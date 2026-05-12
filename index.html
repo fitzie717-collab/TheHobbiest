@@ -1,0 +1,1076 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#7A8A6B" />
+
+  <title>The Hobbiest — Skills Club, Pittston, PA</title>
+  <meta name="description" content="A private skills club where all the things you wish you knew are taught. Opening Summer 2026 in downtown Pittston, Pennsylvania." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="The Hobbiest — Skills Club" />
+  <meta property="og:description" content="A skills club where all the things you wish you knew are taught. Opening Summer 2026 in downtown Pittston, PA." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thehobbiestclub.com" />
+  <meta property="og:image" content="https://thehobbiestclub.com/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <!-- Fonts: Fraunces (display) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — SAGE + CREAM
+       ============================================================ */
+    :root {
+      /* Palette */
+      --bg:        #F1ECDF;   /* cream — ground */
+      --bg-warm:   #EAE3D2;   /* deeper cream — alt sections */
+      --surface:   #FAF7F0;   /* lightest cream — cards */
+      --ink:       #4E5A41;   /* deep sage — primary text */
+      --ink-soft:  #6B7459;   /* softer text */
+      --muted:     #8A8170;   /* warm muted */
+      --hairline:  #D9D2BE;   /* dividers */
+
+      --sage:      #7A8A6B;   /* primary brand */
+      --sage-deep: #4E5A41;   /* deep sage / ink */
+      --sage-pale: #B5BFA8;   /* pale sage accent */
+      --taupe:     #A89878;   /* warm neutral */
+
+      /* Type */
+      --font-display: "Fraunces", "Times New Roman", serif;
+      --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+
+      /* Layout */
+      --max-w:    1280px;
+      --gutter:   clamp(1.25rem, 4vw, 3rem);
+      --section-y: clamp(4rem, 9vw, 8rem);
+
+      /* Motion */
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ============================================================
+       RESET + BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    button { font-family: inherit; cursor: pointer; }
+    a { color: inherit; }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.015em;
+      margin: 0;
+      font-variation-settings: "opsz" 100;
+    }
+
+    p { margin: 0; }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+    }
+
+    /* ============================================================
+       PAPER GRAIN (subtle)
+       ============================================================ */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      opacity: 0.55;
+      mix-blend-mode: multiply;
+    }
+
+    /* ============================================================
+       NAV
+       ============================================================ */
+    .nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: 1.75rem 0;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .wordmark {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      font-style: italic;
+      color: var(--sage);
+      text-decoration: none;
+      font-variation-settings: "opsz" 144;
+    }
+    .nav-meta {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      padding: 9rem 0 5rem;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: clamp(2rem, 6vw, 6rem);
+      align-items: center;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 2.25rem;
+    }
+    .hero-eyebrow::before {
+      content: "";
+      width: 32px;
+      height: 1px;
+      background: var(--sage);
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+      letter-spacing: -0.025em;
+      font-weight: 350;
+      font-variation-settings: "opsz" 144;
+      color: var(--sage-deep);
+    }
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--sage);
+    }
+    .hero-sub {
+      margin-top: 2rem;
+      font-size: clamp(1rem, 1.4vw, 1.18rem);
+      color: var(--ink-soft);
+      max-width: 42ch;
+      line-height: 1.55;
+    }
+    .hero-form {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 0.5rem;
+      max-width: 480px;
+      flex-wrap: wrap;
+    }
+    .hero-form input {
+      flex: 1 1 220px;
+      min-width: 0;
+      padding: 0.95rem 1.2rem;
+      font-family: inherit;
+      font-size: 0.98rem;
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 999px;
+      outline: none;
+      transition: border-color 0.2s var(--ease);
+    }
+    .hero-form input::placeholder { color: var(--muted); }
+    .hero-form input:focus {
+      border-color: var(--sage);
+    }
+    .btn {
+      padding: 0.95rem 1.7rem;
+      background: var(--sage);
+      color: var(--bg);
+      border: 1px solid var(--sage);
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+    }
+    .btn:hover { background: var(--sage-deep); border-color: var(--sage-deep); }
+    .btn:active { transform: translateY(1px); }
+    .form-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+
+    /* Hero seal */
+    .hero-seal-wrap {
+      position: relative;
+      max-width: 460px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .hero-seal {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ============================================================
+       SECTION HELPERS
+       ============================================================ */
+    section {
+      padding: var(--section-y) 0;
+      position: relative;
+    }
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+    }
+    .h-section {
+      font-size: clamp(2rem, 4.5vw, 3.75rem);
+      max-width: 18ch;
+      letter-spacing: -0.02em;
+      color: var(--sage-deep);
+    }
+    .h-section em { font-style: italic; color: var(--sage); }
+    .lede {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 1.9vw, 1.5rem);
+      line-height: 1.45;
+      color: var(--ink-soft);
+      max-width: 56ch;
+      margin-top: 1.5rem;
+      font-weight: 350;
+    }
+
+    /* ============================================================
+       ABOUT
+       ============================================================ */
+    .about {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 6vw, 5rem);
+      align-items: start;
+    }
+    .about-body p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      margin-bottom: 1.4rem;
+    }
+    .about-body p:first-child {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--sage-deep);
+      font-weight: 350;
+      line-height: 1.5;
+    }
+    .about-body p:first-child::first-letter {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 4.5rem;
+      float: left;
+      line-height: 0.85;
+      padding: 0.5rem 0.7rem 0 0;
+      color: var(--sage);
+      font-weight: 400;
+    }
+
+    /* ============================================================
+       WHAT WE TEACH
+       ============================================================ */
+    .teach {
+      background: var(--bg);
+    }
+    .teach-grid {
+      margin-top: 3.5rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--hairline);
+      border-left: 1px solid var(--hairline);
+    }
+    .teach-card {
+      padding: 2.5rem;
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      background: var(--bg);
+      transition: background 0.3s var(--ease);
+      position: relative;
+    }
+    .teach-card:hover {
+      background: var(--bg-warm);
+    }
+    .teach-num {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--sage);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+    .teach-card h3 {
+      font-size: 1.85rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+      color: var(--sage-deep);
+    }
+    .teach-card h3 em {
+      font-style: italic;
+      color: var(--sage);
+    }
+    .teach-card-sub {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .teach-card p {
+      color: var(--ink-soft);
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       LEARN, THEN LIVE IT
+       ============================================================ */
+    .method {
+      background: var(--sage);
+      color: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+    .method::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 50%;
+      width: 1px;
+      height: 80px;
+      background: var(--sage-pale);
+      opacity: 0.6;
+    }
+    .method .eyebrow { color: var(--sage-pale); }
+    .method .h-section { color: var(--bg); }
+    .method .h-section em { color: var(--sage-pale); font-style: italic; }
+    .method-lede {
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 2vw, 1.6rem);
+      line-height: 1.5;
+      color: rgba(241, 236, 223, 0.88);
+      max-width: 58ch;
+      margin-top: 2rem;
+      font-weight: 350;
+    }
+    .method-list {
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .method-item {
+      border-top: 1px solid rgba(241, 236, 223, 0.25);
+      padding-top: 1.5rem;
+    }
+    .method-item-skill {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--sage-pale);
+      margin-bottom: 0.6rem;
+    }
+    .method-item-then {
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: var(--bg);
+    }
+
+    /* ============================================================
+       SPACE / GALLERY
+       ============================================================ */
+    .space-grid {
+      margin-top: 3.5rem;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+    }
+    .space-photo {
+      background: var(--bg-warm);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 1rem;
+    }
+    .space-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .space-photo-1 { grid-column: 1 / 8; aspect-ratio: 16/10; }
+    .space-photo-2 { grid-column: 8 / 13; aspect-ratio: 4/5; grid-row: 1 / 3; }
+    .space-photo-3 { grid-column: 1 / 5; aspect-ratio: 1/1; }
+    .space-photo-4 { grid-column: 5 / 8; aspect-ratio: 1/1; }
+
+    /* ============================================================
+       MEMBERSHIP
+       ============================================================ */
+    .membership {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .membership-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: clamp(2rem, 6vw, 5rem);
+      align-items: start;
+    }
+    .pricing-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      padding: 2.75rem;
+      border-radius: 4px;
+      position: relative;
+    }
+    .pricing-card-tag {
+      position: absolute;
+      top: -12px;
+      left: 2.5rem;
+      background: var(--sage);
+      color: var(--bg);
+      padding: 0.4rem 1rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 600;
+      border-radius: 999px;
+    }
+    .price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .price-number {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 400;
+      letter-spacing: -0.03em;
+      color: var(--sage-deep);
+      line-height: 1;
+    }
+    .price-currency {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--ink-soft);
+    }
+    .price-per {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .price-label {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--sage);
+      margin-bottom: 1.75rem;
+    }
+    .benefits {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .benefits li {
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--hairline);
+      font-size: 0.98rem;
+      color: var(--ink-soft);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+    .benefits li:last-child { border-bottom: none; }
+    .benefits li::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: var(--sage);
+      border-radius: 50%;
+      margin-top: 0.55rem;
+      flex-shrink: 0;
+    }
+    .membership-aside {
+      padding-top: 1rem;
+    }
+    .extras {
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      line-height: 1.65;
+    }
+    .extras strong {
+      color: var(--sage-deep);
+      font-weight: 500;
+    }
+
+    /* ============================================================
+       CTA / SECOND EMAIL CAPTURE
+       ============================================================ */
+    .cta {
+      background: var(--bg);
+      text-align: center;
+      padding: var(--section-y) 0;
+    }
+    .cta .container { max-width: 680px; }
+    .cta h2 {
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      letter-spacing: -0.02em;
+      color: var(--sage-deep);
+    }
+    .cta h2 em { font-style: italic; color: var(--sage); }
+    .cta-list {
+      list-style: none;
+      padding: 0;
+      margin: 2.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      text-align: left;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      color: var(--ink-soft);
+      font-size: 1rem;
+    }
+    .cta-list li::before {
+      content: "→";
+      color: var(--sage);
+      font-family: var(--font-display);
+      font-style: italic;
+      flex-shrink: 0;
+    }
+    .cta-form {
+      display: flex;
+      gap: 0.5rem;
+      max-width: 480px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .cta-form input {
+      flex: 1 1 220px;
+      padding: 1rem 1.2rem;
+      font-family: inherit;
+      font-size: 1rem;
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 999px;
+      outline: none;
+    }
+    .cta-form input::placeholder { color: var(--muted); }
+    .cta-form input:focus { border-color: var(--sage); }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    footer {
+      background: var(--sage-deep);
+      color: var(--bg);
+      padding: 4.5rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    footer h4 {
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage-pale);
+      font-weight: 500;
+      margin-bottom: 1.2rem;
+    }
+    footer .wordmark-lg {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.85rem;
+      color: var(--bg);
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      font-variation-settings: "opsz" 144;
+    }
+    footer a { color: rgba(241, 236, 223, 0.78); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--sage-pale); }
+    footer p { color: rgba(241, 236, 223, 0.7); font-size: 0.95rem; line-height: 1.7; }
+    footer .stack a { display: block; margin-bottom: 0.5rem; font-size: 0.95rem; }
+    .footer-bottom {
+      border-top: 1px solid rgba(241, 236, 223, 0.15);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: rgba(241, 236, 223, 0.45);
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================================
+       REVEAL ANIMATION
+       ============================================================ */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    }
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 880px) {
+      .hero { padding: 7rem 0 4rem; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-seal-wrap { order: -1; max-width: 320px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .teach-grid { grid-template-columns: 1fr; }
+      .method-list { grid-template-columns: 1fr; gap: 1.5rem; }
+      .membership-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; }
+      .space-grid { grid-template-columns: 1fr; }
+      .space-photo-1, .space-photo-2, .space-photo-3, .space-photo-4 {
+        grid-column: auto; grid-row: auto; aspect-ratio: 4/3;
+      }
+    }
+
+    /* form success state */
+    .form-success {
+      color: var(--sage);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.05rem;
+      margin-top: 1rem;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       NAV
+       ========================================================= -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="wordmark">The Hobbiest</a>
+      <div class="nav-meta">Opening Summer 2026</div>
+    </div>
+  </nav>
+
+  <!-- =========================================================
+       HERO
+       ========================================================= -->
+  <header class="hero">
+    <div class="container hero-inner">
+      <div data-reveal>
+        <div class="hero-eyebrow">Pittston, Pennsylvania</div>
+        <h1>
+          A skills club<br />
+          where all the things<br />
+          you wish you knew<br />
+          <em>are taught</em>.
+        </h1>
+        <p class="hero-sub">
+          A private members club for adults. Calligraphy, gardening, money, hosting, sourdough, drawing — and a long list more. Opening Summer 2026 in downtown Pittston.
+        </p>
+
+        <form class="hero-form" id="form-hero" novalidate>
+          <input type="email" name="email" placeholder="your email" required aria-label="Email address" />
+          <button class="btn" type="submit">Join the list</button>
+        </form>
+        <p class="form-note">Founder pricing locked in when membership opens September 1.</p>
+      </div>
+
+      <!-- The Seal — primary logo as hero visual -->
+      <div class="hero-seal-wrap" data-reveal>
+        <svg class="hero-seal" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-label="The Hobbiest seal">
+          <defs>
+            <path id="seal-bottom-arc" d="M 75,300 A 225,225 0 0,0 525,300"/>
+          </defs>
+          <!-- outer ring -->
+          <circle cx="300" cy="300" r="275" fill="none" stroke="#7A8A6B" stroke-width="3"/>
+          <!-- inner ring -->
+          <circle cx="300" cy="300" r="258" fill="none" stroke="#7A8A6B" stroke-width="1.1"/>
+          <!-- wordmark -->
+          <text x="300" y="290"
+                font-family="Fraunces, 'Times New Roman', serif"
+                font-style="italic"
+                font-weight="400"
+                font-size="90"
+                fill="#7A8A6B"
+                text-anchor="middle"
+                letter-spacing="-1.5"
+                style="font-variation-settings: 'opsz' 144;">The Hobbiest</text>
+          <!-- divider lines + SKILLS CLUB -->
+          <line x1="85" y1="333" x2="220" y2="333" stroke="#7A8A6B" stroke-width="1.4"/>
+          <text x="300" y="340"
+                font-family="Fraunces, 'Times New Roman', serif"
+                font-weight="500"
+                font-size="16"
+                fill="#7A8A6B"
+                text-anchor="middle"
+                letter-spacing="10">SKILLS CLUB</text>
+          <line x1="380" y1="333" x2="515" y2="333" stroke="#7A8A6B" stroke-width="1.4"/>
+          <!-- bottom arc text -->
+          <text font-family="Fraunces, 'Times New Roman', serif"
+                font-weight="500"
+                font-size="22"
+                fill="#7A8A6B"
+                letter-spacing="7">
+            <textPath href="#seal-bottom-arc" startOffset="50%" text-anchor="middle">PITTSTON, PENNSYLVANIA</textPath>
+          </text>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       ABOUT
+       ========================================================= -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div data-reveal>
+          <span class="eyebrow">About</span>
+          <h2 class="h-section">A place to <em>spend your time</em> well.</h2>
+        </div>
+        <div class="about-body" data-reveal>
+          <p>The Hobbiest is a private skills club for adults in downtown Pittston, opening summer 2026.</p>
+          <p>It's a place to spend your time learning hobbies and skills built for intentional living and being the best version of yourself. A place where all the things you wish you'd been taught actually are — calligraphy, sourdough, gardening, money, hosting, drawing, and a long list more.</p>
+          <p>Every series ends with an immersive experience, so you don't just learn skills — you live them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       WHAT WE TEACH
+       ========================================================= -->
+  <section class="teach" id="classes">
+    <div class="container">
+      <div data-reveal>
+        <span class="eyebrow">The Curriculum</span>
+        <h2 class="h-section">Four kinds of things, <em>taught well</em>.</h2>
+      </div>
+
+      <div class="teach-grid">
+        <article class="teach-card" data-reveal>
+          <div class="teach-num">01 — Practical</div>
+          <h3>Life <em>skills</em></h3>
+          <p class="teach-card-sub">The stuff school skipped.</p>
+          <p>Budgeting, investing, negotiation, public speaking, taxes, insurance, estate planning, first-time home buying, salary strategy.</p>
+        </article>
+
+        <article class="teach-card" data-reveal>
+          <div class="teach-num">02 — Creative</div>
+          <h3>Hands-on <em>crafts</em></h3>
+          <p class="teach-card-sub">The things you've always meant to try.</p>
+          <p>Calligraphy, drawing, watercolor, embroidery, flower arranging, sourdough, bookbinding, pressed flowers, hand lettering.</p>
+        </article>
+
+        <article class="teach-card" data-reveal>
+          <div class="teach-num">03 — Presentation</div>
+          <h3>Style &amp; <em>poise</em></h3>
+          <p class="teach-card-sub">To feel actually put together.</p>
+          <p>Personal styling, makeup, hosting, tablescaping, modern etiquette, gift wrapping, English tea, couples dancing.</p>
+        </article>
+
+        <article class="teach-card" data-reveal>
+          <div class="teach-num">04 — Wellness</div>
+          <h3>Body <em>literacy</em></h3>
+          <p class="teach-card-sub">What your doctor never explains.</p>
+          <p>Sleep, hydration, cycle awareness, stress management, posture, meditation, food literacy, advocating at the doctor.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       METHOD
+       ========================================================= -->
+  <section class="method">
+    <div class="container">
+      <div data-reveal>
+        <span class="eyebrow">The Method</span>
+        <h2 class="h-section">Learn, then <em>live it</em>.</h2>
+        <p class="method-lede">Every series at The Hobbiest ends with an immersive experience. You don't just learn skills — you put them into the world.</p>
+      </div>
+
+      <div class="method-list">
+        <div class="method-item" data-reveal>
+          <div class="method-item-skill">Learn calligraphy →</div>
+          <p class="method-item-then">Write a real letter on stationery you've lettered. Wax-seal it. We'll mail it.</p>
+        </div>
+        <div class="method-item" data-reveal>
+          <div class="method-item-skill">Plant a cutting garden →</div>
+          <p class="method-item-then">Arrange the bouquet you grew at the Summer Garden Tea.</p>
+        </div>
+        <div class="method-item" data-reveal>
+          <div class="method-item-skill">Bake sourdough →</div>
+          <p class="method-item-then">Bring your first loaf to our member Friendsgiving.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       THE SPACE
+       ========================================================= -->
+  <section class="space" id="space">
+    <div class="container">
+      <div data-reveal>
+        <span class="eyebrow">The Space</span>
+        <h2 class="h-section">2,000 sq ft on <em>Main Street</em>.</h2>
+        <p class="lede">Designed event space with exposed brick walls, soaring ceilings, a real kitchen, and a private outdoor garden where we grow our own cutting flowers for arranging and English Teas.</p>
+      </div>
+
+      <div class="space-grid">
+        <div class="space-photo space-photo-1" data-reveal>
+          <!-- <img src="/images/space-main.jpg" alt="Interior of The Hobbiest" /> -->
+          Photo: Interior wide shot (herringbone floor, green wall, chandelier)
+        </div>
+        <div class="space-photo space-photo-2" data-reveal>
+          <!-- <img src="/images/space-bar.jpg" alt="Bar area" /> -->
+          Photo: The bar (vertical, green bar with cane stools)
+        </div>
+        <div class="space-photo space-photo-3" data-reveal>
+          <!-- <img src="/images/space-kitchen.jpg" alt="Kitchenette" /> -->
+          Photo: Kitchenette with Smeg fridge
+        </div>
+        <div class="space-photo space-photo-4" data-reveal>
+          <!-- <img src="/images/space-garden.jpg" alt="Outdoor garden" /> -->
+          Photo: Outdoor deck + garden with botanical mural
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       MEMBERSHIP
+       ========================================================= -->
+  <section class="membership" id="membership">
+    <div class="container">
+      <div class="membership-grid">
+        <div data-reveal>
+          <span class="eyebrow">Membership</span>
+          <h2 class="h-section">Opens <em>September 2026</em>.</h2>
+          <div class="extras">
+            <p><strong>Phase 1 (July-August):</strong> Classes open to the public. Drop in to try us before joining.</p>
+            <p style="margin-top: 1rem;"><strong>Phase 2 (September on):</strong> Full membership opens at founder pricing — locked in for as long as your membership stays active.</p>
+            <p style="margin-top: 1rem;">Non-members welcome at most classes at a 50% premium over member prices.</p>
+          </div>
+        </div>
+
+        <div class="pricing-card" data-reveal>
+          <div class="pricing-card-tag">Founder Pricing</div>
+          <div class="price">
+            <span class="price-currency">$</span>
+            <span class="price-number">35</span>
+            <span class="price-per">/ month</span>
+          </div>
+          <div class="price-label">Plus class fees from $25</div>
+
+          <ul class="benefits">
+            <li>Full access to the club space during open hours</li>
+            <li>Member pricing on every class</li>
+            <li>Priority enrollment before classes open to non-members</li>
+            <li>Members-only intimate classes (Cycle Awareness, Therapy 101, Meditation)</li>
+            <li>Welcome kit: branded notebook, pen, welcome card</li>
+            <li>Sell your work at the Quarterly Showcase — keep 100% of sales</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SECOND CTA
+       ========================================================= -->
+  <section class="cta" id="join">
+    <div class="container" data-reveal>
+      <span class="eyebrow">Be First To Know</span>
+      <h2>Join the <em>founder's list</em>.</h2>
+
+      <ul class="cta-list">
+        <li>Our Phase 1 class schedule (starting July 2026)</li>
+        <li>First access to founder pricing on September 1</li>
+        <li>Invitation to the Open House on June 27-28</li>
+        <li>Behind-the-scenes from instructor recruitment through opening day</li>
+      </ul>
+
+      <form class="cta-form" id="form-cta" novalidate>
+        <input type="email" name="email" placeholder="your email" required aria-label="Email address" />
+        <button class="btn" type="submit">Join the list</button>
+      </form>
+      <p class="form-note" style="margin-top: 1.25rem;">We send updates rarely. No spam, ever.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="wordmark-lg">The Hobbiest</div>
+          <p>A skills club where all the things you wish you knew are taught. Opening Summer 2026 in downtown Pittston, PA.</p>
+        </div>
+        <div>
+          <h4>Visit</h4>
+          <p>135 N Main Street<br />Pittston, PA 18640<br /><br />Wyoming Valley · NEPA</p>
+        </div>
+        <div>
+          <h4>Follow</h4>
+          <div class="stack">
+            <a href="#" rel="noopener">Instagram</a>
+            <a href="#" rel="noopener">Facebook</a>
+            <a href="mailto:hello@thehobbiestclub.com">hello@thehobbiestclub.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 The Hobbiest Skills Club</span>
+        <span>Built with intention.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ============================================================
+    // REVEAL ON SCROLL
+    // ============================================================
+    const reveals = document.querySelectorAll('[data-reveal]');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    reveals.forEach((r) => io.observe(r));
+
+    // ============================================================
+    // EMAIL FORM HANDLING
+    // ============================================================
+    // Replace ENDPOINT_URL once you have your Beehiiv API key + publication ID.
+    // Until then, this posts to a placeholder.
+    const ENDPOINT_URL = '/api/subscribe';
+
+    function handleForm(formId) {
+      const form = document.getElementById(formId);
+      if (!form) return;
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = form.querySelector('input[name="email"]').value.trim();
+        if (!email || !email.includes('@')) {
+          alert('Please enter a valid email.');
+          return;
+        }
+
+        const btn = form.querySelector('button');
+        const original = btn.textContent;
+        btn.textContent = 'Sending…';
+        btn.disabled = true;
+
+        try {
+          const res = await fetch(ENDPOINT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ email, source: formId })
+          });
+
+          if (res.ok) {
+            form.innerHTML = '<p class="form-success">You\'re on the list. Talk soon. ✿</p>';
+          } else {
+            throw new Error('Submission failed');
+          }
+        } catch (err) {
+          btn.textContent = original;
+          btn.disabled = false;
+          alert('Something went wrong. Please try again or email hello@thehobbiestclub.com.');
+        }
+      });
+    }
+    handleForm('form-hero');
+    handleForm('form-cta');
+  </script>
+
+</body>
+</html>
