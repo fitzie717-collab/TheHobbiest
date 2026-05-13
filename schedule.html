@@ -1,0 +1,1709 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#7A8A6B" />
+
+  <title>Curriculum — The Hobbiest</title>
+  <meta name="description" content="Soft launch curriculum options for The Hobbiest. Tell us what interests you and when you'd come. Opening fall 2026 in Pittston, PA." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Curriculum — The Hobbiest" />
+  <meta property="og:description" content="Help us build the schedule. Tell us what classes interest you and when you'd come." />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <!-- Fonts: Fraunces (display) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — SAGE + CREAM (matches index.html exactly)
+       ============================================================ */
+    :root {
+      --bg:        #F1ECDF;
+      --bg-warm:   #EAE3D2;
+      --surface:   #FAF7F0;
+      --ink:       #4E5A41;
+      --ink-soft:  #6B7459;
+      --muted:     #8A8170;
+      --hairline:  #D9D2BE;
+
+      --sage:      #7A8A6B;
+      --sage-deep: #4E5A41;
+      --sage-pale: #B5BFA8;
+      --taupe:     #A89878;
+
+      --font-display: "Fraunces", "Times New Roman", serif;
+      --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --max-w:    1280px;
+      --gutter:   clamp(1.25rem, 4vw, 3rem);
+      --section-y: clamp(4rem, 9vw, 8rem);
+
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ============================================================
+       RESET + BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    button, input, textarea, select { font-family: inherit; }
+    a { color: inherit; }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.015em;
+      margin: 0;
+      font-variation-settings: "opsz" 100;
+    }
+
+    p { margin: 0; }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+    }
+
+    /* ============================================================
+       PAPER GRAIN (matches main site)
+       ============================================================ */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      opacity: 0.55;
+      mix-blend-mode: multiply;
+    }
+
+    /* ============================================================
+       REVEAL ON SCROLL
+       ============================================================ */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ============================================================
+       NAV
+       ============================================================ */
+    .nav {
+      position: relative;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .wordmark {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      font-style: italic;
+      color: var(--sage);
+      text-decoration: none;
+      font-variation-settings: "opsz" 144;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .nav-link {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s var(--ease);
+    }
+    .nav-link:hover { color: var(--sage); }
+    .nav-link-current { color: var(--sage-deep); }
+    .nav-link-current::after {
+      content: ""; display: block; width: 100%; height: 1px;
+      background: var(--sage); margin-top: 4px;
+    }
+    .nav-link-primary {
+      color: var(--bg);
+      background: var(--sage);
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      letter-spacing: 0.12em;
+      transition: background 0.2s var(--ease);
+    }
+    .nav-link-primary:hover { background: var(--sage-deep); color: var(--bg); }
+    .nav-link-primary::after { display: none !important; }
+    @media (max-width: 640px) {
+      .nav-links { gap: 0.85rem; }
+      .nav-link { font-size: 0.65rem; letter-spacing: 0.12em; }
+    }
+
+    /* ============================================================
+       PAGE HERO
+       ============================================================ */
+    .page-hero {
+      padding: clamp(4rem, 8vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .page-hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 6vw, 6rem);
+      align-items: end;
+    }
+    .page-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+    .page-eyebrow::before {
+      content: "";
+      width: 32px;
+      height: 1px;
+      background: var(--sage);
+    }
+    .page-hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      letter-spacing: -0.025em;
+      font-weight: 350;
+      font-variation-settings: "opsz" 144;
+      color: var(--sage-deep);
+    }
+    .page-hero h1 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--sage);
+    }
+    .page-hero-lede {
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+      line-height: 1.5;
+      color: var(--ink-soft);
+      font-weight: 350;
+      max-width: 44ch;
+    }
+    .page-hero-lede em {
+      font-style: italic;
+      color: var(--sage);
+    }
+
+    /* ============================================================
+       SECTION HELPERS
+       ============================================================ */
+    section { position: relative; }
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+    }
+    .h-section {
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      max-width: 20ch;
+      letter-spacing: -0.02em;
+      color: var(--sage-deep);
+    }
+    .h-section em { font-style: italic; color: var(--sage); }
+
+    /* ============================================================
+       STICKY CATEGORY NAV
+       ============================================================ */
+    .cat-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--hairline);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      background: rgba(241, 236, 223, 0.92);
+    }
+    .cat-nav-inner {
+      display: flex;
+      gap: 0.4rem;
+      padding: 0.85rem 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      align-items: center;
+    }
+    .cat-nav-inner::-webkit-scrollbar { display: none; }
+    .cat-nav-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      padding-right: 0.5rem;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .cat-btn {
+      flex-shrink: 0;
+      padding: 0.55rem 1.1rem;
+      border: 1px solid var(--hairline);
+      background: transparent;
+      color: var(--ink-soft);
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.86rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+    }
+    .cat-btn:hover {
+      background: var(--surface);
+      color: var(--sage-deep);
+      border-color: var(--sage-pale);
+    }
+    .cat-btn.is-active {
+      background: var(--sage);
+      color: var(--bg);
+      border-color: var(--sage);
+    }
+    .cat-btn-form {
+      background: var(--sage-deep);
+      color: var(--bg);
+      border-color: var(--sage-deep);
+      margin-left: auto;
+    }
+    .cat-btn-form:hover {
+      background: var(--sage);
+      color: var(--bg);
+      border-color: var(--sage);
+    }
+    @media (max-width: 700px) {
+      .cat-nav-label { display: none; }
+      .cat-btn-form { margin-left: 0.4rem; }
+    }
+
+    /* ============================================================
+       RECOMMENDATIONS CALLOUT (above the form, also in hero area)
+       ============================================================ */
+    .recommend-callout {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-left: 3px solid var(--sage);
+      padding: 1.5rem 1.75rem;
+      border-radius: 4px;
+      margin-top: 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.1rem;
+      max-width: 560px;
+    }
+    .recommend-mark {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 2rem;
+      color: var(--sage);
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: -0.15rem;
+    }
+    .recommend-body p {
+      font-size: 0.96rem;
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+    .recommend-body strong {
+      color: var(--sage-deep);
+      font-weight: 500;
+    }
+    .recommend-body a {
+      color: var(--sage);
+      text-decoration: none;
+      border-bottom: 1px solid var(--sage-pale);
+      font-weight: 500;
+      transition: border-color 0.2s var(--ease);
+    }
+    .recommend-body a:hover {
+      border-bottom-color: var(--sage);
+    }
+
+    /* ============================================================
+       HOW IT WORKS STRIP
+       ============================================================ */
+    .how-strip {
+      padding: clamp(3rem, 6vw, 5rem) 0;
+      background: var(--bg-warm);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1.5rem, 4vw, 3rem);
+    }
+    .how-item {
+      position: relative;
+    }
+    .how-num {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--sage);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+    .how-item h3 {
+      font-size: 1.5rem;
+      color: var(--sage-deep);
+      margin-bottom: 0.6rem;
+    }
+    .how-item h3 em { font-style: italic; color: var(--sage); }
+    .how-item p {
+      color: var(--ink-soft);
+      font-size: 0.98rem;
+      line-height: 1.65;
+    }
+
+    /* ============================================================
+       CATEGORY SECTIONS
+       ============================================================ */
+    .category-section {
+      padding: clamp(3rem, 6vw, 5rem) 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .category-header {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: clamp(2rem, 5vw, 4rem);
+      margin-bottom: 3rem;
+      align-items: end;
+    }
+    .category-title {
+      font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+      color: var(--sage-deep);
+      letter-spacing: -0.02em;
+    }
+    .category-title em { font-style: italic; color: var(--sage); }
+    .category-desc {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 50ch;
+    }
+
+    /* ============================================================
+       CLASS CARDS
+       ============================================================ */
+    .class-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--hairline);
+      border-left: 1px solid var(--hairline);
+    }
+    .class-card {
+      padding: 2rem 2rem 2.25rem;
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      background: var(--bg);
+      transition: background 0.3s var(--ease);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .class-card:hover {
+      background: var(--surface);
+    }
+    .class-format {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--sage);
+      margin-bottom: 0.85rem;
+      letter-spacing: 0.02em;
+    }
+    .class-card h4 {
+      font-size: 1.5rem;
+      color: var(--sage-deep);
+      margin-bottom: 0.6rem;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    .class-meta {
+      font-size: 0.82rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.1rem;
+      font-weight: 500;
+    }
+    .class-desc {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      line-height: 1.55;
+      flex: 1;
+      margin-bottom: 1.5rem;
+    }
+    .class-footer {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--hairline);
+    }
+    .class-price {
+      font-family: var(--font-display);
+      font-size: 1.65rem;
+      color: var(--sage-deep);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+    .class-price-note {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* ============================================================
+       BUNDLES SECTION
+       ============================================================ */
+    .bundles {
+      background: var(--sage);
+      color: var(--bg);
+      padding: clamp(4rem, 8vw, 6.5rem) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .bundles::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 50%;
+      width: 1px;
+      height: 80px;
+      background: var(--sage-pale);
+      opacity: 0.6;
+    }
+    .bundles .eyebrow { color: var(--sage-pale); }
+    .bundles .h-section { color: var(--bg); }
+    .bundles .h-section em { color: var(--sage-pale); font-style: italic; }
+    .bundles-lede {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 1.7vw, 1.4rem);
+      line-height: 1.5;
+      color: rgba(241, 236, 223, 0.88);
+      max-width: 58ch;
+      margin-top: 1.75rem;
+      font-weight: 350;
+    }
+
+    .bundle-grid {
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+    .bundle-card {
+      background: rgba(241, 236, 223, 0.06);
+      border: 1px solid rgba(241, 236, 223, 0.25);
+      padding: 2.25rem;
+      border-radius: 4px;
+      position: relative;
+      transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+      display: flex;
+      flex-direction: column;
+    }
+    .bundle-card:hover {
+      background: rgba(241, 236, 223, 0.1);
+      transform: translateY(-2px);
+    }
+    .bundle-tag {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--sage-pale);
+      margin-bottom: 0.8rem;
+    }
+    .bundle-card h4 {
+      font-size: 1.65rem;
+      color: var(--bg);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.85rem;
+    }
+    .bundle-card h4 em { font-style: italic; color: var(--sage-pale); }
+    .bundle-format {
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(241, 236, 223, 0.65);
+      margin-bottom: 1.4rem;
+      font-weight: 500;
+    }
+    .bundle-includes-label {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--sage-pale);
+      margin-bottom: 0.7rem;
+    }
+    .bundle-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem 0;
+      flex: 1;
+    }
+    .bundle-list li {
+      padding: 0.5rem 0;
+      font-size: 0.95rem;
+      color: rgba(241, 236, 223, 0.88);
+      line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      border-bottom: 1px solid rgba(241, 236, 223, 0.12);
+    }
+    .bundle-list li:last-child { border-bottom: none; }
+    .bundle-list li::before {
+      content: "—";
+      color: var(--sage-pale);
+      flex-shrink: 0;
+    }
+    .bundle-who {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.92rem;
+      color: rgba(241, 236, 223, 0.75);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .bundle-footer {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(241, 236, 223, 0.25);
+    }
+    .bundle-price {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--bg);
+      letter-spacing: -0.02em;
+    }
+    .bundle-savings {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--sage-pale);
+    }
+
+    /* ============================================================
+       FORM SECTION
+       ============================================================ */
+    .form-section {
+      padding: clamp(4rem, 8vw, 7rem) 0;
+      background: var(--bg);
+    }
+    .form-header {
+      max-width: 720px;
+      margin-bottom: 4rem;
+    }
+    .form-header .h-section {
+      max-width: 18ch;
+    }
+    .form-lede {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 1.9vw, 1.45rem);
+      line-height: 1.5;
+      color: var(--ink-soft);
+      max-width: 56ch;
+      margin-top: 1.5rem;
+      font-weight: 350;
+    }
+
+    .form {
+      max-width: 720px;
+    }
+    .form-block {
+      padding: 2rem 0 2.5rem;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .form-block:first-child { padding-top: 0; }
+    .form-block:last-of-type { border-bottom: none; }
+
+    .form-block-num {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--sage);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+    .form-block-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--sage-deep);
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
+    }
+    .form-block-title em { font-style: italic; color: var(--sage); }
+    .form-block-note {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .form-field label {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+      font-weight: 500;
+    }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      font-size: 0.98rem;
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s var(--ease);
+      font-family: inherit;
+    }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--sage);
+    }
+    .form-field textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    /* Checkbox / Radio grids */
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.5rem 1.25rem;
+    }
+    .check-grid-narrow {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      padding: 0.7rem 0;
+      cursor: pointer;
+      line-height: 1.45;
+    }
+    .check-item input[type="checkbox"],
+    .check-item input[type="radio"] {
+      margin: 0.2rem 0 0 0;
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      accent-color: var(--sage);
+      cursor: pointer;
+    }
+    .check-item-text {
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+    .check-item-text .meta {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+    .check-item:hover .check-item-text {
+      color: var(--sage-deep);
+    }
+
+    .stacked-radio .check-item {
+      padding: 0.55rem 0;
+    }
+
+    /* ============================================================
+       AVAILABILITY MATRIX — days × times grid
+       ============================================================ */
+    .matrix-wrap {
+      margin-top: 0.5rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      background: var(--surface);
+    }
+    .matrix {
+      width: 100%;
+      min-width: 640px;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .matrix th,
+    .matrix td {
+      padding: 0;
+      text-align: center;
+      vertical-align: middle;
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .matrix th:last-child,
+    .matrix td:last-child { border-right: none; }
+    .matrix tr:last-child td { border-bottom: none; }
+
+    .matrix thead th {
+      background: var(--bg-warm);
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--sage-deep);
+      font-size: 0.95rem;
+      padding: 0.8rem 0.3rem;
+      letter-spacing: -0.005em;
+    }
+    .matrix thead th.matrix-corner {
+      background: var(--surface);
+      width: 130px;
+      font-style: normal;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .matrix tbody th {
+      background: var(--bg-warm);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+      font-family: var(--font-body);
+      font-weight: 500;
+      color: var(--sage-deep);
+      font-size: 0.88rem;
+      line-height: 1.3;
+      width: 130px;
+    }
+    .matrix tbody th .matrix-time-range {
+      display: block;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+    .matrix td {
+      position: relative;
+      transition: background 0.15s var(--ease);
+    }
+    .matrix td:hover {
+      background: var(--bg);
+    }
+    .matrix-cell-label {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0.95rem 0.5rem;
+      cursor: pointer;
+      position: relative;
+    }
+    .matrix-cell-label input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .matrix-cell-box {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--hairline);
+      border-radius: 3px;
+      background: var(--bg);
+      transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
+      position: relative;
+    }
+    .matrix-cell-label:hover .matrix-cell-box {
+      border-color: var(--sage);
+    }
+    .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box {
+      background: var(--sage);
+      border-color: var(--sage);
+    }
+    .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 0px;
+      width: 6px;
+      height: 11px;
+      border: solid var(--bg);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .matrix-cell-label:has(input:checked) {
+      background: rgba(122, 138, 107, 0.08);
+    }
+    .matrix-hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 0.75rem;
+      display: block;
+      font-family: var(--font-display);
+    }
+
+    /* Submit */
+    .form-submit-row {
+      padding-top: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      padding: 1.05rem 2.25rem;
+      background: var(--sage);
+      color: var(--bg);
+      border: 1px solid var(--sage);
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+    }
+    .btn-primary:hover { background: var(--sage-deep); border-color: var(--sage-deep); }
+    .btn-primary:active { transform: translateY(1px); }
+    .form-submit-note {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    /* Form thanks state */
+    .form-thanks {
+      display: none;
+      padding: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      text-align: center;
+    }
+    .form-thanks.active {
+      display: block;
+    }
+    .form-thanks h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--sage-deep);
+      margin-bottom: 1rem;
+    }
+    .form-thanks h3 em { font-style: italic; color: var(--sage); }
+    .form-thanks p {
+      color: var(--ink-soft);
+      line-height: 1.65;
+      max-width: 36ch;
+      margin: 0 auto;
+    }
+
+    /* ============================================================
+       SIGN-UP CTA SECTION
+       ============================================================ */
+    .signup-cta {
+      padding: clamp(4rem, 8vw, 6rem) 0;
+      background: var(--bg-warm);
+      text-align: center;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .signup-cta .h-section {
+      max-width: 18ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .signup-cta-lede {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+      line-height: 1.5;
+      color: var(--ink-soft);
+      max-width: 52ch;
+      margin: 1.5rem auto 2.5rem;
+      font-weight: 350;
+    }
+    .signup-cta-btn {
+      display: inline-block;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    /* ============================================================
+       FOOTER (matches main site)
+       ============================================================ */
+    footer {
+      background: var(--sage-deep);
+      color: rgba(241, 236, 223, 0.85);
+      padding: clamp(3rem, 6vw, 5rem) 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: clamp(2rem, 5vw, 4rem);
+      margin-bottom: 3rem;
+    }
+    .footer-grid h4 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--bg);
+      margin-bottom: 1rem;
+      font-style: italic;
+      font-weight: 400;
+    }
+    .footer-grid p {
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: rgba(241, 236, 223, 0.7);
+    }
+    .footer-grid a {
+      display: block;
+      font-size: 0.92rem;
+      color: rgba(241, 236, 223, 0.75);
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+      transition: color 0.2s var(--ease);
+    }
+    .footer-grid a:hover { color: var(--bg); }
+    .stack { display: flex; flex-direction: column; }
+    .wordmark-lg {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.85rem;
+      color: var(--bg);
+      margin-bottom: 1rem;
+      font-variation-settings: "opsz" 144;
+    }
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(241, 236, 223, 0.15);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      color: rgba(241, 236, 223, 0.55);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 900px) {
+      .page-hero-inner,
+      .category-header { grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
+      .how-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    @media (max-width: 560px) {
+      .class-grid { grid-template-columns: 1fr; }
+      .bundle-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       NAV
+       ========================================================= -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="wordmark">The Hobbiest</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/schedule.html" class="nav-link nav-link-current">Skills Schedule</a>
+        <a href="/apply.html" class="nav-link">Apply to Teach</a>
+        <a href="/#interest" class="nav-link nav-link-primary">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- =========================================================
+       PAGE HERO
+       ========================================================= -->
+  <header class="page-hero">
+    <div class="container">
+      <div class="page-hero-inner">
+        <div data-reveal>
+          <span class="page-eyebrow">Skills Schedule</span>
+          <h1>Everything we're <em>considering</em>.</h1>
+        </div>
+        <div data-reveal>
+          <p class="page-hero-lede">
+            Nineteen classes across six categories, plus six fixed bundles. Browse what catches your eye — then head to the <a href="/#interest" style="color: var(--sage); border-bottom: 1px solid var(--sage-pale); text-decoration: none; font-style: italic;">sign-up form</a> to tell us which ones interest you. <em>We schedule what people actually want.</em>
+          </p>
+
+          <div class="recommend-callout">
+            <span class="recommend-mark">+</span>
+            <div class="recommend-body">
+              <p><strong>Don't see what you want?</strong> We're actively taking recommendations for new classes and lecture topics. Tell us what you wish we offered <a href="/#interest">on the sign-up form</a>. The schedule is yours to shape.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       STICKY CATEGORY NAV — jump links to sections
+       ========================================================= -->
+  <nav class="cat-nav" aria-label="Category navigation">
+    <div class="container cat-nav-inner">
+      <span class="cat-nav-label">Jump to</span>
+      <a href="#fiber-arts" class="cat-btn" data-cat="fiber-arts">Fiber Arts</a>
+      <a href="#drawing-paper" class="cat-btn" data-cat="drawing-paper">Drawing &amp; Paper</a>
+      <a href="#calligraphy" class="cat-btn" data-cat="calligraphy">Calligraphy</a>
+      <a href="#life-skills" class="cat-btn" data-cat="life-skills">Life Skills</a>
+      <a href="#self-sufficiency" class="cat-btn" data-cat="self-sufficiency">Self-Sufficiency</a>
+      <a href="#seasonal-specialty" class="cat-btn" data-cat="seasonal-specialty">Seasonal</a>
+      <a href="#bundles" class="cat-btn" data-cat="bundles">Bundles</a>
+      <a href="/#interest" class="cat-btn cat-btn-form">Sign Up →</a>
+    </div>
+  </nav>
+
+  <!-- =========================================================
+       HOW IT WORKS
+       ========================================================= -->
+  <section class="how-strip">
+    <div class="container">
+      <div class="how-grid">
+        <div class="how-item" data-reveal>
+          <div class="how-num">01 — Browse</div>
+          <h3>See the <em>options</em>.</h3>
+          <p>Nineteen classes across six categories, plus six fixed bundles built around moments in life. Each one shows what you'll learn, the format, the class size, and the price.</p>
+        </div>
+        <div class="how-item" data-reveal>
+          <div class="how-num">02 — Tell us</div>
+          <h3>Pick what <em>catches your eye</em>.</h3>
+          <p>Check anything that interests you. Then tell us when you'd actually come — weeknight, weekend morning, weekday afternoon. This is the part that helps us plan.</p>
+        </div>
+        <div class="how-item" data-reveal>
+          <div class="how-num">03 — We schedule</div>
+          <h3>We build <em>around you</em>.</h3>
+          <p>Once enough people want the same thing at the same time, we schedule it and email you. Adults only (18+). Bundles are fixed packages — no swapping classes in or out.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       FIBER ARTS
+       ========================================================= -->
+  <section class="category-section" id="fiber-arts">
+    <div class="container">
+      <div class="category-header" data-reveal>
+        <h2 class="category-title">Fiber <em>arts</em></h2>
+        <p class="category-desc">Slow handwork. Wool, thread, needle. Things you do sitting down with good light and company.</p>
+      </div>
+
+      <div class="class-grid" data-reveal>
+        <article class="class-card">
+          <div class="class-format">4-Week Series</div>
+          <h4>Knitting 101</h4>
+          <div class="class-meta">Small group · 8–10 students</div>
+          <p class="class-desc">Cast on, knit, purl, bind off. By week four you'll have a finished scarf you can actually wear. Kit included: wool yarn, bamboo needles, project bag, pattern booklet.</p>
+          <div class="class-footer">
+            <div class="class-price">$225</div>
+            <div class="class-price-note">kit included</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">4-Week Series</div>
+          <h4>Crochet 101</h4>
+          <div class="class-meta">Small group · 10–12 students</div>
+          <p class="class-desc">Granny square to a small blanket. The most forgiving fiber art for absolute beginners. Kit included: yarn, hook, project bag, pattern.</p>
+          <div class="class-footer">
+            <div class="class-price">$225</div>
+            <div class="class-price-note">kit included</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">4-Week Series</div>
+          <h4>Visible Mending &amp; Sashiko</h4>
+          <div class="class-meta">Small group · 8–10 students</div>
+          <p class="class-desc">Repair the clothes you already own. Turn worn jeans, sweaters, and shirts into pieces with character. Bring 2–3 garments to mend. Thread, needles, and patches included.</p>
+          <div class="class-footer">
+            <div class="class-price">$220</div>
+            <div class="class-price-note">supplies included</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       DRAWING & PAPER ARTS
+       ========================================================= -->
+  <section class="category-section" id="drawing-paper">
+    <div class="container">
+      <div class="category-header" data-reveal>
+        <h2 class="category-title">Drawing &amp; <em>paper</em></h2>
+        <p class="category-desc">For adults who decided they "couldn't draw" in third grade. Real instruction, beginners welcome — that's the whole point.</p>
+      </div>
+
+      <div class="class-grid" data-reveal>
+        <article class="class-card">
+          <div class="class-format">4-Week Series</div>
+          <h4>Watercolor 101</h4>
+          <div class="class-meta">Small group · 8–12 students</div>
+          <p class="class-desc">Real watercolor instruction for true beginners. By week four, a small portfolio of finished pieces and a clear sense of how to keep practicing on your own. Kit included.</p>
+          <div class="class-footer">
+            <div class="class-price">$230</div>
+            <div class="class-price-note">kit included</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">4-Week Series</div>
+          <h4>Drawing Fundamentals</h4>
+          <div class="class-meta">Small group · 8–12 students</div>
+          <p class="class-desc">Line, value, perspective, observation. The drawing class for adults who decided they "couldn't draw." Sketchbook, pencils, and erasers included.</p>
+          <div class="class-footer">
+            <div class="class-price">$225</div>
+            <div class="class-price-note">kit included</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">Single Session · 3 hrs</div>
+          <h4>Make a Travel Journal</h4>
+          <div class="class-meta">Workshop · 10–14 students</div>
+          <p class="class-desc">Build a real hand-bound journal in an afternoon. Walk out with a journal you'd be proud to give as a gift, or keep for yourself. All materials included.</p>
+          <div class="class-footer">
+            <div class="class-price">$90</div>
+            <div class="class-price-note">materials included</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       CALLIGRAPHY
+       ========================================================= -->
+  <section class="category-section" id="calligraphy">
+    <div class="container">
+      <div class="category-header" data-reveal>
+        <h2 class="category-title">Calligraphy &amp; <em>lettering</em></h2>
+        <p class="category-desc">Real hands on real paper with real ink. The pointed pen, the letter, the envelope you actually mail.</p>
+      </div>
+
+      <div class="class-grid" data-reveal>
+        <article class="class-card">
+          <div class="class-format">4-Week Series</div>
+          <h4>Modern Calligraphy 101</h4>
+          <div class="class-meta">Small group · 6–10 students</div>
+          <p class="class-desc">Pointed pen calligraphy from scratch. By the end of four weeks, you'll be writing in a consistent, beautiful hand and have what you need to keep going on your own. Kit included.</p>
+          <div class="class-footer">
+            <div class="class-price">$235</div>
+            <div class="class-price-note">kit included</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">Single Session · 2.5 hrs</div>
+          <h4>Wedding Envelope Calligraphy</h4>
+          <div class="class-meta">Workshop · 12–15 students</div>
+          <p class="class-desc">Address your own wedding envelopes by hand. Designed for engaged couples, but useful for anyone with holiday cards or invitations coming up. Pen, ink, and ten envelopes for real practice.</p>
+          <div class="class-footer">
+            <div class="class-price">$75</div>
+            <div class="class-price-note">materials included</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       LIFE SKILLS
+       ========================================================= -->
+  <section class="category-section" id="life-skills">
+    <div class="container">
+      <div class="category-header" data-reveal>
+        <h2 class="category-title">Life <em>skills</em></h2>
+        <p class="category-desc">The things every adult is supposed to know — and somehow nobody ever taught us.</p>
+      </div>
+
+      <div class="class-grid" data-reveal>
+        <article class="class-card">
+          <div class="class-format">Single Session · 1.5 hrs</div>
+          <h4>How to Set a Proper Table</h4>
+          <div class="class-meta">Lecture &amp; demo · 20–25 students</div>
+          <p class="class-desc">Forks, glasses, place cards, runners — what goes where and why, for everyday meals and for hosting. Worth knowing once, useful for life.</p>
+          <div class="class-footer">
+            <div class="class-price">$35</div>
+            <div class="class-price-note">no materials needed</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">Single Session · 2.5 hrs</div>
+          <h4>Hosting 101</h4>
+          <div class="class-meta">Lecture &amp; demo · 20–25 students</div>
+          <p class="class-desc">Planning a real dinner party from invitation to clean-up. Timing, menu, table, flow, the small touches that make guests feel taken care of. Includes a printed planner you can use forever.</p>
+          <div class="class-footer">
+            <div class="class-price">$70</div>
+            <div class="class-price-note">planner included</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">Single Session · 2 hrs</div>
+          <h4>Confidence at the Dinner Party</h4>
+          <div class="class-meta">Lecture &amp; practice · 20–25 students</div>
+          <p class="class-desc">Conversation skills for adults who freeze in social settings. How to introduce yourself, hold a conversation with a stranger, listen well, exit gracefully. Practical, not preachy.</p>
+          <div class="class-footer">
+            <div class="class-price">$50</div>
+            <div class="class-price-note">no materials needed</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SELF-SUFFICIENCY
+       ========================================================= -->
+  <section class="category-section" id="self-sufficiency">
+    <div class="container">
+      <div class="category-header" data-reveal>
+        <h2 class="category-title">Self-<em>sufficiency</em></h2>
+        <p class="category-desc">Stop calling someone every time something breaks. The 20% of practical knowledge that covers 80% of grown-up life.</p>
+      </div>
+
+      <div class="class-grid" data-reveal>
+        <article class="class-card">
+          <div class="class-format">Single Session · 2 hrs · Offsite</div>
+          <h4>Basic Car Care</h4>
+          <div class="class-meta">Intensive · 6–8 students</div>
+          <p class="class-desc">Tire change, jump start, fluids, when something is a real problem vs. not. Held at a partner garage in Pittston. Wear clothes you don't mind getting dirty.</p>
+          <div class="class-footer">
+            <div class="class-price">$50</div>
+            <div class="class-price-note">all tools provided</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">Single Session · 2.5 hrs</div>
+          <h4>Basic Home Repair</h4>
+          <div class="class-meta">Workshop · 10–12 students</div>
+          <p class="class-desc">Patch drywall, fix a leaky faucet, hang things properly (and find studs), unclog a drain. The 20% of home repair that covers 80% of what you'll need. Tools and materials provided.</p>
+          <div class="class-footer">
+            <div class="class-price">$75</div>
+            <div class="class-price-note">materials included</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">Single Session · 2 hrs</div>
+          <h4>Reading the Paperwork in Your Life</h4>
+          <div class="class-meta">Lecture &amp; demo · 20–25 students</div>
+          <p class="class-desc">How to actually read a lease, a contract, an insurance policy, a paystub, a credit card statement. What every adult is supposed to know and nobody ever taught us.</p>
+          <div class="class-footer">
+            <div class="class-price">$55</div>
+            <div class="class-price-note">workbook included</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">Single Session · 2 hrs</div>
+          <h4>Garden Basics for NEPA</h4>
+          <div class="class-meta">Lecture &amp; demo · 20–25 students</div>
+          <p class="class-desc">What grows in our climate, soil basics, raised beds, sun and shade, when to plant what. For new gardeners or apartment-dwellers about to have a yard for the first time.</p>
+          <div class="class-footer">
+            <div class="class-price">$55</div>
+            <div class="class-price-note">handouts included</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SEASONAL & SPECIALTY
+       ========================================================= -->
+  <section class="category-section" id="seasonal-specialty">
+    <div class="container">
+      <div class="category-header" data-reveal>
+        <h2 class="category-title">Seasonal &amp; <em>specialty</em></h2>
+        <p class="category-desc">Summer on the patio. Sourdough starters in jars. The kind of class you remember.</p>
+      </div>
+
+      <div class="class-grid" data-reveal>
+        <article class="class-card">
+          <div class="class-format">Single Session · 2 hrs</div>
+          <h4>Summer Garden Bouquet</h4>
+          <div class="class-meta">Workshop · 12–14 students</div>
+          <p class="class-desc">A loose, hand-tied bouquet using seasonal flowers. Take home a finished arrangement that lasts the week. All flowers and wrapping included.</p>
+          <div class="class-footer">
+            <div class="class-price">$75</div>
+            <div class="class-price-note">flowers included</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">Single Session · 2 hrs · Outdoor</div>
+          <h4>Plein-Air Sketching on the Patio</h4>
+          <div class="class-meta">Workshop · 12–15 students</div>
+          <p class="class-desc">Outdoor sketching on our patio overlooking the Susquehanna. Brief instruction on simplifying what you see, then two hours of guided sketching with feedback. Weather contingent.</p>
+          <div class="class-footer">
+            <div class="class-price">$60</div>
+            <div class="class-price-note">supplies included</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">Single Session · 2 hrs</div>
+          <h4>Sourdough Starter &amp; Maintenance</h4>
+          <div class="class-meta">Lecture &amp; demo · 25–30 students</div>
+          <p class="class-desc">The intimidating part — the starter — taught properly. Walk out with a live, named, jar-fed starter and a feeding-and-troubleshooting guide. Bring it home and start baking.</p>
+          <div class="class-footer">
+            <div class="class-price">$60</div>
+            <div class="class-price-note">live starter &amp; jar included</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">Single Session · 2 hrs</div>
+          <h4>Charcuterie &amp; Cheese Board Styling</h4>
+          <div class="class-meta">Workshop · 14–18 students</div>
+          <p class="class-desc">Building a board people remember. Composition, what to buy, how to arrange, how to make it look effortless. Take home the wooden board you styled, fully loaded.</p>
+          <div class="class-footer">
+            <div class="class-price">$85</div>
+            <div class="class-price-note">board, cheeses &amp; charcuterie included</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BUNDLES — fixed packages, no choosing
+       ========================================================= -->
+  <section class="bundles" id="bundles">
+    <div class="container">
+      <div data-reveal>
+        <span class="eyebrow">Bundles</span>
+        <h2 class="h-section">Six curated <em>packages</em>.</h2>
+        <p class="bundles-lede">Each bundle is a fixed set of classes designed around a moment in life. Buy the whole package and save. Classes inside a bundle are predetermined — no swaps, no substitutions. That's part of the design.</p>
+      </div>
+
+      <div class="bundle-grid">
+
+        <!-- BUNDLE 1: BRIDE-TO-BE -->
+        <article class="bundle-card" data-reveal>
+          <div class="bundle-tag">For the bride</div>
+          <h4>Bride-to-Be <em>Bundle</em></h4>
+          <div class="bundle-format">4 Classes · Mix of formats</div>
+          <p class="bundle-who">For brides 6–12 months out from their wedding. The four skills that make hosting your own people feel effortless.</p>
+          <div class="bundle-includes-label">Includes:</div>
+          <ul class="bundle-list">
+            <li>Wedding Envelope Calligraphy</li>
+            <li>Summer Garden Bouquet</li>
+            <li>Hosting 101</li>
+            <li>Charcuterie &amp; Cheese Board Styling</li>
+          </ul>
+          <div class="bundle-footer">
+            <div class="bundle-price">$235</div>
+            <div class="bundle-savings">Save $70 vs. individual</div>
+          </div>
+        </article>
+
+        <!-- BUNDLE 2: WEDDING SPEECH -->
+        <article class="bundle-card" data-reveal>
+          <div class="bundle-tag">For best men, maids of honor, fathers of the bride</div>
+          <h4>Wedding Speech <em>Workshop</em></h4>
+          <div class="bundle-format">3-Week Series · Lecture &amp; practice</div>
+          <p class="bundle-who">The class no one else teaches. Walk in nervous, leave with a speech you're proud of.</p>
+          <div class="bundle-includes-label">Three sessions:</div>
+          <ul class="bundle-list">
+            <li>Writing your speech: the story, the structure, what to leave out</li>
+            <li>Editing &amp; refining: cutting, timing, finding the line that lands</li>
+            <li>Delivery &amp; practice: voice, pacing, eye contact, recovery from nerves</li>
+          </ul>
+          <div class="bundle-footer">
+            <div class="bundle-price">$165</div>
+            <div class="bundle-savings">3-week series</div>
+          </div>
+        </article>
+
+        <!-- BUNDLE 3: ADULTING 101 -->
+        <article class="bundle-card" data-reveal>
+          <div class="bundle-tag">Ages 18–25</div>
+          <h4>Adulting 101 <em>for Young Adults</em></h4>
+          <div class="bundle-format">5-Day Intensive · Mon–Fri, 10 AM–12 PM</div>
+          <p class="bundle-who">For new high school graduates heading to college, college students home for summer, and any young adult parents are gently nudging toward independence. Five mornings before they leave. They'll thank you in October.</p>
+          <div class="bundle-includes-label">Five mornings:</div>
+          <ul class="bundle-list">
+            <li>Monday: Laundry, ironing, garment care</li>
+            <li>Tuesday: Basic cooking — 5 meals, knife basics, grocery shopping</li>
+            <li>Wednesday: Basic finances — checking, credit, paystub, budget</li>
+            <li>Thursday: Basic home &amp; roommate — cleaning, maintenance, conflict</li>
+            <li>Friday: Real-world communication — appointments, emails, thank-you notes</li>
+          </ul>
+          <div class="bundle-footer">
+            <div class="bundle-price">$235</div>
+            <div class="bundle-savings">5-day intensive</div>
+          </div>
+        </article>
+
+        <!-- BUNDLE 4: SELF-SUFFICIENCY -->
+        <article class="bundle-card" data-reveal>
+          <div class="bundle-tag">For new homeowners &amp; recent grads</div>
+          <h4>Self-<em>Sufficiency</em> Bundle</h4>
+          <div class="bundle-format">4 Classes · Mix of formats</div>
+          <p class="bundle-who">Stop calling someone every time something breaks. A complete grounding in the practical knowledge most adults wish they'd been taught. Great gift for a recent graduate or new homeowner.</p>
+          <div class="bundle-includes-label">Includes:</div>
+          <ul class="bundle-list">
+            <li>Basic Car Care</li>
+            <li>Basic Home Repair</li>
+            <li>Reading the Paperwork in Your Life</li>
+            <li>Garden Basics for NEPA</li>
+          </ul>
+          <div class="bundle-footer">
+            <div class="bundle-price">$215</div>
+            <div class="bundle-savings">Save $20 vs. individual</div>
+          </div>
+        </article>
+
+        <!-- BUNDLE 5: HOSTING MASTERY -->
+        <article class="bundle-card" data-reveal>
+          <div class="bundle-tag">For the host in your life</div>
+          <h4>Hosting <em>Mastery</em></h4>
+          <div class="bundle-format">4 Classes · Mix of formats</div>
+          <p class="bundle-who">For anyone newly hosting holidays, dinner parties, or family gatherings. Everything you need to make a meal feel like an occasion.</p>
+          <div class="bundle-includes-label">Includes:</div>
+          <ul class="bundle-list">
+            <li>How to Set a Proper Table</li>
+            <li>Hosting 101</li>
+            <li>Charcuterie &amp; Cheese Board Styling</li>
+            <li>Confidence at the Dinner Party</li>
+          </ul>
+          <div class="bundle-footer">
+            <div class="bundle-price">$215</div>
+            <div class="bundle-savings">Save $25 vs. individual</div>
+          </div>
+        </article>
+
+        <!-- BUNDLE 6: SLOW HANDS -->
+        <article class="bundle-card" data-reveal>
+          <div class="bundle-tag">A summer trio</div>
+          <h4>Slow <em>Hands</em></h4>
+          <div class="bundle-format">3 Classes · Workshop format</div>
+          <p class="bundle-who">For the screen-fatigued. Three classes for people who want to spend an afternoon with their hands busy and their phone away.</p>
+          <div class="bundle-includes-label">Includes:</div>
+          <ul class="bundle-list">
+            <li>Make a Travel Journal (bookbinding)</li>
+            <li>Plein-Air Sketching on the Patio</li>
+            <li>Summer Garden Bouquet</li>
+          </ul>
+          <div class="bundle-footer">
+            <div class="bundle-price">$195</div>
+            <div class="bundle-savings">Save $30 vs. individual</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       SIGN-UP CTA — points back to homepage form
+       ========================================================= -->
+  <section class="signup-cta">
+    <div class="container" data-reveal>
+      <span class="eyebrow">Ready to sign up?</span>
+      <h2 class="h-section">Tell us what <em>you want</em>.</h2>
+      <p class="signup-cta-lede">No payment, no commitment — just tell us which classes interest you and when you'd come. We'll email you when classes get scheduled.</p>
+      <a href="/#interest" class="btn-primary signup-cta-btn">Go to the sign-up form →</a>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       FOOTER (matches main site)
+       ========================================================= -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="wordmark-lg">The Hobbiest</div>
+          <p>A skills club where all the things you wish you knew are taught. Opening Summer 2026 in downtown Pittston, PA.</p>
+        </div>
+        <div>
+          <h4>Visit</h4>
+          <p>135 N Main Street<br />Pittston, PA 18640<br /><br />Wyoming Valley · NEPA</p>
+        </div>
+        <div>
+          <h4>Follow</h4>
+          <div class="stack">
+            <a href="#" rel="noopener">Instagram</a>
+            <a href="#" rel="noopener">Facebook</a>
+            <a href="mailto:hello@thehobbiestclub.com">hello@thehobbiestclub.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 The Hobbiest Skills Club</span>
+        <span>Built with intention.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ============================================================
+    // REVEAL ON SCROLL
+    // ============================================================
+    const reveals = document.querySelectorAll('[data-reveal]');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    reveals.forEach((r) => io.observe(r));
+
+    // ============================================================
+    // STICKY CATEGORY NAV — active button highlighting
+    // ============================================================
+    const catSections = ['fiber-arts','drawing-paper','calligraphy','life-skills','self-sufficiency','seasonal-specialty','bundles']
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+    const catButtons = document.querySelectorAll('.cat-btn[data-cat]');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          catButtons.forEach(btn => {
+            btn.classList.toggle('is-active', btn.dataset.cat === id);
+          });
+        }
+      });
+    }, {
+      rootMargin: '-30% 0px -60% 0px',
+      threshold: 0
+    });
+
+    catSections.forEach(s => sectionObserver.observe(s));
+
+    // Smooth scroll offset to account for sticky nav height
+    catButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const targetId = btn.getAttribute('href').slice(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          e.preventDefault();
+          const navHeight = document.querySelector('.cat-nav').offsetHeight;
+          const top = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // ============================================================
+    // FORM HANDLING
+    // ============================================================
+    // Currently the form posts to "#" — replace the action attribute
+    // on the <form> element above with your form handler endpoint.
+    //
+    // For a graceful in-page confirmation after a successful submit
+    // (when using Formspree, Netlify Forms, or similar), uncomment
+    // the AJAX submission block below and configure ENDPOINT_URL.
+    //
+    // const form = document.getElementById('interestForm');
+    // const thanks = document.getElementById('formThanks');
+    // form.addEventListener('submit', async (e) => {
+    //   e.preventDefault();
+    //   const formData = new FormData(form);
+    //   try {
+    //     const res = await fetch(form.action, {
+    //       method: 'POST',
+    //       body: formData,
+    //       headers: { 'Accept': 'application/json' }
+    //     });
+    //     if (res.ok) {
+    //       form.style.display = 'none';
+    //       thanks.classList.add('active');
+    //       window.scrollTo({ top: thanks.offsetTop - 100, behavior: 'smooth' });
+    //     }
+    //   } catch (err) {
+    //     alert('Something went wrong. Please try again.');
+    //   }
+    // });
+  </script>
+
+</body>
+</html>
