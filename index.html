@@ -264,6 +264,48 @@
       margin-top: 1rem;
     }
 
+    /* Hero CTA — dual button replacement for the email form */
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .btn-hero {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 1.05rem 1.9rem;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease);
+      white-space: nowrap;
+    }
+    .btn-hero-primary {
+      background: var(--sage);
+      color: var(--bg);
+      border: 1px solid var(--sage);
+    }
+    .btn-hero-primary:hover {
+      background: var(--sage-deep);
+      border-color: var(--sage-deep);
+    }
+    .btn-hero-primary:active { transform: translateY(1px); }
+    .btn-hero-secondary {
+      background: transparent;
+      color: var(--sage-deep);
+      border: 1px solid var(--sage);
+    }
+    .btn-hero-secondary:hover {
+      background: var(--sage);
+      color: var(--bg);
+    }
+
     /* Hero seal */
     .hero-seal-wrap {
       position: relative;
@@ -634,6 +676,11 @@
       font-style: italic;
       flex-shrink: 0;
     }
+    .cta-button-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
     .cta-form {
       display: flex;
       gap: 0.5rem;
@@ -733,218 +780,6 @@
       }
     }
 
-    /* ============================================================
-       FORM SECTION — full curriculum interest form
-       ============================================================ */
-    .form-section {
-      padding: var(--section-y) 0;
-      background: var(--bg);
-      border-top: 1px solid var(--hairline);
-    }
-    .form-header { max-width: 720px; margin-bottom: 4rem; }
-    .form-header .h-section { max-width: 18ch; }
-    .form-lede {
-      font-family: var(--font-display);
-      font-size: clamp(1.15rem, 1.9vw, 1.45rem);
-      line-height: 1.5;
-      color: var(--ink-soft);
-      max-width: 56ch;
-      margin-top: 1.5rem;
-      font-weight: 350;
-    }
-    .form-lede em { font-style: italic; color: var(--sage); }
-    .form { max-width: 720px; }
-    .form-block {
-      padding: 2rem 0 2.5rem;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .form-block:first-child { padding-top: 0; }
-    .form-block:last-of-type { border-bottom: none; }
-    .form-block-num {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--sage);
-      letter-spacing: 0.05em;
-      margin-bottom: 0.4rem;
-    }
-    .form-block-title {
-      font-family: var(--font-display);
-      font-size: 1.6rem;
-      color: var(--sage-deep);
-      margin-bottom: 0.4rem;
-      letter-spacing: -0.01em;
-    }
-    .form-block-title em { font-style: italic; color: var(--sage); }
-    .form-block-note {
-      font-family: var(--font-display);
-      font-style: italic;
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.5;
-    }
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .form-field label {
-      display: block;
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.6rem;
-      font-weight: 500;
-    }
-    .form-field input,
-    .form-field select,
-    .form-field textarea {
-      width: 100%;
-      padding: 0.85rem 1rem;
-      font-size: 0.98rem;
-      border: 1px solid var(--hairline);
-      background: var(--surface);
-      color: var(--ink);
-      border-radius: 4px;
-      outline: none;
-      transition: border-color 0.2s var(--ease);
-      font-family: inherit;
-    }
-    .form-field input:focus,
-    .form-field select:focus,
-    .form-field textarea:focus { border-color: var(--sage); }
-    .form-field textarea { min-height: 100px; resize: vertical; }
-    .check-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 0.5rem 1.25rem;
-    }
-    .check-grid-narrow { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
-    .check-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.7rem;
-      padding: 0.7rem 0;
-      cursor: pointer;
-      line-height: 1.45;
-    }
-    .check-item input[type="checkbox"],
-    .check-item input[type="radio"] {
-      margin: 0.2rem 0 0 0;
-      flex-shrink: 0;
-      width: 16px;
-      height: 16px;
-      accent-color: var(--sage);
-      cursor: pointer;
-    }
-    .check-item-text { font-size: 0.95rem; color: var(--ink); }
-    .check-item-text .meta {
-      display: block;
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-top: 0.15rem;
-    }
-    .check-item:hover .check-item-text { color: var(--sage-deep); }
-    .stacked-radio .check-item { padding: 0.55rem 0; }
-
-    /* Availability matrix */
-    .matrix-wrap {
-      margin-top: 0.5rem;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      background: var(--surface);
-    }
-    .matrix { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 0.9rem; }
-    .matrix th, .matrix td {
-      padding: 0; text-align: center; vertical-align: middle;
-      border-right: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
-    }
-    .matrix th:last-child, .matrix td:last-child { border-right: none; }
-    .matrix tr:last-child td { border-bottom: none; }
-    .matrix thead th {
-      background: var(--bg-warm);
-      font-family: var(--font-display);
-      font-weight: 400; font-style: italic;
-      color: var(--sage-deep); font-size: 0.95rem;
-      padding: 0.8rem 0.3rem;
-    }
-    .matrix thead th.matrix-corner {
-      background: var(--surface); width: 130px;
-      font-style: normal; font-family: var(--font-body);
-      font-size: 0.72rem; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--muted); font-weight: 500;
-    }
-    .matrix tbody th {
-      background: var(--bg-warm);
-      padding: 0.6rem 0.85rem; text-align: left;
-      font-family: var(--font-body); font-weight: 500;
-      color: var(--sage-deep); font-size: 0.88rem;
-      line-height: 1.3; width: 130px;
-    }
-    .matrix tbody th .matrix-time-range {
-      display: block;
-      font-family: var(--font-display); font-style: italic;
-      font-weight: 400; font-size: 0.78rem;
-      color: var(--muted); margin-top: 0.15rem;
-    }
-    .matrix td { position: relative; transition: background 0.15s var(--ease); }
-    .matrix td:hover { background: var(--bg); }
-    .matrix-cell-label {
-      display: block; width: 100%; height: 100%;
-      padding: 0.95rem 0.5rem; cursor: pointer; position: relative;
-    }
-    .matrix-cell-label input[type="checkbox"] {
-      position: absolute; opacity: 0; pointer-events: none;
-    }
-    .matrix-cell-box {
-      display: inline-block; width: 18px; height: 18px;
-      border: 1.5px solid var(--hairline); border-radius: 3px;
-      background: var(--bg); position: relative;
-      transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
-    }
-    .matrix-cell-label:hover .matrix-cell-box { border-color: var(--sage); }
-    .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box {
-      background: var(--sage); border-color: var(--sage);
-    }
-    .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box::after {
-      content: ""; position: absolute;
-      left: 4px; top: 0px;
-      width: 6px; height: 11px;
-      border: solid var(--bg);
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg);
-    }
-    .matrix-cell-label:has(input:checked) { background: rgba(122, 138, 107, 0.08); }
-    .matrix-hint {
-      font-size: 0.78rem; color: var(--muted);
-      font-style: italic; margin-top: 0.75rem;
-      display: block; font-family: var(--font-display);
-    }
-    .form-submit-row {
-      padding-top: 2.5rem;
-      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
-    }
-    .btn-primary {
-      padding: 1.05rem 2.25rem;
-      background: var(--sage); color: var(--bg);
-      border: 1px solid var(--sage); border-radius: 999px;
-      font-family: inherit; font-size: 0.98rem;
-      font-weight: 500; letter-spacing: 0.02em;
-      cursor: pointer;
-      transition: background 0.2s var(--ease), transform 0.2s var(--ease);
-    }
-    .btn-primary:hover { background: var(--sage-deep); border-color: var(--sage-deep); }
-    .btn-primary:active { transform: translateY(1px); }
-    .form-submit-note {
-      font-family: var(--font-display); font-style: italic;
-      color: var(--muted); font-size: 0.92rem;
-    }
-
     /* form success state */
     .form-success {
       color: var(--sage);
@@ -967,7 +802,7 @@
       <div class="nav-links">
         <a href="/schedule.html" class="nav-link">Skills Schedule</a>
         <a href="/apply.html" class="nav-link">Apply to Teach</a>
-        <a href="#interest" class="nav-link nav-link-primary">Sign Up</a>
+        <a href="/signup.html" class="nav-link nav-link-primary">Sign Up</a>
       </div>
     </div>
   </nav>
@@ -989,10 +824,11 @@
           A private members club for adults. Calligraphy, gardening, money, hosting, sourdough, drawing — and a long list more. Opening Summer 2026 in downtown Pittston.
         </p>
 
-        <div class="hero-form-wrap">
-          <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="fd71c736-fa91-430f-b5b0-75d2cfb1df45"></script>
+        <div class="hero-cta">
+          <a href="/signup.html" class="btn-hero btn-hero-primary">Tell us what you want →</a>
+          <a href="/schedule.html" class="btn-hero btn-hero-secondary">See the schedule</a>
         </div>
-        <p class="form-note">Founder pricing locked in when membership opens September 1.</p>
+        <p class="form-note">Help us build the soft-launch schedule. No payment, no commitment.</p>
       </div>
 
       <!-- The Seal — primary logo as hero visual -->
@@ -1197,249 +1033,6 @@
     </div>
   </section>
 
-  <!-- =========================================================
-       INTEREST FORM — full curriculum signup
-       ========================================================= -->
-  <section class="form-section" id="interest">
-    <div class="container">
-      <div class="form-header" data-reveal>
-        <span class="eyebrow">Soft Launch — Tell Us What You Want</span>
-        <h2 class="h-section">Help us build <em>the schedule</em>.</h2>
-        <p class="form-lede">We're opening this fall. Before we lock anything in, we want to know what you actually want and when you'd come. <em>No payment, no commitment.</em></p>
-        <p style="margin-top: 1.5rem; font-size: 0.95rem; color: var(--ink-soft);">Not sure what we offer? <a href="/schedule.html" style="color: var(--sage); border-bottom: 1px solid var(--sage-pale); text-decoration: none;">See the full Skills Schedule →</a></p>
-      </div>
-
-      <!--
-        ============================================================
-        FORM SUBMISSION
-        ============================================================
-        Replace `action="#"` with your form handler URL.
-        Options: Formspree, Netlify Forms, Beehiiv via Zapier, or your own backend.
-        ============================================================
-      -->
-      <form class="form" id="interestForm" action="#" method="POST" data-reveal>
-
-        <!-- 01. YOUR INFO -->
-        <div class="form-block">
-          <div class="form-block-num">01 — About you</div>
-          <h3 class="form-block-title">Your <em>information</em></h3>
-          <p class="form-block-note">So we can get back to you.</p>
-
-          <div class="form-row">
-            <div class="form-field">
-              <label for="firstName">First name</label>
-              <input type="text" id="firstName" name="firstName" required />
-            </div>
-            <div class="form-field">
-              <label for="lastName">Last name</label>
-              <input type="text" id="lastName" name="lastName" required />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" required />
-            </div>
-            <div class="form-field">
-              <label for="zip">Zip code</label>
-              <input type="text" id="zip" name="zip" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label for="ageRange">Age range <span style="text-transform:none;letter-spacing:0;color:var(--muted);font-style:italic;font-weight:400;">(optional)</span></label>
-              <select id="ageRange" name="ageRange">
-                <option value="">Prefer not to say</option>
-                <option>18–25</option>
-                <option>25–35</option>
-                <option>35–50</option>
-                <option>50–65</option>
-                <option>65+</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- 02. CLASS INTERESTS -->
-        <div class="form-block">
-          <div class="form-block-num">02 — Classes</div>
-          <h3 class="form-block-title">Which classes <em>interest you</em>?</h3>
-          <p class="form-block-note">Check anything that catches your eye. No limit, no obligation. See the <a href="/schedule.html" style="color: var(--sage); border-bottom: 1px solid var(--sage-pale); text-decoration: none;">full schedule</a> for descriptions.</p>
-
-          <div class="check-grid">
-            <label class="check-item"><input type="checkbox" name="classes" value="Knitting 101" /><span class="check-item-text">Knitting 101 <span class="meta">$225 · 4-week series</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Crochet 101" /><span class="check-item-text">Crochet 101 <span class="meta">$225 · 4-week series</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Visible Mending & Sashiko" /><span class="check-item-text">Visible Mending &amp; Sashiko <span class="meta">$220 · 4-week series</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Watercolor 101" /><span class="check-item-text">Watercolor 101 <span class="meta">$230 · 4-week series</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Drawing Fundamentals" /><span class="check-item-text">Drawing Fundamentals <span class="meta">$225 · 4-week series</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Make a Travel Journal" /><span class="check-item-text">Make a Travel Journal <span class="meta">$90 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Modern Calligraphy 101" /><span class="check-item-text">Modern Calligraphy 101 <span class="meta">$235 · 4-week series</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Wedding Envelope Calligraphy" /><span class="check-item-text">Wedding Envelope Calligraphy <span class="meta">$75 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="How to Set a Proper Table" /><span class="check-item-text">How to Set a Proper Table <span class="meta">$35 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Hosting 101" /><span class="check-item-text">Hosting 101 <span class="meta">$70 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Confidence at the Dinner Party" /><span class="check-item-text">Confidence at the Dinner Party <span class="meta">$50 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Basic Car Care" /><span class="check-item-text">Basic Car Care <span class="meta">$50 · offsite</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Basic Home Repair" /><span class="check-item-text">Basic Home Repair <span class="meta">$75 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Reading the Paperwork in Your Life" /><span class="check-item-text">Reading the Paperwork <span class="meta">$55 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Garden Basics for NEPA" /><span class="check-item-text">Garden Basics for NEPA <span class="meta">$55 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Summer Garden Bouquet" /><span class="check-item-text">Summer Garden Bouquet <span class="meta">$75 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Plein-Air Sketching" /><span class="check-item-text">Plein-Air Sketching <span class="meta">$60 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Sourdough Starter & Maintenance" /><span class="check-item-text">Sourdough Starter <span class="meta">$60 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Charcuterie & Cheese Board Styling" /><span class="check-item-text">Charcuterie &amp; Cheese Board <span class="meta">$85 · single session</span></span></label>
-          </div>
-        </div>
-
-        <!-- 03. BUNDLE INTERESTS -->
-        <div class="form-block">
-          <div class="form-block-num">03 — Bundles</div>
-          <h3 class="form-block-title">Which bundles <em>interest you</em>?</h3>
-          <p class="form-block-note">For yourself, or as a gift. Bundles are fixed — no swapping classes in or out.</p>
-
-          <div class="check-grid">
-            <label class="check-item"><input type="checkbox" name="bundles" value="Bride-to-Be" /><span class="check-item-text">Bride-to-Be Bundle <span class="meta">$235 · 4 classes</span></span></label>
-            <label class="check-item"><input type="checkbox" name="bundles" value="Wedding Speech Workshop" /><span class="check-item-text">Wedding Speech Workshop <span class="meta">$165 · 3-week series</span></span></label>
-            <label class="check-item"><input type="checkbox" name="bundles" value="Adulting 101 for Young Adults" /><span class="check-item-text">Adulting 101 for Young Adults <span class="meta">$235 · 5-day intensive</span></span></label>
-            <label class="check-item"><input type="checkbox" name="bundles" value="Self-Sufficiency Bundle" /><span class="check-item-text">Self-Sufficiency Bundle <span class="meta">$215 · 4 classes</span></span></label>
-            <label class="check-item"><input type="checkbox" name="bundles" value="Hosting Mastery" /><span class="check-item-text">Hosting Mastery <span class="meta">$215 · 4 classes</span></span></label>
-            <label class="check-item"><input type="checkbox" name="bundles" value="Slow Hands" /><span class="check-item-text">Slow Hands <span class="meta">$195 · 3 classes</span></span></label>
-          </div>
-        </div>
-
-        <!-- 04. AVAILABILITY MATRIX -->
-        <div class="form-block">
-          <div class="form-block-num">04 — Availability</div>
-          <h3 class="form-block-title">When would you <em>actually come</em>?</h3>
-          <p class="form-block-note">This is the most useful question on the form. Check every cell that works. We're testing a 6 AM early-bird slot — tell us if you'd come.</p>
-
-          <div class="matrix-wrap">
-            <table class="matrix" role="grid" aria-label="Availability by day and time">
-              <thead>
-                <tr>
-                  <th class="matrix-corner" scope="col">Time / Day</th>
-                  <th scope="col">Mon</th><th scope="col">Tue</th><th scope="col">Wed</th><th scope="col">Thu</th><th scope="col">Fri</th><th scope="col">Sat</th><th scope="col">Sun</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Early morning <span class="matrix-time-range">6:00–7:30 AM</span></th>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Mon-EarlyAM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Tue-EarlyAM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Wed-EarlyAM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Thu-EarlyAM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Fri-EarlyAM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sat-EarlyAM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sun-EarlyAM" /><span class="matrix-cell-box"></span></label></td>
-                </tr>
-                <tr>
-                  <th scope="row">Morning <span class="matrix-time-range">9 AM–12 PM</span></th>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Mon-AM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Tue-AM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Wed-AM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Thu-AM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Fri-AM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sat-AM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sun-AM" /><span class="matrix-cell-box"></span></label></td>
-                </tr>
-                <tr>
-                  <th scope="row">Afternoon <span class="matrix-time-range">1–4 PM</span></th>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Mon-PM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Tue-PM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Wed-PM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Thu-PM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Fri-PM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sat-PM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sun-PM" /><span class="matrix-cell-box"></span></label></td>
-                </tr>
-                <tr>
-                  <th scope="row">Evening <span class="matrix-time-range">6–9 PM</span></th>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Mon-EVE" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Tue-EVE" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Wed-EVE" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Thu-EVE" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Fri-EVE" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sat-EVE" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sun-EVE" /><span class="matrix-cell-box"></span></label></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <span class="matrix-hint">Scroll sideways on mobile to see all days.</span>
-
-          <div style="margin-top: 2.5rem;">
-            <p class="form-block-note" style="margin-bottom: 1rem;"><strong style="color:var(--sage-deep);font-weight:500;">For a 4-week series</strong>, which schedule works best?</p>
-            <div class="check-grid check-grid-narrow stacked-radio">
-              <label class="check-item"><input type="radio" name="seriesPref" value="Weeknight evening" /><span class="check-item-text">Same weeknight evening</span></label>
-              <label class="check-item"><input type="radio" name="seriesPref" value="Saturday morning" /><span class="check-item-text">Same Saturday morning</span></label>
-              <label class="check-item"><input type="radio" name="seriesPref" value="Saturday afternoon" /><span class="check-item-text">Same Saturday afternoon</span></label>
-              <label class="check-item"><input type="radio" name="seriesPref" value="Weekday daytime" /><span class="check-item-text">Weekday daytime</span></label>
-              <label class="check-item"><input type="radio" name="seriesPref" value="Early morning" /><span class="check-item-text">Early morning (6–7:30 AM)</span></label>
-              <label class="check-item"><input type="radio" name="seriesPref" value="Prefer single sessions" /><span class="check-item-text">I prefer single sessions</span></label>
-            </div>
-          </div>
-
-          <div style="margin-top: 2rem;">
-            <p class="form-block-note" style="margin-bottom: 1rem;"><strong style="color:var(--sage-deep);font-weight:500;">How often</strong> would you come?</p>
-            <div class="check-grid check-grid-narrow stacked-radio">
-              <label class="check-item"><input type="radio" name="frequency" value="Few times a year" /><span class="check-item-text">A few times a year</span></label>
-              <label class="check-item"><input type="radio" name="frequency" value="Monthly" /><span class="check-item-text">About once a month</span></label>
-              <label class="check-item"><input type="radio" name="frequency" value="Weekly" /><span class="check-item-text">Every week or two</span></label>
-              <label class="check-item"><input type="radio" name="frequency" value="Multiple times a week" /><span class="check-item-text">Multiple times a week</span></label>
-            </div>
-          </div>
-        </div>
-
-        <!-- 05. RECOMMENDATIONS -->
-        <div class="form-block">
-          <div class="form-block-num">05 — Recommendations</div>
-          <h3 class="form-block-title">What should we <em>add</em>?</h3>
-          <p class="form-block-note">Our favorite question on the form. If we hear something multiple times, it's going on the schedule.</p>
-
-          <div class="form-field">
-            <label for="recommendation">A class you wish we offered</label>
-            <textarea id="recommendation" name="recommendation" placeholder="Stained glass, woodworking, canning, jewelry making, beekeeping..."></textarea>
-          </div>
-
-          <div class="form-field" style="margin-top: 1.75rem;">
-            <label for="lectureTopics">Lecture topics — what life skills should we teach?</label>
-            <p class="form-block-note" style="margin: 0 0 0.75rem 0;">Things adults are supposed to know that nobody taught us. Taught in 90 minutes to a room.</p>
-            <textarea id="lectureTopics" name="lectureTopics" placeholder="Salary negotiation, reading a financial statement, talking to a doctor, writing a will, basic investing, buying a car, Medicare, asking for a raise..."></textarea>
-          </div>
-
-          <div class="form-field" style="margin-top: 1.75rem;">
-            <label for="instructorRec">Know someone who should teach here?</label>
-            <input type="text" id="instructorRec" name="instructorRec" placeholder="Name and what they do — we'll reach out" />
-          </div>
-        </div>
-
-        <!-- 06. MEMBERSHIP -->
-        <div class="form-block">
-          <div class="form-block-num">06 — Membership</div>
-          <h3 class="form-block-title">Would you join <em>as a member</em>?</h3>
-          <p class="form-block-note">$35/month. Unlimited Drawing Room access, drip coffee every visit, 10% off classes.</p>
-
-          <div class="check-grid check-grid-narrow stacked-radio">
-            <label class="check-item"><input type="radio" name="membership" value="Yes" /><span class="check-item-text">Yes — sign me up</span></label>
-            <label class="check-item"><input type="radio" name="membership" value="Maybe" /><span class="check-item-text">Maybe — tell me more</span></label>
-            <label class="check-item"><input type="radio" name="membership" value="No" /><span class="check-item-text">Just classes for me</span></label>
-          </div>
-
-          <div style="margin-top: 1.75rem; padding: 1.25rem 1.5rem; background: var(--bg-warm); border-radius: 4px; border: 1px solid var(--hairline);">
-            <p style="font-family: var(--font-display); font-style: italic; color: var(--sage-deep); margin-bottom: 0.75rem;">Founding Member option</p>
-            <p style="font-size: 0.95rem; color: var(--ink-soft); line-height: 1.55; margin-bottom: 1rem;">First 50 members lock in $25/month for life. Want one of those spots?</p>
-            <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
-              <label class="check-item" style="padding: 0;"><input type="radio" name="founding" value="Yes" /><span class="check-item-text">Yes, save me a spot</span></label>
-              <label class="check-item" style="padding: 0;"><input type="radio" name="founding" value="No" /><span class="check-item-text">No thanks</span></label>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-submit-row">
-          <button type="submit" class="btn-primary">Send my interest</button>
-          <span class="form-submit-note">We'll be in touch as classes get scheduled.</span>
-        </div>
-      </form>
-    </div>
-  </section>
 
   <!-- =========================================================
        SECOND CTA
@@ -1456,8 +1049,8 @@
         <li>Behind-the-scenes from instructor recruitment through opening day</li>
       </ul>
 
-      <div class="cta-form-wrap">
-        <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="fd71c736-fa91-430f-b5b0-75d2cfb1df45"></script>
+      <div class="cta-button-wrap">
+        <a href="/signup.html" class="btn-hero btn-hero-primary">Sign up &amp; tell us what you want →</a>
       </div>
       <p class="form-note" style="margin-top: 1.25rem;">We send updates rarely. No spam, ever.</p>
     </div>
