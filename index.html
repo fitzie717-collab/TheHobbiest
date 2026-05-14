@@ -142,6 +142,19 @@
       gap: 1.75rem;
       align-items: center;
     }
+
+    /* Visually hidden but accessible to screen readers */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
     .nav-link {
       font-size: 0.78rem;
       letter-spacing: 0.18em;
@@ -238,10 +251,10 @@
        ============================================================ */
     .hero {
       position: relative;
-      padding: 8rem 0 6rem;
+      padding: 8rem 0 2rem;
       display: flex;
       flex-direction: column;
-      gap: clamp(4rem, 7vw, 6rem);
+      gap: clamp(2rem, 4vw, 3rem);
       overflow: hidden;
     }
     .hero-top {
@@ -255,7 +268,7 @@
       position: relative;
       max-width: 460px;
       width: 100%;
-      margin: 0 auto;
+      margin: 0 0 0 auto;
     }
     .hero-seal {
       width: 100%;
@@ -264,12 +277,13 @@
     }
     .hero-quote {
       font-family: var(--font-display);
-      font-size: clamp(2.4rem, 6.2vw, 5.25rem);
+      font-size: clamp(2.5rem, 6.2vw, 5.25rem);
       font-weight: 350;
       line-height: 1.05;
       letter-spacing: -0.025em;
       color: var(--sage-deep);
-      margin: 0;
+      margin: 0 0 2rem;
+      text-align: left;
       font-variation-settings: "opsz" 144;
     }
     .hero-quote em {
@@ -277,8 +291,12 @@
       font-weight: 400;
       color: var(--sage);
     }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+    }
     .hero-paragraph {
-      max-width: 72ch;
+      max-width: 100%;
     }
     .hero-paragraph p {
       font-family: var(--font-display);
@@ -289,13 +307,16 @@
       letter-spacing: -0.005em;
       margin: 0;
     }
-    .hero-paragraph p::first-letter {
+    .hero-paragraph p + p {
+      margin-top: 1.5rem;
+    }
+    .hero-paragraph p:first-of-type::first-letter {
       font-family: var(--font-display);
       font-style: italic;
       font-size: 5rem;
       float: left;
       line-height: 0.82;
-      padding: 0.3rem 1.2rem 0 0.15rem;
+      padding: 0.3rem 0.75rem 0 0.15rem;
       color: var(--sage);
       font-weight: 400;
       font-variation-settings: "opsz" 144;
@@ -367,7 +388,7 @@
       position: relative;
       max-width: 460px;
       width: 100%;
-      margin: 0 auto;
+      margin: 0 0 0 auto;
     }
     .hero-seal {
       width: 100%;
@@ -672,6 +693,7 @@
       background: var(--bg-warm);
       border-top: 1px solid var(--hairline);
       border-bottom: 1px solid var(--hairline);
+      padding-top: clamp(2.5rem, 5vw, 4rem);
     }
     .curriculum-intro {
       margin-bottom: 3rem;
@@ -1341,7 +1363,8 @@
     @media (max-width: 880px) {
       .hero { padding: 7rem 0 4rem; gap: 2.5rem; }
       .hero-top { grid-template-columns: 1fr; }
-      .hero-seal-wrap { order: -1; max-width: 280px; }
+      .hero-seal-wrap { order: -1; max-width: 280px; margin: 0 auto; }
+      .hero-quote { text-align: left; }
       .pillars-grid { grid-template-columns: 1fr; }
       .formats-grid { grid-template-columns: 1fr; }
       .launch-grid { grid-template-columns: 1fr; }
@@ -1368,20 +1391,24 @@
   </nav>
 
   <!-- =========================================================
-       HERO — quote (left) + big seal (right); paragraph full width below
+       HERO — heading + paragraph (left column) / seal (right column)
        ========================================================= -->
   <header class="hero">
     <div class="container">
 
-      <!-- TOP ROW: quote (left) + big seal (right) -->
       <div class="hero-top">
-        <h1 class="hero-quote" data-reveal>
-          A place to learn everything<br />
-          you wish you knew.
-        </h1>
+        <div class="hero-left">
+          <h1 class="hero-quote" data-reveal>
+            Lessons, <em>for Life</em>.
+          </h1>
+          <div class="hero-paragraph" data-reveal>
+            <p>The Hobbiest is a private skills club opening in downtown Pittston in July 2026. Built around the idea that confidence comes from capability, The Hobbiest teaches the kinds of things no one ever formally taught us — the practical, creative, and social skills that help you shape a richer, more self-reliant life.</p>
+            <p>Through immersive, expert-led experiences, members learn not just how to do new things, but how to cultivate taste, confidence, and a stronger sense of self. It's a place for people who want to spend their time more intentionally — and curate a life that feels fully their own.</p>
+          </div>
+        </div>
 
         <div class="hero-seal-wrap" data-reveal>
-          <svg class="hero-seal" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-label="The Hobbiest seal">
+          <svg class="hero-seal" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-label="The Hobbiest seal — Pittston, Pennsylvania">
             <defs>
               <path id="seal-bottom-arc" d="M 75,300 A 225,225 0 0,0 525,300"/>
             </defs>
@@ -1425,11 +1452,6 @@
         </div>
       </div>
 
-      <!-- BOTTOM: full-width body paragraph with drop cap -->
-      <div class="hero-paragraph" data-reveal>
-        <p>The Hobbiest is a private skills club in downtown Pittston, opening July 2026. It's the answer to the long list of things you've always meant to learn — taught by people who actually know how. Every series ends with an immersive experience, so you don't just learn skills, you live them.</p>
-      </div>
-
     </div>
   </header>
 
@@ -1452,29 +1474,29 @@
         <a href="schedule.html" class="pillar" data-reveal>
           <div class="pillar-num">01</div>
           <h3>Creative <em>Pursuits</em></h3>
-          <p class="pillar-sub">Things made by hand.</p>
-          <p>Calligraphy, drawing, watercolor, creative writing, embroidery, sourdough, bookbinding, hand lettering.</p>
+          <p class="pillar-sub">Things made beautifully by hand.</p>
+          <p>Explorations in craftsmanship, creative expression, and traditional arts — from calligraphy and watercolor to sourdough, bookbinding, embroidery, and other rotating workshops.</p>
         </a>
 
         <a href="schedule.html" class="pillar" data-reveal>
           <div class="pillar-num">02</div>
-          <h3>Presents &amp; <em>Presence</em></h3>
-          <p class="pillar-sub">Putting your best foot forward.</p>
-          <p>Hosting, tablescaping, modern etiquette, gift wrapping, English tea, couples dancing, personal styling.</p>
+          <h3>Presence &amp; <em>Entertaining</em></h3>
+          <p class="pillar-sub">The art of making people feel welcome.</p>
+          <p>Courses centered around hosting, social confidence, presentation, and modern etiquette — including tablescaping, personal styling, couples dancing, tea service, and seasonal gatherings.</p>
         </a>
 
         <a href="schedule.html" class="pillar" data-reveal>
           <div class="pillar-num">03</div>
-          <h3>Life <em>Skills</em></h3>
-          <p class="pillar-sub">Things they never taught in school.</p>
-          <p>Changing a tire, negotiating, basic home repair, budgeting, financial planning basics, public speaking.</p>
+          <h3>Essential <em>Life Skills</em></h3>
+          <p class="pillar-sub">The things everyone should know.</p>
+          <p>Practical knowledge for everyday competence and self-reliance — from negotiating and financial literacy to home repair, public speaking, and beyond.</p>
         </a>
 
         <a href="schedule.html" class="pillar" data-reveal>
           <div class="pillar-num">04</div>
-          <h3>Life <em>Style</em></h3>
-          <p class="pillar-sub">Living a curated, intentional life.</p>
-          <p>Gardening, flower arranging, meditation, sleep, posture, food literacy, tending a home.</p>
+          <h3>Living <em>Well</em></h3>
+          <p class="pillar-sub">Creating a slower, more intentional life.</p>
+          <p>Studies in personal wellbeing, domestic rituals, and intentional living — including gardening, flower arranging, food literacy, posture, sleep, and tending a home.</p>
         </a>
       </div>
     </div>
