@@ -63,7 +63,10 @@
        RESET + BASE
        ============================================================ */
     *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
     body {
       margin: 0;
       font-family: var(--font-body);
@@ -251,22 +254,26 @@
        ============================================================ */
     .hero {
       position: relative;
-      padding: 8rem 0 2rem;
+      padding: 8rem 0 4.5rem;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       gap: clamp(2rem, 4vw, 3rem);
       overflow: hidden;
+      min-height: 100vh;
+      min-height: 100dvh;
+      scroll-snap-align: start;
     }
     .hero-top {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: clamp(2rem, 6vw, 5rem);
-      align-items: center;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: start;
       width: 100%;
     }
     .hero-seal-wrap {
       position: relative;
-      max-width: 460px;
+      max-width: 540px;
       width: 100%;
       margin: 0 0 0 auto;
     }
@@ -277,7 +284,7 @@
     }
     .hero-quote {
       font-family: var(--font-display);
-      font-size: clamp(2.5rem, 6.2vw, 5.25rem);
+      font-size: clamp(2.3rem, 5.5vw, 4.5rem);
       font-weight: 350;
       line-height: 1.05;
       letter-spacing: -0.025em;
@@ -296,7 +303,7 @@
       flex-direction: column;
     }
     .hero-paragraph {
-      max-width: 100%;
+      max-width: 30rem;
     }
     .hero-paragraph p {
       font-family: var(--font-display);
@@ -386,7 +393,7 @@
     /* Hero seal */
     .hero-seal-wrap {
       position: relative;
-      max-width: 460px;
+      max-width: 540px;
       width: 100%;
       margin: 0 0 0 auto;
     }
@@ -694,6 +701,12 @@
       border-top: 1px solid var(--hairline);
       border-bottom: 1px solid var(--hairline);
       padding-top: clamp(2.5rem, 5vw, 4rem);
+      min-height: 100vh;
+      min-height: 100dvh;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .curriculum-intro {
       margin-bottom: 3rem;
@@ -834,6 +847,12 @@
       background: var(--bg);
       border-top: 1px solid var(--hairline);
       border-bottom: 1px solid var(--hairline);
+      min-height: 100vh;
+      min-height: 100dvh;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .formats {
       margin-top: 0;
@@ -849,6 +868,12 @@
       background: var(--surface);
       border-top: 1px solid var(--hairline);
       border-bottom: 1px solid var(--hairline);
+      min-height: 100vh;
+      min-height: 100dvh;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .house-content {
       max-width: 1040px;
@@ -887,6 +912,9 @@
       color: var(--ink-soft);
       line-height: 1.7;
       margin: 0;
+    }
+    .house-prose p + p {
+      margin-top: 1.25rem;
     }
 
     /* (continued: .formats-title etc. below) */
@@ -1181,6 +1209,12 @@
       background: var(--bg-warm);
       border-top: 1px solid var(--hairline);
       border-bottom: 1px solid var(--hairline);
+      min-height: 100vh;
+      min-height: 100dvh;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .launch-grid {
       display: grid;
@@ -1509,29 +1543,29 @@
     <div class="container">
       <div class="formats" data-reveal>
         <div class="formats-header">
-          <span class="eyebrow">How Classes Work</span>
-          <h3 class="formats-title">Three <em>formats</em>.</h3>
+          <span class="eyebrow">Course Structure</span>
+          <h3 class="formats-title">Ways to <em>Learn</em>.</h3>
         </div>
         <div class="formats-grid">
           <a href="schedule.html" class="format">
             <div class="format-num">01</div>
-            <h4>Sessions</h4>
+            <h4>Lessons</h4>
             <p class="format-price">From $25 per session</p>
-            <p>Classes run as 2- to 4-week sessions, organized by pillar. Drop into the ones that pull at you.</p>
+            <p>Single-subject classes designed to explore a skill, craft, or idea through seasonal 2–4 week series. A place to follow curiosity wherever it leads.</p>
             <span class="format-cta">See course catalog <span class="format-cta-arrow">→</span></span>
           </a>
           <a href="schedule.html#bundles" class="format">
             <div class="format-num">02</div>
-            <h4>Life Bundles</h4>
-            <p class="format-price">From $150 per bundle <span class="format-price-detail">($30 / session)</span></p>
-            <p>Curated multi-class packages for the moment of life you're in — recent grad, newlywed, new mom.</p>
-            <span class="format-cta">See bundles <span class="format-cta-arrow">→</span></span>
+            <h4>Programs</h4>
+            <p class="format-price">From $30 per session</p>
+            <p>Curated multi-class experiences designed around seasons of life, personal goals, and deeper areas of study — helping members build confidence, capability, and community over time.</p>
+            <span class="format-cta">See programs <span class="format-cta-arrow">→</span></span>
           </a>
           <a href="schedule.html" class="format">
             <div class="format-num">03</div>
             <h4>Offsites</h4>
             <p class="format-price">From $35 per session</p>
-            <p>Hands-on classes taught out in the world — changing a tire, vegetable gardening, oil changes, starting a fire from sticks. Skills that need their own setting.</p>
+            <p>Immersive experiences taught beyond the classroom — in gardens, workshops, kitchens, campsites, and gathering spaces. Practical skills learned in the environments they belong.</p>
             <span class="format-cta">See offsites <span class="format-cta-arrow">→</span></span>
           </a>
         </div>
@@ -1540,23 +1574,24 @@
   </section>
 
   <!-- =========================================================
-       IN THE SPACE — house rules (phone-free, alcohol-free, 18+)
+       IN THE SPACE — environment curation (phone-free, alcohol-free, 18+)
        ========================================================= -->
   <section class="house" id="house">
     <div class="container">
       <div class="house-content" data-reveal>
         <span class="eyebrow">In the Space</span>
-        <h2 class="h-section">A few <em>quiet expectations</em>.</h2>
+        <h2 class="h-section">Environment <em>Curation</em>.</h2>
 
         <div class="house-rules">
-          <p>Water, tea, and coffee are on us. Photos are held until the last minute of class — your instructor will invite a moment to capture your work, and we encourage you to share what you've made out in the world.</p>
+          <div class="house-prose">
+            <p>The Hobbiest is designed to be an environment where members are fully present with the experience in front of them. To preserve the atmosphere of the space and respect the experience of others, we keep expectations intentionally simple:</p>
+            <p>Photos may be invited by the instructor during the final moments of class. We ask that members remain mindful of the privacy and experience of others.</p>
+          </div>
           <ul class="house-rules-list">
-            <li>Phones away.</li>
-            <li>No WiFi.</li>
-            <li>No alcohol.</li>
+            <li>No electronics or WiFi.</li>
+            <li>Adults-only environment; guests must be 18+ to enroll in sessions.</li>
+            <li>No smoking or alcohol.</li>
             <li>No outside food.</li>
-            <li>No smoking.</li>
-            <li>Adults only (18+).</li>
           </ul>
         </div>
       </div>
