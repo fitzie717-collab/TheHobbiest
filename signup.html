@@ -5,18 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#7A8A6B" />
 
-  <title>Soft Launch — The Hobbiest</title>
-  <meta name="description" content="Help us build the schedule. Tell us what classes you want and when you'd come. No payment, no commitment." />
+  <title>Sign Up — The Hobbiest</title>
+  <meta name="description" content="Sign up for The Hobbiest. Tell us which classes you'd take and when you can come — we schedule what people actually want." />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Soft Launch — The Hobbiest" />
-  <meta property="og:description" content="Help us build the schedule. Tell us what you want." />
+  <meta property="og:title" content="Sign Up — The Hobbiest" />
+  <meta property="og:description" content="Tell us which classes interest you and when you'd come." />
   <meta property="og:type" content="website" />
 
-  <!-- Favicon -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
@@ -30,20 +26,16 @@
       --ink-soft:  #6B7459;
       --muted:     #8A8170;
       --hairline:  #D9D2BE;
-
       --sage:      #7A8A6B;
       --sage-deep: #4E5A41;
       --sage-pale: #B5BFA8;
-      --taupe:     #A89878;
 
       --font-display: "Fraunces", "Times New Roman", serif;
       --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
 
       --max-w:    1280px;
       --gutter:   clamp(1.25rem, 4vw, 3rem);
-      --section-y: clamp(4rem, 9vw, 8rem);
-
-      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease:     cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -56,10 +48,8 @@
       color: var(--ink);
       background: var(--bg);
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
-    img { max-width: 100%; height: auto; display: block; }
     button, input, textarea, select { font-family: inherit; }
     a { color: inherit; }
     h1, h2, h3, h4 {
@@ -68,9 +58,9 @@
       line-height: 1.05;
       letter-spacing: -0.015em;
       margin: 0;
-      font-variation-settings: "opsz" 100;
     }
     p { margin: 0; }
+
     .container {
       max-width: var(--max-w);
       margin: 0 auto;
@@ -98,8 +88,12 @@
     }
     [data-reveal].is-visible { opacity: 1; transform: none; }
 
-    /* Nav */
-    .nav { position: relative; padding: 1.75rem 0; border-bottom: 1px solid var(--hairline); }
+    /* NAV */
+    .nav {
+      position: relative;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--hairline);
+    }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; }
     .wordmark {
       font-family: var(--font-display);
@@ -108,6 +102,7 @@
       color: var(--sage);
       text-decoration: none;
       font-variation-settings: "opsz" 144;
+      letter-spacing: -0.01em;
     }
     .nav-links { display: flex; gap: 1.5rem; align-items: center; }
     .nav-link {
@@ -126,37 +121,49 @@
       background: var(--sage); margin-top: 4px;
     }
     .nav-link-primary {
-      color: var(--bg); background: var(--sage);
-      padding: 0.55rem 1.1rem; border-radius: 999px;
-      letter-spacing: 0.12em; transition: background 0.2s var(--ease);
+      color: var(--bg);
+      background: var(--sage);
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      letter-spacing: 0.12em;
+      transition: background 0.2s var(--ease);
     }
     .nav-link-primary:hover { background: var(--sage-deep); color: var(--bg); }
-    .nav-link-primary::after { display: none !important; }
-    .nav-link-primary.nav-link-current { color: var(--bg); }
     @media (max-width: 640px) {
       .nav-links { gap: 0.85rem; }
       .nav-link { font-size: 0.65rem; letter-spacing: 0.12em; }
     }
 
-    /* Hero */
+    /* PAGE HERO */
     .page-hero {
-      padding: clamp(5rem, 10vw, 9rem) 0 clamp(4rem, 7vw, 6rem);
+      padding: clamp(4rem, 8vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
       border-bottom: 1px solid var(--hairline);
     }
     .page-hero-inner {
       display: grid;
-      grid-template-columns: 1.3fr 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: clamp(2rem, 6vw, 6rem);
       align-items: end;
     }
     .page-eyebrow {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
-      color: var(--sage); font-weight: 600; margin-bottom: 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 2rem;
     }
-    .page-eyebrow::before { content: ""; width: 32px; height: 1px; background: var(--sage); }
+    .page-eyebrow::before {
+      content: "";
+      width: 32px;
+      height: 1px;
+      background: var(--sage);
+    }
     .page-hero h1 {
-      font-size: clamp(2.75rem, 7vw, 6rem);
+      font-size: clamp(2.5rem, 6vw, 5rem);
       letter-spacing: -0.025em;
       font-weight: 350;
       font-variation-settings: "opsz" 144;
@@ -165,71 +172,40 @@
     .page-hero h1 em { font-style: italic; font-weight: 400; color: var(--sage); }
     .page-hero-lede {
       font-family: var(--font-display);
-      font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+      font-size: clamp(1.05rem, 1.5vw, 1.3rem);
       line-height: 1.5;
       color: var(--ink-soft);
-      max-width: 44ch;
       font-weight: 350;
+      max-width: 50ch;
     }
     .page-hero-lede em { font-style: italic; color: var(--sage); }
-    .page-hero-lede a {
-      color: var(--sage);
-      border-bottom: 1px solid var(--sage-pale);
-      text-decoration: none;
-      font-style: italic;
+    @media (max-width: 900px) {
+      .page-hero-inner { grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
     }
-    .page-hero-lede a:hover { border-bottom-color: var(--sage); }
 
-    /* Section helpers */
+    /* SECTION HELPERS */
     .eyebrow {
-      font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
-      color: var(--sage); font-weight: 600;
-      margin-bottom: 1.5rem; display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: inline-block;
     }
     .h-section {
+      font-family: var(--font-display);
       font-size: clamp(2rem, 4.5vw, 3.5rem);
       max-width: 20ch;
       letter-spacing: -0.02em;
       color: var(--sage-deep);
+      font-weight: 400;
+      line-height: 1.05;
     }
     .h-section em { font-style: italic; color: var(--sage); }
 
-    /* How it works strip */
-    .how-strip {
-      padding: clamp(3rem, 6vw, 5rem) 0;
-      background: var(--bg-warm);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .how-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: clamp(1.5rem, 4vw, 3rem);
-    }
-    .how-num {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--sage);
-      margin-bottom: 0.75rem;
-      letter-spacing: 0.05em;
-    }
-    .how-item h3 {
-      font-size: 1.4rem;
-      color: var(--sage-deep);
-      margin-bottom: 0.6rem;
-    }
-    .how-item h3 em { font-style: italic; color: var(--sage); }
-    .how-item p {
-      color: var(--ink-soft);
-      font-size: 0.97rem;
-      line-height: 1.65;
-    }
-
-    /* FORM SECTION */
-    .form-section {
-      padding: clamp(4rem, 9vw, 8rem) 0;
-      background: var(--bg);
-    }
+    /* FORM */
+    .form-section { padding: clamp(4rem, 8vw, 7rem) 0; background: var(--bg); }
     .form-header { max-width: 720px; margin-bottom: 4rem; }
     .form-header .h-section { max-width: 18ch; }
     .form-lede {
@@ -241,7 +217,7 @@
       margin-top: 1.5rem;
       font-weight: 350;
     }
-    .form-lede em { font-style: italic; color: var(--sage); }
+
     .form { max-width: 720px; }
     .form-block {
       padding: 2rem 0 2.5rem;
@@ -249,79 +225,112 @@
     }
     .form-block:first-child { padding-top: 0; }
     .form-block:last-of-type { border-bottom: none; }
+
     .form-block-num {
-      font-family: var(--font-display); font-style: italic;
-      font-size: 0.95rem; color: var(--sage);
-      letter-spacing: 0.05em; margin-bottom: 0.4rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--sage);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
     }
     .form-block-title {
       font-family: var(--font-display);
-      font-size: 1.6rem; color: var(--sage-deep);
-      margin-bottom: 0.4rem; letter-spacing: -0.01em;
+      font-size: 1.6rem;
+      color: var(--sage-deep);
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
     }
     .form-block-title em { font-style: italic; color: var(--sage); }
     .form-block-note {
-      font-family: var(--font-display); font-style: italic;
-      color: var(--muted); font-size: 0.95rem;
-      margin-bottom: 1.5rem; line-height: 1.5;
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
     }
-    .form-block-note a {
-      color: var(--sage);
-      border-bottom: 1px solid var(--sage-pale);
-      text-decoration: none;
-    }
+
     .form-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem; margin-bottom: 1rem;
+      gap: 1rem;
+      margin-bottom: 1rem;
     }
     .form-field label {
       display: block;
-      font-size: 0.78rem; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--muted);
-      margin-bottom: 0.6rem; font-weight: 500;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+      font-weight: 500;
+    }
+    .form-field-required::after {
+      content: " *";
+      color: var(--sage);
     }
     .form-field input,
     .form-field select,
     .form-field textarea {
-      width: 100%; padding: 0.85rem 1rem;
+      width: 100%;
+      padding: 0.85rem 1rem;
       font-size: 0.98rem;
       border: 1px solid var(--hairline);
-      background: var(--surface); color: var(--ink);
-      border-radius: 4px; outline: none;
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 4px;
+      outline: none;
       transition: border-color 0.2s var(--ease);
       font-family: inherit;
     }
     .form-field input:focus,
     .form-field select:focus,
     .form-field textarea:focus { border-color: var(--sage); }
-    .form-field textarea { min-height: 100px; resize: vertical; }
+    .form-field textarea { min-height: 120px; resize: vertical; }
+    .form-field-help {
+      display: block;
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      line-height: 1.4;
+    }
 
+    /* Checkbox grids */
     .check-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 0.5rem 1.25rem;
     }
-    .check-grid-narrow { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
     .check-item {
-      display: flex; align-items: flex-start; gap: 0.7rem;
-      padding: 0.7rem 0; cursor: pointer; line-height: 1.45;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      padding: 0.55rem 0;
+      cursor: pointer;
+      line-height: 1.45;
     }
     .check-item input[type="checkbox"],
     .check-item input[type="radio"] {
-      margin: 0.2rem 0 0 0; flex-shrink: 0;
-      width: 16px; height: 16px;
-      accent-color: var(--sage); cursor: pointer;
+      margin: 0.2rem 0 0 0;
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      accent-color: var(--sage);
+      cursor: pointer;
     }
     .check-item-text { font-size: 0.95rem; color: var(--ink); }
     .check-item-text .meta {
-      display: block; font-size: 0.82rem;
-      color: var(--muted); margin-top: 0.15rem;
+      display: block;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
     }
     .check-item:hover .check-item-text { color: var(--sage-deep); }
-    .stacked-radio .check-item { padding: 0.55rem 0; }
 
-    /* Availability matrix */
+    /* AVAILABILITY MATRIX */
     .matrix-wrap {
       margin-top: 0.5rem;
       overflow-x: auto;
@@ -330,91 +339,168 @@
       border-radius: 4px;
       background: var(--surface);
     }
-    .matrix { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 0.9rem; }
+    .matrix {
+      width: 100%;
+      min-width: 640px;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
     .matrix th, .matrix td {
-      padding: 0; text-align: center; vertical-align: middle;
-      border-right: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+      padding: 0;
+      text-align: center;
+      vertical-align: middle;
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
     }
     .matrix th:last-child, .matrix td:last-child { border-right: none; }
     .matrix tr:last-child td { border-bottom: none; }
     .matrix thead th {
       background: var(--bg-warm);
       font-family: var(--font-display);
-      font-weight: 400; font-style: italic;
-      color: var(--sage-deep); font-size: 0.95rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--sage-deep);
+      font-size: 0.95rem;
       padding: 0.8rem 0.3rem;
     }
     .matrix thead th.matrix-corner {
-      background: var(--surface); width: 130px;
-      font-style: normal; font-family: var(--font-body);
-      font-size: 0.72rem; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--muted); font-weight: 500;
+      background: var(--surface);
+      width: 140px;
+      font-style: normal;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
     }
     .matrix tbody th {
       background: var(--bg-warm);
-      padding: 0.6rem 0.85rem; text-align: left;
-      font-family: var(--font-body); font-weight: 500;
-      color: var(--sage-deep); font-size: 0.88rem;
-      line-height: 1.3; width: 130px;
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+      font-family: var(--font-body);
+      font-weight: 500;
+      color: var(--sage-deep);
+      font-size: 0.88rem;
+      line-height: 1.3;
+      width: 140px;
     }
     .matrix tbody th .matrix-time-range {
       display: block;
-      font-family: var(--font-display); font-style: italic;
-      font-weight: 400; font-size: 0.78rem;
-      color: var(--muted); margin-top: 0.15rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
     }
     .matrix td { position: relative; transition: background 0.15s var(--ease); }
     .matrix td:hover { background: var(--bg); }
     .matrix-cell-label {
-      display: block; width: 100%; height: 100%;
-      padding: 0.95rem 0.5rem; cursor: pointer; position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0.95rem 0.5rem;
+      cursor: pointer;
+      position: relative;
     }
     .matrix-cell-label input[type="checkbox"] {
-      position: absolute; opacity: 0; pointer-events: none;
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
     }
     .matrix-cell-box {
-      display: inline-block; width: 18px; height: 18px;
-      border: 1.5px solid var(--hairline); border-radius: 3px;
-      background: var(--bg); position: relative;
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--hairline);
+      border-radius: 3px;
+      background: var(--bg);
       transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
+      position: relative;
     }
     .matrix-cell-label:hover .matrix-cell-box { border-color: var(--sage); }
     .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box {
-      background: var(--sage); border-color: var(--sage);
+      background: var(--sage);
+      border-color: var(--sage);
     }
     .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box::after {
-      content: ""; position: absolute;
-      left: 4px; top: 0px; width: 6px; height: 11px;
-      border: solid var(--bg); border-width: 0 2px 2px 0;
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 0px;
+      width: 6px;
+      height: 11px;
+      border: solid var(--bg);
+      border-width: 0 2px 2px 0;
       transform: rotate(45deg);
     }
     .matrix-cell-label:has(input:checked) { background: rgba(122, 138, 107, 0.08); }
     .matrix-hint {
-      font-size: 0.78rem; color: var(--muted);
-      font-style: italic; margin-top: 0.75rem;
-      display: block; font-family: var(--font-display);
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 0.75rem;
+      display: block;
+      font-family: var(--font-display);
     }
+
+    /* SUBMIT */
     .form-submit-row {
       padding-top: 2.5rem;
-      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
     }
     .btn-primary {
       padding: 1.05rem 2.25rem;
-      background: var(--sage); color: var(--bg);
-      border: 1px solid var(--sage); border-radius: 999px;
-      font-family: inherit; font-size: 0.98rem;
-      font-weight: 500; letter-spacing: 0.02em;
+      background: var(--sage);
+      color: var(--bg);
+      border: 1px solid var(--sage);
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
       cursor: pointer;
       transition: background 0.2s var(--ease), transform 0.2s var(--ease);
     }
     .btn-primary:hover { background: var(--sage-deep); border-color: var(--sage-deep); }
     .btn-primary:active { transform: translateY(1px); }
     .form-submit-note {
-      font-family: var(--font-display); font-style: italic;
-      color: var(--muted); font-size: 0.92rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.92rem;
     }
 
-    /* Footer */
+    /* THANK YOU STATE */
+    .form-thanks {
+      display: none;
+      padding: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      text-align: center;
+      max-width: 720px;
+    }
+    .form-thanks.active { display: block; }
+    .form-thanks h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--sage-deep);
+      margin-bottom: 1rem;
+    }
+    .form-thanks h3 em { font-style: italic; color: var(--sage); }
+    .form-thanks p {
+      color: var(--ink-soft);
+      line-height: 1.65;
+      max-width: 42ch;
+      margin: 0 auto;
+    }
+
+    /* FOOTER */
     footer {
       background: var(--sage-deep);
       color: rgba(241, 236, 223, 0.85);
@@ -428,16 +514,20 @@
     }
     .footer-grid h4 {
       font-family: var(--font-display);
-      font-size: 1.15rem; color: var(--bg);
+      font-size: 1.15rem;
+      color: var(--bg);
       margin-bottom: 1rem;
-      font-style: italic; font-weight: 400;
+      font-style: italic;
+      font-weight: 400;
     }
     .footer-grid p {
-      font-size: 0.92rem; line-height: 1.65;
+      font-size: 0.92rem;
+      line-height: 1.65;
       color: rgba(241, 236, 223, 0.7);
     }
     .footer-grid a {
-      display: block; font-size: 0.92rem;
+      display: block;
+      font-size: 0.92rem;
       color: rgba(241, 236, 223, 0.75);
       text-decoration: none;
       margin-bottom: 0.5rem;
@@ -446,31 +536,37 @@
     .footer-grid a:hover { color: var(--bg); }
     .stack { display: flex; flex-direction: column; }
     .wordmark-lg {
-      font-family: var(--font-display); font-style: italic;
-      font-size: 1.85rem; color: var(--bg);
-      margin-bottom: 1rem; font-variation-settings: "opsz" 144;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.85rem;
+      color: var(--bg);
+      margin-bottom: 1rem;
+      font-variation-settings: "opsz" 144;
     }
     .footer-bottom {
       padding-top: 2rem;
       border-top: 1px solid rgba(241, 236, 223, 0.15);
-      display: flex; justify-content: space-between;
-      flex-wrap: wrap; gap: 1rem;
-      font-size: 0.78rem; letter-spacing: 0.05em;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
       color: rgba(241, 236, 223, 0.55);
     }
-
+    .footer-bottom a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .footer-bottom a:hover { color: var(--bg); }
     @media (max-width: 900px) {
-      .page-hero-inner { grid-template-columns: 1fr; gap: 2rem; align-items: start; }
-      .how-grid { grid-template-columns: 1fr; gap: 2rem; }
       .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- =========================================================
-       NAV
-       ========================================================= -->
+  <!-- NAV -->
   <nav class="nav">
     <div class="container nav-inner">
       <a href="index.html" class="wordmark">The Hobbiest</a>
@@ -478,307 +574,362 @@
         <a href="index.html" class="nav-link">Home</a>
         <a href="schedule.html" class="nav-link">Skills Schedule</a>
         <a href="apply.html" class="nav-link">Apply to Teach</a>
-        <a href="signup.html" class="nav-link nav-link-primary nav-link-current">Sign Up</a>
+        <a href="signup.html" class="nav-link nav-link-primary" aria-current="page">Sign Up</a>
       </div>
     </div>
   </nav>
 
-  <!-- =========================================================
-       PAGE HERO
-       ========================================================= -->
+  <!-- PAGE HERO -->
   <header class="page-hero">
     <div class="container">
       <div class="page-hero-inner">
         <div data-reveal>
-          <span class="page-eyebrow">Soft Launch</span>
-          <h1>Help us build <em>the schedule</em>.</h1>
+          <span class="page-eyebrow">Sign Up</span>
+          <h1>Tell us what <em>you want</em>.</h1>
         </div>
         <div data-reveal>
           <p class="page-hero-lede">
-            We're opening this fall. Before we lock anything in, we want to know what you actually want and when you'd come. <em>No payment, no commitment.</em> Browse the <a href="schedule.html">Skills Schedule</a> first if you'd like a closer look at the classes.
+            We schedule what people actually want. Check the classes that interest you, the bundles you'd buy, and the times you could realistically come. No payment, no commitment. <em>We'll email you when classes are scheduled.</em>
           </p>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- =========================================================
-       HOW IT WORKS
-       ========================================================= -->
-  <section class="how-strip">
+  <!-- FORM -->
+  <section class="form-section">
     <div class="container">
-      <div class="how-grid">
-        <div class="how-item" data-reveal>
-          <div class="how-num">01 — Tell us</div>
-          <h3>Pick what <em>catches your eye</em>.</h3>
-          <p>Check anything from the class list and bundles that interests you. There's no limit, no obligation, no payment.</p>
-        </div>
-        <div class="how-item" data-reveal>
-          <div class="how-num">02 — When</div>
-          <h3>Show us your <em>real availability</em>.</h3>
-          <p>Days, times, frequency. The honest answer is the useful one — we'll build the schedule around real demand.</p>
-        </div>
-        <div class="how-item" data-reveal>
-          <div class="how-num">03 — We schedule</div>
-          <h3>We <em>schedule around you</em>.</h3>
-          <p>Once enough people want the same thing at the same time, we book it and email you. Adults only (18+).</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- =========================================================
-       INTEREST FORM
-       ========================================================= -->
-  <section class="form-section" id="interest">
-    <div class="container">
       <div class="form-header" data-reveal>
-        <span class="eyebrow">Six Quick Sections</span>
-        <h2 class="h-section">Tell us <em>everything</em>.</h2>
-        <p class="form-lede">Or just fill in what feels right. There are no required questions beyond your name and email.</p>
+        <span class="eyebrow">The sign-up form</span>
+        <h2 class="h-section">Help us build the <em>schedule</em>.</h2>
+        <p class="form-lede">Three short sections: who you are, what you'd take, and when you could come. We'll email you when something you checked gets scheduled. Takes about 5 minutes.</p>
       </div>
 
-      <!--
-        ============================================================
-        FORM SUBMISSION
-        ============================================================
-        Replace `action="#"` with your form handler URL.
-        Recommended: Formspree, Netlify Forms, or Beehiiv via Zapier.
-        ============================================================
-      -->
-      <form class="form" id="interestForm" action="#" method="POST" data-reveal>
+      <form class="form" id="signupForm" action="#" method="POST" data-netlify="true" name="hobbiest-signup">
+        <input type="hidden" name="form-name" value="hobbiest-signup" />
 
-        <!-- 01. YOUR INFO -->
-        <div class="form-block">
-          <div class="form-block-num">01 — About you</div>
-          <h3 class="form-block-title">Your <em>information</em></h3>
-          <p class="form-block-note">So we can get back to you.</p>
+        <!-- 01: About you -->
+        <div class="form-block" data-reveal>
+          <div class="form-block-num">01</div>
+          <h3 class="form-block-title">About <em>you</em></h3>
+          <p class="form-block-note">We only use this to email you when classes you wanted are scheduled.</p>
 
           <div class="form-row">
             <div class="form-field">
-              <label for="firstName">First name</label>
-              <input type="text" id="firstName" name="firstName" required />
+              <label for="name" class="form-field-required">Full name</label>
+              <input type="text" id="name" name="name" required />
             </div>
             <div class="form-field">
-              <label for="lastName">Last name</label>
-              <input type="text" id="lastName" name="lastName" required />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label for="email">Email</label>
+              <label for="email" class="form-field-required">Email</label>
               <input type="email" id="email" name="email" required />
             </div>
-            <div class="form-field">
-              <label for="zip">Zip code</label>
-              <input type="text" id="zip" name="zip" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" />
-            </div>
           </div>
+
           <div class="form-row">
             <div class="form-field">
-              <label for="ageRange">Age range <span style="text-transform:none;letter-spacing:0;color:var(--muted);font-style:italic;font-weight:400;">(optional)</span></label>
-              <select id="ageRange" name="ageRange">
-                <option value="">Prefer not to say</option>
-                <option>18–25</option>
-                <option>25–35</option>
-                <option>35–50</option>
-                <option>50–65</option>
-                <option>65+</option>
-              </select>
+              <label for="phone">Phone (optional)</label>
+              <input type="tel" id="phone" name="phone" />
+              <span class="form-field-help">Only if you'd like a text reminder when classes go live.</span>
+            </div>
+            <div class="form-field">
+              <label for="zip">ZIP code (optional)</label>
+              <input type="text" id="zip" name="zip" placeholder="18640" />
+              <span class="form-field-help">Helps us understand where folks are traveling from.</span>
             </div>
           </div>
         </div>
 
-        <!-- 02. CLASS INTERESTS -->
-        <div class="form-block">
-          <div class="form-block-num">02 — Classes</div>
+        <!-- 02: Which classes -->
+        <div class="form-block" data-reveal>
+          <div class="form-block-num">02</div>
           <h3 class="form-block-title">Which classes <em>interest you</em>?</h3>
-          <p class="form-block-note">Check anything that catches your eye. No limit, no obligation. See the <a href="schedule.html">full schedule</a> for descriptions.</p>
+          <p class="form-block-note">Check anything you'd take. No commitment — this just helps us know what to schedule first.</p>
 
-          <div class="check-grid">
-            <label class="check-item"><input type="checkbox" name="classes" value="Knitting 101" /><span class="check-item-text">Knitting 101 <span class="meta">$225 · 4-week series</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Crochet 101" /><span class="check-item-text">Crochet 101 <span class="meta">$225 · 4-week series</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Visible Mending & Sashiko" /><span class="check-item-text">Visible Mending &amp; Sashiko <span class="meta">$220 · 4-week series</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Watercolor 101" /><span class="check-item-text">Watercolor 101 <span class="meta">$230 · 4-week series</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Drawing Fundamentals" /><span class="check-item-text">Drawing Fundamentals <span class="meta">$225 · 4-week series</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Make a Travel Journal" /><span class="check-item-text">Make a Travel Journal <span class="meta">$90 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Modern Calligraphy 101" /><span class="check-item-text">Modern Calligraphy 101 <span class="meta">$235 · 4-week series</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Wedding Envelope Calligraphy" /><span class="check-item-text">Wedding Envelope Calligraphy <span class="meta">$75 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="How to Set a Proper Table" /><span class="check-item-text">How to Set a Proper Table <span class="meta">$35 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Hosting 101" /><span class="check-item-text">Hosting 101 <span class="meta">$70 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Confidence at the Dinner Party" /><span class="check-item-text">Confidence at the Dinner Party <span class="meta">$50 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Basic Car Care" /><span class="check-item-text">Basic Car Care <span class="meta">$50 · offsite</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Basic Home Repair" /><span class="check-item-text">Basic Home Repair <span class="meta">$75 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Reading the Paperwork in Your Life" /><span class="check-item-text">Reading the Paperwork <span class="meta">$55 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Garden Basics for NEPA" /><span class="check-item-text">Garden Basics for NEPA <span class="meta">$55 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Summer Garden Bouquet" /><span class="check-item-text">Summer Garden Bouquet <span class="meta">$75 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Plein-Air Sketching" /><span class="check-item-text">Plein-Air Sketching <span class="meta">$60 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Sourdough Starter & Maintenance" /><span class="check-item-text">Sourdough Starter <span class="meta">$60 · single session</span></span></label>
-            <label class="check-item"><input type="checkbox" name="classes" value="Charcuterie & Cheese Board Styling" /><span class="check-item-text">Charcuterie &amp; Cheese Board <span class="meta">$85 · single session</span></span></label>
+          <!-- Fiber Arts -->
+          <div class="form-field" style="margin-bottom: 1.5rem;">
+            <label>Fiber Arts</label>
+            <div class="check-grid">
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Knitting 101" />
+                <span class="check-item-text">Knitting 101<span class="meta">4-week series · $225 · kit included</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Crochet 101" />
+                <span class="check-item-text">Crochet 101<span class="meta">4-week series · $225 · kit included</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Visible Mending & Sashiko" />
+                <span class="check-item-text">Visible Mending &amp; Sashiko<span class="meta">4-week series · $220</span></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Drawing & Paper -->
+          <div class="form-field" style="margin-bottom: 1.5rem;">
+            <label>Drawing &amp; Paper</label>
+            <div class="check-grid">
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Watercolor 101" />
+                <span class="check-item-text">Watercolor 101<span class="meta">4-week series · $230 · kit included</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Drawing Fundamentals" />
+                <span class="check-item-text">Drawing Fundamentals<span class="meta">4-week series · $225 · kit included</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Make a Travel Journal" />
+                <span class="check-item-text">Make a Travel Journal<span class="meta">Single session · 3 hrs · $90</span></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Calligraphy & Lettering -->
+          <div class="form-field" style="margin-bottom: 1.5rem;">
+            <label>Calligraphy &amp; Lettering</label>
+            <div class="check-grid">
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Modern Calligraphy 101" />
+                <span class="check-item-text">Modern Calligraphy 101<span class="meta">4-week series · $235 · kit included</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Wedding Envelope Calligraphy" />
+                <span class="check-item-text">Wedding Envelope Calligraphy<span class="meta">Single session · 2.5 hrs · $75</span></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Life Skills -->
+          <div class="form-field" style="margin-bottom: 1.5rem;">
+            <label>Life Skills</label>
+            <div class="check-grid">
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="How to Set a Proper Table" />
+                <span class="check-item-text">How to Set a Proper Table<span class="meta">Single session · 1.5 hrs · $35</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Hosting 101" />
+                <span class="check-item-text">Hosting 101<span class="meta">Single session · 2.5 hrs · $70</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Confidence at the Dinner Party" />
+                <span class="check-item-text">Confidence at the Dinner Party<span class="meta">Single session · 2 hrs · $50</span></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Self-Sufficiency -->
+          <div class="form-field" style="margin-bottom: 1.5rem;">
+            <label>Self-Sufficiency</label>
+            <div class="check-grid">
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Basic Car Care" />
+                <span class="check-item-text">Basic Car Care<span class="meta">Single session · 2 hrs · offsite · $50</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Basic Home Repair" />
+                <span class="check-item-text">Basic Home Repair<span class="meta">Single session · 2.5 hrs · $75</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Reading the Paperwork in Your Life" />
+                <span class="check-item-text">Reading the Paperwork in Your Life<span class="meta">Single session · 2 hrs · $55</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Garden Basics for NEPA" />
+                <span class="check-item-text">Garden Basics for NEPA<span class="meta">Single session · 2 hrs · $55</span></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Seasonal & Specialty -->
+          <div class="form-field" style="margin-bottom: 0.5rem;">
+            <label>Seasonal &amp; Specialty</label>
+            <div class="check-grid">
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Summer Garden Bouquet" />
+                <span class="check-item-text">Summer Garden Bouquet<span class="meta">Single session · 2 hrs · $75</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Plein-Air Sketching on the Patio" />
+                <span class="check-item-text">Plein-Air Sketching on the Patio<span class="meta">Single session · 2 hrs · outdoor · $60</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Sourdough Starter & Maintenance" />
+                <span class="check-item-text">Sourdough Starter &amp; Maintenance<span class="meta">Single session · 2 hrs · $60</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="classes[]" value="Charcuterie & Cheese Board Styling" />
+                <span class="check-item-text">Charcuterie &amp; Cheese Board Styling<span class="meta">Single session · 2 hrs · $85</span></span>
+              </label>
+            </div>
           </div>
         </div>
 
-        <!-- 03. BUNDLE INTERESTS -->
-        <div class="form-block">
-          <div class="form-block-num">03 — Bundles</div>
-          <h3 class="form-block-title">Which bundles <em>interest you</em>?</h3>
-          <p class="form-block-note">For yourself, or as a gift. Bundles are fixed — no swapping classes in or out.</p>
+        <!-- 03: Bundles -->
+        <div class="form-block" data-reveal>
+          <div class="form-block-num">03</div>
+          <h3 class="form-block-title">Any <em>bundles</em>?</h3>
+          <p class="form-block-note">Each bundle is a fixed set of classes built around a moment in life. Buy the whole package and save.</p>
 
           <div class="check-grid">
-            <label class="check-item"><input type="checkbox" name="bundles" value="Bride-to-Be" /><span class="check-item-text">Bride-to-Be Bundle <span class="meta">$235 · 4 classes</span></span></label>
-            <label class="check-item"><input type="checkbox" name="bundles" value="Wedding Speech Workshop" /><span class="check-item-text">Wedding Speech Workshop <span class="meta">$165 · 3-week series</span></span></label>
-            <label class="check-item"><input type="checkbox" name="bundles" value="Adulting 101 for Young Adults" /><span class="check-item-text">Adulting 101 for Young Adults <span class="meta">$235 · 5-day intensive</span></span></label>
-            <label class="check-item"><input type="checkbox" name="bundles" value="Self-Sufficiency Bundle" /><span class="check-item-text">Self-Sufficiency Bundle <span class="meta">$215 · 4 classes</span></span></label>
-            <label class="check-item"><input type="checkbox" name="bundles" value="Hosting Mastery" /><span class="check-item-text">Hosting Mastery <span class="meta">$215 · 4 classes</span></span></label>
-            <label class="check-item"><input type="checkbox" name="bundles" value="Slow Hands" /><span class="check-item-text">Slow Hands <span class="meta">$195 · 3 classes</span></span></label>
+            <label class="check-item">
+              <input type="checkbox" name="bundles[]" value="Bride-to-Be Bundle" />
+              <span class="check-item-text">Bride-to-Be Bundle<span class="meta">4 classes · $235 · save $70</span></span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="bundles[]" value="Wedding Speech Workshop" />
+              <span class="check-item-text">Wedding Speech Workshop<span class="meta">3-week series · $165</span></span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="bundles[]" value="Adulting 101 for Young Adults" />
+              <span class="check-item-text">Adulting 101 (ages 18–25)<span class="meta">5-day intensive · $235</span></span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="bundles[]" value="Self-Sufficiency Bundle" />
+              <span class="check-item-text">Self-Sufficiency Bundle<span class="meta">4 classes · $215 · save $20</span></span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="bundles[]" value="Hosting Mastery" />
+              <span class="check-item-text">Hosting Mastery<span class="meta">4 classes · $215 · save $25</span></span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="bundles[]" value="Slow Hands" />
+              <span class="check-item-text">Slow Hands<span class="meta">3 classes · $195 · save $30</span></span>
+            </label>
           </div>
         </div>
 
-        <!-- 04. AVAILABILITY MATRIX -->
-        <div class="form-block">
-          <div class="form-block-num">04 — Availability</div>
-          <h3 class="form-block-title">When would you <em>actually come</em>?</h3>
-          <p class="form-block-note">This is the most useful question on the form. Check every cell that works. We're testing a 6 AM early-bird slot — tell us if you'd come.</p>
+        <!-- 04: Wish list -->
+        <div class="form-block" data-reveal>
+          <div class="form-block-num">04</div>
+          <h3 class="form-block-title">Don't see what you <em>want</em>?</h3>
+          <p class="form-block-note">We're actively building the catalog. Tell us what you wish we offered.</p>
+
+          <div class="form-field">
+            <label for="wishlist">Classes or topics you'd love to see</label>
+            <textarea id="wishlist" name="wishlist" placeholder="A class on bread baking. A talk on caring for old wooden furniture. Anything you'd come to."></textarea>
+          </div>
+        </div>
+
+        <!-- 05: When you'd come -->
+        <div class="form-block" data-reveal>
+          <div class="form-block-num">05</div>
+          <h3 class="form-block-title">When could you <em>come</em>?</h3>
+          <p class="form-block-note">Check anything that generally works. This helps us schedule classes at times people will actually show up.</p>
 
           <div class="matrix-wrap">
-            <table class="matrix" role="grid" aria-label="Availability by day and time">
+            <table class="matrix">
               <thead>
                 <tr>
-                  <th class="matrix-corner" scope="col">Time / Day</th>
-                  <th scope="col">Mon</th><th scope="col">Tue</th><th scope="col">Wed</th><th scope="col">Thu</th><th scope="col">Fri</th><th scope="col">Sat</th><th scope="col">Sun</th>
+                  <th class="matrix-corner">Day &amp; Time</th>
+                  <th>Mon</th>
+                  <th>Tue</th>
+                  <th>Wed</th>
+                  <th>Thu</th>
+                  <th>Fri</th>
+                  <th>Sat</th>
+                  <th>Sun</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">Early morning <span class="matrix-time-range">6:00–7:30 AM</span></th>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Mon-EarlyAM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Tue-EarlyAM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Wed-EarlyAM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Thu-EarlyAM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Fri-EarlyAM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sat-EarlyAM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sun-EarlyAM" /><span class="matrix-cell-box"></span></label></td>
+                  <th scope="row">Morning<span class="matrix-time-range">8 AM – 11 AM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Morning"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Morning"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Morning"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Morning"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Morning"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Morning"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Morning"><span class="matrix-cell-box"></span></label></td>
                 </tr>
                 <tr>
-                  <th scope="row">Morning <span class="matrix-time-range">9 AM–12 PM</span></th>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Mon-AM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Tue-AM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Wed-AM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Thu-AM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Fri-AM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sat-AM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sun-AM" /><span class="matrix-cell-box"></span></label></td>
+                  <th scope="row">Midday<span class="matrix-time-range">11 AM – 2 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Midday"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Midday"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Midday"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Midday"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Midday"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Midday"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Midday"><span class="matrix-cell-box"></span></label></td>
                 </tr>
                 <tr>
-                  <th scope="row">Afternoon <span class="matrix-time-range">1–4 PM</span></th>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Mon-PM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Tue-PM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Wed-PM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Thu-PM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Fri-PM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sat-PM" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sun-PM" /><span class="matrix-cell-box"></span></label></td>
+                  <th scope="row">Afternoon<span class="matrix-time-range">2 PM – 5 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Afternoon"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Afternoon"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Afternoon"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Afternoon"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Afternoon"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Afternoon"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Afternoon"><span class="matrix-cell-box"></span></label></td>
                 </tr>
                 <tr>
-                  <th scope="row">Evening <span class="matrix-time-range">6–9 PM</span></th>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Mon-EVE" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Tue-EVE" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Wed-EVE" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Thu-EVE" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Fri-EVE" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sat-EVE" /><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail" value="Sun-EVE" /><span class="matrix-cell-box"></span></label></td>
+                  <th scope="row">Evening<span class="matrix-time-range">5 PM – 8 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Evening"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Evening"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Evening"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Evening"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Evening"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Evening"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Evening"><span class="matrix-cell-box"></span></label></td>
+                </tr>
+                <tr>
+                  <th scope="row">Late Evening<span class="matrix-time-range">8 PM – 10 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Late"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Late"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Late"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Late"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Late"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Late"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Late"><span class="matrix-cell-box"></span></label></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <span class="matrix-hint">Scroll sideways on mobile to see all days.</span>
-
-          <div style="margin-top: 2.5rem;">
-            <p class="form-block-note" style="margin-bottom: 1rem;"><strong style="color:var(--sage-deep);font-weight:500;">For a 4-week series</strong>, which schedule works best?</p>
-            <div class="check-grid check-grid-narrow stacked-radio">
-              <label class="check-item"><input type="radio" name="seriesPref" value="Weeknight evening" /><span class="check-item-text">Same weeknight evening</span></label>
-              <label class="check-item"><input type="radio" name="seriesPref" value="Saturday morning" /><span class="check-item-text">Same Saturday morning</span></label>
-              <label class="check-item"><input type="radio" name="seriesPref" value="Saturday afternoon" /><span class="check-item-text">Same Saturday afternoon</span></label>
-              <label class="check-item"><input type="radio" name="seriesPref" value="Weekday daytime" /><span class="check-item-text">Weekday daytime</span></label>
-              <label class="check-item"><input type="radio" name="seriesPref" value="Early morning" /><span class="check-item-text">Early morning (6–7:30 AM)</span></label>
-              <label class="check-item"><input type="radio" name="seriesPref" value="Prefer single sessions" /><span class="check-item-text">I prefer single sessions</span></label>
-            </div>
-          </div>
-
-          <div style="margin-top: 2rem;">
-            <p class="form-block-note" style="margin-bottom: 1rem;"><strong style="color:var(--sage-deep);font-weight:500;">How often</strong> would you come?</p>
-            <div class="check-grid check-grid-narrow stacked-radio">
-              <label class="check-item"><input type="radio" name="frequency" value="Few times a year" /><span class="check-item-text">A few times a year</span></label>
-              <label class="check-item"><input type="radio" name="frequency" value="Monthly" /><span class="check-item-text">About once a month</span></label>
-              <label class="check-item"><input type="radio" name="frequency" value="Weekly" /><span class="check-item-text">Every week or two</span></label>
-              <label class="check-item"><input type="radio" name="frequency" value="Multiple times a week" /><span class="check-item-text">Multiple times a week</span></label>
-            </div>
-          </div>
+          <span class="matrix-hint">Check any block of time you could realistically attend. The more you check, the more likely we'll find a class that fits.</span>
         </div>
 
-        <!-- 05. RECOMMENDATIONS -->
-        <div class="form-block">
-          <div class="form-block-num">05 — Recommendations</div>
-          <h3 class="form-block-title">What should we <em>add</em>?</h3>
-          <p class="form-block-note">Our favorite question on the form. If we hear something multiple times, it's going on the schedule.</p>
+        <!-- 06: Anything else -->
+        <div class="form-block" data-reveal>
+          <div class="form-block-num">06</div>
+          <h3 class="form-block-title">Anything <em>else</em>?</h3>
+          <p class="form-block-note">Optional. Things we should know, questions, or just a hello.</p>
 
           <div class="form-field">
-            <label for="recommendation">A class you wish we offered</label>
-            <textarea id="recommendation" name="recommendation" placeholder="Stained glass, woodworking, canning, jewelry making, beekeeping..."></textarea>
+            <label for="notes">Notes or questions</label>
+            <textarea id="notes" name="notes" placeholder="Optional — leave it blank if there's nothing to add."></textarea>
           </div>
 
-          <div class="form-field" style="margin-top: 1.75rem;">
-            <label for="lectureTopics">Lecture topics — what life skills should we teach?</label>
-            <p class="form-block-note" style="margin: 0 0 0.75rem 0;">Things adults are supposed to know that nobody taught us. Taught in 90 minutes to a room.</p>
-            <textarea id="lectureTopics" name="lectureTopics" placeholder="Salary negotiation, reading a financial statement, talking to a doctor, writing a will, basic investing, buying a car, Medicare, asking for a raise..."></textarea>
-          </div>
-
-          <div class="form-field" style="margin-top: 1.75rem;">
-            <label for="instructorRec">Know someone who should teach here?</label>
-            <input type="text" id="instructorRec" name="instructorRec" placeholder="Name and what they do — we'll reach out" />
+          <div class="form-field" style="margin-top: 1.5rem;">
+            <label class="check-item">
+              <input type="checkbox" name="newsletter" value="yes" checked />
+              <span class="check-item-text">Keep me on the email list for general updates from The Hobbiest.<span class="meta">Phase announcements, founder pricing, monthly notes. Unsubscribe anytime.</span></span>
+            </label>
           </div>
         </div>
 
-        <!-- 06. MEMBERSHIP -->
-        <div class="form-block">
-          <div class="form-block-num">06 — Membership</div>
-          <h3 class="form-block-title">Would you join <em>as a member</em>?</h3>
-          <p class="form-block-note">$35/month. Unlimited Drawing Room access, drip coffee every visit, 10% off classes.</p>
-
-          <div class="check-grid check-grid-narrow stacked-radio">
-            <label class="check-item"><input type="radio" name="membership" value="Yes" /><span class="check-item-text">Yes — sign me up</span></label>
-            <label class="check-item"><input type="radio" name="membership" value="Maybe" /><span class="check-item-text">Maybe — tell me more</span></label>
-            <label class="check-item"><input type="radio" name="membership" value="No" /><span class="check-item-text">Just classes for me</span></label>
-          </div>
-
-          <div style="margin-top: 1.75rem; padding: 1.25rem 1.5rem; background: var(--bg-warm); border-radius: 4px; border: 1px solid var(--hairline);">
-            <p style="font-family: var(--font-display); font-style: italic; color: var(--sage-deep); margin-bottom: 0.75rem;">Founding Member option</p>
-            <p style="font-size: 0.95rem; color: var(--ink-soft); line-height: 1.55; margin-bottom: 1rem;">First 50 members lock in $25/month for life. Want one of those spots?</p>
-            <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
-              <label class="check-item" style="padding: 0;"><input type="radio" name="founding" value="Yes" /><span class="check-item-text">Yes, save me a spot</span></label>
-              <label class="check-item" style="padding: 0;"><input type="radio" name="founding" value="No" /><span class="check-item-text">No thanks</span></label>
-            </div>
-          </div>
-        </div>
-
+        <!-- Submit -->
         <div class="form-submit-row">
-          <button type="submit" class="btn-primary">Send my interest</button>
-          <span class="form-submit-note">We'll be in touch as classes get scheduled.</span>
+          <button type="submit" class="btn-primary">Send →</button>
+          <span class="form-submit-note">We'll email you when classes you checked are scheduled.</span>
         </div>
       </form>
+
+      <!-- Thank you state -->
+      <div class="form-thanks" id="formThanks">
+        <h3>Thank you. <em>We've got it.</em></h3>
+        <p>Your sign-up is in. We'll email you when something you marked gets scheduled — usually a few weeks out. In the meantime, you can browse the full catalog at <a href="schedule.html" style="color: var(--sage);">schedule.html</a>.</p>
+      </div>
+
     </div>
   </section>
 
-  <!-- =========================================================
-       FOOTER
-       ========================================================= -->
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div>
           <div class="wordmark-lg">The Hobbiest</div>
-          <p>A skills club where all the things you wish you knew are taught. Opening Summer 2026 in downtown Pittston, PA.</p>
+          <p>A skills club where all the things you wish you knew are taught. Opening July 2026 in downtown Pittston, PA.</p>
         </div>
         <div>
           <h4>Visit</h4>
@@ -789,18 +940,19 @@
           <div class="stack">
             <a href="#" rel="noopener">Instagram</a>
             <a href="#" rel="noopener">Facebook</a>
-            <a href="mailto:hello@thehobbiestskillsclub.com">hello@thehobbiestskillsclub.com</a>
+            <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© 2026 The Hobbiest Skills Club</span>
-        <span>Built with intention.</span>
+        <span><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></span>
       </div>
     </div>
   </footer>
 
   <script>
+    // Reveal on scroll
     const reveals = document.querySelectorAll('[data-reveal]');
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
@@ -811,6 +963,27 @@
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     reveals.forEach((r) => io.observe(r));
+
+    // Form submission handler
+    // For Netlify Forms: form posts directly; the data-netlify="true" attribute
+    // and the hidden form-name field handle submission server-side.
+    // Replace action="#" with your real endpoint to use Formspree or similar.
+    //
+    // The block below intercepts submission to show an inline thank-you instead
+    // of navigating away. If you wire up an actual endpoint, uncomment the
+    // fetch() call and adjust as needed.
+    const form = document.getElementById('signupForm');
+    const thanks = document.getElementById('formThanks');
+    form.addEventListener('submit', (e) => {
+      // If action is still "#" (i.e., no backend wired up), prevent default
+      // and just show the thank-you. Remove this block once you have a real endpoint.
+      if (form.getAttribute('action') === '#') {
+        e.preventDefault();
+        form.style.display = 'none';
+        thanks.classList.add('active');
+        window.scrollTo({ top: thanks.offsetTop - 100, behavior: 'smooth' });
+      }
+    });
   </script>
 
 </body>

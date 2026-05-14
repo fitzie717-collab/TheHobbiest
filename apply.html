@@ -6,17 +6,13 @@
   <meta name="theme-color" content="#7A8A6B" />
 
   <title>Apply to Teach — The Hobbiest</title>
-  <meta name="description" content="Teach at The Hobbiest. A 50/50 partnership with instructors — we provide the space, students, and marketing. You teach what you love." />
+  <meta name="description" content="Apply to teach at The Hobbiest. We're building our founding faculty for July 2026." />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="Apply to Teach — The Hobbiest" />
-  <meta property="og:description" content="A 50/50 partnership with instructors at a new skills club in Pittston, PA." />
+  <meta property="og:description" content="We're building our founding faculty for July 2026 in Pittston, PA." />
   <meta property="og:type" content="website" />
 
-  <!-- Favicon -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
@@ -30,20 +26,16 @@
       --ink-soft:  #6B7459;
       --muted:     #8A8170;
       --hairline:  #D9D2BE;
-
       --sage:      #7A8A6B;
       --sage-deep: #4E5A41;
       --sage-pale: #B5BFA8;
-      --taupe:     #A89878;
 
       --font-display: "Fraunces", "Times New Roman", serif;
       --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
 
       --max-w:    1280px;
       --gutter:   clamp(1.25rem, 4vw, 3rem);
-      --section-y: clamp(4rem, 9vw, 8rem);
-
-      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease:     cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -56,10 +48,8 @@
       color: var(--ink);
       background: var(--bg);
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
-    img { max-width: 100%; height: auto; display: block; }
     button, input, textarea, select { font-family: inherit; }
     a { color: inherit; }
     h1, h2, h3, h4 {
@@ -68,9 +58,9 @@
       line-height: 1.05;
       letter-spacing: -0.015em;
       margin: 0;
-      font-variation-settings: "opsz" 100;
     }
     p { margin: 0; }
+
     .container {
       max-width: var(--max-w);
       margin: 0 auto;
@@ -98,8 +88,12 @@
     }
     [data-reveal].is-visible { opacity: 1; transform: none; }
 
-    /* Nav */
-    .nav { position: relative; padding: 1.75rem 0; border-bottom: 1px solid var(--hairline); }
+    /* NAV */
+    .nav {
+      position: relative;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--hairline);
+    }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; }
     .wordmark {
       font-family: var(--font-display);
@@ -108,6 +102,7 @@
       color: var(--sage);
       text-decoration: none;
       font-variation-settings: "opsz" 144;
+      letter-spacing: -0.01em;
     }
     .nav-links { display: flex; gap: 1.5rem; align-items: center; }
     .nav-link {
@@ -126,36 +121,49 @@
       background: var(--sage); margin-top: 4px;
     }
     .nav-link-primary {
-      color: var(--bg); background: var(--sage);
-      padding: 0.55rem 1.1rem; border-radius: 999px;
-      letter-spacing: 0.12em; transition: background 0.2s var(--ease);
+      color: var(--bg);
+      background: var(--sage);
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      letter-spacing: 0.12em;
+      transition: background 0.2s var(--ease);
     }
     .nav-link-primary:hover { background: var(--sage-deep); color: var(--bg); }
-    .nav-link-primary::after { display: none !important; }
     @media (max-width: 640px) {
       .nav-links { gap: 0.85rem; }
       .nav-link { font-size: 0.65rem; letter-spacing: 0.12em; }
     }
 
-    /* Hero */
+    /* PAGE HERO */
     .page-hero {
-      padding: clamp(5rem, 10vw, 9rem) 0 clamp(4rem, 7vw, 6rem);
+      padding: clamp(4rem, 8vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
       border-bottom: 1px solid var(--hairline);
     }
     .page-hero-inner {
       display: grid;
-      grid-template-columns: 1.3fr 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: clamp(2rem, 6vw, 6rem);
       align-items: end;
     }
     .page-eyebrow {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
-      color: var(--sage); font-weight: 600; margin-bottom: 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 2rem;
     }
-    .page-eyebrow::before { content: ""; width: 32px; height: 1px; background: var(--sage); }
+    .page-eyebrow::before {
+      content: "";
+      width: 32px;
+      height: 1px;
+      background: var(--sage);
+    }
     .page-hero h1 {
-      font-size: clamp(2.75rem, 7vw, 6rem);
+      font-size: clamp(2.5rem, 6vw, 5rem);
       letter-spacing: -0.025em;
       font-weight: 350;
       font-variation-settings: "opsz" 144;
@@ -164,171 +172,52 @@
     .page-hero h1 em { font-style: italic; font-weight: 400; color: var(--sage); }
     .page-hero-lede {
       font-family: var(--font-display);
-      font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+      font-size: clamp(1.05rem, 1.5vw, 1.3rem);
       line-height: 1.5;
       color: var(--ink-soft);
-      max-width: 44ch;
       font-weight: 350;
+      max-width: 50ch;
     }
     .page-hero-lede em { font-style: italic; color: var(--sage); }
+    @media (max-width: 900px) {
+      .page-hero-inner { grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
+    }
 
-    /* Section helpers */
-    section { position: relative; padding: var(--section-y) 0; }
+    /* SECTION HELPERS */
     .eyebrow {
-      font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
-      color: var(--sage); font-weight: 600;
-      margin-bottom: 1.5rem; display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: inline-block;
     }
     .h-section {
+      font-family: var(--font-display);
       font-size: clamp(2rem, 4.5vw, 3.5rem);
       max-width: 20ch;
       letter-spacing: -0.02em;
       color: var(--sage-deep);
+      font-weight: 400;
+      line-height: 1.05;
     }
     .h-section em { font-style: italic; color: var(--sage); }
-    .lede {
-      font-family: var(--font-display);
-      font-size: clamp(1.15rem, 1.7vw, 1.4rem);
-      line-height: 1.5;
-      color: var(--ink-soft);
-      max-width: 58ch;
-      margin-top: 1.5rem;
-      font-weight: 350;
-    }
-    .lede em { font-style: italic; color: var(--sage); }
 
-    /* The deal section — list of partnership terms */
-    .deal {
-      padding: clamp(4rem, 8vw, 7rem) 0;
-    }
-    .deal-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      gap: clamp(2rem, 6vw, 5rem);
-      align-items: start;
-      margin-top: 3rem;
-    }
-    .deal-side {
-      position: sticky;
-      top: 2rem;
-    }
-    .deal-side h3 {
-      font-size: 1.6rem;
-      color: var(--sage-deep);
-      margin-bottom: 1rem;
-      letter-spacing: -0.01em;
-    }
-    .deal-side h3 em { font-style: italic; color: var(--sage); }
-    .deal-side p {
-      font-size: 1rem;
-      color: var(--ink-soft);
-      line-height: 1.65;
-    }
-    .deal-list {
-      display: grid;
-      gap: 0;
-    }
-    .deal-item {
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--hairline);
-      display: grid;
-      grid-template-columns: 60px 1fr;
-      gap: 1.5rem;
-      align-items: start;
-    }
-    .deal-item:first-child { padding-top: 0; }
-    .deal-item:last-child { border-bottom: none; }
-    .deal-num {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1.4rem;
-      color: var(--sage);
-      line-height: 1;
-    }
-    .deal-item h4 {
-      font-size: 1.3rem;
-      color: var(--sage-deep);
-      margin-bottom: 0.6rem;
-      letter-spacing: -0.01em;
-    }
-    .deal-item h4 em { font-style: italic; color: var(--sage); }
-    .deal-item p {
-      font-size: 0.98rem;
-      color: var(--ink-soft);
-      line-height: 1.65;
-    }
-
-    /* Two-column comparison: We provide / You provide */
-    .compare {
-      background: var(--bg-warm);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .compare-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      margin-top: 3.5rem;
-      border-top: 1px solid var(--hairline);
-      border-left: 1px solid var(--hairline);
-      background: var(--bg);
-    }
-    .compare-col {
-      padding: 2.5rem;
-      border-right: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .compare-col h3 {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1.6rem;
-      color: var(--sage);
-      margin-bottom: 1.5rem;
-    }
-    .compare-col h3 strong {
-      font-style: normal;
-      color: var(--sage-deep);
-      font-weight: 400;
-    }
-    .compare-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .compare-list li {
-      padding: 0.8rem 0;
-      border-bottom: 1px solid var(--hairline);
-      font-size: 0.98rem;
-      color: var(--ink-soft);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.8rem;
-      line-height: 1.55;
-    }
-    .compare-list li:last-child { border-bottom: none; }
-    .compare-list li::before {
-      content: "—";
-      color: var(--sage);
-      flex-shrink: 0;
-      margin-top: 0;
-    }
-
-    /* Form */
-    .form-section {
-      padding: clamp(4rem, 8vw, 7rem) 0;
-      background: var(--bg);
-    }
-    .form-header { max-width: 720px; margin-bottom: 3.5rem; }
+    /* FORM */
+    .form-section { padding: clamp(4rem, 8vw, 7rem) 0; background: var(--bg); }
+    .form-header { max-width: 720px; margin-bottom: 4rem; }
     .form-header .h-section { max-width: 18ch; }
     .form-lede {
       font-family: var(--font-display);
-      font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+      font-size: clamp(1.15rem, 1.9vw, 1.45rem);
       line-height: 1.5;
       color: var(--ink-soft);
       max-width: 56ch;
       margin-top: 1.5rem;
       font-weight: 350;
     }
+
     .form { max-width: 720px; }
     .form-block {
       padding: 2rem 0 2.5rem;
@@ -336,91 +225,282 @@
     }
     .form-block:first-child { padding-top: 0; }
     .form-block:last-of-type { border-bottom: none; }
+
     .form-block-num {
-      font-family: var(--font-display); font-style: italic;
-      font-size: 0.95rem; color: var(--sage);
-      letter-spacing: 0.05em; margin-bottom: 0.4rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--sage);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
     }
     .form-block-title {
       font-family: var(--font-display);
-      font-size: 1.55rem; color: var(--sage-deep);
-      margin-bottom: 0.4rem; letter-spacing: -0.01em;
+      font-size: 1.6rem;
+      color: var(--sage-deep);
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
     }
     .form-block-title em { font-style: italic; color: var(--sage); }
     .form-block-note {
-      font-family: var(--font-display); font-style: italic;
-      color: var(--muted); font-size: 0.95rem;
-      margin-bottom: 1.5rem; line-height: 1.5;
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
     }
+
     .form-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem; margin-bottom: 1rem;
+      gap: 1rem;
+      margin-bottom: 1rem;
     }
     .form-field label {
       display: block;
-      font-size: 0.78rem; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--muted);
-      margin-bottom: 0.6rem; font-weight: 500;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+      font-weight: 500;
+    }
+    .form-field-required::after {
+      content: " *";
+      color: var(--sage);
     }
     .form-field input,
     .form-field select,
     .form-field textarea {
-      width: 100%; padding: 0.85rem 1rem;
+      width: 100%;
+      padding: 0.85rem 1rem;
       font-size: 0.98rem;
       border: 1px solid var(--hairline);
-      background: var(--surface); color: var(--ink);
-      border-radius: 4px; outline: none;
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 4px;
+      outline: none;
       transition: border-color 0.2s var(--ease);
       font-family: inherit;
     }
     .form-field input:focus,
     .form-field select:focus,
     .form-field textarea:focus { border-color: var(--sage); }
-    .form-field textarea { min-height: 110px; resize: vertical; }
-    .form-field-helper {
+    .form-field textarea { min-height: 120px; resize: vertical; }
+    .form-field-help {
+      display: block;
       font-family: var(--font-display);
       font-style: italic;
-      font-size: 0.82rem;
       color: var(--muted);
-      margin-top: 0.4rem;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      line-height: 1.4;
     }
 
-    .check-group {
+    /* Checkbox grids */
+    .check-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.4rem 1.25rem;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.5rem 1.25rem;
     }
     .check-item {
-      display: flex; align-items: flex-start; gap: 0.7rem;
-      padding: 0.55rem 0; cursor: pointer; line-height: 1.45;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      padding: 0.55rem 0;
+      cursor: pointer;
+      line-height: 1.45;
     }
-    .check-item input { margin: 0.2rem 0 0 0; width: 16px; height: 16px;
-      accent-color: var(--sage); flex-shrink: 0; cursor: pointer; }
+    .check-item input[type="checkbox"],
+    .check-item input[type="radio"] {
+      margin: 0.2rem 0 0 0;
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      accent-color: var(--sage);
+      cursor: pointer;
+    }
     .check-item-text { font-size: 0.95rem; color: var(--ink); }
+    .check-item-text .meta {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
     .check-item:hover .check-item-text { color: var(--sage-deep); }
 
+    /* AVAILABILITY MATRIX */
+    .matrix-wrap {
+      margin-top: 0.5rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      background: var(--surface);
+    }
+    .matrix {
+      width: 100%;
+      min-width: 640px;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .matrix th, .matrix td {
+      padding: 0;
+      text-align: center;
+      vertical-align: middle;
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .matrix th:last-child, .matrix td:last-child { border-right: none; }
+    .matrix tr:last-child td { border-bottom: none; }
+    .matrix thead th {
+      background: var(--bg-warm);
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--sage-deep);
+      font-size: 0.95rem;
+      padding: 0.8rem 0.3rem;
+    }
+    .matrix thead th.matrix-corner {
+      background: var(--surface);
+      width: 140px;
+      font-style: normal;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .matrix tbody th {
+      background: var(--bg-warm);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+      font-family: var(--font-body);
+      font-weight: 500;
+      color: var(--sage-deep);
+      font-size: 0.88rem;
+      line-height: 1.3;
+      width: 140px;
+    }
+    .matrix tbody th .matrix-time-range {
+      display: block;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+    .matrix td { position: relative; transition: background 0.15s var(--ease); }
+    .matrix td:hover { background: var(--bg); }
+    .matrix-cell-label {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0.95rem 0.5rem;
+      cursor: pointer;
+      position: relative;
+    }
+    .matrix-cell-label input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .matrix-cell-box {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--hairline);
+      border-radius: 3px;
+      background: var(--bg);
+      transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
+      position: relative;
+    }
+    .matrix-cell-label:hover .matrix-cell-box { border-color: var(--sage); }
+    .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box {
+      background: var(--sage);
+      border-color: var(--sage);
+    }
+    .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 0px;
+      width: 6px;
+      height: 11px;
+      border: solid var(--bg);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .matrix-cell-label:has(input:checked) { background: rgba(122, 138, 107, 0.08); }
+    .matrix-hint {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 0.75rem;
+      display: block;
+      font-family: var(--font-display);
+    }
+
+    /* SUBMIT */
     .form-submit-row {
       padding-top: 2.5rem;
-      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
     }
     .btn-primary {
       padding: 1.05rem 2.25rem;
-      background: var(--sage); color: var(--bg);
-      border: 1px solid var(--sage); border-radius: 999px;
-      font-family: inherit; font-size: 0.98rem;
-      font-weight: 500; letter-spacing: 0.02em;
+      background: var(--sage);
+      color: var(--bg);
+      border: 1px solid var(--sage);
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
       cursor: pointer;
       transition: background 0.2s var(--ease), transform 0.2s var(--ease);
     }
     .btn-primary:hover { background: var(--sage-deep); border-color: var(--sage-deep); }
     .btn-primary:active { transform: translateY(1px); }
     .form-submit-note {
-      font-family: var(--font-display); font-style: italic;
-      color: var(--muted); font-size: 0.92rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.92rem;
     }
 
-    /* Footer */
+    /* THANK YOU STATE */
+    .form-thanks {
+      display: none;
+      padding: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      text-align: center;
+      max-width: 720px;
+    }
+    .form-thanks.active { display: block; }
+    .form-thanks h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--sage-deep);
+      margin-bottom: 1rem;
+    }
+    .form-thanks h3 em { font-style: italic; color: var(--sage); }
+    .form-thanks p {
+      color: var(--ink-soft);
+      line-height: 1.65;
+      max-width: 42ch;
+      margin: 0 auto;
+    }
+
+    /* FOOTER */
     footer {
       background: var(--sage-deep);
       color: rgba(241, 236, 223, 0.85);
@@ -456,33 +536,37 @@
     .footer-grid a:hover { color: var(--bg); }
     .stack { display: flex; flex-direction: column; }
     .wordmark-lg {
-      font-family: var(--font-display); font-style: italic;
-      font-size: 1.85rem; color: var(--bg);
-      margin-bottom: 1rem; font-variation-settings: "opsz" 144;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.85rem;
+      color: var(--bg);
+      margin-bottom: 1rem;
+      font-variation-settings: "opsz" 144;
     }
     .footer-bottom {
       padding-top: 2rem;
       border-top: 1px solid rgba(241, 236, 223, 0.15);
-      display: flex; justify-content: space-between;
-      flex-wrap: wrap; gap: 1rem;
-      font-size: 0.78rem; letter-spacing: 0.05em;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
       color: rgba(241, 236, 223, 0.55);
     }
-
+    .footer-bottom a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .footer-bottom a:hover { color: var(--bg); }
     @media (max-width: 900px) {
-      .page-hero-inner,
-      .deal-grid { grid-template-columns: 1fr; gap: 2rem; align-items: start; }
-      .deal-side { position: static; }
-      .compare-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- =========================================================
-       NAV
-       ========================================================= -->
+  <!-- NAV -->
   <nav class="nav">
     <div class="container nav-inner">
       <a href="index.html" class="wordmark">The Hobbiest</a>
@@ -495,291 +579,275 @@
     </div>
   </nav>
 
-  <!-- =========================================================
-       HERO
-       ========================================================= -->
+  <!-- PAGE HERO -->
   <header class="page-hero">
     <div class="container">
       <div class="page-hero-inner">
         <div data-reveal>
-          <span class="page-eyebrow">For Instructors</span>
-          <h1>Teach what you <em>love</em>.</h1>
+          <span class="page-eyebrow">Apply to Teach</span>
+          <h1>Teach a class. <em>Build the catalog.</em></h1>
         </div>
         <div data-reveal>
           <p class="page-hero-lede">
-            We're looking for instructors who genuinely know their craft and want to teach. A simple 50/50 partnership — <em>we provide everything but the teaching</em>. Show up, share your skill, share in what we make together.
+            We're building the founding faculty for The Hobbiest, opening July 2026 in Pittston. We're looking for craftspeople, professionals, and quiet experts who want to teach what they know to adults in a phone-free, focused room. <em>Tell us what you do.</em>
           </p>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- =========================================================
-       THE DEAL — partnership terms
-       ========================================================= -->
-  <section class="deal">
+  <!-- FORM -->
+  <section class="form-section">
     <div class="container">
-      <div data-reveal>
-        <span class="eyebrow">The Partnership</span>
-        <h2 class="h-section">How it <em>works</em>.</h2>
-        <p class="lede">No rent. No platform fee. No marketing burden. A genuine partnership where both sides have skin in the game.</p>
-      </div>
 
-      <div class="deal-grid">
-        <div class="deal-side" data-reveal>
-          <h3>Built for <em>real teachers</em>.</h3>
-          <p>Most class businesses pay instructors flat rates that turn teaching into a side gig. We don't. The 50/50 model means we have real skin in your success — when a class fills and students come back, we both benefit.</p>
-          <p style="margin-top: 1rem;">In return, we ask that you commit to teaching at least one class series or three single sessions a quarter, and that you don't poach your students into private lessons that bypass us. That's it.</p>
-        </div>
-
-        <div class="deal-list" data-reveal>
-          <div class="deal-item">
-            <div class="deal-num">01</div>
-            <div>
-              <h4>You keep <em>half of net revenue</em>.</h4>
-              <p>After materials, instructor and Hobbiest split class revenue 50/50. Materials are sourced by you at cost (we reimburse) — you know what your students need better than we do.</p>
-            </div>
-          </div>
-          <div class="deal-item">
-            <div class="deal-num">02</div>
-            <div>
-              <h4>We provide <em>the room</em>.</h4>
-              <p>Workshop space, tables, lighting, coffee, bathrooms, parking. Two beautifully renovated buildings on North Main Street in downtown Pittston. No rent ever charged.</p>
-            </div>
-          </div>
-          <div class="deal-item">
-            <div class="deal-num">03</div>
-            <div>
-              <h4>We bring the <em>students</em>.</h4>
-              <p>Marketing, social media, email lists, booking platform, registration, payments — all on us. You teach. We handle the rest.</p>
-            </div>
-          </div>
-          <div class="deal-item">
-            <div class="deal-num">04</div>
-            <div>
-              <h4>Materials reimbursed <em>at cost</em>.</h4>
-              <p>You source what your students need at wholesale. Submit receipts. We reimburse within seven days, before the class even runs. No fronting your own money.</p>
-            </div>
-          </div>
-          <div class="deal-item">
-            <div class="deal-num">05</div>
-            <div>
-              <h4>Paid <em>weekly</em>.</h4>
-              <p>For series classes, your half is paid each week after the class meets. For single sessions, within seven days. Predictable cash flow, no chasing checks.</p>
-            </div>
-          </div>
-          <div class="deal-item">
-            <div class="deal-num">06</div>
-            <div>
-              <h4>Your class, <em>your way</em>.</h4>
-              <p>You choose the curriculum, the kit, the price point (within our pricing structure), and the size cap. We trust you to know how to teach what you teach.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       WE PROVIDE / YOU PROVIDE
-       ========================================================= -->
-  <section class="compare">
-    <div class="container">
-      <div data-reveal>
-        <span class="eyebrow">The Split</span>
-        <h2 class="h-section">What each <em>side brings</em>.</h2>
-      </div>
-
-      <div class="compare-grid" data-reveal>
-        <div class="compare-col">
-          <h3><strong>We provide</strong> <em>everything but the teaching.</em></h3>
-          <ul class="compare-list">
-            <li>The space, ready to go — tables, chairs, lighting, supplies storage</li>
-            <li>Marketing and social media presence</li>
-            <li>Email list of interested students</li>
-            <li>Online registration and payment processing</li>
-            <li>Reservation deposit system (we don't run half-empty classes)</li>
-            <li>Coffee and light snacks for you and your students</li>
-            <li>Insurance for the space and classes</li>
-            <li>Materials reimbursement at cost, within 7 days</li>
-            <li>Weekly payment for series, within 7 days for singles</li>
-            <li>Welcome kit, branded materials, photography of your work</li>
-            <li>Cross-promotion across all our channels</li>
-          </ul>
-        </div>
-        <div class="compare-col">
-          <h3><strong>You provide</strong> <em>what you're great at.</em></h3>
-          <ul class="compare-list">
-            <li>Real expertise in what you teach — at least 3 years of serious practice</li>
-            <li>A curriculum (we'll help you shape the first one if needed)</li>
-            <li>Material sourcing at wholesale, with receipts</li>
-            <li>Your time — for the class itself plus prep and setup</li>
-            <li>Patience with beginners — most of our students are starting fresh</li>
-            <li>Commitment to one series or three single sessions per quarter, minimum</li>
-            <li>A non-poaching agreement during and 6 months after teaching with us</li>
-            <li>Photos of your work for marketing (we credit you everywhere)</li>
-            <li>Background check (we handle the cost — required for all instructors)</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       APPLICATION FORM
-       ========================================================= -->
-  <section class="form-section" id="apply">
-    <div class="container">
       <div class="form-header" data-reveal>
-        <span class="eyebrow">Apply to Teach</span>
-        <h2 class="h-section">Tell us about <em>yourself</em>.</h2>
-        <p class="form-lede">Six questions. We'll read every application personally and get back to you within two weeks.</p>
+        <span class="eyebrow">The application</span>
+        <h2 class="h-section">A few <em>questions</em>.</h2>
+        <p class="form-lede">No CV needed. We're more interested in what you'd teach, how you'd teach it, and what you're like in a room of beginners. Takes about 10 minutes.</p>
       </div>
 
-      <!--
-        ============================================================
-        FORM SUBMISSION
-        ============================================================
-        Replace `action="#"` with your form handler URL.
-        Recommended: Formspree, Netlify Forms, or your own backend.
-        ============================================================
-      -->
-      <form class="form" id="applyForm" action="#" method="POST" data-reveal>
+      <form class="form" id="applyForm" action="#" method="POST" data-netlify="true" name="instructor-application">
+        <input type="hidden" name="form-name" value="instructor-application" />
 
-        <!-- 01. YOU -->
-        <div class="form-block">
-          <div class="form-block-num">01 — You</div>
-          <h3 class="form-block-title">Who <em>are you</em>?</h3>
-          <p class="form-block-note">The basics. We'll be in touch from this email.</p>
+        <!-- 01: About you -->
+        <div class="form-block" data-reveal>
+          <div class="form-block-num">01</div>
+          <h3 class="form-block-title">About <em>you</em></h3>
+          <p class="form-block-note">Just the basics — we'll follow up by email.</p>
 
           <div class="form-row">
             <div class="form-field">
-              <label for="firstName">First name</label>
-              <input type="text" id="firstName" name="firstName" required />
+              <label for="name" class="form-field-required">Full name</label>
+              <input type="text" id="name" name="name" required />
             </div>
             <div class="form-field">
-              <label for="lastName">Last name</label>
-              <input type="text" id="lastName" name="lastName" required />
+              <label for="pronouns">Pronouns (optional)</label>
+              <input type="text" id="pronouns" name="pronouns" placeholder="she/her, he/him, they/them..." />
             </div>
           </div>
+
           <div class="form-row">
             <div class="form-field">
-              <label for="email">Email</label>
+              <label for="email" class="form-field-required">Email</label>
               <input type="email" id="email" name="email" required />
             </div>
             <div class="form-field">
-              <label for="phone">Phone (optional)</label>
+              <label for="phone">Phone</label>
               <input type="tel" id="phone" name="phone" />
             </div>
           </div>
+
           <div class="form-row">
             <div class="form-field">
-              <label for="city">City &amp; state</label>
-              <input type="text" id="city" name="city" placeholder="Pittston, PA" required />
+              <label for="location" class="form-field-required">Where are you based?</label>
+              <input type="text" id="location" name="location" placeholder="Pittston, Scranton, Wilkes-Barre, etc." required />
+              <span class="form-field-help">We're local-first, but we're open to instructors from across NEPA.</span>
+            </div>
+            <div class="form-field">
+              <label for="website">Website or portfolio (optional)</label>
+              <input type="url" id="website" name="website" placeholder="https://..." />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="instagram">Instagram (optional)</label>
+              <input type="text" id="instagram" name="instagram" placeholder="@handle" />
             </div>
           </div>
         </div>
 
-        <!-- 02. WHAT YOU TEACH -->
-        <div class="form-block">
-          <div class="form-block-num">02 — What you teach</div>
-          <h3 class="form-block-title">What's your <em>craft</em>?</h3>
-          <p class="form-block-note">What would you teach at The Hobbiest? Be specific. A class title or topic is enough — we'll work out the format with you.</p>
+        <!-- 02: What you'd teach -->
+        <div class="form-block" data-reveal>
+          <div class="form-block-num">02</div>
+          <h3 class="form-block-title">What you'd <em>teach</em></h3>
+          <p class="form-block-note">Pick any categories that fit. You can propose classes inside or outside what's currently on the schedule.</p>
 
-          <div class="form-field">
-            <label for="craft">Your craft or topic</label>
-            <input type="text" id="craft" name="craft" placeholder="Watercolor, modern calligraphy, sourdough baking, basic home repair, hand embroidery..." required />
+          <div class="form-field" style="margin-bottom: 1.5rem;">
+            <label>Which categories fit your expertise?</label>
+            <div class="check-grid">
+              <label class="check-item">
+                <input type="checkbox" name="categories[]" value="Fiber Arts" />
+                <span class="check-item-text">Fiber Arts<span class="meta">Knitting, crochet, sewing, mending, weaving</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="categories[]" value="Drawing & Paper" />
+                <span class="check-item-text">Drawing &amp; Paper<span class="meta">Watercolor, drawing, bookbinding, journals</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="categories[]" value="Calligraphy & Lettering" />
+                <span class="check-item-text">Calligraphy &amp; Lettering<span class="meta">Pointed pen, modern calligraphy, lettering</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="categories[]" value="Life Skills" />
+                <span class="check-item-text">Life Skills<span class="meta">Hosting, etiquette, conversation, table setting</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="categories[]" value="Self-Sufficiency" />
+                <span class="check-item-text">Self-Sufficiency<span class="meta">Car care, home repair, paperwork, gardening</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="categories[]" value="Seasonal & Specialty" />
+                <span class="check-item-text">Seasonal &amp; Specialty<span class="meta">Florals, sourdough, charcuterie, plein-air</span></span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="categories[]" value="Something else" />
+                <span class="check-item-text">Something else<span class="meta">Tell us about it below.</span></span>
+              </label>
+            </div>
           </div>
 
-          <div class="form-field" style="margin-top: 1.5rem;">
-            <label>Which category does it fit best?</label>
-            <div class="check-group" style="margin-top: 0.4rem;">
-              <label class="check-item"><input type="checkbox" name="category" value="Fiber Arts" /><span class="check-item-text">Fiber Arts</span></label>
-              <label class="check-item"><input type="checkbox" name="category" value="Drawing & Paper" /><span class="check-item-text">Drawing &amp; Paper</span></label>
-              <label class="check-item"><input type="checkbox" name="category" value="Calligraphy & Lettering" /><span class="check-item-text">Calligraphy &amp; Lettering</span></label>
-              <label class="check-item"><input type="checkbox" name="category" value="Life Skills" /><span class="check-item-text">Life Skills</span></label>
-              <label class="check-item"><input type="checkbox" name="category" value="Self-Sufficiency" /><span class="check-item-text">Self-Sufficiency</span></label>
-              <label class="check-item"><input type="checkbox" name="category" value="Floral & Seasonal" /><span class="check-item-text">Floral &amp; Seasonal</span></label>
-              <label class="check-item"><input type="checkbox" name="category" value="Cooking & Food" /><span class="check-item-text">Cooking &amp; Food</span></label>
-              <label class="check-item"><input type="checkbox" name="category" value="Other" /><span class="check-item-text">Other / something new</span></label>
+          <div class="form-field" style="margin-bottom: 1.5rem;">
+            <label for="proposed_classes" class="form-field-required">What class (or classes) would you teach?</label>
+            <textarea id="proposed_classes" name="proposed_classes" required placeholder="Be specific. For example: 'A 4-week intro to wheel pottery, 8 students max, kit included' — or pitch us something we haven't thought of."></textarea>
+            <span class="form-field-help">Feel free to list multiple. You can pitch existing classes from our schedule or new ones entirely.</span>
+          </div>
+
+          <div class="form-field" style="margin-bottom: 1.5rem;">
+            <label for="background" class="form-field-required">Tell us about your background</label>
+            <textarea id="background" name="background" required placeholder="How did you come to this craft? Where have you taught or practiced before? Whatever you'd want us to know."></textarea>
+            <span class="form-field-help">Formal teaching experience is welcome but not required. A real craft and a willingness to meet beginners where they are count for more.</span>
+          </div>
+
+          <div class="form-field">
+            <label for="format_preference">Preferred class format</label>
+            <div class="check-grid">
+              <label class="check-item">
+                <input type="checkbox" name="format[]" value="Single session (1–3 hrs)" />
+                <span class="check-item-text">Single session (1–3 hours)</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="format[]" value="Multi-week series (3–6 weeks)" />
+                <span class="check-item-text">Multi-week series (3–6 weeks)</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="format[]" value="Weekend intensive" />
+                <span class="check-item-text">Weekend intensive</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="format[]" value="Offsite (outdoor, at a partner location)" />
+                <span class="check-item-text">Offsite (outdoor, at a partner location)</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="format[]" value="Open / flexible" />
+                <span class="check-item-text">Open / flexible</span>
+              </label>
             </div>
           </div>
         </div>
 
-        <!-- 03. EXPERIENCE -->
-        <div class="form-block">
-          <div class="form-block-num">03 — Experience</div>
-          <h3 class="form-block-title">How long have you been <em>doing this</em>?</h3>
-          <p class="form-block-note">We're not snobs about credentials — what matters is genuine practice. Tell us your story.</p>
-
-          <div class="form-field">
-            <label for="experience">Your background with this craft</label>
-            <textarea id="experience" name="experience" placeholder="How long you've been practicing, what got you into it, where you trained (if applicable), what you've made, where you've shown or sold your work..." required></textarea>
-          </div>
-
-          <div class="form-field" style="margin-top: 1.5rem;">
-            <label for="taught">Have you taught before? Where?</label>
-            <textarea id="taught" name="taught" placeholder="If you've taught — formally or informally — tell us where, what, and to whom. If you haven't, just say so. New teachers are welcome."></textarea>
-          </div>
-        </div>
-
-        <!-- 04. SHOW YOUR WORK -->
-        <div class="form-block">
-          <div class="form-block-num">04 — Show your work</div>
-          <h3 class="form-block-title">Where can we <em>see what you make</em>?</h3>
-          <p class="form-block-note">Instagram, Etsy, personal website, portfolio — anywhere we can see your craft. If you don't have an online presence, that's fine; tell us what you'd send instead.</p>
-
-          <div class="form-field">
-            <label for="portfolio">Links to your work</label>
-            <textarea id="portfolio" name="portfolio" placeholder="https://instagram.com/yourhandle&#10;https://yourwebsite.com&#10;https://etsy.com/shop/yourshop"></textarea>
-          </div>
-        </div>
-
-        <!-- 05. AVAILABILITY -->
-        <div class="form-block">
-          <div class="form-block-num">05 — Availability</div>
+        <!-- 03: When you can teach -->
+        <div class="form-block" data-reveal>
+          <div class="form-block-num">03</div>
           <h3 class="form-block-title">When could you <em>teach</em>?</h3>
-          <p class="form-block-note">Roughly which days and times work for you. We schedule classes based on student demand, so this is a starting point, not a commitment.</p>
+          <p class="form-block-note">Check anything that generally works. We use this to plan the schedule.</p>
+
+          <div class="matrix-wrap">
+            <table class="matrix">
+              <thead>
+                <tr>
+                  <th class="matrix-corner">Day &amp; Time</th>
+                  <th>Mon</th>
+                  <th>Tue</th>
+                  <th>Wed</th>
+                  <th>Thu</th>
+                  <th>Fri</th>
+                  <th>Sat</th>
+                  <th>Sun</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Morning<span class="matrix-time-range">8 AM – 11 AM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Morning"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Morning"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Morning"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Morning"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Morning"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Morning"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Morning"><span class="matrix-cell-box"></span></label></td>
+                </tr>
+                <tr>
+                  <th scope="row">Midday<span class="matrix-time-range">11 AM – 2 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Midday"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Midday"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Midday"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Midday"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Midday"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Midday"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Midday"><span class="matrix-cell-box"></span></label></td>
+                </tr>
+                <tr>
+                  <th scope="row">Afternoon<span class="matrix-time-range">2 PM – 5 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Afternoon"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Afternoon"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Afternoon"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Afternoon"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Afternoon"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Afternoon"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Afternoon"><span class="matrix-cell-box"></span></label></td>
+                </tr>
+                <tr>
+                  <th scope="row">Evening<span class="matrix-time-range">5 PM – 8 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Evening"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Evening"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Evening"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Evening"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Evening"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Evening"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Evening"><span class="matrix-cell-box"></span></label></td>
+                </tr>
+                <tr>
+                  <th scope="row">Late Evening<span class="matrix-time-range">8 PM – 10 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Late"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Late"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Late"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Late"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Late"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Late"><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Late"><span class="matrix-cell-box"></span></label></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <span class="matrix-hint">Tap any block of time that could work for you. This isn't a commitment — it's a starting point.</span>
+        </div>
+
+        <!-- 04: Why The Hobbiest -->
+        <div class="form-block" data-reveal>
+          <div class="form-block-num">04</div>
+          <h3 class="form-block-title">Why The <em>Hobbiest</em>?</h3>
+          <p class="form-block-note">In your own words. We read everything.</p>
 
           <div class="form-field">
-            <label for="availability">When you're typically free to teach</label>
-            <textarea id="availability" name="availability" placeholder="e.g. 'Tuesday and Thursday evenings, Saturday mornings, weekday afternoons after 2pm'"></textarea>
-          </div>
-
-          <div class="form-field" style="margin-top: 1.5rem;">
-            <label for="firstClass">When could you teach your first class?</label>
-            <input type="text" id="firstClass" name="firstClass" placeholder="Earliest start date — we're looking ahead to fall 2026" />
+            <label for="why">What draws you to teaching here?</label>
+            <textarea id="why" name="why" placeholder="Optional. What about a phone-free, focused, adult learning space appeals to you?"></textarea>
           </div>
         </div>
 
-        <!-- 06. ANYTHING ELSE -->
-        <div class="form-block">
-          <div class="form-block-num">06 — Anything else</div>
-          <h3 class="form-block-title">What should we <em>know</em>?</h3>
-          <p class="form-block-note">Optional. Anything you want us to consider — questions, ideas for collaboration, classes you wish existed, anything.</p>
-
-          <div class="form-field">
-            <textarea id="notes" name="notes" placeholder="Tell us what we missed..."></textarea>
-          </div>
-        </div>
-
+        <!-- Submit -->
         <div class="form-submit-row">
-          <button type="submit" class="btn-primary">Send my application</button>
-          <span class="form-submit-note">We'll be in touch within two weeks.</span>
+          <button type="submit" class="btn-primary">Send application →</button>
+          <span class="form-submit-note">We respond within a week.</span>
         </div>
       </form>
+
+      <!-- Thank you state -->
+      <div class="form-thanks" id="formThanks">
+        <h3>Thank you. <em>Truly.</em></h3>
+        <p>Your application is in. We read every one and reply within a week — usually sooner. In the meantime, the schedule is at <a href="schedule.html" style="color: var(--sage);">schedule.html</a> if you want to see what we're building.</p>
+      </div>
+
     </div>
   </section>
 
-  <!-- =========================================================
-       FOOTER
-       ========================================================= -->
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div>
           <div class="wordmark-lg">The Hobbiest</div>
-          <p>A skills club where all the things you wish you knew are taught. Opening Summer 2026 in downtown Pittston, PA.</p>
+          <p>A skills club where all the things you wish you knew are taught. Opening July 2026 in downtown Pittston, PA.</p>
         </div>
         <div>
           <h4>Visit</h4>
@@ -790,18 +858,19 @@
           <div class="stack">
             <a href="#" rel="noopener">Instagram</a>
             <a href="#" rel="noopener">Facebook</a>
-            <a href="mailto:hello@thehobbiestskillsclub.com">hello@thehobbiestskillsclub.com</a>
+            <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© 2026 The Hobbiest Skills Club</span>
-        <span>Built with intention.</span>
+        <span><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></span>
       </div>
     </div>
   </footer>
 
   <script>
+    // Reveal on scroll
     const reveals = document.querySelectorAll('[data-reveal]');
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
@@ -812,6 +881,27 @@
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     reveals.forEach((r) => io.observe(r));
+
+    // Form submission handler
+    // For Netlify Forms: form posts directly; the data-netlify="true" attribute
+    // and the hidden form-name field handle submission server-side.
+    // Replace action="#" with your real endpoint to use Formspree or similar.
+    //
+    // The block below intercepts submission to show an inline thank-you instead
+    // of navigating away. If you wire up an actual endpoint, uncomment the
+    // fetch() call and adjust as needed.
+    const form = document.getElementById('applyForm');
+    const thanks = document.getElementById('formThanks');
+    form.addEventListener('submit', (e) => {
+      // If action is still "#" (i.e., no backend wired up), prevent default
+      // and just show the thank-you. Remove this block once you have a real endpoint.
+      if (form.getAttribute('action') === '#') {
+        e.preventDefault();
+        form.style.display = 'none';
+        thanks.classList.add('active');
+        window.scrollTo({ top: thanks.offsetTop - 100, behavior: 'smooth' });
+      }
+    });
   </script>
 
 </body>
