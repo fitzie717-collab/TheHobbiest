@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#7A8A6B" />
+  <title>Terms of Service — The Hobbiest</title>
+  <meta name="description" content="Terms of Service for The Hobbiest Skills Club, Pittston, PA." />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:        #F1ECDF;
+      --bg-warm:   #EAE3D2;
+      --surface:   #FAF7F0;
+      --ink:       #4E5A41;
+      --ink-soft:  #6B7459;
+      --muted:     #8A8170;
+      --hairline:  #D9D2BE;
+      --sage:      #7A8A6B;
+      --sage-deep: #4E5A41;
+      --sage-pale: #B5BFA8;
+
+      --font-display: "Fraunces", "Times New Roman", serif;
+      --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --max-w:    1280px;
+      --gutter:   clamp(1.25rem, 4vw, 3rem);
+
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a { color: inherit; }
+    button { font-family: inherit; cursor: pointer; }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      opacity: 0.55;
+      mix-blend-mode: multiply;
+    }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+    }
+
+    /* NAV */
+    .nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: 1.75rem 0;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .wordmark {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      font-style: italic;
+      color: var(--sage);
+      text-decoration: none;
+      font-variation-settings: "opsz" 144;
+    }
+    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
+    .nav-link {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s var(--ease);
+    }
+    .nav-link:hover { color: var(--sage); }
+    .nav-link-primary {
+      color: var(--bg);
+      background: var(--sage);
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      letter-spacing: 0.12em;
+      transition: background 0.2s var(--ease);
+    }
+    .nav-link-primary:hover { background: var(--sage-deep); color: var(--bg); }
+    .nav-item-dropdown { position: relative; }
+    .nav-dropdown-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 0;
+      font-family: inherit;
+      cursor: pointer;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    .nav-dropdown-arrow {
+      font-size: 0.85em;
+      transition: transform 0.2s var(--ease);
+      display: inline-block;
+    }
+    .nav-item-dropdown:hover .nav-dropdown-arrow,
+    .nav-item-dropdown:focus-within .nav-dropdown-arrow { transform: rotate(180deg); }
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 0;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      padding: 0.5rem 0;
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), visibility 0.2s var(--ease);
+      box-shadow: 0 10px 32px rgba(78, 90, 65, 0.12);
+      z-index: 20;
+    }
+    .nav-item-dropdown:hover .nav-dropdown,
+    .nav-item-dropdown:focus-within .nav-dropdown {
+      opacity: 1; visibility: visible; transform: translateY(0);
+    }
+    .nav-dropdown-link {
+      display: block;
+      padding: 0.7rem 1.2rem;
+      font-size: 0.74rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s var(--ease), background 0.2s var(--ease);
+    }
+    .nav-dropdown-link:hover { color: var(--sage); background: var(--bg); }
+    @media (max-width: 640px) {
+      .nav-links { gap: 0.9rem; }
+      .nav-link { font-size: 0.68rem; letter-spacing: 0.14em; }
+      .nav-dropdown { right: auto; left: 0; min-width: 180px; }
+    }
+
+    /* PAGE */
+    .page-hero { padding: 9rem 0 2.5rem; }
+    .page-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      display: inline-block;
+    }
+    .page-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.25rem, 5vw, 3.75rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--sage-deep);
+      line-height: 1.05;
+      margin: 0;
+      font-variation-settings: "opsz" 144;
+    }
+    .page-title em { font-style: italic; color: var(--sage); }
+    .page-meta {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-style: italic;
+      font-family: var(--font-display);
+    }
+
+    .content {
+      padding: 1.5rem 0 6rem;
+      max-width: 70ch;
+    }
+    .content h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 400;
+      color: var(--sage-deep);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin: 2.5rem 0 1rem;
+    }
+    .content h2 em { font-style: italic; color: var(--sage); }
+    .content h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--sage-deep);
+      margin: 1.75rem 0 0.6rem;
+    }
+    .content p {
+      color: var(--ink-soft);
+      line-height: 1.7;
+      margin: 0 0 1.1rem;
+    }
+    .content ul {
+      color: var(--ink-soft);
+      line-height: 1.7;
+      padding-left: 1.25rem;
+      margin: 0 0 1.1rem;
+    }
+    .content li { margin-bottom: 0.4rem; }
+    .content a {
+      color: var(--sage-deep);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--sage-pale);
+      transition: text-decoration-color 0.2s var(--ease);
+    }
+    .content a:hover { text-decoration-color: var(--sage); }
+    .content strong { color: var(--sage-deep); font-weight: 600; }
+
+    /* FOOTER */
+    footer {
+      background: var(--sage-deep);
+      color: var(--bg);
+      padding: 4.5rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    footer h4 {
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage-pale);
+      font-weight: 500;
+      margin-bottom: 1.2rem;
+    }
+    footer .wordmark-lg {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.85rem;
+      color: var(--bg);
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      font-variation-settings: "opsz" 144;
+    }
+    footer a { color: rgba(241, 236, 223, 0.78); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--sage-pale); }
+    footer p { color: rgba(241, 236, 223, 0.7); font-size: 0.95rem; line-height: 1.7; }
+    footer .stack a { display: block; margin-bottom: 0.5rem; font-size: 0.95rem; }
+    .footer-bottom {
+      border-top: 1px solid rgba(241, 236, 223, 0.15);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: rgba(241, 236, 223, 0.45);
+      letter-spacing: 0.04em;
+    }
+    .footer-legal { display: flex; align-items: center; gap: 0.5rem; }
+    .footer-divider { opacity: 0.5; }
+
+    @media (max-width: 880px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="wordmark">The Hobbiest</a>
+      <div class="nav-links">
+        <a href="schedule.html" class="nav-link">Course Schedule</a>
+        <a href="apply.html" class="nav-link">Instructor Applications</a>
+        <a href="hobbiests.html" class="nav-link">Hobbiests</a>
+        <div class="nav-item nav-item-dropdown">
+          <button class="nav-link nav-link-primary nav-dropdown-trigger" aria-haspopup="true">
+            Log in <span class="nav-dropdown-arrow" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-dropdown" role="menu">
+            <a href="instructor-login.html" class="nav-dropdown-link">For Instructors</a>
+            <a href="availability.html" class="nav-dropdown-link">For Hobbiests</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="page-hero">
+    <div class="container">
+      <span class="page-eyebrow">Legal</span>
+      <h1 class="page-title">Terms of <em>Service</em>.</h1>
+      <p class="page-meta">Last updated May 13, 2026</p>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content container">
+
+    <p>Welcome to The Hobbiest Skills Club. These Terms of Service ("Terms") govern your use of <a href="https://thehobbiestskillsclub.com">thehobbiestskillsclub.com</a>, our physical space at 135 N Main Street, Pittston, PA, and the classes, memberships, bundles, and offsites we offer. By signing up for a class, becoming a member, or using our website, you agree to these Terms.</p>
+
+    <h2>Who can <em>join</em></h2>
+    <p>The Hobbiest is a club for adults. You must be at least 18 years old to sign up for a membership or class on your own. We can't admit minors except in specifically marked family or guardian classes.</p>
+
+    <h2>Membership</h2>
+    <p>Memberships are billed monthly. Founder pricing — locked in for as long as your membership remains continuously active — is offered to members who join during the founding window (September 2026 onward) and stays at that rate until you cancel.</p>
+    <p>You can cancel anytime; we don't lock you in. Cancellation takes effect at the end of your current billing cycle. We don't prorate or refund partial months.</p>
+
+    <h2>Classes &amp; <em>registration</em></h2>
+    <p>To take a class you'll need to register and pay the class fee. Class spots are first-come, first-served unless a class is designated members-only.</p>
+
+    <h3>Cancellations &amp; refunds</h3>
+    <ul>
+      <li><strong>More than 7 days before class:</strong> full refund or credit toward another class.</li>
+      <li><strong>2–7 days before class:</strong> 50% refund or full class credit.</li>
+      <li><strong>Less than 48 hours:</strong> no refund, but you can transfer your spot to someone else by emailing us.</li>
+      <li><strong>If we cancel a class</strong> (instructor illness, weather, etc.): you get a full refund or credit, your choice.</li>
+    </ul>
+
+    <h3>Materials and supplies</h3>
+    <p>Some classes include materials in the fee; others ask you to bring your own. The class listing always says which. If a class has a materials fee on top of the class fee, that's listed too.</p>
+
+    <h2>Life Bundles &amp; <em>Offsites</em></h2>
+    <p>Life Bundles are sold as a package; the bundle fee secures your spot in all the classes in the bundle. If you can't attend a session in your bundle, we'll do our best to substitute another class of equal value.</p>
+    <p>Offsite classes happen at locations outside our Main Street space (gardens, garages, parks, etc.). You're responsible for getting yourself to and from the offsite location. Specific risks of the activity (you're outdoors, you're handling tools, etc.) will be described in the class listing.</p>
+
+    <h2>Code of <em>conduct</em></h2>
+    <p>The Hobbiest works because it's a thoughtful, focused space. We expect every member, guest, and instructor to:</p>
+    <ul>
+      <li><strong>Be 18 or older.</strong> The Hobbiest is an adults-only space.</li>
+      <li><strong>Keep your phone away.</strong> The Hobbiest is a cell-phone-free space and we don't offer WiFi. The whole point is to spend an hour or two without a screen.</li>
+      <li><strong>Treat others with kindness and respect</strong> — regardless of skill level, background, or identity.</li>
+      <li><strong>Show up on time and present</strong> for the class you signed up for.</li>
+      <li><strong>Leave the space cleaner than you found it.</strong></li>
+      <li><strong>No alcohol</strong> in the space; <strong>no smoking</strong> inside the building; <strong>no outside food</strong>. We provide water, tea, and coffee — save your meals for before or after class.</li>
+      <li><strong>Follow safety instructions from instructors</strong>, especially in classes with tools, heat, sharp objects, or outdoor settings.</li>
+      <li><strong>Hold photos until the end.</strong> Your instructor will invite a brief photo moment in the final minutes of class. Before then, please keep cameras and phones put away.</li>
+    </ul>
+    <p>We reserve the right to refuse service to, or end the membership of, anyone whose behavior is harassing, dangerous, or repeatedly disruptive. We don't refund the unused portion of a membership ended for cause.</p>
+
+    <h2>Photography &amp; <em>sharing</em></h2>
+    <p>The Hobbiest is a phone-free space. To preserve the focus of class, we ask that you keep your camera and phone away during the session. In the last few minutes, your instructor will invite a brief moment to photograph your work, the class, or both — and we'd love for you to share what you made on Instagram, with friends, anywhere. Tag us if you like.</p>
+    <p>The Hobbiest itself occasionally photographs classes and events for our own marketing. When we plan to photograph, we'll let you know at the start of class and you can opt out. If you'd prefer never to be photographed in our space, tell us in writing and we'll honor that across every class you take.</p>
+
+    <h2>Liability &amp; assumption of <em>risk</em></h2>
+    <p>Classes involve activities — some with tools, heat, sharp objects, food handling, physical movement, or outdoor settings — that carry some risk. By signing up, you acknowledge that you're participating voluntarily and assume the ordinary risks of the activity.</p>
+    <p>To the fullest extent permitted by Pennsylvania law, The Hobbiest Skills Club is not liable for personal injury, property damage, or losses arising out of class participation, except where caused by our gross negligence or willful misconduct. We carry the insurance Pennsylvania requires for a venue of this kind, and we'll point you to our certificate on request.</p>
+
+    <h2>Intellectual property</h2>
+    <p>The Hobbiest name, seal, logos, website design, and original content are ours. Instructor-created content (their handouts, demonstrations, etc.) belongs to the instructor. You're welcome to use what you make in our classes however you want — sell it, gift it, post it. We just ask that you don't reproduce our brand assets without written permission.</p>
+
+    <h2>Payment</h2>
+    <p>We charge through standard payment processors. Class fees and membership dues are non-transferable except as described in the cancellation policy above. Failed payments may pause your membership until resolved.</p>
+
+    <h2>Changes</h2>
+    <p>We may update these Terms from time to time. When we do, we'll change the "Last updated" date above and notify active members of meaningful changes by email. Continued use of our services after the change means you accept the updated Terms.</p>
+
+    <h2>Governing law</h2>
+    <p>These Terms are governed by the laws of the Commonwealth of Pennsylvania. Any dispute that can't be resolved informally will be heard in the courts of Luzerne County, Pennsylvania.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about these Terms: <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>, or write to us at:</p>
+    <p>The Hobbiest Skills Club<br />135 N Main Street<br />Pittston, PA 18640</p>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="wordmark-lg">The Hobbiest</div>
+          <p>A private members skills club for adults. Opening July 2026 in downtown Pittston, PA.</p>
+        </div>
+        <div>
+          <h4>Visit</h4>
+          <p>135 N Main Street<br />Pittston, PA 18640<br /><br />Wyoming Valley · NEPA</p>
+        </div>
+        <div>
+          <h4>Follow</h4>
+          <div class="stack">
+            <a href="#" rel="noopener">Instagram</a>
+            <a href="#" rel="noopener">Facebook</a>
+            <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 The Hobbiest Skills Club</span>
+        <div class="footer-legal">
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="footer-divider">·</span>
+          <a href="terms.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
