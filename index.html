@@ -152,6 +152,11 @@
       transition: color 0.2s var(--ease);
     }
     .nav-link:hover { color: var(--sage); }
+    .nav-link-current { color: var(--sage-deep); }
+    .nav-link-current::after {
+      content: ""; display: block; width: 100%; height: 1px;
+      background: var(--sage); margin-top: 4px;
+    }
     .nav-link-primary {
       color: var(--bg);
       background: var(--sage);
@@ -1339,18 +1344,10 @@
     <div class="container nav-inner">
       <a href="index.html" class="wordmark">The Hobbiest</a>
       <div class="nav-links">
-        <a href="schedule.html" class="nav-link">Course Schedule</a>
-        <a href="apply.html" class="nav-link">Instructor Applications</a>
-        <a href="hobbiests.html" class="nav-link">Hobbiests</a>
-        <div class="nav-item nav-item-dropdown">
-          <button class="nav-link nav-link-primary nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            Log in <span class="nav-dropdown-arrow" aria-hidden="true">▾</span>
-          </button>
-          <div class="nav-dropdown" role="menu">
-            <a href="instructor-login.html" class="nav-dropdown-link" role="menuitem">For Instructors</a>
-            <a href="availability.html" class="nav-dropdown-link" role="menuitem">For Hobbiests</a>
-          </div>
-        </div>
+        <a href="index.html" class="nav-link nav-link-current">Home</a>
+        <a href="schedule.html" class="nav-link">Skills Schedule</a>
+        <a href="apply.html" class="nav-link">Apply to Teach</a>
+        <a href="signup.html" class="nav-link nav-link-primary">Sign Up</a>
       </div>
     </div>
   </nav>
@@ -1437,28 +1434,28 @@
       </div>
 
       <div class="pillars-grid">
-        <a href="schedule.html#creative-pursuits" class="pillar" data-reveal>
+        <a href="schedule.html" class="pillar" data-reveal>
           <div class="pillar-num">01</div>
           <h3>Creative <em>Pursuits</em></h3>
           <p class="pillar-sub">Things made by hand.</p>
           <p>Calligraphy, drawing, watercolor, creative writing, embroidery, sourdough, bookbinding, hand lettering.</p>
         </a>
 
-        <a href="schedule.html#presents-presence" class="pillar" data-reveal>
+        <a href="schedule.html" class="pillar" data-reveal>
           <div class="pillar-num">02</div>
           <h3>Presents &amp; <em>Presence</em></h3>
           <p class="pillar-sub">Putting your best foot forward.</p>
           <p>Hosting, tablescaping, modern etiquette, gift wrapping, English tea, couples dancing, personal styling.</p>
         </a>
 
-        <a href="schedule.html#life-skills" class="pillar" data-reveal>
+        <a href="schedule.html" class="pillar" data-reveal>
           <div class="pillar-num">03</div>
           <h3>Life <em>Skills</em></h3>
           <p class="pillar-sub">Things they never taught in school.</p>
           <p>Changing a tire, negotiating, basic home repair, budgeting, financial planning basics, public speaking.</p>
         </a>
 
-        <a href="schedule.html#life-style" class="pillar" data-reveal>
+        <a href="schedule.html" class="pillar" data-reveal>
           <div class="pillar-num">04</div>
           <h3>Life <em>Style</em></h3>
           <p class="pillar-sub">Living a curated, intentional life.</p>
@@ -1486,14 +1483,14 @@
             <p>Classes run as 2- to 4-week sessions, organized by pillar. Drop into the ones that pull at you.</p>
             <span class="format-cta">See course catalog <span class="format-cta-arrow">→</span></span>
           </a>
-          <a href="bundles.html" class="format">
+          <a href="schedule.html#bundles" class="format">
             <div class="format-num">02</div>
             <h4>Life Bundles</h4>
             <p class="format-price">From $150 per bundle <span class="format-price-detail">($30 / session)</span></p>
             <p>Curated multi-class packages for the moment of life you're in — recent grad, newlywed, new mom.</p>
             <span class="format-cta">See bundles <span class="format-cta-arrow">→</span></span>
           </a>
-          <a href="offsites.html" class="format">
+          <a href="schedule.html" class="format">
             <div class="format-num">03</div>
             <h4>Offsites</h4>
             <p class="format-price">From $35 per session</p>
@@ -1529,7 +1526,7 @@
     <div class="container">
       <div class="launch-grid">
         <div class="launch-photo" data-reveal>
-          <img src="images/space-main.png" alt="The Hobbiest interior — members at tables working on crafts, with the upcoming-classes chalkboard, sage green accent wall, white brick on the right, and warm wood floors" />
+          <img src="images/space-main.jpg" alt="The Hobbiest interior — members at tables working on crafts, with the upcoming-classes chalkboard, sage green accent wall, white brick on the right, and warm wood floors" />
         </div>
 
         <div class="launch-info" data-reveal>
