@@ -6,11 +6,11 @@
   <meta name="theme-color" content="#7A8A6B" />
 
   <title>The Hobbiest — Skills Club, Pittston, PA</title>
-  <meta name="description" content="A private skills club where all the things you wish you knew are taught. Opening Summer 2026 in downtown Pittston, Pennsylvania." />
+  <meta name="description" content="A private members skills club for adults. Opening July 2026 in downtown Pittston, Pennsylvania." />
 
   <!-- Open Graph -->
   <meta property="og:title" content="The Hobbiest — Skills Club" />
-  <meta property="og:description" content="A skills club where all the things you wish you knew are taught. Opening Summer 2026 in downtown Pittston, PA." />
+  <meta property="og:description" content="A private members skills club for adults. Opening July 2026 in downtown Pittston, PA." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://thehobbiestskillsclub.com" />
   <meta property="og:image" content="https://thehobbiestskillsclub.com/og-image.jpg" />
@@ -161,9 +161,71 @@
       transition: background 0.2s var(--ease);
     }
     .nav-link-primary:hover { background: var(--sage-deep); color: var(--bg); }
+
+    /* Nav dropdown (Log in) */
+    .nav-item-dropdown {
+      position: relative;
+    }
+    .nav-dropdown-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 0;
+      font-family: inherit;
+      cursor: pointer;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    .nav-dropdown-arrow {
+      font-size: 0.85em;
+      transition: transform 0.2s var(--ease);
+      display: inline-block;
+    }
+    .nav-item-dropdown:hover .nav-dropdown-arrow,
+    .nav-item-dropdown:focus-within .nav-dropdown-arrow {
+      transform: rotate(180deg);
+    }
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 0;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      padding: 0.5rem 0;
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), visibility 0.2s var(--ease);
+      box-shadow: 0 10px 32px rgba(78, 90, 65, 0.12);
+      z-index: 20;
+    }
+    .nav-item-dropdown:hover .nav-dropdown,
+    .nav-item-dropdown:focus-within .nav-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .nav-dropdown-link {
+      display: block;
+      padding: 0.7rem 1.2rem;
+      font-size: 0.74rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s var(--ease), background 0.2s var(--ease);
+    }
+    .nav-dropdown-link:hover {
+      color: var(--sage);
+      background: var(--bg);
+    }
     @media (max-width: 640px) {
       .nav-links { gap: 0.9rem; }
       .nav-link { font-size: 0.68rem; letter-spacing: 0.14em; }
+      .nav-dropdown { right: auto; left: 0; min-width: 180px; }
     }
 
     /* ============================================================
@@ -171,78 +233,67 @@
        ============================================================ */
     .hero {
       position: relative;
-      min-height: 100vh;
-      padding: 9rem 0 5rem;
+      padding: 8rem 0 6rem;
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      gap: clamp(4rem, 7vw, 6rem);
       overflow: hidden;
     }
-    .hero-inner {
+    .hero-top {
       display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: clamp(2rem, 6vw, 6rem);
+      grid-template-columns: 1.2fr 1fr;
+      gap: clamp(2rem, 6vw, 5rem);
       align-items: center;
       width: 100%;
     }
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.72rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--sage);
-      font-weight: 600;
-      margin-bottom: 2.25rem;
+    .hero-seal-wrap {
+      position: relative;
+      max-width: 460px;
+      width: 100%;
+      margin: 0 auto;
     }
-    .hero-eyebrow::before {
-      content: "";
-      width: 32px;
-      height: 1px;
-      background: var(--sage);
+    .hero-seal {
+      width: 100%;
+      height: auto;
+      display: block;
     }
-    .hero h1 {
-      font-size: clamp(2.5rem, 6.5vw, 5.5rem);
-      letter-spacing: -0.025em;
+    .hero-quote {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 6.2vw, 5.25rem);
       font-weight: 350;
-      font-variation-settings: "opsz" 144;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
       color: var(--sage-deep);
+      margin: 0;
+      font-variation-settings: "opsz" 144;
     }
-    .hero h1 em {
+    .hero-quote em {
       font-style: italic;
       font-weight: 400;
       color: var(--sage);
     }
-    .hero-sub {
-      margin-top: 2rem;
-      font-size: clamp(1rem, 1.4vw, 1.18rem);
-      color: var(--ink-soft);
-      max-width: 42ch;
-      line-height: 1.55;
+    .hero-paragraph {
+      max-width: 72ch;
     }
-    .hero-form {
-      margin-top: 2.5rem;
-      display: flex;
-      gap: 0.5rem;
-      max-width: 480px;
-      flex-wrap: wrap;
+    .hero-paragraph p {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 1.55vw, 1.45rem);
+      line-height: 1.6;
+      color: var(--sage-deep);
+      font-weight: 350;
+      letter-spacing: -0.005em;
+      margin: 0;
     }
-    .hero-form input {
-      flex: 1 1 220px;
-      min-width: 0;
-      padding: 0.95rem 1.2rem;
-      font-family: inherit;
-      font-size: 0.98rem;
-      border: 1px solid var(--hairline);
-      background: var(--surface);
-      color: var(--ink);
-      border-radius: 999px;
-      outline: none;
-      transition: border-color 0.2s var(--ease);
-    }
-    .hero-form input::placeholder { color: var(--muted); }
-    .hero-form input:focus {
-      border-color: var(--sage);
+    .hero-paragraph p::first-letter {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 5rem;
+      float: left;
+      line-height: 0.82;
+      padding: 0.3rem 0.6rem 0 0;
+      color: var(--sage);
+      font-weight: 400;
+      font-variation-settings: "opsz" 144;
     }
     .btn {
       padding: 0.95rem 1.7rem;
@@ -264,7 +315,7 @@
       margin-top: 1rem;
     }
 
-    /* Hero CTA — dual button replacement for the email form */
+    /* Hero CTA — dual button */
     .hero-cta {
       margin-top: 2.5rem;
       display: flex;
@@ -352,14 +403,14 @@
       font-weight: 350;
     }
 
-    /* ============================================================
-       ABOUT
-       ============================================================ */
-    .about {
-      background: var(--bg-warm);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
+    .hero-cta-bottom {
+      margin-top: 1.5rem;
     }
+
+    /* ============================================================
+       ABOUT — now combined into the hero section above
+       Kept here because the hero's bottom row uses these styles
+       ============================================================ */
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -372,26 +423,58 @@
       color: var(--ink-soft);
       margin-bottom: 1.4rem;
     }
-    .about-body p:first-child {
+    .about-body p:first-of-type {
       font-family: var(--font-display);
-      font-size: 1.3rem;
+      font-size: clamp(1.35rem, 1.8vw, 1.6rem);
       color: var(--sage-deep);
       font-weight: 350;
-      line-height: 1.5;
+      line-height: 1.45;
+      letter-spacing: -0.01em;
     }
-    .about-body p:first-child::first-letter {
+    .about-body p:first-of-type::first-letter {
       font-family: var(--font-display);
       font-style: italic;
-      font-size: 4.5rem;
+      font-size: 5.5rem;
       float: left;
-      line-height: 0.85;
-      padding: 0.5rem 0.7rem 0 0;
+      line-height: 0.82;
+      padding: 0.35rem 0.65rem 0 0;
       color: var(--sage);
       font-weight: 400;
+      font-variation-settings: "opsz" 144;
+    }
+
+    /* Method examples nested inside about column */
+    .about-method {
+      margin-top: 1.75rem;
+    }
+    .about-method-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+    .about-method-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px dashed var(--hairline);
+      font-size: 0.98rem;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+    .about-method-item:last-child { border-bottom: none; }
+    .about-method-skill {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--sage);
+      flex-shrink: 0;
+      min-width: 12ch;
     }
 
     /* ============================================================
-       WHAT WE TEACH
+       WHAT WE TEACH — now clickable cards
        ============================================================ */
     .teach {
       background: var(--bg);
@@ -404,16 +487,30 @@
       border-top: 1px solid var(--hairline);
       border-left: 1px solid var(--hairline);
     }
+    .teach-grid-three {
+      grid-template-columns: repeat(3, 1fr);
+    }
     .teach-card {
       padding: 2.5rem;
       border-right: 1px solid var(--hairline);
       border-bottom: 1px solid var(--hairline);
       background: var(--bg);
-      transition: background 0.3s var(--ease);
+      transition: background 0.3s var(--ease), transform 0.3s var(--ease);
       position: relative;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
     }
     .teach-card:hover {
       background: var(--bg-warm);
+    }
+    .teach-card:hover .teach-cta {
+      color: var(--sage-deep);
+      gap: 0.6rem;
+    }
+    .teach-card:hover .teach-cta-arrow {
+      transform: translateX(4px);
     }
     .teach-num {
       font-family: var(--font-display);
@@ -444,63 +541,404 @@
       color: var(--ink-soft);
       font-size: 0.98rem;
       line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .teach-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      transition: color 0.2s var(--ease), gap 0.2s var(--ease);
+    }
+    .teach-cta-arrow {
+      display: inline-block;
+      transition: transform 0.2s var(--ease);
     }
 
     /* ============================================================
-       LEARN, THEN LIVE IT
+       BUNDLES & OFFSITES — beyond the regular curriculum
        ============================================================ */
-    .method {
-      background: var(--sage);
-      color: var(--bg);
-      position: relative;
-      overflow: hidden;
+    .bundles {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
     }
-    .method::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 50%;
-      width: 1px;
-      height: 80px;
-      background: var(--sage-pale);
-      opacity: 0.6;
-    }
-    .method .eyebrow { color: var(--sage-pale); }
-    .method .h-section { color: var(--bg); }
-    .method .h-section em { color: var(--sage-pale); font-style: italic; }
-    .method-lede {
-      font-family: var(--font-display);
-      font-size: clamp(1.25rem, 2vw, 1.6rem);
-      line-height: 1.5;
-      color: rgba(241, 236, 223, 0.88);
-      max-width: 58ch;
-      margin-top: 2rem;
-      font-weight: 350;
-    }
-    .method-list {
-      margin-top: 4rem;
+    .bundles-grid {
+      margin-top: 3.5rem;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
     }
-    .method-item {
-      border-top: 1px solid rgba(241, 236, 223, 0.25);
-      padding-top: 1.5rem;
+    .bundle-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      padding: 2.75rem;
+      border-radius: 4px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+      cursor: pointer;
+      position: relative;
     }
-    .method-item-skill {
+    .bundle-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--sage-pale);
+    }
+    .bundle-card:hover .bundle-card-cta {
+      gap: 0.65rem;
+    }
+    .bundle-card:hover .bundle-card-cta-arrow {
+      transform: translateX(4px);
+    }
+    .bundle-card-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+    }
+    .bundle-card-title {
+      font-family: var(--font-display);
+      font-size: 2.1rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--sage-deep);
+      line-height: 1.1;
+      margin: 0.1rem 0 0.2rem;
+    }
+    .bundle-card-title em {
+      font-style: italic;
+      color: var(--sage);
+    }
+    .bundle-card-body {
+      color: var(--ink-soft);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .bundle-card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.3rem 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem 0.7rem;
+    }
+    .bundle-card-list li {
       font-family: var(--font-display);
       font-style: italic;
-      font-size: 1.15rem;
-      color: var(--sage-pale);
-      margin-bottom: 0.6rem;
+      color: var(--sage);
+      font-size: 0.98rem;
     }
-    .method-item-then {
-      font-size: 1.05rem;
-      line-height: 1.55;
-      color: var(--bg);
+    .bundle-card-list li + li::before {
+      content: "·";
+      margin-right: 0.6rem;
+      color: var(--muted);
+      font-style: normal;
+    }
+    .bundle-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-top: auto;
+      padding-top: 0.6rem;
+      transition: gap 0.2s var(--ease);
+    }
+    .bundle-card-cta-arrow {
+      display: inline-block;
+      transition: transform 0.2s var(--ease);
     }
 
     /* ============================================================
-       SPACE / GALLERY
+       CURRICULUM VITAE — four pillars + three class formats
+       ============================================================ */
+    .curriculum {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .curriculum-intro {
+      margin-bottom: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1.5rem 2.5rem;
+    }
+    .curriculum-intro-text {
+      max-width: 100%;
+    }
+
+    /* Four pillars (2x2 grid) */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--hairline);
+      border-left: 1px solid var(--hairline);
+    }
+    .pillar {
+      padding: 2.5rem;
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      background: var(--surface);
+      transition: background 0.3s var(--ease);
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      position: relative;
+    }
+    .pillar:hover {
+      background: var(--bg);
+    }
+    .pillar:hover .pillar-cta {
+      gap: 0.6rem;
+    }
+    .pillar:hover .pillar-cta-arrow {
+      transform: translateX(4px);
+    }
+    .pillar-num {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--sage);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+    .pillar h3 {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--sage-deep);
+      line-height: 1.1;
+      margin: 0 0 0.5rem;
+    }
+    .pillar h3 em {
+      font-style: italic;
+      color: var(--sage);
+    }
+    .pillar-sub {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--muted);
+      font-size: 1rem;
+      margin: 0 0 1.2rem;
+    }
+    .pillar p:not(.pillar-sub) {
+      color: var(--ink-soft);
+      font-size: 0.98rem;
+      line-height: 1.6;
+      margin: 0 0 1.5rem;
+    }
+    .pillar-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      transition: gap 0.2s var(--ease);
+    }
+    .pillar-cta-arrow {
+      display: inline-block;
+      transition: transform 0.2s var(--ease);
+    }
+
+    /* Eyebrow variant: italic Latin (mixed case, no all-caps) */
+    .eyebrow-latin {
+      text-transform: none;
+      font-style: italic;
+      font-family: var(--font-display);
+      letter-spacing: 0.02em;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--sage);
+    }
+
+    /* Course Catalog link — sits next to the section heading */
+    .catalog-cta-link {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+      font-style: italic;
+      color: var(--sage-deep);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      letter-spacing: -0.005em;
+      transition: color 0.2s var(--ease), gap 0.2s var(--ease);
+      font-weight: 400;
+      font-variation-settings: "opsz" 144;
+      white-space: nowrap;
+      padding-bottom: 0.4rem;
+    }
+    .catalog-cta-link:hover {
+      color: var(--sage);
+      gap: 0.7rem;
+    }
+    .catalog-cta-link:hover .catalog-cta-arrow {
+      transform: translateX(2px);
+    }
+    .catalog-cta-arrow {
+      display: inline-block;
+      font-style: normal;
+      transition: transform 0.2s var(--ease);
+    }
+
+    /* ============================================================
+       HOW CLASSES WORK — separate section, lighter bg for contrast
+       ============================================================ */
+    .formats-section {
+      background: var(--bg);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .formats {
+      margin-top: 0;
+    }
+    .formats-header {
+      margin-bottom: 2rem;
+    }
+
+    /* ============================================================
+       IN THE SPACE — house rules; lightest cream for a quiet moment
+       ============================================================ */
+    .house {
+      background: var(--surface);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .house-content {
+      max-width: 720px;
+    }
+    .house-rules {
+      margin-top: 2.25rem;
+    }
+    .house-lede {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+      font-style: italic;
+      color: var(--sage-deep);
+      font-weight: 350;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin: 0 0 1.5rem;
+      font-variation-settings: "opsz" 144;
+    }
+    .house-rules p:not(.house-lede) {
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* (continued: .formats-title etc. below) */
+    .formats-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      color: var(--sage-deep);
+      line-height: 1.1;
+      margin: 0;
+    }
+    .formats-title em {
+      font-style: italic;
+      color: var(--sage);
+    }
+    .formats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .format {
+      padding: 1.75rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    a.format:hover {
+      transform: translateY(-2px);
+      border-color: var(--sage-pale);
+    }
+    a.format:hover .format-cta { gap: 0.6rem; }
+    a.format:hover .format-cta-arrow { transform: translateX(4px); }
+    .format-num {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--sage);
+    }
+    .format h4 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 400;
+      letter-spacing: -0.005em;
+      color: var(--sage-deep);
+      margin: 0;
+      line-height: 1.15;
+    }
+    .format-price {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--sage);
+      margin: 0 !important;
+      line-height: 1.4;
+    }
+    .format-price-detail {
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-style: normal;
+      margin-left: 0.15rem;
+    }
+    .format p:not(.format-price) {
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      margin: 0;
+    }
+    .format-cta {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      transition: gap 0.2s var(--ease);
+      padding-top: 0.5rem;
+    }
+    .format-cta-arrow {
+      display: inline-block;
+      transition: transform 0.2s var(--ease);
+    }
+
+    /* ============================================================
+       SPACE / GALLERY — photos now clickable lightbox triggers
        ============================================================ */
     .space-grid {
       margin-top: 3.5rem;
@@ -523,11 +961,23 @@
       font-size: 0.9rem;
       text-align: center;
       padding: 1rem;
+      cursor: pointer;
+      transition: transform 0.4s var(--ease);
+    }
+    .space-photo:hover {
+      transform: scale(1.01);
+    }
+    .space-photo:has(img) {
+      padding: 0;
     }
     .space-photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.6s var(--ease);
+    }
+    .space-photo:hover img {
+      transform: scale(1.04);
     }
     .space-photo-1 { grid-column: 1 / 8; aspect-ratio: 16/10; }
     .space-photo-2 { grid-column: 8 / 13; aspect-ratio: 4/5; grid-row: 1 / 3; }
@@ -681,26 +1131,75 @@
       justify-content: center;
       margin-top: 0.5rem;
     }
-    .cta-form {
-      display: flex;
-      gap: 0.5rem;
-      max-width: 480px;
-      margin: 0 auto;
-      flex-wrap: wrap;
+
+    /* ============================================================
+       THE LAUNCH — combined space + dates + CTA
+       ============================================================ */
+    .launch {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
     }
-    .cta-form input {
-      flex: 1 1 220px;
-      padding: 1rem 1.2rem;
-      font-family: inherit;
-      font-size: 1rem;
+    .launch-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: clamp(2rem, 5vw, 4.5rem);
+      align-items: center;
+    }
+    .launch-photo {
+      border-radius: 4px;
+      overflow: hidden;
       border: 1px solid var(--hairline);
-      background: var(--surface);
-      color: var(--ink);
-      border-radius: 999px;
-      outline: none;
+      aspect-ratio: 4/3;
+      background: var(--bg);
     }
-    .cta-form input::placeholder { color: var(--muted); }
-    .cta-form input:focus { border-color: var(--sage); }
+    .launch-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .launch-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .launch-info .h-section { margin-bottom: 0.25rem; }
+    .launch-lede {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: var(--ink-soft);
+      font-weight: 350;
+      font-style: italic;
+    }
+    .launch-phases {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-top: 0.5rem;
+    }
+    .launch-phase {
+      padding-top: 1.1rem;
+      border-top: 1px solid var(--hairline);
+    }
+    .launch-phase-date {
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    .launch-phase p {
+      color: var(--ink-soft);
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .launch-cta {
+      align-self: flex-start;
+      margin-top: 0.5rem;
+    }
 
     /* ============================================================
        FOOTER
@@ -747,6 +1246,61 @@
       color: rgba(241, 236, 223, 0.45);
       letter-spacing: 0.04em;
     }
+    .footer-legal {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .footer-divider {
+      opacity: 0.5;
+    }
+
+    /* ============================================================
+       LIGHTBOX (for clickable photos)
+       ============================================================ */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(45, 52, 38, 0.92);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      cursor: zoom-out;
+      opacity: 0;
+      transition: opacity 0.3s var(--ease);
+    }
+    .lightbox.is-open {
+      display: flex;
+      opacity: 1;
+    }
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: transparent;
+      border: 1px solid rgba(241, 236, 223, 0.4);
+      color: var(--bg);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s var(--ease);
+    }
+    .lightbox-close:hover {
+      background: rgba(241, 236, 223, 0.15);
+    }
 
     /* ============================================================
        REVEAL ANIMATION
@@ -765,30 +1319,15 @@
        RESPONSIVE
        ============================================================ */
     @media (max-width: 880px) {
-      .hero { padding: 7rem 0 4rem; }
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-seal-wrap { order: -1; max-width: 320px; }
-      .about-grid { grid-template-columns: 1fr; }
-      .teach-grid { grid-template-columns: 1fr; }
-      .method-list { grid-template-columns: 1fr; gap: 1.5rem; }
-      .membership-grid { grid-template-columns: 1fr; }
+      .hero { padding: 7rem 0 4rem; gap: 2.5rem; }
+      .hero-top { grid-template-columns: 1fr; }
+      .hero-seal-wrap { order: -1; max-width: 280px; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .formats-grid { grid-template-columns: 1fr; }
+      .launch-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
       .footer-bottom { flex-direction: column; gap: 0.5rem; }
-      .space-grid { grid-template-columns: 1fr; }
-      .space-photo-1, .space-photo-2, .space-photo-3, .space-photo-4 {
-        grid-column: auto; grid-row: auto; aspect-ratio: 4/3;
-      }
     }
-
-    /* form success state */
-    .form-success {
-      color: var(--sage);
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1.05rem;
-      margin-top: 1rem;
-    }
-
   </style>
 </head>
 <body>
@@ -800,259 +1339,218 @@
     <div class="container nav-inner">
       <a href="index.html" class="wordmark">The Hobbiest</a>
       <div class="nav-links">
-        <a href="schedule.html" class="nav-link">Skills Schedule</a>
-        <a href="apply.html" class="nav-link">Apply to Teach</a>
-        <a href="signup.html" class="nav-link nav-link-primary">Sign Up</a>
+        <a href="schedule.html" class="nav-link">Course Schedule</a>
+        <a href="apply.html" class="nav-link">Instructor Applications</a>
+        <a href="hobbiests.html" class="nav-link">Hobbiests</a>
+        <div class="nav-item nav-item-dropdown">
+          <button class="nav-link nav-link-primary nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+            Log in <span class="nav-dropdown-arrow" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-dropdown" role="menu">
+            <a href="instructor-login.html" class="nav-dropdown-link" role="menuitem">For Instructors</a>
+            <a href="availability.html" class="nav-dropdown-link" role="menuitem">For Hobbiests</a>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
 
   <!-- =========================================================
-       HERO
+       HERO — quote (left) + big seal (right); paragraph full width below
        ========================================================= -->
   <header class="hero">
-    <div class="container hero-inner">
-      <div data-reveal>
-        <div class="hero-eyebrow">Pittston, Pennsylvania</div>
-        <h1>
-          A skills club<br />
-          where all the things<br />
-          you wish you knew<br />
-          <em>are taught</em>.
+    <div class="container">
+
+      <!-- TOP ROW: quote (left) + big seal (right) -->
+      <div class="hero-top">
+        <h1 class="hero-quote" data-reveal>
+          A place to learn everything<br />
+          you wish you knew how to do.
         </h1>
-        <p class="hero-sub">
-          A private members club for adults. Calligraphy, gardening, money, hosting, sourdough, drawing — and a long list more. Opening Summer 2026 in downtown Pittston.
-        </p>
 
-        <div class="hero-cta">
-          <a href="signup.html" class="btn-hero btn-hero-primary">Tell us what you want →</a>
-          <a href="schedule.html" class="btn-hero btn-hero-secondary">See the schedule</a>
+        <div class="hero-seal-wrap" data-reveal>
+          <svg class="hero-seal" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-label="The Hobbiest seal">
+            <defs>
+              <path id="seal-bottom-arc" d="M 75,300 A 225,225 0 0,0 525,300"/>
+            </defs>
+            <!-- outer ring -->
+            <circle cx="300" cy="300" r="275" fill="none" stroke="#7A8A6B" stroke-width="3"/>
+            <!-- inner ring -->
+            <circle cx="300" cy="300" r="258" fill="none" stroke="#7A8A6B" stroke-width="1.1"/>
+            <!-- wordmark -->
+            <text x="300" y="290"
+                  font-family="Fraunces, 'Times New Roman', serif"
+                  font-style="italic"
+                  font-weight="400"
+                  font-size="90"
+                  fill="#7A8A6B"
+                  text-anchor="middle"
+                  letter-spacing="-1.5"
+                  style="font-variation-settings: 'opsz' 144;">The Hobbiest</text>
+            <!-- divider flourishes + SKILLS CLUB -->
+            <g fill="#7A8A6B">
+              <line x1="85" y1="330" x2="140" y2="330" stroke="#7A8A6B" stroke-width="1.2"/>
+              <path d="M 79,330 L 85,326 L 91,330 L 85,334 Z"/>
+              <text x="300" y="340"
+                    font-family="Fraunces, 'Times New Roman', serif"
+                    font-weight="500"
+                    font-size="28"
+                    fill="#7A8A6B"
+                    text-anchor="middle"
+                    letter-spacing="10">SKILLS CLUB</text>
+              <line x1="460" y1="330" x2="515" y2="330" stroke="#7A8A6B" stroke-width="1.2"/>
+              <path d="M 521,330 L 515,326 L 509,330 L 515,334 Z"/>
+            </g>
+            <!-- bottom arc text -->
+            <text font-family="Fraunces, 'Times New Roman', serif"
+                  font-weight="500"
+                  font-size="22"
+                  fill="#7A8A6B"
+                  letter-spacing="7">
+              <textPath href="#seal-bottom-arc" startOffset="50%" text-anchor="middle">PITTSTON, PENNSYLVANIA</textPath>
+            </text>
+          </svg>
         </div>
-        <p class="form-note">Help us build the soft-launch schedule. No payment, no commitment.</p>
       </div>
 
-      <!-- The Seal — primary logo as hero visual -->
-      <div class="hero-seal-wrap" data-reveal>
-        <svg class="hero-seal" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-label="The Hobbiest seal">
-          <defs>
-            <path id="seal-bottom-arc" d="M 75,300 A 225,225 0 0,0 525,300"/>
-          </defs>
-          <!-- outer ring -->
-          <circle cx="300" cy="300" r="275" fill="none" stroke="#7A8A6B" stroke-width="3"/>
-          <!-- inner ring -->
-          <circle cx="300" cy="300" r="258" fill="none" stroke="#7A8A6B" stroke-width="1.1"/>
-          <!-- wordmark -->
-          <text x="300" y="290"
-                font-family="Fraunces, 'Times New Roman', serif"
-                font-style="italic"
-                font-weight="400"
-                font-size="90"
-                fill="#7A8A6B"
-                text-anchor="middle"
-                letter-spacing="-1.5"
-                style="font-variation-settings: 'opsz' 144;">The Hobbiest</text>
-          <!-- divider lines + SKILLS CLUB -->
-          <line x1="85" y1="333" x2="220" y2="333" stroke="#7A8A6B" stroke-width="1.4"/>
-          <text x="300" y="340"
-                font-family="Fraunces, 'Times New Roman', serif"
-                font-weight="500"
-                font-size="16"
-                fill="#7A8A6B"
-                text-anchor="middle"
-                letter-spacing="10">SKILLS CLUB</text>
-          <line x1="380" y1="333" x2="515" y2="333" stroke="#7A8A6B" stroke-width="1.4"/>
-          <!-- bottom arc text -->
-          <text font-family="Fraunces, 'Times New Roman', serif"
-                font-weight="500"
-                font-size="22"
-                fill="#7A8A6B"
-                letter-spacing="7">
-            <textPath href="#seal-bottom-arc" startOffset="50%" text-anchor="middle">PITTSTON, PENNSYLVANIA</textPath>
-          </text>
-        </svg>
+      <!-- BOTTOM: full-width body paragraph with drop cap -->
+      <div class="hero-paragraph" data-reveal>
+        <p>The Hobbiest is a private skills club in downtown Pittston, opening July 2026. It's the answer to the long list of things you've always meant to learn — taught by people who actually know how. Every series ends with an immersive experience, so you don't just learn skills, you live them.</p>
       </div>
+
     </div>
   </header>
 
   <!-- =========================================================
-       ABOUT
+       CURRICULUM VITAE — four pillars + three class formats
        ========================================================= -->
-  <section class="about" id="about">
+  <section class="curriculum" id="curriculum">
     <div class="container">
-      <div class="about-grid">
-        <div data-reveal>
-          <span class="eyebrow">About</span>
-          <h2 class="h-section">A place to <em>spend your time</em> well.</h2>
+      <div class="curriculum-intro" data-reveal>
+        <div class="curriculum-intro-text">
+          <span class="eyebrow eyebrow-latin">Lectiones ad vitam</span>
+          <h2 class="h-section">Curriculum <em>Cornerstones</em>.</h2>
         </div>
-        <div class="about-body" data-reveal>
-          <p>The Hobbiest is a private skills club for adults in downtown Pittston, opening summer 2026.</p>
-          <p>It's a place to spend your time learning hobbies and skills built for intentional living and being the best version of yourself. A place where all the things you wish you'd been taught actually are — calligraphy, sourdough, gardening, money, hosting, drawing, and a long list more.</p>
-          <p>Every series ends with an immersive experience, so you don't just learn skills — you live them.</p>
+        <a href="schedule.html" class="catalog-cta-link">
+          Browse Full Course Catalog <span class="catalog-cta-arrow">→</span>
+        </a>
+      </div>
+
+      <div class="pillars-grid">
+        <a href="schedule.html#creative-pursuits" class="pillar" data-reveal>
+          <div class="pillar-num">01</div>
+          <h3>Creative <em>Pursuits</em></h3>
+          <p class="pillar-sub">Things made by hand.</p>
+          <p>Calligraphy, drawing, watercolor, creative writing, embroidery, sourdough, bookbinding, hand lettering.</p>
+        </a>
+
+        <a href="schedule.html#presents-presence" class="pillar" data-reveal>
+          <div class="pillar-num">02</div>
+          <h3>Presents &amp; <em>Presence</em></h3>
+          <p class="pillar-sub">Putting your best foot forward.</p>
+          <p>Hosting, tablescaping, modern etiquette, gift wrapping, English tea, couples dancing, personal styling.</p>
+        </a>
+
+        <a href="schedule.html#life-skills" class="pillar" data-reveal>
+          <div class="pillar-num">03</div>
+          <h3>Life <em>Skills</em></h3>
+          <p class="pillar-sub">Things they never taught in school.</p>
+          <p>Changing a tire, negotiating, basic home repair, budgeting, financial planning basics, public speaking.</p>
+        </a>
+
+        <a href="schedule.html#life-style" class="pillar" data-reveal>
+          <div class="pillar-num">04</div>
+          <h3>Life <em>Style</em></h3>
+          <p class="pillar-sub">Living a curated, intentional life.</p>
+          <p>Gardening, flower arranging, meditation, sleep, posture, food literacy, tending a home.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       HOW CLASSES WORK — distinct section, lighter background
+       ========================================================= -->
+  <section class="formats-section" id="formats">
+    <div class="container">
+      <div class="formats" data-reveal>
+        <div class="formats-header">
+          <span class="eyebrow">How Classes Work</span>
+          <h3 class="formats-title">Three <em>formats</em>.</h3>
+        </div>
+        <div class="formats-grid">
+          <a href="schedule.html" class="format">
+            <div class="format-num">01</div>
+            <h4>Sessions</h4>
+            <p class="format-price">From $25 per session</p>
+            <p>Classes run as 2- to 4-week sessions, organized by pillar. Drop into the ones that pull at you.</p>
+            <span class="format-cta">See course catalog <span class="format-cta-arrow">→</span></span>
+          </a>
+          <a href="bundles.html" class="format">
+            <div class="format-num">02</div>
+            <h4>Life Bundles</h4>
+            <p class="format-price">From $150 per bundle <span class="format-price-detail">($30 / session)</span></p>
+            <p>Curated multi-class packages for the moment of life you're in — recent grad, newlywed, new mom.</p>
+            <span class="format-cta">See bundles <span class="format-cta-arrow">→</span></span>
+          </a>
+          <a href="offsites.html" class="format">
+            <div class="format-num">03</div>
+            <h4>Offsites</h4>
+            <p class="format-price">From $35 per session</p>
+            <p>Hands-on classes taught out in the world — changing a tire, vegetable gardening, oil changes, starting a fire from sticks. Skills that need their own setting.</p>
+            <span class="format-cta">See offsites <span class="format-cta-arrow">→</span></span>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- =========================================================
-       WHAT WE TEACH
+       IN THE SPACE — house rules (phone-free, alcohol-free, 18+)
        ========================================================= -->
-  <section class="teach" id="classes">
+  <section class="house" id="house">
     <div class="container">
-      <div data-reveal>
-        <span class="eyebrow">The Curriculum</span>
-        <h2 class="h-section">Four kinds of things, <em>taught well</em>.</h2>
-      </div>
+      <div class="house-content" data-reveal>
+        <span class="eyebrow">In the Space</span>
+        <h2 class="h-section">A few <em>quiet expectations</em>.</h2>
 
-      <div class="teach-grid">
-        <article class="teach-card" data-reveal>
-          <div class="teach-num">01 — Practical</div>
-          <h3>Life <em>skills</em></h3>
-          <p class="teach-card-sub">The stuff school skipped.</p>
-          <p>Budgeting, investing, negotiation, public speaking, taxes, insurance, estate planning, first-time home buying, salary strategy.</p>
-        </article>
-
-        <article class="teach-card" data-reveal>
-          <div class="teach-num">02 — Creative</div>
-          <h3>Hands-on <em>crafts</em></h3>
-          <p class="teach-card-sub">The things you've always meant to try.</p>
-          <p>Calligraphy, drawing, watercolor, embroidery, flower arranging, sourdough, bookbinding, pressed flowers, hand lettering.</p>
-        </article>
-
-        <article class="teach-card" data-reveal>
-          <div class="teach-num">03 — Presentation</div>
-          <h3>Style &amp; <em>poise</em></h3>
-          <p class="teach-card-sub">To feel actually put together.</p>
-          <p>Personal styling, makeup, hosting, tablescaping, modern etiquette, gift wrapping, English tea, couples dancing.</p>
-        </article>
-
-        <article class="teach-card" data-reveal>
-          <div class="teach-num">04 — Wellness</div>
-          <h3>Body <em>literacy</em></h3>
-          <p class="teach-card-sub">What your doctor never explains.</p>
-          <p>Sleep, hydration, cycle awareness, stress management, posture, meditation, food literacy, advocating at the doctor.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       METHOD
-       ========================================================= -->
-  <section class="method">
-    <div class="container">
-      <div data-reveal>
-        <span class="eyebrow">The Method</span>
-        <h2 class="h-section">Learn, then <em>live it</em>.</h2>
-        <p class="method-lede">Every series at The Hobbiest ends with an immersive experience. You don't just learn skills — you put them into the world.</p>
-      </div>
-
-      <div class="method-list">
-        <div class="method-item" data-reveal>
-          <div class="method-item-skill">Learn calligraphy →</div>
-          <p class="method-item-then">Write a real letter on stationery you've lettered. Wax-seal it. We'll mail it.</p>
-        </div>
-        <div class="method-item" data-reveal>
-          <div class="method-item-skill">Plant a cutting garden →</div>
-          <p class="method-item-then">Arrange the bouquet you grew at the Summer Garden Tea.</p>
-        </div>
-        <div class="method-item" data-reveal>
-          <div class="method-item-skill">Bake sourdough →</div>
-          <p class="method-item-then">Bring your first loaf to our member Friendsgiving.</p>
+        <div class="house-rules">
+          <p class="house-lede">Phones away. No WiFi. No alcohol. No outside food. No smoking. Adults only (18+).</p>
+          <p>Water, tea, and coffee are on us. Photos are held until the last minute of class — your instructor will invite a moment to capture your work, and we encourage you to share what you've made out in the world.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- =========================================================
-       THE SPACE
+       THE LAUNCH — combines space photo + phases + signup
        ========================================================= -->
-  <section class="space" id="space">
+  <section class="launch" id="launch">
     <div class="container">
-      <div data-reveal>
-        <span class="eyebrow">The Space</span>
-        <h2 class="h-section">2,000 sq ft on <em>Main Street</em>.</h2>
-        <p class="lede">Designed event space with exposed brick walls, soaring ceilings, a real kitchen, and a private outdoor garden where we grow our own cutting flowers for arranging and English Teas.</p>
-      </div>
+      <div class="launch-grid">
+        <div class="launch-photo" data-reveal>
+          <img src="images/space-main.png" alt="The Hobbiest interior — members at tables working on crafts, with the class schedule chalkboard and herringbone floor" />
+        </div>
 
-      <div class="space-grid">
-        <div class="space-photo space-photo-1" data-reveal>
-          <!-- <img src="/images/space-main.jpg" alt="Interior of The Hobbiest" /> -->
-          Photo: Interior wide shot (herringbone floor, green wall, chandelier)
-        </div>
-        <div class="space-photo space-photo-2" data-reveal>
-          <!-- <img src="/images/space-bar.jpg" alt="Bar area" /> -->
-          Photo: The bar (vertical, green bar with cane stools)
-        </div>
-        <div class="space-photo space-photo-3" data-reveal>
-          <!-- <img src="/images/space-kitchen.jpg" alt="Kitchenette" /> -->
-          Photo: Kitchenette with Smeg fridge
-        </div>
-        <div class="space-photo space-photo-4" data-reveal>
-          <!-- <img src="/images/space-garden.jpg" alt="Outdoor garden" /> -->
-          Photo: Outdoor deck + garden with botanical mural
-        </div>
-      </div>
-    </div>
-  </section>
+        <div class="launch-info" data-reveal>
+          <span class="eyebrow">The Launch</span>
+          <h2 class="h-section">Summer courses, <em>fall memberships</em>.</h2>
+          <p class="launch-lede">2,000 sq ft on Main Street, opening in two phases.</p>
 
-  <!-- =========================================================
-       MEMBERSHIP
-       ========================================================= -->
-  <section class="membership" id="membership">
-    <div class="container">
-      <div class="membership-grid">
-        <div data-reveal>
-          <span class="eyebrow">Membership</span>
-          <h2 class="h-section">Opens <em>September 2026</em>.</h2>
-          <div class="extras">
-            <p><strong>Phase 1 (July-August):</strong> Classes open to the public. Drop in to try us before joining.</p>
-            <p style="margin-top: 1rem;"><strong>Phase 2 (September on):</strong> Full membership opens at founder pricing — locked in for as long as your membership stays active.</p>
-            <p style="margin-top: 1rem;">Non-members welcome at most classes at a 50% premium over member prices.</p>
+          <div class="launch-phases">
+            <div class="launch-phase">
+              <div class="launch-phase-date">July 2026</div>
+              <p>Summer course launch — classes open to the public.</p>
+            </div>
+            <div class="launch-phase">
+              <div class="launch-phase-date">September 2026</div>
+              <p>Fall memberships begin — founder pricing for early members.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="pricing-card" data-reveal>
-          <div class="pricing-card-tag">Founder Pricing</div>
-          <div class="price">
-            <span class="price-currency">$</span>
-            <span class="price-number">35</span>
-            <span class="price-per">/ month</span>
-          </div>
-          <div class="price-label">Plus class fees from $25</div>
-
-          <ul class="benefits">
-            <li>Full access to the club space during open hours</li>
-            <li>Member pricing on every class</li>
-            <li>Priority enrollment before classes open to non-members</li>
-            <li>Members-only intimate classes (Cycle Awareness, Therapy 101, Meditation)</li>
-            <li>Welcome kit: branded notebook, pen, welcome card</li>
-            <li>Sell your work at the Quarterly Showcase — keep 100% of sales</li>
-          </ul>
+          <a href="signup.html" class="btn-hero btn-hero-primary launch-cta">Be first to know →</a>
         </div>
       </div>
-    </div>
-  </section>
-
-
-  <!-- =========================================================
-       SECOND CTA
-       ========================================================= -->
-  <section class="cta" id="join">
-    <div class="container" data-reveal>
-      <span class="eyebrow">Be First To Know</span>
-      <h2>Join the <em>founder's list</em>.</h2>
-
-      <ul class="cta-list">
-        <li>Our Phase 1 class schedule (starting July 2026)</li>
-        <li>First access to founder pricing on September 1</li>
-        <li>Invitation to the Open House on June 27-28</li>
-        <li>Behind-the-scenes from instructor recruitment through opening day</li>
-      </ul>
-
-      <div class="cta-button-wrap">
-        <a href="signup.html" class="btn-hero btn-hero-primary">Sign up &amp; tell us what you want →</a>
-      </div>
-      <p class="form-note" style="margin-top: 1.25rem;">We send updates rarely. No spam, ever.</p>
     </div>
   </section>
 
@@ -1064,7 +1562,7 @@
       <div class="footer-grid">
         <div>
           <div class="wordmark-lg">The Hobbiest</div>
-          <p>A skills club where all the things you wish you knew are taught. Opening Summer 2026 in downtown Pittston, PA.</p>
+          <p>A private members skills club for adults. Opening July 2026 in downtown Pittston, PA.</p>
         </div>
         <div>
           <h4>Visit</h4>
@@ -1075,16 +1573,28 @@
           <div class="stack">
             <a href="#" rel="noopener">Instagram</a>
             <a href="#" rel="noopener">Facebook</a>
-            <a href="mailto:hello@thehobbiestskillsclub.com">hello@thehobbiestskillsclub.com</a>
+            <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© 2026 The Hobbiest Skills Club</span>
-        <span>Built with intention.</span>
+        <div class="footer-legal">
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="footer-divider">·</span>
+          <a href="terms.html">Terms of Service</a>
+        </div>
       </div>
     </div>
   </footer>
+
+  <!-- =========================================================
+       LIGHTBOX (for the photos)
+       ========================================================= -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo">×</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
 
   <script>
     // ============================================================
@@ -1100,6 +1610,46 @@
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     reveals.forEach((r) => io.observe(r));
+
+    // ============================================================
+    // LIGHTBOX for space photos
+    // Each .space-photo has a data-src; clicking opens it.
+    // ============================================================
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    document.querySelectorAll('.space-photo').forEach((el) => {
+      el.addEventListener('click', () => {
+        const src = el.getAttribute('data-src');
+        const caption = el.getAttribute('data-caption') || '';
+        if (!src) return;
+        // Only open if the photo actually exists (will fall back gracefully)
+        const test = new Image();
+        test.onload = () => {
+          lightboxImg.src = src;
+          lightboxImg.alt = caption;
+          lightbox.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+        };
+        test.onerror = () => {
+          // No image yet — do nothing (placeholders remain visible)
+        };
+        test.src = src;
+      });
+    });
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('is-open');
+      document.body.style.overflow = '';
+    };
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
 
     // ============================================================
     // EMAIL CAPTURE
