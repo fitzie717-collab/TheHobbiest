@@ -6,10 +6,10 @@
   <meta name="theme-color" content="#7A8A6B" />
 
   <title>Sign Up — The Hobbiest</title>
-  <meta name="description" content="Sign up for The Hobbiest. Tell us which classes you'd take and when you can come — we schedule what people actually want." />
+  <meta name="description" content="Become a Hobbiest. Add your name to hear first when classes open this summer, and when membership opens in the fall." />
 
   <meta property="og:title" content="Sign Up — The Hobbiest" />
-  <meta property="og:description" content="Tell us which classes interest you and when you'd come." />
+  <meta property="og:description" content="Become a Hobbiest. Add your name to hear first when classes open." />
   <meta property="og:type" content="website" />
 
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -445,6 +445,91 @@
       font-family: var(--font-display);
     }
 
+    /* CLASS PICK GROUPS — subheadings inside the Classes block */
+    .class-pick-group {
+      margin-bottom: 1.75rem;
+    }
+    .class-pick-group:last-child { margin-bottom: 0; }
+    .class-pick-label {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--sage);
+      letter-spacing: 0.01em;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    /* SHARE SECTION */
+    .share-section {
+      max-width: 720px;
+      margin: 4rem 0 0;
+      padding: 2.5rem 0 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .share-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+    .share-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+      color: var(--sage-deep);
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      margin: 0 0 0.5rem;
+      line-height: 1.15;
+    }
+    .share-title em { font-style: italic; color: var(--sage); }
+    .share-note {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+    .share-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1.3rem;
+      background: transparent;
+      color: var(--sage-deep);
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease);
+    }
+    .share-btn:hover {
+      background: var(--surface);
+      border-color: var(--sage);
+      color: var(--sage-deep);
+    }
+    .share-btn.is-copied {
+      background: var(--sage);
+      color: var(--bg);
+      border-color: var(--sage);
+    }
+    .share-icon {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
     /* SUBMIT */
     .form-submit-row {
       padding-top: 2.5rem;
@@ -585,11 +670,11 @@
       <div class="page-hero-inner">
         <div data-reveal>
           <span class="page-eyebrow">Sign Up</span>
-          <h1>Tell us what <em>you want</em>.</h1>
+          <h1>Become a <em>Hobbiest</em>.</h1>
         </div>
         <div data-reveal>
           <p class="page-hero-lede">
-            We schedule what people actually want. Check the classes that interest you, the bundles you'd buy, and the times you could realistically come. No payment, no commitment. <em>We'll email you when classes are scheduled.</em>
+            Add your name to hear first when classes open this summer, and when membership opens in the fall.
           </p>
         </div>
       </div>
@@ -601,227 +686,102 @@
     <div class="container">
 
       <div class="form-header" data-reveal>
-        <span class="eyebrow">The sign-up form</span>
-        <h2 class="h-section">Help us build the <em>schedule</em>.</h2>
-        <p class="form-lede">Three short sections: who you are, what you'd take, and when you could come. We'll email you when something you checked gets scheduled. Takes about 5 minutes.</p>
+        <p class="form-lede">A few quick questions. Takes about a minute.</p>
       </div>
 
       <form class="form" id="signupForm" action="#" method="POST" data-netlify="true" name="hobbiest-signup">
         <input type="hidden" name="form-name" value="hobbiest-signup" />
 
-        <!-- 01: About you -->
+        <!-- 01: You -->
         <div class="form-block" data-reveal>
           <div class="form-block-num">01 — You</div>
           <h3 class="form-block-title">About <em>you</em></h3>
-          <p class="form-block-note">We only use this to email you when classes you wanted are scheduled.</p>
 
           <div class="form-row">
             <div class="form-field">
-              <label for="name" class="form-field-required">Full name</label>
-              <input type="text" id="name" name="name" required />
+              <label for="firstName" class="form-field-required">First name</label>
+              <input type="text" id="firstName" name="firstName" required />
             </div>
+            <div class="form-field">
+              <label for="lastName" class="form-field-required">Last name</label>
+              <input type="text" id="lastName" name="lastName" required />
+            </div>
+          </div>
+
+          <div class="form-row">
             <div class="form-field">
               <label for="email" class="form-field-required">Email</label>
               <input type="email" id="email" name="email" required />
             </div>
-          </div>
-
-          <div class="form-row">
             <div class="form-field">
               <label for="phone">Phone (optional)</label>
               <input type="tel" id="phone" name="phone" />
-              <span class="form-field-help">Only if you'd like a text reminder when classes go live.</span>
-            </div>
-            <div class="form-field">
-              <label for="zip">ZIP code (optional)</label>
-              <input type="text" id="zip" name="zip" placeholder="18640" />
-              <span class="form-field-help">Helps us understand where folks are traveling from.</span>
             </div>
           </div>
         </div>
 
-        <!-- 02: Which classes -->
+        <!-- 02: Classes -->
         <div class="form-block" data-reveal>
           <div class="form-block-num">02 — Classes</div>
-          <h3 class="form-block-title">Which classes <em>interest you</em>?</h3>
-          <p class="form-block-note">Check anything you'd take. No commitment — this just helps us know what to schedule first.</p>
+          <h3 class="form-block-title">Which classes are you <em>most interested in</em>?</h3>
+          <p class="form-block-note">Optional. Check anything that calls to you.</p>
 
-          <!-- Fiber Arts -->
-          <div class="form-field" style="margin-bottom: 1.5rem;">
-            <label>Fiber Arts</label>
+          <div class="class-pick-group">
+            <div class="class-pick-label">Creative Pursuits</div>
             <div class="check-grid">
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Knitting 101" />
-                <span class="check-item-text">Knitting 101<span class="meta">4-week series · $225 · kit included</span></span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Crochet 101" />
-                <span class="check-item-text">Crochet 101<span class="meta">4-week series · $225 · kit included</span></span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Visible Mending & Sashiko" />
-                <span class="check-item-text">Visible Mending &amp; Sashiko<span class="meta">4-week series · $220</span></span>
-              </label>
+              <label class="check-item"><input type="checkbox" name="classes" value="watercolor-101" /><span class="check-item-text">Watercolor 101</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="drawing-fundamentals" /><span class="check-item-text">Drawing Fundamentals</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="modern-calligraphy" /><span class="check-item-text">Modern Calligraphy</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="knitting-101" /><span class="check-item-text">Knitting 101</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="writing" /><span class="check-item-text">Writing</span></label>
             </div>
           </div>
 
-          <!-- Drawing & Paper -->
-          <div class="form-field" style="margin-bottom: 1.5rem;">
-            <label>Drawing &amp; Paper</label>
+          <div class="class-pick-group">
+            <div class="class-pick-label">Presence &amp; Entertaining</div>
             <div class="check-grid">
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Watercolor 101" />
-                <span class="check-item-text">Watercolor 101<span class="meta">4-week series · $230 · kit included</span></span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Drawing Fundamentals" />
-                <span class="check-item-text">Drawing Fundamentals<span class="meta">4-week series · $225 · kit included</span></span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Make a Travel Journal" />
-                <span class="check-item-text">Make a Travel Journal<span class="meta">Single session · 3 hrs · $90</span></span>
-              </label>
+              <label class="check-item"><input type="checkbox" name="classes" value="hosting-101" /><span class="check-item-text">Hosting 101</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="proper-table" /><span class="check-item-text">How to Set a Proper Table</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="modern-etiquette" /><span class="check-item-text">Modern Etiquette</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="charcuterie" /><span class="check-item-text">Charcuterie &amp; Cheese Board Styling</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="confidence-dinner" /><span class="check-item-text">Confidence at the Dinner Party</span></label>
             </div>
           </div>
 
-          <!-- Calligraphy & Lettering -->
-          <div class="form-field" style="margin-bottom: 1.5rem;">
-            <label>Calligraphy &amp; Lettering</label>
+          <div class="class-pick-group">
+            <div class="class-pick-label">Essential Life Skills</div>
             <div class="check-grid">
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Modern Calligraphy 101" />
-                <span class="check-item-text">Modern Calligraphy 101<span class="meta">4-week series · $235 · kit included</span></span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Wedding Envelope Calligraphy" />
-                <span class="check-item-text">Wedding Envelope Calligraphy<span class="meta">Single session · 2.5 hrs · $75</span></span>
-              </label>
+              <label class="check-item"><input type="checkbox" name="classes" value="basic-car-care" /><span class="check-item-text">Basic Car Care</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="basic-home-repair" /><span class="check-item-text">Basic Home Repair</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="paperwork" /><span class="check-item-text">Reading the Paperwork in Your Life</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="knot-tying" /><span class="check-item-text">Knot Tying &amp; Practical Rope Work</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="first-aid" /><span class="check-item-text">First Aid &amp; Emergency Basics</span></label>
             </div>
           </div>
 
-          <!-- Life Skills -->
-          <div class="form-field" style="margin-bottom: 1.5rem;">
-            <label>Life Skills</label>
+          <div class="class-pick-group">
+            <div class="class-pick-label">Living Well</div>
             <div class="check-grid">
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="How to Set a Proper Table" />
-                <span class="check-item-text">How to Set a Proper Table<span class="meta">Single session · 1.5 hrs · $35</span></span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Hosting 101" />
-                <span class="check-item-text">Hosting 101<span class="meta">Single session · 2.5 hrs · $70</span></span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Confidence at the Dinner Party" />
-                <span class="check-item-text">Confidence at the Dinner Party<span class="meta">Single session · 2 hrs · $50</span></span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Self-Sufficiency -->
-          <div class="form-field" style="margin-bottom: 1.5rem;">
-            <label>Self-Sufficiency</label>
-            <div class="check-grid">
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Basic Car Care" />
-                <span class="check-item-text">Basic Car Care<span class="meta">Single session · 2 hrs · offsite · $50</span></span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Basic Home Repair" />
-                <span class="check-item-text">Basic Home Repair<span class="meta">Single session · 2.5 hrs · $75</span></span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Reading the Paperwork in Your Life" />
-                <span class="check-item-text">Reading the Paperwork in Your Life<span class="meta">Single session · 2 hrs · $55</span></span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Garden Basics for NEPA" />
-                <span class="check-item-text">Garden Basics for NEPA<span class="meta">Single session · 2 hrs · $55</span></span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Seasonal & Specialty -->
-          <div class="form-field" style="margin-bottom: 0.5rem;">
-            <label>Seasonal &amp; Specialty</label>
-            <div class="check-grid">
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Summer Garden Bouquet" />
-                <span class="check-item-text">Summer Garden Bouquet<span class="meta">Single session · 2 hrs · $75</span></span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Plein-Air Sketching on the Patio" />
-                <span class="check-item-text">Plein-Air Sketching on the Patio<span class="meta">Single session · 2 hrs · outdoor · $60</span></span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Sourdough Starter & Maintenance" />
-                <span class="check-item-text">Sourdough Starter &amp; Maintenance<span class="meta">Single session · 2 hrs · $60</span></span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="classes[]" value="Charcuterie & Cheese Board Styling" />
-                <span class="check-item-text">Charcuterie &amp; Cheese Board Styling<span class="meta">Single session · 2 hrs · $85</span></span>
-              </label>
+              <label class="check-item"><input type="checkbox" name="classes" value="vegetable-gardening" /><span class="check-item-text">Vegetable Gardening</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="flower-gardening" /><span class="check-item-text">Flower Gardening</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="floral-arranging" /><span class="check-item-text">Floral Arranging</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="wreath-making" /><span class="check-item-text">Wreath Making</span></label>
+              <label class="check-item"><input type="checkbox" name="classes" value="sourdough" /><span class="check-item-text">Sourdough Starter &amp; Maintenance</span></label>
             </div>
           </div>
         </div>
 
-        <!-- 03: Bundles -->
+        <!-- 03: Availability -->
         <div class="form-block" data-reveal>
-          <div class="form-block-num">03 — Bundles</div>
-          <h3 class="form-block-title">Any <em>bundles</em>?</h3>
-          <p class="form-block-note">Each bundle is a fixed set of classes built around a moment in life. Buy the whole package and save.</p>
-
-          <div class="check-grid">
-            <label class="check-item">
-              <input type="checkbox" name="bundles[]" value="Bride-to-Be Bundle" />
-              <span class="check-item-text">Bride-to-Be Bundle<span class="meta">4 classes · $235 · save $70</span></span>
-            </label>
-            <label class="check-item">
-              <input type="checkbox" name="bundles[]" value="Wedding Speech Workshop" />
-              <span class="check-item-text">Wedding Speech Workshop<span class="meta">3-week series · $165</span></span>
-            </label>
-            <label class="check-item">
-              <input type="checkbox" name="bundles[]" value="Adulting 101 for Young Adults" />
-              <span class="check-item-text">Adulting 101 (ages 18–25)<span class="meta">5-day intensive · $235</span></span>
-            </label>
-            <label class="check-item">
-              <input type="checkbox" name="bundles[]" value="Self-Sufficiency Bundle" />
-              <span class="check-item-text">Self-Sufficiency Bundle<span class="meta">4 classes · $215 · save $20</span></span>
-            </label>
-            <label class="check-item">
-              <input type="checkbox" name="bundles[]" value="Hosting Mastery" />
-              <span class="check-item-text">Hosting Mastery<span class="meta">4 classes · $215 · save $25</span></span>
-            </label>
-            <label class="check-item">
-              <input type="checkbox" name="bundles[]" value="Slow Hands" />
-              <span class="check-item-text">Slow Hands<span class="meta">3 classes · $195 · save $30</span></span>
-            </label>
-          </div>
-        </div>
-
-        <!-- 04: Wish list -->
-        <div class="form-block" data-reveal>
-          <div class="form-block-num">04 — Wishes</div>
-          <h3 class="form-block-title">Don't see what you <em>want</em>?</h3>
-          <p class="form-block-note">We're actively building the catalog. Tell us what you wish we offered.</p>
-
-          <div class="form-field">
-            <label for="wishlist">Classes or topics you'd love to see</label>
-            <textarea id="wishlist" name="wishlist" placeholder="A class on bread baking. A talk on caring for old wooden furniture. Anything you'd come to."></textarea>
-          </div>
-        </div>
-
-        <!-- 05: When you'd come -->
-        <div class="form-block" data-reveal>
-          <div class="form-block-num">05 — Times</div>
-          <h3 class="form-block-title">When could you <em>come</em>?</h3>
-          <p class="form-block-note">Check anything that generally works. This helps us schedule classes at times people will actually show up.</p>
+          <div class="form-block-num">03 — Availability</div>
+          <h3 class="form-block-title">When can you <em>generally</em> make it?</h3>
+          <p class="form-block-note">Check anything that generally works in your week.</p>
 
           <div class="matrix-wrap">
             <table class="matrix">
               <thead>
                 <tr>
-                  <th class="matrix-corner">Day &amp; Time</th>
+                  <th class="matrix-corner"></th>
                   <th>Mon</th>
                   <th>Tue</th>
                   <th>Wed</th>
@@ -833,92 +793,112 @@
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">Morning<span class="matrix-time-range">8 AM – 11 AM</span></th>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Morning"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Morning"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Morning"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Morning"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Morning"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Morning"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Morning"><span class="matrix-cell-box"></span></label></td>
+                  <th>Morning<span class="matrix-time-range">8–11 AM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="mon-morning" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="tue-morning" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="wed-morning" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="thu-morning" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="fri-morning" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sat-morning" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sun-morning" /><span class="matrix-cell-box"></span></label></td>
                 </tr>
                 <tr>
-                  <th scope="row">Midday<span class="matrix-time-range">11 AM – 2 PM</span></th>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Midday"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Midday"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Midday"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Midday"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Midday"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Midday"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Midday"><span class="matrix-cell-box"></span></label></td>
+                  <th>Midday<span class="matrix-time-range">11 AM–2 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="mon-midday" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="tue-midday" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="wed-midday" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="thu-midday" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="fri-midday" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sat-midday" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sun-midday" /><span class="matrix-cell-box"></span></label></td>
                 </tr>
                 <tr>
-                  <th scope="row">Afternoon<span class="matrix-time-range">2 PM – 5 PM</span></th>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Afternoon"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Afternoon"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Afternoon"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Afternoon"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Afternoon"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Afternoon"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Afternoon"><span class="matrix-cell-box"></span></label></td>
+                  <th>Afternoon<span class="matrix-time-range">2–5 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="mon-afternoon" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="tue-afternoon" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="wed-afternoon" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="thu-afternoon" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="fri-afternoon" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sat-afternoon" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sun-afternoon" /><span class="matrix-cell-box"></span></label></td>
                 </tr>
                 <tr>
-                  <th scope="row">Evening<span class="matrix-time-range">5 PM – 8 PM</span></th>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Evening"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Evening"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Evening"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Evening"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Evening"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Evening"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Evening"><span class="matrix-cell-box"></span></label></td>
+                  <th>Evening<span class="matrix-time-range">5–8 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="mon-evening" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="tue-evening" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="wed-evening" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="thu-evening" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="fri-evening" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sat-evening" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sun-evening" /><span class="matrix-cell-box"></span></label></td>
                 </tr>
                 <tr>
-                  <th scope="row">Late Evening<span class="matrix-time-range">8 PM – 10 PM</span></th>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Mon-Late"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Tue-Late"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Wed-Late"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Thu-Late"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Fri-Late"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sat-Late"><span class="matrix-cell-box"></span></label></td>
-                  <td><label class="matrix-cell-label"><input type="checkbox" name="avail[]" value="Sun-Late"><span class="matrix-cell-box"></span></label></td>
+                  <th>Late<span class="matrix-time-range">8–10 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="mon-late" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="tue-late" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="wed-late" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="thu-late" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="fri-late" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sat-late" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sun-late" /><span class="matrix-cell-box"></span></label></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <span class="matrix-hint">Check any block of time you could realistically attend. The more you check, the more likely we'll find a class that fits.</span>
+          <p class="matrix-hint">Tap or click any cell to mark it as available.</p>
         </div>
 
-        <!-- 06: Anything else -->
+        <!-- 04: Anything else -->
         <div class="form-block" data-reveal>
-          <div class="form-block-num">06 — Anything else</div>
-          <h3 class="form-block-title">Anything <em>else</em>?</h3>
-          <p class="form-block-note">Optional. Things we should know, questions, or just a hello.</p>
+          <div class="form-block-num">04 — Anything else</div>
+          <h3 class="form-block-title">Notes or <em>questions</em></h3>
+          <p class="form-block-note">Optional. Anything you'd like us to know.</p>
 
           <div class="form-field">
-            <label for="notes">Notes or questions</label>
-            <textarea id="notes" name="notes" placeholder="Optional — leave it blank if there's nothing to add."></textarea>
+            <textarea id="notes" name="notes" placeholder="Optional"></textarea>
           </div>
 
           <div class="form-field" style="margin-top: 1.5rem;">
             <label class="check-item">
               <input type="checkbox" name="newsletter" value="yes" checked />
-              <span class="check-item-text">Keep me on the email list for general updates from The Hobbiest.<span class="meta">Phase announcements, founder pricing, monthly notes. Unsubscribe anytime.</span></span>
+              <span class="check-item-text">Add me to the email list.<span class="meta">Phase announcements, monthly notes. Unsubscribe anytime.</span></span>
             </label>
           </div>
         </div>
 
         <!-- Submit -->
         <div class="form-submit-row">
-          <button type="submit" class="btn-primary">Send →</button>
-          <span class="form-submit-note">We'll email you when classes you checked are scheduled.</span>
+          <button type="submit" class="btn-primary">Sign me up →</button>
         </div>
       </form>
 
+      <!-- Share section -->
+      <div class="share-section" data-reveal>
+        <div class="share-eyebrow">Spread the word</div>
+        <h3 class="share-title">Know someone who'd <em>love this</em>?</h3>
+        <p class="share-note">Send them a link.</p>
+        <div class="share-buttons">
+          <button type="button" class="share-btn" data-share="copy">
+            <span class="share-icon" aria-hidden="true">⌘</span>
+            <span class="share-label">Copy link</span>
+          </button>
+          <a class="share-btn" href="mailto:?subject=The%20Hobbiest%20Skills%20Club&body=I%20just%20signed%20up%20for%20The%20Hobbiest%20—%20a%20private%20skills%20club%20in%20Pittston%20opening%20this%20July.%20Thought%20you%20might%20like%20it%20too%3A%20https%3A%2F%2Fthehobbiestskillsclub.com">
+            <span class="share-icon" aria-hidden="true">✉</span>
+            <span class="share-label">Email</span>
+          </a>
+          <a class="share-btn" href="sms:?&body=I%20just%20signed%20up%20for%20The%20Hobbiest%20Skills%20Club%20—%20https%3A%2F%2Fthehobbiestskillsclub.com">
+            <span class="share-icon" aria-hidden="true">✦</span>
+            <span class="share-label">Text</span>
+          </a>
+        </div>
+      </div>
+
       <!-- Thank you state -->
       <div class="form-thanks" id="formThanks">
-        <h3>Thank you. <em>We've got it.</em></h3>
-        <p>Your sign-up is in. We'll email you when something you marked gets scheduled — usually a few weeks out. In the meantime, you can browse the full catalog at <a href="schedule.html" style="color: var(--sage);">schedule.html</a>.</p>
+        <h3>You're in. <em>Welcome.</em></h3>
+        <p>We'll be in touch.</p>
       </div>
+
 
     </div>
   </section>
@@ -984,6 +964,34 @@
         window.scrollTo({ top: thanks.offsetTop - 100, behavior: 'smooth' });
       }
     });
+
+    // Share: copy link to clipboard
+    const copyBtn = document.querySelector('.share-btn[data-share="copy"]');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        const url = window.location.href;
+        const label = copyBtn.querySelector('.share-label');
+        const originalText = label.textContent;
+        try {
+          await navigator.clipboard.writeText(url);
+          label.textContent = 'Copied!';
+          copyBtn.classList.add('is-copied');
+        } catch (err) {
+          // Fallback for older browsers
+          const ta = document.createElement('textarea');
+          ta.value = url;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); label.textContent = 'Copied!'; copyBtn.classList.add('is-copied'); }
+          catch (e) { label.textContent = 'Press Ctrl+C'; }
+          document.body.removeChild(ta);
+        }
+        setTimeout(() => {
+          label.textContent = originalText;
+          copyBtn.classList.remove('is-copied');
+        }, 2200);
+      });
+    }
   </script>
 
 </body>
