@@ -249,79 +249,137 @@
     .h-section em { font-style: italic; color: var(--sage); }
 
     /* ============================================================
-       STICKY CATEGORY NAV
+       SCHEDULE LAYOUT — left rail nav + main content (2-column)
        ============================================================ */
-    .cat-nav {
+    .schedule-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: clamp(2rem, 5vw, 4.5rem);
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(1rem, 4vw, 2rem);
+    }
+
+    .schedule-rail {
+      position: relative;
+    }
+
+    .rail-nav {
       position: sticky;
-      top: 0;
-      z-index: 50;
-      background: var(--bg);
-      border-bottom: 1px solid var(--hairline);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      background: rgba(241, 236, 223, 0.92);
-    }
-    .cat-nav-inner {
+      top: 6rem;
+      padding: 0;
       display: flex;
-      gap: 0.4rem;
-      padding: 0.85rem 0;
-      overflow-x: auto;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      align-items: center;
+      flex-direction: column;
+      gap: 0;
     }
-    .cat-nav-inner::-webkit-scrollbar { display: none; }
-    .cat-nav-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.22em;
+
+    .rail-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
       color: var(--muted);
       font-weight: 600;
-      padding-right: 0.5rem;
-      flex-shrink: 0;
-      white-space: nowrap;
+      margin-bottom: 1.5rem;
+      padding-left: 1.1rem;
     }
-    .cat-btn {
-      flex-shrink: 0;
-      padding: 0.55rem 1.1rem;
-      border: 1px solid var(--hairline);
-      background: transparent;
-      color: var(--ink-soft);
-      border-radius: 999px;
-      font-family: inherit;
-      font-size: 0.86rem;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      cursor: pointer;
+
+    .rail-link {
+      display: block;
+      padding: 0.85rem 0 0.85rem 1.1rem;
+      margin-left: -1px;
+      border-left: 1px solid var(--hairline);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
       text-decoration: none;
-      white-space: nowrap;
-      transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+      font-weight: 500;
+      line-height: 1.4;
+      transition: color 0.25s var(--ease), border-color 0.25s var(--ease), padding-left 0.25s var(--ease);
     }
-    .cat-btn:hover {
-      background: var(--surface);
+
+    .rail-link:hover {
+      color: var(--ink);
+      border-left-color: var(--sage-pale);
+    }
+
+    .rail-link.is-active {
       color: var(--sage-deep);
-      border-color: var(--sage-pale);
+      border-left: 2px solid var(--sage-deep);
+      padding-left: calc(1.1rem - 1px);
+      font-weight: 600;
     }
-    .cat-btn.is-active {
-      background: var(--sage);
-      color: var(--bg);
-      border-color: var(--sage);
+
+    .rail-link-program {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--hairline);
+      border-left-color: transparent;
     }
-    .cat-btn-form {
-      background: var(--sage-deep);
-      color: var(--bg);
-      border-color: var(--sage-deep);
-      margin-left: auto;
+
+    .schedule-main {
+      min-width: 0; /* prevents grid overflow */
     }
-    .cat-btn-form:hover {
-      background: var(--sage);
-      color: var(--bg);
-      border-color: var(--sage);
+
+    /* on the new layout, kill the inner container's horizontal padding
+       since the schedule-layout already provides container padding */
+    .schedule-main .container {
+      padding-left: 0;
+      padding-right: 0;
+      max-width: none;
     }
-    @media (max-width: 700px) {
-      .cat-nav-label { display: none; }
-      .cat-btn-form { margin-left: 0.4rem; }
+
+    /* Mobile: stack rail above content, horizontal scrolling chips */
+    @media (max-width: 880px) {
+      .schedule-layout {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .schedule-rail {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(241, 236, 223, 0.94);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--hairline);
+        margin: 0 -1rem;
+        padding: 0 1rem;
+      }
+      .rail-eyebrow { display: none; }
+      .rail-nav {
+        position: static;
+        flex-direction: row;
+        gap: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+        padding: 0.5rem 0;
+      }
+      .rail-nav::-webkit-scrollbar { display: none; }
+      .rail-link {
+        flex-shrink: 0;
+        border-left: none;
+        border-bottom: 2px solid transparent;
+        padding: 0.6rem 0.9rem;
+        white-space: nowrap;
+        font-size: 0.75rem;
+      }
+      .rail-link.is-active {
+        border-left: none;
+        border-bottom: 2px solid var(--sage-deep);
+        padding-left: 0.9rem;
+      }
+      .rail-link-program {
+        margin-top: 0;
+        padding-top: 0.6rem;
+        border-top: none;
+        border-left: 1px solid var(--hairline);
+        margin-left: 0.5rem;
+        padding-left: 1.4rem;
+      }
     }
+
 
     /* ============================================================
        RECOMMENDATIONS CALLOUT (above the form, also in hero area)
@@ -1094,129 +1152,50 @@
       <div class="page-hero-inner">
         <div data-reveal>
           <span class="page-eyebrow">Skills Schedule</span>
-          <h1>Everything we're <em>considering</em>.</h1>
+          <h1>The Launch <em>Curriculum</em>.</h1>
         </div>
         <div data-reveal>
           <p class="page-hero-lede">
-            Nineteen classes across six categories, plus six fixed bundles. Browse what catches your eye — then head to the <a href="signup.html" style="color: var(--sage); border-bottom: 1px solid var(--sage-pale); text-decoration: none; font-style: italic;">sign-up form</a> to tell us which ones interest you. <em>We schedule what people actually want.</em>
+            Twenty classes across the four cornerstones of The Hobbiest curriculum. Each one runs as a focused short series — two to four sessions — held <em>in studio</em> or out in the world. Programs combine related classes into curated arcs.
           </p>
-
-          <div class="recommend-callout">
-            <span class="recommend-mark">+</span>
-            <div class="recommend-body">
-              <p><strong>Don't see what you want?</strong> We're actively taking recommendations for new classes and lecture topics. Tell us what you wish we offered <a href="signup.html">on the sign-up form</a>. The schedule is yours to shape.</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   </header>
 
   <!-- =========================================================
-       STICKY CATEGORY NAV — jump links to sections
+       SCHEDULE LAYOUT — left-rail nav + main content
        ========================================================= -->
-  <nav class="cat-nav" aria-label="Category navigation">
-    <div class="container cat-nav-inner">
-      <span class="cat-nav-label">Jump to</span>
-      <a href="#fiber-arts" class="cat-btn" data-cat="fiber-arts">Fiber Arts</a>
-      <a href="#drawing-paper" class="cat-btn" data-cat="drawing-paper">Drawing &amp; Paper</a>
-      <a href="#calligraphy" class="cat-btn" data-cat="calligraphy">Calligraphy</a>
-      <a href="#life-skills" class="cat-btn" data-cat="life-skills">Life Skills</a>
-      <a href="#self-sufficiency" class="cat-btn" data-cat="self-sufficiency">Self-Sufficiency</a>
-      <a href="#seasonal-specialty" class="cat-btn" data-cat="seasonal-specialty">Seasonal</a>
-      <a href="#bundles" class="cat-btn" data-cat="bundles">Bundles</a>
-      <a href="signup.html" class="cat-btn cat-btn-form">Sign Up →</a>
-    </div>
-  </nav>
+  <div class="schedule-layout">
+
+    <aside class="schedule-rail">
+      <nav class="rail-nav" aria-label="Curriculum navigation">
+        <div class="rail-eyebrow">Curriculum</div>
+        <a href="#creative-pursuits" class="rail-link" data-cat="creative-pursuits">01 &nbsp; Creative Pursuits</a>
+        <a href="#presence-entertaining" class="rail-link" data-cat="presence-entertaining">02 &nbsp; Presence &amp; Entertaining</a>
+        <a href="#essential-life-skills" class="rail-link" data-cat="essential-life-skills">03 &nbsp; Essential Life Skills</a>
+        <a href="#living-well" class="rail-link" data-cat="living-well">04 &nbsp; Living Well</a>
+        <a href="#programs" class="rail-link rail-link-program" data-cat="programs">Programs</a>
+      </nav>
+    </aside>
+
+    <main class="schedule-main">
 
   <!-- =========================================================
-       HOW IT WORKS
+       01 — CREATIVE PURSUITS
        ========================================================= -->
-  <section class="how-strip">
-    <div class="container">
-      <div class="how-grid">
-        <div class="how-item" data-reveal>
-          <div class="how-num">01 — Browse</div>
-          <h3>See the <em>options</em>.</h3>
-          <p>Nineteen classes across six categories, plus six fixed bundles built around moments in life. Each one shows what you'll learn, the format, the class size, and the price.</p>
-        </div>
-        <div class="how-item" data-reveal>
-          <div class="how-num">02 — Tell us</div>
-          <h3>Pick what <em>catches your eye</em>.</h3>
-          <p>Check anything that interests you. Then tell us when you'd actually come — weeknight, weekend morning, weekday afternoon. This is the part that helps us plan.</p>
-        </div>
-        <div class="how-item" data-reveal>
-          <div class="how-num">03 — We schedule</div>
-          <h3>We build <em>around you</em>.</h3>
-          <p>Once enough people want the same thing at the same time, we schedule it and email you. Adults only (18+). Bundles are fixed packages — no swapping classes in or out.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       FIBER ARTS
-       ========================================================= -->
-  <section class="category-section" id="fiber-arts">
+  <section class="category-section" id="creative-pursuits">
     <div class="container">
       <div class="category-header" data-reveal>
-        <h2 class="category-title">Fiber <em>arts</em></h2>
-        <p class="category-desc">Slow handwork. Wool, thread, needle. Things you do sitting down with good light and company.</p>
+        <h2 class="category-title">01 — Creative <em>Pursuits</em></h2>
+        <p class="category-desc">Things made beautifully by hand. Explorations in craftsmanship, creative expression, and traditional arts.</p>
       </div>
 
       <div class="class-grid" data-reveal>
         <article class="class-card">
-          <div class="class-format">4-Week Series</div>
-          <h4>Knitting 101</h4>
-          <div class="class-meta">Small group · 8–10 students</div>
-          <p class="class-desc">Cast on, knit, purl, bind off. By week four you'll have a finished scarf you can actually wear. Kit included: wool yarn, bamboo needles, project bag, pattern booklet.</p>
-          <div class="class-footer">
-            <div class="class-price">$225</div>
-            <div class="class-price-note">kit included</div>
-          </div>
-        </article>
-
-        <article class="class-card">
-          <div class="class-format">4-Week Series</div>
-          <h4>Crochet 101</h4>
-          <div class="class-meta">Small group · 10–12 students</div>
-          <p class="class-desc">Granny square to a small blanket. The most forgiving fiber art for absolute beginners. Kit included: yarn, hook, project bag, pattern.</p>
-          <div class="class-footer">
-            <div class="class-price">$225</div>
-            <div class="class-price-note">kit included</div>
-          </div>
-        </article>
-
-        <article class="class-card">
-          <div class="class-format">4-Week Series</div>
-          <h4>Visible Mending &amp; Sashiko</h4>
-          <div class="class-meta">Small group · 8–10 students</div>
-          <p class="class-desc">Repair the clothes you already own. Turn worn jeans, sweaters, and shirts into pieces with character. Bring 2–3 garments to mend. Thread, needles, and patches included.</p>
-          <div class="class-footer">
-            <div class="class-price">$220</div>
-            <div class="class-price-note">supplies included</div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       DRAWING & PAPER ARTS
-       ========================================================= -->
-  <section class="category-section" id="drawing-paper">
-    <div class="container">
-      <div class="category-header" data-reveal>
-        <h2 class="category-title">Drawing &amp; <em>paper</em></h2>
-        <p class="category-desc">For adults who decided they "couldn't draw" in third grade. Real instruction, beginners welcome — that's the whole point.</p>
-      </div>
-
-      <div class="class-grid" data-reveal>
-        <article class="class-card">
-          <div class="class-format">4-Week Series</div>
+          <div class="class-format">4 sessions · In studio · Begins July 2026</div>
           <h4>Watercolor 101</h4>
-          <div class="class-meta">Small group · 8–12 students</div>
-          <p class="class-desc">Real watercolor instruction for true beginners. By week four, a small portfolio of finished pieces and a clear sense of how to keep practicing on your own. Kit included.</p>
+          <p class="class-desc">Real watercolor instruction for true beginners. By the end of four sessions, a small portfolio of finished pieces and a clear sense of how to keep practicing on your own. Kit included.</p>
           <div class="class-footer">
             <div class="class-price">$230</div>
             <div class="class-price-note">kit included</div>
@@ -1224,10 +1203,9 @@
         </article>
 
         <article class="class-card">
-          <div class="class-format">4-Week Series</div>
+          <div class="class-format">4 sessions · In studio · Begins July 2026</div>
           <h4>Drawing Fundamentals</h4>
-          <div class="class-meta">Small group · 8–12 students</div>
-          <p class="class-desc">Line, value, perspective, observation. The drawing class for adults who decided they "couldn't draw." Sketchbook, pencils, and erasers included.</p>
+          <p class="class-desc">Line, value, perspective, observation. Drawing taught from the ground up, for anyone ready to start (or restart) with the fundamentals. Sketchbook, pencils, and erasers included.</p>
           <div class="class-footer">
             <div class="class-price">$225</div>
             <div class="class-price-note">kit included</div>
@@ -1235,35 +1213,9 @@
         </article>
 
         <article class="class-card">
-          <div class="class-format">Single Session · 3 hrs</div>
-          <h4>Make a Travel Journal</h4>
-          <div class="class-meta">Workshop · 10–14 students</div>
-          <p class="class-desc">Build a real hand-bound journal in an afternoon. Walk out with a journal you'd be proud to give as a gift, or keep for yourself. All materials included.</p>
-          <div class="class-footer">
-            <div class="class-price">$90</div>
-            <div class="class-price-note">materials included</div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       CALLIGRAPHY
-       ========================================================= -->
-  <section class="category-section" id="calligraphy">
-    <div class="container">
-      <div class="category-header" data-reveal>
-        <h2 class="category-title">Calligraphy &amp; <em>lettering</em></h2>
-        <p class="category-desc">Real hands on real paper with real ink. The pointed pen, the letter, the envelope you actually mail.</p>
-      </div>
-
-      <div class="class-grid" data-reveal>
-        <article class="class-card">
-          <div class="class-format">4-Week Series</div>
-          <h4>Modern Calligraphy 101</h4>
-          <div class="class-meta">Small group · 6–10 students</div>
-          <p class="class-desc">Pointed pen calligraphy from scratch. By the end of four weeks, you'll be writing in a consistent, beautiful hand and have what you need to keep going on your own. Kit included.</p>
+          <div class="class-format">4 sessions · In studio · Begins July 2026</div>
+          <h4>Modern Calligraphy</h4>
+          <p class="class-desc">Pointed pen calligraphy from scratch. By the end of four sessions, you'll be writing in a consistent, beautiful hand and have what you need to keep going on your own. Kit included.</p>
           <div class="class-footer">
             <div class="class-price">$235</div>
             <div class="class-price-note">kit included</div>
@@ -1271,13 +1223,22 @@
         </article>
 
         <article class="class-card">
-          <div class="class-format">Single Session · 2.5 hrs</div>
-          <h4>Wedding Envelope Calligraphy</h4>
-          <div class="class-meta">Workshop · 12–15 students</div>
-          <p class="class-desc">Address your own wedding envelopes by hand. Designed for engaged couples, but useful for anyone with holiday cards or invitations coming up. Pen, ink, and ten envelopes for real practice.</p>
+          <div class="class-format">4 sessions · In studio · Begins July 2026</div>
+          <h4>Knitting 101</h4>
+          <p class="class-desc">Cast on, knit, purl, bind off. By the fourth session you'll have a finished scarf you can actually wear. Kit included: wool yarn, bamboo needles, project bag, pattern booklet.</p>
           <div class="class-footer">
-            <div class="class-price">$75</div>
-            <div class="class-price-note">materials included</div>
+            <div class="class-price">$225</div>
+            <div class="class-price-note">kit included</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">3 sessions · In studio · Begins July 2026</div>
+          <h4>Writing</h4>
+          <p class="class-desc">A craft-first introduction to writing. Voice, structure, and the rhythm of your own sentences. Short prompts, real feedback, finished pieces by the end — and the habit of writing regularly.</p>
+          <div class="class-footer">
+            <div class="class-price">$165</div>
+            <div class="class-price-note">notebook included</div>
           </div>
         </article>
       </div>
@@ -1285,45 +1246,62 @@
   </section>
 
   <!-- =========================================================
-       LIFE SKILLS
+       02 — PRESENCE & ENTERTAINING
        ========================================================= -->
-  <section class="category-section" id="life-skills">
+  <section class="category-section" id="presence-entertaining">
     <div class="container">
       <div class="category-header" data-reveal>
-        <h2 class="category-title">Life <em>skills</em></h2>
-        <p class="category-desc">The things every adult is supposed to know — and somehow nobody ever taught us.</p>
+        <h2 class="category-title">02 — Presence &amp; <em>Entertaining</em></h2>
+        <p class="category-desc">The art of making people feel welcome. Hosting, social confidence, presentation, and modern etiquette.</p>
       </div>
 
       <div class="class-grid" data-reveal>
         <article class="class-card">
-          <div class="class-format">Single Session · 1.5 hrs</div>
-          <h4>How to Set a Proper Table</h4>
-          <div class="class-meta">Lecture &amp; demo · 20–25 students</div>
-          <p class="class-desc">Forks, glasses, place cards, runners — what goes where and why, for everyday meals and for hosting. Worth knowing once, useful for life.</p>
-          <div class="class-footer">
-            <div class="class-price">$35</div>
-            <div class="class-price-note">no materials needed</div>
-          </div>
-        </article>
-
-        <article class="class-card">
-          <div class="class-format">Single Session · 2.5 hrs</div>
+          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
           <h4>Hosting 101</h4>
-          <div class="class-meta">Lecture &amp; demo · 20–25 students</div>
           <p class="class-desc">Planning a real dinner party from invitation to clean-up. Timing, menu, table, flow, the small touches that make guests feel taken care of. Includes a printed planner you can use forever.</p>
           <div class="class-footer">
-            <div class="class-price">$70</div>
+            <div class="class-price">$130</div>
             <div class="class-price-note">planner included</div>
           </div>
         </article>
 
         <article class="class-card">
-          <div class="class-format">Single Session · 2 hrs</div>
-          <h4>Confidence at the Dinner Party</h4>
-          <div class="class-meta">Lecture &amp; practice · 20–25 students</div>
-          <p class="class-desc">Conversation skills for adults who freeze in social settings. How to introduce yourself, hold a conversation with a stranger, listen well, exit gracefully. Practical, not preachy.</p>
+          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+          <h4>How to Set a Proper Table</h4>
+          <p class="class-desc">Forks, glasses, place cards, runners — what goes where and why, for everyday meals and for hosting. The kind of thing worth learning once and useful for life.</p>
           <div class="class-footer">
-            <div class="class-price">$50</div>
+            <div class="class-price">$85</div>
+            <div class="class-price-note">no materials needed</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">3 sessions · In studio · Begins July 2026</div>
+          <h4>Modern Etiquette</h4>
+          <p class="class-desc">The current state of manners — at the table, in inboxes, around plus-ones, in conversation. What's outdated, what's eternal, and how to navigate the modern social landscape gracefully.</p>
+          <div class="class-footer">
+            <div class="class-price">$165</div>
+            <div class="class-price-note">workbook included</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+          <h4>Charcuterie &amp; Cheese Board Styling</h4>
+          <p class="class-desc">Building a board people remember. Composition, what to buy, how to arrange, how to make it look effortless. Take home the wooden board you styled, fully loaded.</p>
+          <div class="class-footer">
+            <div class="class-price">$145</div>
+            <div class="class-price-note">board, cheeses &amp; charcuterie included</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+          <h4>Confidence at the Dinner Party</h4>
+          <p class="class-desc">How to be the guest people invite back. Choosing a thoughtful host gift, navigating a proper place setting as a guest, making introductions, holding real conversations, and writing the thank-you that lands. The skills of being good company.</p>
+          <div class="class-footer">
+            <div class="class-price">$105</div>
             <div class="class-price-note">no materials needed</div>
           </div>
         </article>
@@ -1332,57 +1310,63 @@
   </section>
 
   <!-- =========================================================
-       SELF-SUFFICIENCY
+       03 — ESSENTIAL LIFE SKILLS
        ========================================================= -->
-  <section class="category-section" id="self-sufficiency">
+  <section class="category-section" id="essential-life-skills">
     <div class="container">
       <div class="category-header" data-reveal>
-        <h2 class="category-title">Self-<em>sufficiency</em></h2>
-        <p class="category-desc">Stop calling someone every time something breaks. The 20% of practical knowledge that covers 80% of grown-up life.</p>
+        <h2 class="category-title">03 — Essential <em>Life Skills</em></h2>
+        <p class="category-desc">The things everyone should know. Practical knowledge for everyday competence and self-reliance.</p>
       </div>
 
       <div class="class-grid" data-reveal>
         <article class="class-card">
-          <div class="class-format">Single Session · 2 hrs · Offsite</div>
+          <div class="class-format">2 sessions · Offsite · Begins September 2026</div>
           <h4>Basic Car Care</h4>
-          <div class="class-meta">Intensive · 6–8 students</div>
           <p class="class-desc">Tire change, jump start, fluids, when something is a real problem vs. not. Held at a partner garage in Pittston. Wear clothes you don't mind getting dirty.</p>
           <div class="class-footer">
-            <div class="class-price">$50</div>
+            <div class="class-price">$105</div>
             <div class="class-price-note">all tools provided</div>
           </div>
         </article>
 
         <article class="class-card">
-          <div class="class-format">Single Session · 2.5 hrs</div>
+          <div class="class-format">3 sessions · In studio · Begins July 2026</div>
           <h4>Basic Home Repair</h4>
-          <div class="class-meta">Workshop · 10–12 students</div>
-          <p class="class-desc">Patch drywall, fix a leaky faucet, hang things properly (and find studs), unclog a drain. The 20% of home repair that covers 80% of what you'll need. Tools and materials provided.</p>
+          <p class="class-desc">Patch drywall, fix a leaky faucet, hang things properly (and find studs), unclog a drain. The 20% of home repair that covers 80% of what you'll actually need. Tools and materials provided.</p>
           <div class="class-footer">
-            <div class="class-price">$75</div>
+            <div class="class-price">$175</div>
             <div class="class-price-note">materials included</div>
           </div>
         </article>
 
         <article class="class-card">
-          <div class="class-format">Single Session · 2 hrs</div>
+          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
           <h4>Reading the Paperwork in Your Life</h4>
-          <div class="class-meta">Lecture &amp; demo · 20–25 students</div>
-          <p class="class-desc">How to actually read a lease, a contract, an insurance policy, a paystub, a credit card statement. What every adult is supposed to know and nobody ever taught us.</p>
+          <p class="class-desc">How to actually read a lease, a contract, an insurance policy, a paystub, a credit card statement. The reading skills every adult needs — taught plainly, with examples from real documents.</p>
           <div class="class-footer">
-            <div class="class-price">$55</div>
+            <div class="class-price">$105</div>
             <div class="class-price-note">workbook included</div>
           </div>
         </article>
 
         <article class="class-card">
-          <div class="class-format">Single Session · 2 hrs</div>
-          <h4>Garden Basics for NEPA</h4>
-          <div class="class-meta">Lecture &amp; demo · 20–25 students</div>
-          <p class="class-desc">What grows in our climate, soil basics, raised beds, sun and shade, when to plant what. For new gardeners or apartment-dwellers about to have a yard for the first time.</p>
+          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+          <h4>Knot Tying &amp; Practical Rope Work</h4>
+          <p class="class-desc">Bowline, clove hitch, taut-line, sheet bend, square knot — and when each is actually useful. The classic Eagle Scout repertoire, plus a few from sailing and climbing. Rope provided.</p>
           <div class="class-footer">
-            <div class="class-price">$55</div>
-            <div class="class-price-note">handouts included</div>
+            <div class="class-price">$90</div>
+            <div class="class-price-note">rope included to take home</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+          <h4>First Aid &amp; Emergency Basics</h4>
+          <p class="class-desc">What to do in the first ten minutes — before professional help arrives. Wound care, CPR fundamentals, choking response, burns, and how to keep a clear head. Hands-on practice with manikins.</p>
+          <div class="class-footer">
+            <div class="class-price">$135</div>
+            <div class="class-price-note">supplies included</div>
           </div>
         </article>
       </div>
@@ -1390,57 +1374,63 @@
   </section>
 
   <!-- =========================================================
-       SEASONAL & SPECIALTY
+       04 — LIVING WELL
        ========================================================= -->
-  <section class="category-section" id="seasonal-specialty">
+  <section class="category-section" id="living-well">
     <div class="container">
       <div class="category-header" data-reveal>
-        <h2 class="category-title">Seasonal &amp; <em>specialty</em></h2>
-        <p class="category-desc">Summer on the patio. Sourdough starters in jars. The kind of class you remember.</p>
+        <h2 class="category-title">04 — Living <em>Well</em></h2>
+        <p class="category-desc">Creating a slower, more intentional life. Studies in domestic rituals, the seasons, and tending what's around you.</p>
       </div>
 
       <div class="class-grid" data-reveal>
         <article class="class-card">
-          <div class="class-format">Single Session · 2 hrs</div>
-          <h4>Summer Garden Bouquet</h4>
-          <div class="class-meta">Workshop · 12–14 students</div>
-          <p class="class-desc">A loose, hand-tied bouquet using seasonal flowers. Take home a finished arrangement that lasts the week. All flowers and wrapping included.</p>
+          <div class="class-format">4 sessions across the season · Offsite · Begins September 2026</div>
+          <h4>Vegetable Gardening</h4>
+          <p class="class-desc">From bed to harvest at a partner farm. Soil, planting, tending, and the timing that actually matters in NEPA. Four sessions across spring and summer — start in March, leave with a basket in July.</p>
           <div class="class-footer">
-            <div class="class-price">$75</div>
+            <div class="class-price">$210</div>
+            <div class="class-price-note">all seeds &amp; tools provided</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">4 sessions across the season · Offsite · Begins September 2026</div>
+          <h4>Flower Gardening</h4>
+          <p class="class-desc">A cutting garden from the ground up. Choose the plot, sow the seeds, tend the rows, harvest for arrangements. Some of what you grow comes back to studio for the floral classes.</p>
+          <div class="class-footer">
+            <div class="class-price">$210</div>
+            <div class="class-price-note">all seeds &amp; tools provided</div>
+          </div>
+        </article>
+
+        <article class="class-card">
+          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+          <h4>Floral Arranging</h4>
+          <p class="class-desc">Seasonal arrangements you can actually replicate at home. Loose, hand-tied bouquets in spring and summer; weighty, structured pieces in fall and winter. Take home a finished arrangement.</p>
+          <div class="class-footer">
+            <div class="class-price">$145</div>
             <div class="class-price-note">flowers included</div>
           </div>
         </article>
 
         <article class="class-card">
-          <div class="class-format">Single Session · 2 hrs · Outdoor</div>
-          <h4>Plein-Air Sketching on the Patio</h4>
-          <div class="class-meta">Workshop · 12–15 students</div>
-          <p class="class-desc">Outdoor sketching on our patio overlooking the Susquehanna. Brief instruction on simplifying what you see, then two hours of guided sketching with feedback. Weather contingent.</p>
+          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+          <h4>Wreath Making</h4>
+          <p class="class-desc">Hand-bound wreaths from foraged and dried materials. Build a foundation, layer textures, finish with a ribbon. Take home a wreath you'll actually want to hang on your door.</p>
           <div class="class-footer">
-            <div class="class-price">$60</div>
-            <div class="class-price-note">supplies included</div>
+            <div class="class-price">$125</div>
+            <div class="class-price-note">all materials included</div>
           </div>
         </article>
 
         <article class="class-card">
-          <div class="class-format">Single Session · 2 hrs</div>
+          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
           <h4>Sourdough Starter &amp; Maintenance</h4>
-          <div class="class-meta">Lecture &amp; demo · 25–30 students</div>
-          <p class="class-desc">The intimidating part — the starter — taught properly. Walk out with a live, named, jar-fed starter and a feeding-and-troubleshooting guide. Bring it home and start baking.</p>
+          <p class="class-desc">The foundation of every great loaf — your starter, taught properly. Walk out with a live, named, jar-fed starter and a feeding-and-troubleshooting guide. Bring it home and start baking.</p>
           <div class="class-footer">
-            <div class="class-price">$60</div>
+            <div class="class-price">$115</div>
             <div class="class-price-note">live starter &amp; jar included</div>
-          </div>
-        </article>
-
-        <article class="class-card">
-          <div class="class-format">Single Session · 2 hrs</div>
-          <h4>Charcuterie &amp; Cheese Board Styling</h4>
-          <div class="class-meta">Workshop · 14–18 students</div>
-          <p class="class-desc">Building a board people remember. Composition, what to buy, how to arrange, how to make it look effortless. Take home the wooden board you styled, fully loaded.</p>
-          <div class="class-footer">
-            <div class="class-price">$85</div>
-            <div class="class-price-note">board, cheeses &amp; charcuterie included</div>
           </div>
         </article>
       </div>
@@ -1450,32 +1440,36 @@
   <!-- =========================================================
        BUNDLES — fixed packages, no choosing
        ========================================================= -->
-  <section class="bundles" id="bundles">
+  <!-- =========================================================
+       BUNDLES — fixed packages, no choosing
+       ========================================================= -->
+  <section class="bundles" id="programs">
     <div class="container">
       <div data-reveal>
-        <span class="eyebrow">Bundles</span>
-        <h2 class="h-section">Six curated <em>packages</em>.</h2>
-        <p class="bundles-lede">Each bundle is a fixed set of classes designed around a moment in life. Buy the whole package and save. Classes inside a bundle are predetermined — no swaps, no substitutions. That's part of the design.</p>
+        <span class="eyebrow">Programs</span>
+        <h2 class="h-section">Curated <em>programs</em>.</h2>
+        <p class="bundles-lede">Programs combine multiple classes into one experience — designed around moments in life, seasons of the year, or shared goals. Built to be taken together.</p>
       </div>
 
       <div class="bundle-grid">
 
-        <!-- BUNDLE 1: BRIDE-TO-BE -->
+        <!-- BUNDLE: OFF TO COLLEGE -->
         <article class="bundle-card" data-reveal>
-          <div class="bundle-tag">For the bride</div>
-          <h4>Bride-to-Be <em>Bundle</em></h4>
-          <div class="bundle-format">4 Classes · Mix of formats</div>
-          <p class="bundle-who">For brides 6–12 months out from their wedding. The four skills that make hosting your own people feel effortless.</p>
+          <div class="bundle-tag">Begins July 2026 · For new high school graduates</div>
+          <h4>Off to <em>College</em></h4>
+          <div class="bundle-format">5 Classes · 11 sessions</div>
+          <p class="bundle-who">For the kid heading to a dorm or first apartment. Five classes that build the kind of practical confidence that pays off all four years — what to do when something breaks, how to read the paperwork that arrives, how to handle an emergency, how to feed yourself well, and how to be the kind of guest people invite back.</p>
           <div class="bundle-includes-label">Includes:</div>
           <ul class="bundle-list">
-            <li>Wedding Envelope Calligraphy</li>
-            <li>Summer Garden Bouquet</li>
-            <li>Hosting 101</li>
-            <li>Charcuterie &amp; Cheese Board Styling</li>
+            <li>Reading the Paperwork in Your Life</li>
+            <li>Basic Home Repair</li>
+            <li>First Aid &amp; Emergency Basics</li>
+            <li>Confidence at the Dinner Party</li>
+            <li>Sourdough Starter &amp; Maintenance</li>
           </ul>
           <div class="bundle-footer">
-            <div class="bundle-price">$235</div>
-            <div class="bundle-savings">Save $70 vs. individual</div>
+            <div class="bundle-price">$475</div>
+            <div class="bundle-savings">Save $160 vs. individual</div>
           </div>
         </article>
 
@@ -1484,7 +1478,7 @@
           <div class="bundle-tag">For best men, maids of honor, fathers of the bride</div>
           <h4>Wedding Speech <em>Workshop</em></h4>
           <div class="bundle-format">3-Week Series · Lecture &amp; practice</div>
-          <p class="bundle-who">The class no one else teaches. Walk in nervous, leave with a speech you're proud of.</p>
+          <p class="bundle-who">The class no one else teaches. Three weeks to a speech you're proud to give.</p>
           <div class="bundle-includes-label">Three sessions:</div>
           <ul class="bundle-list">
             <li>Writing your speech: the story, the structure, what to leave out</li>
@@ -1517,31 +1511,31 @@
           </div>
         </article>
 
-        <!-- BUNDLE 4: SELF-SUFFICIENCY -->
+        <!-- BUNDLE: SELF-SUFFICIENCY -->
         <article class="bundle-card" data-reveal>
-          <div class="bundle-tag">For new homeowners &amp; recent grads</div>
+          <div class="bundle-tag">Begins September 2026 · For new homeowners &amp; recent grads</div>
           <h4>Self-<em>Sufficiency</em> Bundle</h4>
-          <div class="bundle-format">4 Classes · Mix of formats</div>
-          <p class="bundle-who">Stop calling someone every time something breaks. A complete grounding in the practical knowledge most adults wish they'd been taught. Great gift for a recent graduate or new homeowner.</p>
+          <div class="bundle-format">4 Classes · 11 sessions</div>
+          <p class="bundle-who">The practical knowledge that turns a renter into a homeowner — and a homeowner into someone the neighbors come over for advice. A complete grounding in the basics. A great gift for a recent graduate or new homeowner.</p>
           <div class="bundle-includes-label">Includes:</div>
           <ul class="bundle-list">
             <li>Basic Car Care</li>
             <li>Basic Home Repair</li>
             <li>Reading the Paperwork in Your Life</li>
-            <li>Garden Basics for NEPA</li>
+            <li>Vegetable Gardening</li>
           </ul>
           <div class="bundle-footer">
-            <div class="bundle-price">$215</div>
-            <div class="bundle-savings">Save $20 vs. individual</div>
+            <div class="bundle-price">$555</div>
+            <div class="bundle-savings">Save $40 vs. individual</div>
           </div>
         </article>
 
-        <!-- BUNDLE 5: HOSTING MASTERY -->
+        <!-- BUNDLE: HOSTING MASTERY -->
         <article class="bundle-card" data-reveal>
-          <div class="bundle-tag">For the host in your life</div>
+          <div class="bundle-tag">Begins October 2026 · For Thanksgiving &amp; the holiday season</div>
           <h4>Hosting <em>Mastery</em></h4>
-          <div class="bundle-format">4 Classes · Mix of formats</div>
-          <p class="bundle-who">For anyone newly hosting holidays, dinner parties, or family gatherings. Everything you need to make a meal feel like an occasion.</p>
+          <div class="bundle-format">4 Classes · 8 sessions</div>
+          <p class="bundle-who">Designed to finish before Thanksgiving. For anyone newly hosting the holidays — or anyone who's been hosting forever and wants to do it with more ease. Everything you need to make a meal feel like an occasion.</p>
           <div class="bundle-includes-label">Includes:</div>
           <ul class="bundle-list">
             <li>How to Set a Proper Table</li>
@@ -1555,40 +1549,12 @@
           </div>
         </article>
 
-        <!-- BUNDLE 6: SLOW HANDS -->
-        <article class="bundle-card" data-reveal>
-          <div class="bundle-tag">A summer trio</div>
-          <h4>Slow <em>Hands</em></h4>
-          <div class="bundle-format">3 Classes · Workshop format</div>
-          <p class="bundle-who">For the screen-fatigued. Three classes for people who want to spend an afternoon with their hands busy and their phone away.</p>
-          <div class="bundle-includes-label">Includes:</div>
-          <ul class="bundle-list">
-            <li>Make a Travel Journal (bookbinding)</li>
-            <li>Plein-Air Sketching on the Patio</li>
-            <li>Summer Garden Bouquet</li>
-          </ul>
-          <div class="bundle-footer">
-            <div class="bundle-price">$195</div>
-            <div class="bundle-savings">Save $30 vs. individual</div>
-          </div>
-        </article>
-
       </div>
     </div>
   </section>
 
-
-  <!-- =========================================================
-       SIGN-UP CTA — points back to homepage form
-       ========================================================= -->
-  <section class="signup-cta">
-    <div class="container" data-reveal>
-      <span class="eyebrow">Ready to sign up?</span>
-      <h2 class="h-section">Tell us what <em>you want</em>.</h2>
-      <p class="signup-cta-lede">No payment, no commitment — just tell us which classes interest you and when you'd come. We'll email you when classes get scheduled.</p>
-      <a href="signup.html" class="btn-primary signup-cta-btn">Go to the sign-up form →</a>
-    </div>
-  </section>
+    </main>
+  </div>
 
   <!-- =========================================================
        FOOTER (matches main site)
@@ -1636,12 +1602,13 @@
     reveals.forEach((r) => io.observe(r));
 
     // ============================================================
-    // STICKY CATEGORY NAV — active button highlighting
     // ============================================================
-    const catSections = ['fiber-arts','drawing-paper','calligraphy','life-skills','self-sufficiency','seasonal-specialty','bundles']
+    // RAIL NAV — active link highlighting + smooth scroll
+    // ============================================================
+    const catSections = ['creative-pursuits','presence-entertaining','essential-life-skills','living-well','programs']
       .map(id => document.getElementById(id))
       .filter(Boolean);
-    const catButtons = document.querySelectorAll('.cat-btn[data-cat]');
+    const catButtons = document.querySelectorAll('.rail-link[data-cat]');
 
     const sectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -1659,15 +1626,18 @@
 
     catSections.forEach(s => sectionObserver.observe(s));
 
-    // Smooth scroll offset to account for sticky nav height
+    // Smooth scroll — only offset for the sticky rail on mobile
     catButtons.forEach(btn => {
       btn.addEventListener('click', (e) => {
         const targetId = btn.getAttribute('href').slice(1);
         const target = document.getElementById(targetId);
         if (target) {
           e.preventDefault();
-          const navHeight = document.querySelector('.cat-nav').offsetHeight;
-          const top = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
+          // On mobile (≤880px) the rail is a sticky bar at the top with non-zero height
+          const isMobile = window.matchMedia('(max-width: 880px)').matches;
+          const rail = document.querySelector('.schedule-rail');
+          const offset = (isMobile && rail) ? rail.offsetHeight + 8 : 16;
+          const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
           window.scrollTo({ top, behavior: 'smooth' });
         }
       });
