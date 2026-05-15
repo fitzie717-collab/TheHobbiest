@@ -491,71 +491,100 @@
     }
 
     /* ============================================================
-       CLASS CARDS
+       CLASS CARDS — vertical accordion list
        ============================================================ */
     .class-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 0;
-      border-top: 1px solid var(--hairline);
-      border-left: 1px solid var(--hairline);
-    }
-    .class-card {
-      padding: 2rem 2rem 2.25rem;
-      border-right: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      background: var(--bg);
-      transition: background 0.3s var(--ease);
-      position: relative;
       display: flex;
       flex-direction: column;
+      border-top: 1px solid var(--hairline);
+    }
+    .class-card {
+      border-bottom: 1px solid var(--hairline);
+      background: transparent;
+      transition: background 0.25s var(--ease);
+      position: relative;
     }
     .class-card:hover {
       background: var(--surface);
     }
+
+    /* Hide native disclosure marker */
+    .class-summary { list-style: none; cursor: pointer; outline: none; }
+    .class-summary::-webkit-details-marker { display: none; }
+    .class-summary::marker { display: none; content: ""; }
+
+    .class-summary {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: clamp(1rem, 3vw, 2.5rem);
+      align-items: center;
+      padding: 1.4rem 1.5rem 1.4rem 0.5rem;
+    }
+    .class-summary-main {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-width: 0;
+    }
     .class-format {
       font-family: var(--font-display);
       font-style: italic;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--sage);
-      margin-bottom: 0.85rem;
       letter-spacing: 0.02em;
+      margin: 0;
     }
     .class-card h4 {
-      font-size: 1.5rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2.3vw, 1.5rem);
       color: var(--sage-deep);
-      margin-bottom: 0.6rem;
+      font-weight: 400;
+      margin: 0;
       line-height: 1.15;
       letter-spacing: -0.01em;
     }
-    .class-meta {
-      font-size: 0.82rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 1.1rem;
-      font-weight: 500;
-    }
-    .class-desc {
-      font-size: 0.95rem;
-      color: var(--ink-soft);
-      line-height: 1.55;
-      flex: 1;
-      margin-bottom: 1.5rem;
-    }
-    .class-footer {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--hairline);
-    }
     .class-price {
       font-family: var(--font-display);
-      font-size: 1.65rem;
+      font-size: clamp(1.2rem, 2.2vw, 1.5rem);
       color: var(--sage-deep);
       font-weight: 400;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .class-chevron {
+      font-family: var(--font-body);
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--muted);
+      width: 1.5rem;
+      height: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s var(--ease), color 0.25s var(--ease);
+      flex-shrink: 0;
+    }
+    .class-summary:hover .class-chevron {
+      color: var(--sage-deep);
+    }
+    .class-details-wrap[open] > .class-summary .class-chevron {
+      transform: rotate(45deg);
+      color: var(--sage-deep);
+    }
+    .class-details-body {
+      padding: 0 1.5rem 1.75rem 0.5rem;
+      max-width: 60ch;
+      animation: classDetailsFade 0.3s var(--ease) both;
+    }
+    @keyframes classDetailsFade {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .class-desc {
+      font-size: 0.98rem;
+      color: var(--ink-soft);
+      line-height: 1.7;
+      margin: 0 0 0.85rem;
     }
     .class-price-note {
       font-family: var(--font-display);
@@ -563,6 +592,26 @@
       font-size: 0.85rem;
       color: var(--muted);
     }
+
+    @media (max-width: 700px) {
+      .class-summary {
+        grid-template-columns: 1fr auto;
+        gap: 0.75rem;
+        padding: 1.2rem 1rem 1.2rem 0.25rem;
+      }
+      .class-price {
+        grid-column: 1 / 2;
+        font-size: 1.1rem;
+      }
+      .class-chevron {
+        grid-column: 2;
+        grid-row: 1 / 3;
+      }
+      .class-details-body {
+        padding: 0 1rem 1.5rem 0.25rem;
+      }
+    }
+
 
     /* ============================================================
        BUNDLES SECTION
@@ -1122,7 +1171,6 @@
     }
 
     @media (max-width: 560px) {
-      .class-grid { grid-template-columns: 1fr; }
       .bundle-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -1175,7 +1223,7 @@
         <a href="#presence-entertaining" class="rail-link" data-cat="presence-entertaining">02 &nbsp; Presence &amp; Entertaining</a>
         <a href="#essential-life-skills" class="rail-link" data-cat="essential-life-skills">03 &nbsp; Essential Life Skills</a>
         <a href="#living-well" class="rail-link" data-cat="living-well">04 &nbsp; Living Well</a>
-        <a href="#programs" class="rail-link rail-link-program" data-cat="programs">Programs</a>
+        <a href="#programs" class="rail-link rail-link-program" data-cat="programs">Life Packages</a>
       </nav>
     </aside>
 
@@ -1193,53 +1241,88 @@
 
       <div class="class-grid" data-reveal>
         <article class="class-card">
-          <div class="class-format">4 sessions · In studio · Begins July 2026</div>
-          <h4>Watercolor 101</h4>
-          <p class="class-desc">Real watercolor instruction for true beginners. By the end of four sessions, a small portfolio of finished pieces and a clear sense of how to keep practicing on your own. Kit included.</p>
-          <div class="class-footer">
-            <div class="class-price">$230</div>
-            <div class="class-price-note">kit included</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">4 sessions · In studio · Begins July 2026</div>
+                <h4>Watercolor 101</h4>
+              </div>
+              <div class="class-price">$230</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">Real watercolor instruction for true beginners. By the end of four sessions, a small portfolio of finished pieces and a clear sense of how to keep practicing on your own. Kit included.</p>
+              <div class="class-price-note">kit included</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">4 sessions · In studio · Begins July 2026</div>
-          <h4>Drawing Fundamentals</h4>
-          <p class="class-desc">Line, value, perspective, observation. Drawing taught from the ground up, for anyone ready to start (or restart) with the fundamentals. Sketchbook, pencils, and erasers included.</p>
-          <div class="class-footer">
-            <div class="class-price">$225</div>
-            <div class="class-price-note">kit included</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">4 sessions · In studio · Begins July 2026</div>
+                <h4>Drawing Fundamentals</h4>
+              </div>
+              <div class="class-price">$225</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">Line, value, perspective, observation. Drawing taught from the ground up, for anyone ready to start (or restart) with the fundamentals. Sketchbook, pencils, and erasers included.</p>
+              <div class="class-price-note">kit included</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">4 sessions · In studio · Begins July 2026</div>
-          <h4>Modern Calligraphy</h4>
-          <p class="class-desc">Pointed pen calligraphy from scratch. By the end of four sessions, you'll be writing in a consistent, beautiful hand and have what you need to keep going on your own. Kit included.</p>
-          <div class="class-footer">
-            <div class="class-price">$235</div>
-            <div class="class-price-note">kit included</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">4 sessions · In studio · Begins July 2026</div>
+                <h4>Modern Calligraphy</h4>
+              </div>
+              <div class="class-price">$235</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">Pointed pen calligraphy from scratch. By the end of four sessions, you'll be writing in a consistent, beautiful hand and have what you need to keep going on your own. Kit included.</p>
+              <div class="class-price-note">kit included</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">4 sessions · In studio · Begins July 2026</div>
-          <h4>Knitting 101</h4>
-          <p class="class-desc">Cast on, knit, purl, bind off. By the fourth session you'll have a finished scarf you can actually wear. Kit included: wool yarn, bamboo needles, project bag, pattern booklet.</p>
-          <div class="class-footer">
-            <div class="class-price">$225</div>
-            <div class="class-price-note">kit included</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">4 sessions · In studio · Begins July 2026</div>
+                <h4>Knitting 101</h4>
+              </div>
+              <div class="class-price">$225</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">Cast on, knit, purl, bind off. By the fourth session you'll have a finished scarf you can actually wear. Kit included: wool yarn, bamboo needles, project bag, pattern booklet.</p>
+              <div class="class-price-note">kit included</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">3 sessions · In studio · Begins July 2026</div>
-          <h4>Writing</h4>
-          <p class="class-desc">A craft-first introduction to writing. Voice, structure, and the rhythm of your own sentences. Short prompts, real feedback, finished pieces by the end — and the habit of writing regularly.</p>
-          <div class="class-footer">
-            <div class="class-price">$165</div>
-            <div class="class-price-note">notebook included</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">3 sessions · In studio · Begins July 2026</div>
+                <h4>Writing</h4>
+              </div>
+              <div class="class-price">$165</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">A craft-first introduction to writing. Voice, structure, and the rhythm of your own sentences. Short prompts, real feedback, finished pieces by the end — and the habit of writing regularly.</p>
+              <div class="class-price-note">notebook included</div>
+            </div>
+          </details>
         </article>
       </div>
     </div>
@@ -1257,53 +1340,88 @@
 
       <div class="class-grid" data-reveal>
         <article class="class-card">
-          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
-          <h4>Hosting 101</h4>
-          <p class="class-desc">Planning a real dinner party from invitation to clean-up. Timing, menu, table, flow, the small touches that make guests feel taken care of. Includes a printed planner you can use forever.</p>
-          <div class="class-footer">
-            <div class="class-price">$130</div>
-            <div class="class-price-note">planner included</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+                <h4>Hosting 101</h4>
+              </div>
+              <div class="class-price">$130</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">Planning a real dinner party from invitation to clean-up. Timing, menu, table, flow, the small touches that make guests feel taken care of. Includes a printed planner you can use forever.</p>
+              <div class="class-price-note">planner included</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
-          <h4>How to Set a Proper Table</h4>
-          <p class="class-desc">Forks, glasses, place cards, runners — what goes where and why, for everyday meals and for hosting. The kind of thing worth learning once and useful for life.</p>
-          <div class="class-footer">
-            <div class="class-price">$85</div>
-            <div class="class-price-note">no materials needed</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+                <h4>How to Set a Proper Table</h4>
+              </div>
+              <div class="class-price">$85</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">Forks, glasses, place cards, runners — what goes where and why, for everyday meals and for hosting. The kind of thing worth learning once and useful for life.</p>
+              <div class="class-price-note">no materials needed</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">3 sessions · In studio · Begins July 2026</div>
-          <h4>Modern Etiquette</h4>
-          <p class="class-desc">The current state of manners — at the table, in inboxes, around plus-ones, in conversation. What's outdated, what's eternal, and how to navigate the modern social landscape gracefully.</p>
-          <div class="class-footer">
-            <div class="class-price">$165</div>
-            <div class="class-price-note">workbook included</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">3 sessions · In studio · Begins July 2026</div>
+                <h4>Modern Etiquette</h4>
+              </div>
+              <div class="class-price">$165</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">The current state of manners — at the table, in inboxes, around plus-ones, in conversation. What's outdated, what's eternal, and how to navigate the modern social landscape gracefully.</p>
+              <div class="class-price-note">workbook included</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
-          <h4>Charcuterie &amp; Cheese Board Styling</h4>
-          <p class="class-desc">Building a board people remember. Composition, what to buy, how to arrange, how to make it look effortless. Take home the wooden board you styled, fully loaded.</p>
-          <div class="class-footer">
-            <div class="class-price">$145</div>
-            <div class="class-price-note">board, cheeses &amp; charcuterie included</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+                <h4>Charcuterie &amp; Cheese Board Styling</h4>
+              </div>
+              <div class="class-price">$145</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">Building a board people remember. Composition, what to buy, how to arrange, how to make it look effortless. Take home the wooden board you styled, fully loaded.</p>
+              <div class="class-price-note">board, cheeses &amp; charcuterie included</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
-          <h4>Confidence at the Dinner Party</h4>
-          <p class="class-desc">How to be the guest people invite back. Choosing a thoughtful host gift, navigating a proper place setting as a guest, making introductions, holding real conversations, and writing the thank-you that lands. The skills of being good company.</p>
-          <div class="class-footer">
-            <div class="class-price">$105</div>
-            <div class="class-price-note">no materials needed</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+                <h4>Confidence at the Dinner Party</h4>
+              </div>
+              <div class="class-price">$105</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">How to be the guest people invite back. Choosing a thoughtful host gift, navigating a proper place setting as a guest, making introductions, holding real conversations, and writing the thank-you that lands. The skills of being good company.</p>
+              <div class="class-price-note">no materials needed</div>
+            </div>
+          </details>
         </article>
       </div>
     </div>
@@ -1321,53 +1439,88 @@
 
       <div class="class-grid" data-reveal>
         <article class="class-card">
-          <div class="class-format">2 sessions · Offsite · Begins September 2026</div>
-          <h4>Basic Car Care</h4>
-          <p class="class-desc">Tire change, jump start, fluids, when something is a real problem vs. not. Held at a partner garage in Pittston. Wear clothes you don't mind getting dirty.</p>
-          <div class="class-footer">
-            <div class="class-price">$105</div>
-            <div class="class-price-note">all tools provided</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">2 sessions · Offsite · Begins September 2026</div>
+                <h4>Basic Car Care</h4>
+              </div>
+              <div class="class-price">$105</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">Tire change, jump start, fluids, when something is a real problem vs. not. Held at a partner garage in Pittston. Wear clothes you don't mind getting dirty.</p>
+              <div class="class-price-note">all tools provided</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">3 sessions · In studio · Begins July 2026</div>
-          <h4>Basic Home Repair</h4>
-          <p class="class-desc">Patch drywall, fix a leaky faucet, hang things properly (and find studs), unclog a drain. The 20% of home repair that covers 80% of what you'll actually need. Tools and materials provided.</p>
-          <div class="class-footer">
-            <div class="class-price">$175</div>
-            <div class="class-price-note">materials included</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">3 sessions · In studio · Begins July 2026</div>
+                <h4>Basic Home Repair</h4>
+              </div>
+              <div class="class-price">$175</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">Patch drywall, fix a leaky faucet, hang things properly (and find studs), unclog a drain. The 20% of home repair that covers 80% of what you'll actually need. Tools and materials provided.</p>
+              <div class="class-price-note">materials included</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
-          <h4>Reading the Paperwork in Your Life</h4>
-          <p class="class-desc">How to actually read a lease, a contract, an insurance policy, a paystub, a credit card statement. The reading skills every adult needs — taught plainly, with examples from real documents.</p>
-          <div class="class-footer">
-            <div class="class-price">$105</div>
-            <div class="class-price-note">workbook included</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+                <h4>Reading the Paperwork in Your Life</h4>
+              </div>
+              <div class="class-price">$105</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">How to actually read a lease, a contract, an insurance policy, a paystub, a credit card statement. The reading skills every adult needs — taught plainly, with examples from real documents.</p>
+              <div class="class-price-note">workbook included</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
-          <h4>Knot Tying &amp; Practical Rope Work</h4>
-          <p class="class-desc">Bowline, clove hitch, taut-line, sheet bend, square knot — and when each is actually useful. The classic Eagle Scout repertoire, plus a few from sailing and climbing. Rope provided.</p>
-          <div class="class-footer">
-            <div class="class-price">$90</div>
-            <div class="class-price-note">rope included to take home</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+                <h4>Knot Tying &amp; Practical Rope Work</h4>
+              </div>
+              <div class="class-price">$90</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">Bowline, clove hitch, taut-line, sheet bend, square knot — and when each is actually useful. The classic Eagle Scout repertoire, plus a few from sailing and climbing. Rope provided.</p>
+              <div class="class-price-note">rope included to take home</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
-          <h4>First Aid &amp; Emergency Basics</h4>
-          <p class="class-desc">What to do in the first ten minutes — before professional help arrives. Wound care, CPR fundamentals, choking response, burns, and how to keep a clear head. Hands-on practice with manikins.</p>
-          <div class="class-footer">
-            <div class="class-price">$135</div>
-            <div class="class-price-note">supplies included</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+                <h4>First Aid &amp; Emergency Basics</h4>
+              </div>
+              <div class="class-price">$135</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">What to do in the first ten minutes — before professional help arrives. Wound care, CPR fundamentals, choking response, burns, and how to keep a clear head. Hands-on practice with manikins.</p>
+              <div class="class-price-note">supplies included</div>
+            </div>
+          </details>
         </article>
       </div>
     </div>
@@ -1385,53 +1538,88 @@
 
       <div class="class-grid" data-reveal>
         <article class="class-card">
-          <div class="class-format">4 sessions across the season · Offsite · Begins September 2026</div>
-          <h4>Vegetable Gardening</h4>
-          <p class="class-desc">From bed to harvest at a partner farm. Soil, planting, tending, and the timing that actually matters in NEPA. Four sessions across spring and summer — start in March, leave with a basket in July.</p>
-          <div class="class-footer">
-            <div class="class-price">$210</div>
-            <div class="class-price-note">all seeds &amp; tools provided</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">4 sessions across the season · Offsite · Begins September 2026</div>
+                <h4>Vegetable Gardening</h4>
+              </div>
+              <div class="class-price">$210</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">From bed to harvest at a partner farm. Soil, planting, tending, and the timing that actually matters in NEPA. Four sessions across spring and summer — start in March, leave with a basket in July.</p>
+              <div class="class-price-note">all seeds &amp; tools provided</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">4 sessions across the season · Offsite · Begins September 2026</div>
-          <h4>Flower Gardening</h4>
-          <p class="class-desc">A cutting garden from the ground up. Choose the plot, sow the seeds, tend the rows, harvest for arrangements. Some of what you grow comes back to studio for the floral classes.</p>
-          <div class="class-footer">
-            <div class="class-price">$210</div>
-            <div class="class-price-note">all seeds &amp; tools provided</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">4 sessions across the season · Offsite · Begins September 2026</div>
+                <h4>Flower Gardening</h4>
+              </div>
+              <div class="class-price">$210</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">A cutting garden from the ground up. Choose the plot, sow the seeds, tend the rows, harvest for arrangements. Some of what you grow comes back to studio for the floral classes.</p>
+              <div class="class-price-note">all seeds &amp; tools provided</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
-          <h4>Floral Arranging</h4>
-          <p class="class-desc">Seasonal arrangements you can actually replicate at home. Loose, hand-tied bouquets in spring and summer; weighty, structured pieces in fall and winter. Take home a finished arrangement.</p>
-          <div class="class-footer">
-            <div class="class-price">$145</div>
-            <div class="class-price-note">flowers included</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+                <h4>Floral Arranging</h4>
+              </div>
+              <div class="class-price">$145</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">Seasonal arrangements you can actually replicate at home. Loose, hand-tied bouquets in spring and summer; weighty, structured pieces in fall and winter. Take home a finished arrangement.</p>
+              <div class="class-price-note">flowers included</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
-          <h4>Wreath Making</h4>
-          <p class="class-desc">Hand-bound wreaths from foraged and dried materials. Build a foundation, layer textures, finish with a ribbon. Take home a wreath you'll actually want to hang on your door.</p>
-          <div class="class-footer">
-            <div class="class-price">$125</div>
-            <div class="class-price-note">all materials included</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+                <h4>Wreath Making</h4>
+              </div>
+              <div class="class-price">$125</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">Hand-bound wreaths from foraged and dried materials. Build a foundation, layer textures, finish with a ribbon. Take home a wreath you'll actually want to hang on your door.</p>
+              <div class="class-price-note">all materials included</div>
+            </div>
+          </details>
         </article>
 
         <article class="class-card">
-          <div class="class-format">2 sessions · In studio · Begins July 2026</div>
-          <h4>Sourdough Starter &amp; Maintenance</h4>
-          <p class="class-desc">The foundation of every great loaf — your starter, taught properly. Walk out with a live, named, jar-fed starter and a feeding-and-troubleshooting guide. Bring it home and start baking.</p>
-          <div class="class-footer">
-            <div class="class-price">$115</div>
-            <div class="class-price-note">live starter &amp; jar included</div>
-          </div>
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">2 sessions · In studio · Begins July 2026</div>
+                <h4>Sourdough Starter &amp; Maintenance</h4>
+              </div>
+              <div class="class-price">$115</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">The foundation of every great loaf — your starter, taught properly. Walk out with a live, named, jar-fed starter and a feeding-and-troubleshooting guide. Bring it home and start baking.</p>
+              <div class="class-price-note">live starter &amp; jar included</div>
+            </div>
+          </details>
         </article>
       </div>
     </div>
@@ -1446,9 +1634,9 @@
   <section class="bundles" id="programs">
     <div class="container">
       <div data-reveal>
-        <span class="eyebrow">Programs</span>
-        <h2 class="h-section">Curated <em>programs</em>.</h2>
-        <p class="bundles-lede">Programs combine multiple classes into one experience — designed around moments in life, seasons of the year, or shared goals. Built to be taken together.</p>
+        <span class="eyebrow">Life Packages</span>
+        <h2 class="h-section">Life <em>Packages</em>.</h2>
+        <p class="bundles-lede">Life packages combine multiple classes into one curated experience — designed around moments in life, seasons of the year, or shared goals. Built to be taken together.</p>
       </div>
 
       <div class="bundle-grid">
