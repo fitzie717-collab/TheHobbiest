@@ -689,8 +689,13 @@
         <p class="form-lede">A few quick questions. Takes about a minute.</p>
       </div>
 
-      <form class="form" id="signupForm" action="#" method="POST" data-netlify="true" name="hobbiest-signup">
-        <input type="hidden" name="form-name" value="hobbiest-signup" />
+      <form class="form" id="signupForm" action="https://api.web3forms.com/submit" method="POST">
+        <!-- Web3Forms config -->
+        <input type="hidden" name="access_key" value="38874121-66c9-4ac2-b031-6b49d727f714" />
+        <input type="hidden" name="subject" value="New Hobbiest waitlist signup" />
+        <input type="hidden" name="from_name" value="The Hobbiest — Waitlist" />
+        <!-- Honeypot (spam protection) — invisible to humans, bots fill it in -->
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
 
         <!-- 01: You -->
         <div class="form-block" data-reveal>
@@ -950,24 +955,35 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     reveals.forEach((r) => io.observe(r));
 
-    // Form submission handler
-    // For Netlify Forms: form posts directly; the data-netlify="true" attribute
-    // and the hidden form-name field handle submission server-side.
-    // Replace action="#" with your real endpoint to use Formspree or similar.
-    //
-    // The block below intercepts submission to show an inline thank-you instead
-    // of navigating away. If you wire up an actual endpoint, uncomment the
-    // fetch() call and adjust as needed.
+    // Form submission via Web3Forms
     const form = document.getElementById('signupForm');
     const thanks = document.getElementById('formThanks');
-    form.addEventListener('submit', (e) => {
-      // If action is still "#" (i.e., no backend wired up), prevent default
-      // and just show the thank-you. Remove this block once you have a real endpoint.
-      if (form.getAttribute('action') === '#') {
-        e.preventDefault();
-        form.style.display = 'none';
-        thanks.classList.add('active');
-        window.scrollTo({ top: thanks.offsetTop - 100, behavior: 'smooth' });
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalLabel = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      try {
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' },
+        });
+        const result = await response.json();
+        if (response.ok && result.success) {
+          form.style.display = 'none';
+          thanks.classList.add('active');
+          window.scrollTo({ top: thanks.offsetTop - 100, behavior: 'smooth' });
+        } else {
+          throw new Error(result.message || 'Submission failed');
+        }
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+        alert("Sorry — something went wrong sending your signup. Please try again, or email us directly at pittston@thehobbiestskillsclub.com and we'll add you to the list.");
       }
     });
 

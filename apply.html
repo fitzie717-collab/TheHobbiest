@@ -420,6 +420,32 @@
       color: var(--muted); font-size: 0.92rem;
     }
 
+    /* Thank-you state (shown after successful submit) */
+    .form-thanks {
+      display: none;
+      padding: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      text-align: center;
+      max-width: 720px;
+      margin: 2rem auto 0;
+    }
+    .form-thanks.active { display: block; }
+    .form-thanks h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--sage-deep);
+      margin-bottom: 1rem;
+    }
+    .form-thanks h3 em { font-style: italic; color: var(--sage); }
+    .form-thanks p {
+      color: var(--ink-soft);
+      line-height: 1.65;
+      max-width: 48ch;
+      margin: 0 auto;
+    }
+
     /* Footer */
     footer {
       background: var(--sage-deep);
@@ -579,13 +605,17 @@
 
       <!--
         ============================================================
-        FORM SUBMISSION
-        ============================================================
-        Replace `action="#"` with your form handler URL.
-        Recommended: Formspree, Netlify Forms, or your own backend.
+        FORM SUBMISSION — Web3Forms
+        Submissions arrive at pittston@thehobbiestskillsclub.com
+        Subject-tagged "New Hobbiest teach application" for easy sorting
         ============================================================
       -->
-      <form class="form" id="applyForm" action="#" method="POST" data-reveal>
+      <form class="form" id="applyForm" action="https://api.web3forms.com/submit" method="POST" data-reveal>
+        <input type="hidden" name="access_key" value="38874121-66c9-4ac2-b031-6b49d727f714" />
+        <input type="hidden" name="subject" value="New Hobbiest teach application" />
+        <input type="hidden" name="from_name" value="The Hobbiest — Teach Application" />
+        <!-- Honeypot for spam protection -->
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
 
         <!-- 01. YOU -->
         <div class="form-block">
@@ -706,6 +736,12 @@
           <span class="form-submit-note">We'll be in touch within two weeks.</span>
         </div>
       </form>
+
+      <!-- Thank you state -->
+      <div class="form-thanks" id="formThanks">
+        <h3>Thanks for <em>applying.</em></h3>
+        <p>We've received your application and will be in touch within two weeks. If we have questions in the meantime, we'll reach out from <strong>pittston@thehobbiestskillsclub.com</strong>.</p>
+      </div>
     </div>
   </section>
 
@@ -750,6 +786,38 @@
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     reveals.forEach((r) => io.observe(r));
+
+    // Form submission via Web3Forms
+    const form = document.getElementById('applyForm');
+    const thanks = document.getElementById('formThanks');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalLabel = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      try {
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' },
+        });
+        const result = await response.json();
+        if (response.ok && result.success) {
+          form.style.display = 'none';
+          thanks.classList.add('active');
+          window.scrollTo({ top: thanks.offsetTop - 100, behavior: 'smooth' });
+        } else {
+          throw new Error(result.message || 'Submission failed');
+        }
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+        alert("Sorry — something went wrong sending your application. Please try again, or email us directly at pittston@thehobbiestskillsclub.com.");
+      }
+    });
   </script>
 
 </body>
