@@ -42,7 +42,7 @@
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: var(--font-body);
+      font-family: var(--font-display);
       font-size: 16px;
       line-height: 1.6;
       color: var(--ink);
@@ -50,8 +50,10 @@
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
-    button, input, textarea, select { font-family: inherit; }
+    button, input, textarea, select { font-family: var(--font-body); }
     a { color: inherit; }
+    /* Keep small UI text (nav, eyebrows) in sans for crisp uppercase tracking */
+    .nav-link, .eyebrow { font-family: var(--font-body); }
     h1, h2, h3, h4 {
       font-family: var(--font-display);
       font-weight: 400;
@@ -205,7 +207,7 @@
     .h-section em { font-style: italic; color: var(--sage); }
 
     /* FORM */
-    .form-section { padding: clamp(4rem, 8vw, 7rem) 0; background: var(--bg); }
+    .form-section { padding: clamp(2rem, 4vw, 3.5rem) 0 clamp(4rem, 8vw, 7rem); background: var(--bg); }
     .form-header { max-width: 720px; margin-bottom: 4rem; }
     .form-header .h-section { max-width: 18ch; }
     .form-lede {
@@ -563,26 +565,35 @@
     /* THANK YOU STATE */
     .form-thanks {
       display: none;
-      padding: 3rem;
+      padding: clamp(3rem, 6vw, 5rem) clamp(2rem, 5vw, 4rem);
       background: var(--surface);
       border: 1px solid var(--hairline);
       border-radius: 4px;
       text-align: center;
       max-width: 720px;
+      margin: 2rem auto 4rem;
     }
     .form-thanks.active { display: block; }
     .form-thanks h3 {
       font-family: var(--font-display);
-      font-size: 2rem;
+      font-size: clamp(2.25rem, 4vw, 3.25rem);
+      line-height: 1.1;
       color: var(--sage-deep);
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      font-weight: 400;
     }
     .form-thanks h3 em { font-style: italic; color: var(--sage); }
     .form-thanks p {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
       color: var(--ink-soft);
       line-height: 1.65;
-      max-width: 42ch;
+      max-width: 48ch;
       margin: 0 auto;
+    }
+    .form-thanks p strong {
+      font-weight: 500;
+      color: var(--sage-deep);
     }
 
     /* FOOTER */
@@ -684,10 +695,6 @@
   <!-- FORM -->
   <section class="form-section">
     <div class="container">
-
-      <div class="form-header" data-reveal>
-        <p class="form-lede">A few quick questions. Takes about a minute.</p>
-      </div>
 
       <form class="form" id="signupForm" action="https://api.web3forms.com/submit" method="POST">
         <!-- Web3Forms config -->
@@ -887,6 +894,12 @@
         </div>
       </form>
 
+      <!-- Thank you state (shown after successful submission) -->
+      <div class="form-thanks" id="formThanks">
+        <h3>You're in. <em>Welcome.</em></h3>
+        <p>We'll be in touch as classes open and as membership opens this fall. Keep an eye on <strong>pittston@thehobbiestskillsclub.com</strong> — that's where we'll write from.</p>
+      </div>
+
       <!-- Share section -->
       <div class="share-section" data-reveal>
         <div class="share-eyebrow">Spread the word</div>
@@ -902,12 +915,6 @@
             <span class="share-label">Email</span>
           </a>
         </div>
-      </div>
-
-      <!-- Thank you state -->
-      <div class="form-thanks" id="formThanks">
-        <h3>You're in. <em>Welcome.</em></h3>
-        <p>We'll be in touch.</p>
       </div>
 
 
@@ -974,7 +981,10 @@
         });
         const result = await response.json();
         if (response.ok && result.success) {
+          // Hide the form and the "A few quick questions" lede above it
           form.style.display = 'none';
+          const formHeader = document.querySelector('.form-header');
+          if (formHeader) formHeader.style.display = 'none';
           thanks.classList.add('active');
           window.scrollTo({ top: thanks.offsetTop - 100, behavior: 'smooth' });
         } else {

@@ -56,7 +56,7 @@
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: var(--font-body);
+      font-family: var(--font-display);
       font-size: 16px;
       line-height: 1.6;
       color: var(--ink);
@@ -66,8 +66,10 @@
       overflow-x: hidden;
     }
     img { max-width: 100%; height: auto; display: block; }
-    button, input, textarea, select { font-family: inherit; }
+    button, input, textarea, select { font-family: var(--font-body); }
     a { color: inherit; }
+    /* Keep small UI text (nav, eyebrows, rail links) in sans for crisp uppercase tracking */
+    .nav-link, .eyebrow, .rail-link, .rail-eyebrow { font-family: var(--font-body); }
 
     h1, h2, h3, h4 {
       font-family: var(--font-display);
