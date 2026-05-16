@@ -50,7 +50,7 @@
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: var(--font-body);
+      font-family: var(--font-display);
       font-size: 16px;
       line-height: 1.6;
       color: var(--ink);
@@ -60,7 +60,10 @@
       overflow-x: hidden;
     }
     img { max-width: 100%; height: auto; display: block; }
-    button, input, textarea, select { font-family: inherit; }
+    /* Form fields stay in sans-serif for typing readability */
+    button, input, textarea, select { font-family: var(--font-body); }
+    /* Small UI text (nav, eyebrows) keeps the sans for crisp uppercase tracking */
+    .nav-link, .eyebrow { font-family: var(--font-body); }
     a { color: inherit; }
     h1, h2, h3, h4 {
       font-family: var(--font-display);
@@ -400,6 +403,121 @@
     .check-item-text { font-size: 0.95rem; color: var(--ink); }
     .check-item:hover .check-item-text { color: var(--sage-deep); }
 
+    /* Availability matrix — 7 days x 5 time blocks */
+    .matrix-wrap {
+      margin-top: 0.5rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      background: var(--surface);
+    }
+    .matrix {
+      width: 100%;
+      min-width: 640px;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .matrix th, .matrix td {
+      padding: 0;
+      text-align: center;
+      vertical-align: middle;
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .matrix th:last-child, .matrix td:last-child { border-right: none; }
+    .matrix tr:last-child td { border-bottom: none; }
+    .matrix thead th {
+      background: var(--bg-warm);
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--sage-deep);
+      font-size: 0.95rem;
+      padding: 0.8rem 0.3rem;
+    }
+    .matrix thead th.matrix-corner {
+      background: var(--surface);
+      width: 140px;
+      font-style: normal;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .matrix tbody th {
+      background: var(--bg-warm);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+      font-family: var(--font-body);
+      font-weight: 500;
+      color: var(--sage-deep);
+      font-size: 0.88rem;
+      line-height: 1.3;
+      width: 140px;
+    }
+    .matrix tbody th .matrix-time-range {
+      display: block;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+    .matrix td { position: relative; transition: background 0.15s var(--ease); }
+    .matrix td:hover { background: var(--bg); }
+    .matrix-cell-label {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0.95rem 0.5rem;
+      cursor: pointer;
+      position: relative;
+    }
+    .matrix-cell-label input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .matrix-cell-box {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--hairline);
+      border-radius: 3px;
+      background: var(--bg);
+      transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
+      position: relative;
+    }
+    .matrix-cell-label:hover .matrix-cell-box { border-color: var(--sage); }
+    .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box {
+      background: var(--sage);
+      border-color: var(--sage);
+    }
+    .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 0px;
+      width: 6px;
+      height: 11px;
+      border: solid var(--bg);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .matrix-cell-label:has(input:checked) { background: rgba(122, 138, 107, 0.08); }
+    .matrix-hint {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 0.75rem;
+      display: block;
+      font-family: var(--font-display);
+    }
+
     .form-submit-row {
       padding-top: 2.5rem;
       display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
@@ -423,27 +541,35 @@
     /* Thank-you state (shown after successful submit) */
     .form-thanks {
       display: none;
-      padding: 3rem;
+      padding: clamp(3rem, 6vw, 5rem) clamp(2rem, 5vw, 4rem);
       background: var(--surface);
       border: 1px solid var(--hairline);
       border-radius: 4px;
       text-align: center;
       max-width: 720px;
-      margin: 2rem auto 0;
+      margin: 2rem auto 4rem;
     }
     .form-thanks.active { display: block; }
     .form-thanks h3 {
       font-family: var(--font-display);
-      font-size: 2rem;
+      font-size: clamp(2.25rem, 4vw, 3.25rem);
+      line-height: 1.1;
       color: var(--sage-deep);
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      font-weight: 400;
     }
     .form-thanks h3 em { font-style: italic; color: var(--sage); }
     .form-thanks p {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
       color: var(--ink-soft);
       line-height: 1.65;
       max-width: 48ch;
       margin: 0 auto;
+    }
+    .form-thanks p strong {
+      font-weight: 500;
+      color: var(--sage-deep);
     }
 
     /* Footer */
@@ -618,7 +744,7 @@
         <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
 
         <!-- 01. YOU -->
-        <div class="form-block">
+        <div class="form-block" data-reveal>
           <div class="form-block-num">01 — You</div>
           <h3 class="form-block-title">Who <em>are you</em>?</h3>
           <p class="form-block-note">The basics. We'll be in touch from this email.</p>
@@ -652,7 +778,7 @@
         </div>
 
         <!-- 02. WHAT YOU TEACH -->
-        <div class="form-block">
+        <div class="form-block" data-reveal>
           <div class="form-block-num">02 — What you teach</div>
           <h3 class="form-block-title">What's your <em>craft</em>?</h3>
           <p class="form-block-note">What would you teach at The Hobbiest? Be specific. A class title or topic is enough — we'll work out the format with you.</p>
@@ -675,7 +801,7 @@
         </div>
 
         <!-- 03. EXPERIENCE -->
-        <div class="form-block">
+        <div class="form-block" data-reveal>
           <div class="form-block-num">03 — Experience</div>
           <h3 class="form-block-title">How long have you been <em>doing this</em>?</h3>
           <p class="form-block-note">We're not snobs about credentials — what matters is genuine practice. Tell us your story.</p>
@@ -692,7 +818,7 @@
         </div>
 
         <!-- 04. SHOW YOUR WORK -->
-        <div class="form-block">
+        <div class="form-block" data-reveal>
           <div class="form-block-num">04 — Show your work</div>
           <h3 class="form-block-title">Where can we <em>see what you make</em>?</h3>
           <p class="form-block-note">Instagram, Etsy, personal website, portfolio — anywhere we can see your craft. If you don't have an online presence, that's fine; tell us what you'd send instead.</p>
@@ -704,24 +830,89 @@
         </div>
 
         <!-- 05. AVAILABILITY -->
-        <div class="form-block">
+        <div class="form-block" data-reveal>
           <div class="form-block-num">05 — Availability</div>
           <h3 class="form-block-title">When could you <em>teach</em>?</h3>
-          <p class="form-block-note">Roughly which days and times work for you. We schedule classes based on student demand, so this is a starting point, not a commitment.</p>
+          <p class="form-block-note">Check anything that generally works in your week.</p>
 
-          <div class="form-field">
-            <label for="availability">When you're typically free to teach</label>
-            <textarea id="availability" name="availability" placeholder="e.g. 'Tuesday and Thursday evenings, Saturday mornings, weekday afternoons after 2pm'"></textarea>
+          <div class="matrix-wrap">
+            <table class="matrix">
+              <thead>
+                <tr>
+                  <th class="matrix-corner"></th>
+                  <th>Mon</th>
+                  <th>Tue</th>
+                  <th>Wed</th>
+                  <th>Thu</th>
+                  <th>Fri</th>
+                  <th>Sat</th>
+                  <th>Sun</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Morning<span class="matrix-time-range">8–11 AM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="mon-morning" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="tue-morning" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="wed-morning" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="thu-morning" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="fri-morning" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sat-morning" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sun-morning" /><span class="matrix-cell-box"></span></label></td>
+                </tr>
+                <tr>
+                  <th>Midday<span class="matrix-time-range">11 AM–2 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="mon-midday" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="tue-midday" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="wed-midday" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="thu-midday" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="fri-midday" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sat-midday" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sun-midday" /><span class="matrix-cell-box"></span></label></td>
+                </tr>
+                <tr>
+                  <th>Afternoon<span class="matrix-time-range">2–5 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="mon-afternoon" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="tue-afternoon" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="wed-afternoon" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="thu-afternoon" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="fri-afternoon" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sat-afternoon" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sun-afternoon" /><span class="matrix-cell-box"></span></label></td>
+                </tr>
+                <tr>
+                  <th>Evening<span class="matrix-time-range">5–8 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="mon-evening" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="tue-evening" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="wed-evening" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="thu-evening" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="fri-evening" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sat-evening" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sun-evening" /><span class="matrix-cell-box"></span></label></td>
+                </tr>
+                <tr>
+                  <th>Late<span class="matrix-time-range">8–10 PM</span></th>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="mon-late" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="tue-late" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="wed-late" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="thu-late" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="fri-late" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sat-late" /><span class="matrix-cell-box"></span></label></td>
+                  <td><label class="matrix-cell-label"><input type="checkbox" name="availability" value="sun-late" /><span class="matrix-cell-box"></span></label></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+          <p class="matrix-hint">Tap or click any cell to mark it as available.</p>
 
-          <div class="form-field" style="margin-top: 1.5rem;">
-            <label for="firstClass">When could you teach your first class?</label>
-            <input type="text" id="firstClass" name="firstClass" placeholder="Earliest start date — we're looking ahead to July 2026" />
+          <div class="form-field" style="margin-top: 2rem;">
+            <label for="firstClass">Earliest you could teach your first class</label>
+            <input type="text" id="firstClass" name="firstClass" placeholder="We're looking ahead to July 2026" />
           </div>
         </div>
 
         <!-- 06. ANYTHING ELSE -->
-        <div class="form-block">
+        <div class="form-block" data-reveal>
           <div class="form-block-num">06 — Anything else</div>
           <h3 class="form-block-title">What should we <em>know</em>?</h3>
           <p class="form-block-note">Optional. Anything you want us to consider — questions, ideas for collaboration, classes you wish existed, anything.</p>
@@ -806,7 +997,10 @@
         });
         const result = await response.json();
         if (response.ok && result.success) {
+          // Hide the form and its header lede
           form.style.display = 'none';
+          const formHeader = document.querySelector('.form-header');
+          if (formHeader) formHeader.style.display = 'none';
           thanks.classList.add('active');
           window.scrollTo({ top: thanks.offsetTop - 100, behavior: 'smooth' });
         } else {
