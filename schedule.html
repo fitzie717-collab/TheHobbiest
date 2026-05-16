@@ -329,6 +329,12 @@
       padding-right: 0;
       max-width: none;
     }
+    /* Bundles section needs container padding restored so the
+       eyebrow/heading/lede aren't flush against the left edge */
+    .schedule-main .bundles .container {
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+    }
 
     /* Mobile: stack rail above content, horizontal scrolling chips */
     @media (max-width: 880px) {
