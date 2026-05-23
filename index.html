@@ -725,13 +725,13 @@
     /* Four pillars (2x2 grid) */
     .pillars-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 0;
       border-top: 1px solid var(--hairline);
       border-left: 1px solid var(--hairline);
     }
     .pillar {
-      padding: 2.5rem;
+      padding: 1.75rem;
       border-right: 1px solid var(--hairline);
       border-bottom: 1px solid var(--hairline);
       background: var(--surface);
@@ -937,6 +937,13 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
+    }
+    .format-coming {
+      opacity: 0.75;
+      cursor: default;
+    }
+    .format-coming .format-price {
+      color: var(--taupe);
     }
     .format {
       padding: 1.75rem;
@@ -1396,6 +1403,9 @@
     /* ============================================================
        RESPONSIVE
        ============================================================ */
+    @media (max-width: 1100px) {
+      .pillars-grid { grid-template-columns: repeat(3, 1fr); }
+    }
     @media (max-width: 880px) {
       .hero { padding: 7rem 0 4rem; gap: 2.5rem; }
       .hero-top { grid-template-columns: 1fr; }
@@ -1510,28 +1520,35 @@
           <div class="pillar-num">01</div>
           <h3>Creative <em>Pursuits</em></h3>
           <p class="pillar-sub">Things made beautifully by hand.</p>
-          <p>Explorations in craftsmanship, creative expression, and traditional arts — from calligraphy and watercolor to sourdough, bookbinding, embroidery, and other rotating workshops.</p>
+          <p>Watercolor, calligraphy, knitting, drawing, and other craft traditions.</p>
         </a>
 
         <a href="schedule.html" class="pillar" data-reveal>
           <div class="pillar-num">02</div>
           <h3>Presence &amp; <em>Entertaining</em></h3>
           <p class="pillar-sub">The art of making people feel welcome.</p>
-          <p>Courses centered around hosting, social confidence, presentation, and modern etiquette — including tablescaping, personal styling, couples dancing, tea service, and seasonal gatherings.</p>
+          <p>Hosting, modern etiquette, personal styling, and the small social skills that hold.</p>
         </a>
 
         <a href="schedule.html" class="pillar" data-reveal>
           <div class="pillar-num">03</div>
           <h3>Essential <em>Life Skills</em></h3>
           <p class="pillar-sub">The things everyone should know.</p>
-          <p>Practical knowledge for everyday competence and self-reliance — from negotiating and financial literacy to home repair, public speaking, and beyond.</p>
+          <p>Home repair, finances, first aid, and the habits that compound over years.</p>
         </a>
 
         <a href="schedule.html" class="pillar" data-reveal>
           <div class="pillar-num">04</div>
+          <h3>Hearth &amp; <em>Garden</em></h3>
+          <p class="pillar-sub">Slow, seasonal work with living things.</p>
+          <p>Sourdough, floral arranging, herb gardens, and the rituals of the year.</p>
+        </a>
+
+        <a href="schedule.html" class="pillar" data-reveal>
+          <div class="pillar-num">05</div>
           <h3>Living <em>Well</em></h3>
-          <p class="pillar-sub">Creating a slower, more intentional life.</p>
-          <p>Studies in personal wellbeing, domestic rituals, and intentional living — including gardening, flower arranging, food literacy, posture, sleep, and tending a home.</p>
+          <p class="pillar-sub">The inward side of an intentional life.</p>
+          <p>Meditation, journaling, intention-setting, and daily practices that hold.</p>
         </a>
       </div>
     </div>
@@ -1555,20 +1572,18 @@
             <p>Single-subject classes designed to explore a skill, craft, or idea through a focused four-session series, two hours per session. A place to follow curiosity wherever it leads.</p>
             <span class="format-cta">See course catalog <span class="format-cta-arrow">→</span></span>
           </a>
-          <a href="schedule.html#bundles" class="format">
+          <div class="format format-coming">
             <div class="format-num">02</div>
             <h4>Skills Packages</h4>
-            <p class="format-price">From $125 · multi-class package</p>
+            <p class="format-price">Coming 2027</p>
             <p>Curated multi-class experiences designed around seasons of life, personal goals, and deeper areas of study — helping members build confidence, capability, and community over time.</p>
-            <span class="format-cta">See skills packages <span class="format-cta-arrow">→</span></span>
-          </a>
-          <a href="schedule.html" class="format">
+          </div>
+          <div class="format format-coming">
             <div class="format-num">03</div>
             <h4>Offsites</h4>
-            <p class="format-price">From $99 · 4-session course</p>
+            <p class="format-price">Coming 2027</p>
             <p>Immersive experiences taught beyond the classroom — in gardens, workshops, kitchens, campsites, and gathering spaces. Practical skills learned in the environments they belong.</p>
-            <span class="format-cta">See offsites <span class="format-cta-arrow">→</span></span>
-          </a>
+          </div>
         </div>
       </div>
     </div>
