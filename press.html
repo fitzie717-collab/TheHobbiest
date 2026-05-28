@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#7A8A6B" />
+
+  <title>Press — The Hobbiest Skills Club</title>
+  <meta name="description" content="Press release and media kit for The Hobbiest — a private members skills club for adults opening July 2026 in downtown Pittston, PA." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Press — The Hobbiest Skills Club" />
+  <meta property="og:description" content="Harvard-trained AI developer Ashley Fitzgerald opens The Hobbiest, a phone-free skills club for adults, in downtown Pittston this July." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://thehobbiestskillsclub.com/press.html" />
+  <meta property="og:image" content="https://thehobbiestskillsclub.com/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <!-- Fonts: Fraunces (display) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — SAGE + CREAM (matches index.html)
+       ============================================================ */
+    :root {
+      --bg:        #F1ECDF;
+      --bg-warm:   #EAE3D2;
+      --surface:   #FAF7F0;
+      --ink:       #4E5A41;
+      --ink-soft:  #6B7459;
+      --muted:     #8A8170;
+      --hairline:  #D9D2BE;
+
+      --sage:      #7A8A6B;
+      --sage-deep: #4E5A41;
+      --sage-pale: #B5BFA8;
+      --taupe:     #A89878;
+
+      --font-display: "Fraunces", "Times New Roman", serif;
+      --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --max-w:    1280px;
+      --gutter:   clamp(1.25rem, 4vw, 3rem);
+      --section-y: clamp(4rem, 9vw, 8rem);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    button { font-family: var(--font-body); cursor: pointer; }
+    a { color: inherit; }
+    .nav-link, .eyebrow { font-family: var(--font-body); }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.015em;
+      margin: 0;
+      font-variation-settings: "opsz" 100;
+    }
+    p { margin: 0; }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+    }
+
+    /* Paper grain (same as index) */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      opacity: 0.55;
+      mix-blend-mode: multiply;
+    }
+
+    /* ============================================================
+       NAV — matches index
+       ============================================================ */
+    .nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 10;
+      padding: 1.75rem 0;
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .wordmark {
+      font-family: var(--font-display);
+      font-size: 1.2rem; font-weight: 400; letter-spacing: -0.01em;
+      font-style: italic; color: var(--sage); text-decoration: none;
+      font-variation-settings: "opsz" 144;
+    }
+    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
+    .nav-link {
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); font-weight: 500; text-decoration: none;
+      transition: color 0.2s var(--ease);
+    }
+    .nav-link:hover { color: var(--sage); }
+    .nav-link-current { color: var(--sage-deep); }
+    .nav-link-current::after {
+      content: ""; display: block; width: 100%; height: 1px;
+      background: var(--sage); margin-top: 4px;
+    }
+    .nav-link-primary {
+      color: var(--bg); background: var(--sage);
+      padding: 0.55rem 1.1rem; border-radius: 999px;
+      letter-spacing: 0.12em; transition: background 0.2s var(--ease);
+    }
+    .nav-link-primary:hover { background: var(--sage-deep); color: var(--bg); }
+    @media (max-width: 640px) {
+      .nav-links { gap: 0.9rem; }
+      .nav-link { font-size: 0.68rem; letter-spacing: 0.14em; }
+    }
+
+    /* ============================================================
+       PRESS HERO
+       ============================================================ */
+    .press-hero {
+      padding: 9rem 0 3rem;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .press-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.25rem;
+    }
+    .press-meta-tag {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--sage);
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--sage);
+      border-radius: 999px;
+    }
+    .press-meta-date {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--muted);
+      letter-spacing: 0.01em;
+    }
+    .press-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+      font-weight: 350;
+      line-height: 1.06;
+      letter-spacing: -0.025em;
+      color: var(--sage-deep);
+      max-width: 22ch;
+      margin: 0 0 1.75rem;
+      font-variation-settings: "opsz" 144;
+    }
+    .press-headline em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--sage);
+    }
+    .press-deck {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 1.7vw, 1.4rem);
+      line-height: 1.5;
+      color: var(--ink-soft);
+      font-weight: 350;
+      max-width: 62ch;
+      font-style: italic;
+    }
+
+    /* Utility bar — sticky-ish download row */
+    .press-utility {
+      background: var(--bg-warm);
+      border-bottom: 1px solid var(--hairline);
+      padding: 1.25rem 0;
+    }
+    .press-utility-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .press-utility-label {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .press-utility-actions {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+    .btn-press {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.7rem 1.25rem;
+      border-radius: 999px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+      cursor: pointer;
+      border: 1px solid var(--sage);
+      background: transparent;
+      color: var(--sage-deep);
+    }
+    .btn-press:hover {
+      background: var(--sage);
+      color: var(--bg);
+    }
+    .btn-press-primary {
+      background: var(--sage);
+      color: var(--bg);
+    }
+    .btn-press-primary:hover {
+      background: var(--sage-deep);
+      border-color: var(--sage-deep);
+    }
+
+    /* ============================================================
+       ARTICLE BODY — editorial long-read
+       ============================================================ */
+    .article {
+      padding: clamp(3.5rem, 7vw, 6rem) 0;
+    }
+    .article-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .dateline {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--sage);
+      font-size: 1.05rem;
+      margin-bottom: 1.75rem;
+      letter-spacing: 0.01em;
+    }
+    .dateline .dateline-loc {
+      font-style: normal;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      color: var(--sage-deep);
+      margin-right: 0.5rem;
+    }
+    .article p {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: var(--ink);
+      margin: 0 0 1.5rem;
+      font-weight: 350;
+    }
+    .article p.lede-graf::first-letter {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 4.5rem;
+      float: left;
+      line-height: 0.82;
+      padding: 0.35rem 0.65rem 0 0.1rem;
+      color: var(--sage);
+      font-weight: 400;
+      font-variation-settings: "opsz" 144;
+    }
+    .article p em { font-style: italic; color: var(--sage-deep); }
+    .article p strong { font-weight: 500; color: var(--sage-deep); }
+
+    .pull-quote {
+      margin: 3rem 0;
+      padding: 0 0 0 2rem;
+      border-left: 2px solid var(--sage);
+    }
+    .pull-quote-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.45rem, 2.4vw, 1.85rem);
+      line-height: 1.3;
+      color: var(--sage-deep);
+      font-style: italic;
+      font-weight: 350;
+      letter-spacing: -0.01em;
+      font-variation-settings: "opsz" 144;
+    }
+    .pull-quote-attr {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-top: 1.25rem;
+      display: block;
+    }
+
+    .end-mark {
+      text-align: center;
+      margin: 3rem 0 0;
+      color: var(--sage);
+      letter-spacing: 0.6em;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    /* ============================================================
+       INFO BOXES — About / Founder / Contact
+       ============================================================ */
+    .info {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      padding: clamp(3.5rem, 7vw, 5.5rem) 0;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      padding: 2.5rem;
+      border-radius: 4px;
+    }
+    .info-card-label {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .info-card-title {
+      font-family: var(--font-display);
+      font-size: 1.65rem;
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      color: var(--sage-deep);
+      line-height: 1.15;
+      margin: 0 0 1rem;
+    }
+    .info-card-title em { font-style: italic; color: var(--sage); }
+    .info-card p {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--ink-soft);
+      font-weight: 350;
+      margin: 0;
+    }
+
+    @media (max-width: 720px) {
+      .info-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       MEDIA CONTACT
+       ============================================================ */
+    .contact {
+      padding: clamp(3.5rem, 7vw, 6rem) 0;
+    }
+    .contact-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+      font-weight: 400;
+      color: var(--sage-deep);
+      letter-spacing: -0.02em;
+      margin: 0.75rem 0 1.5rem;
+    }
+    .contact h2 em { font-style: italic; color: var(--sage); }
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      padding: 2.5rem;
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .contact-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-style: italic;
+      color: var(--sage-deep);
+      font-variation-settings: "opsz" 144;
+    }
+    .contact-role {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .contact-lines a,
+    .contact-lines {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--ink);
+      text-decoration: none;
+      line-height: 1.9;
+    }
+    .contact-lines a:hover { color: var(--sage); }
+
+    /* ============================================================
+       FOOTER — same as index
+       ============================================================ */
+    footer {
+      background: var(--sage-deep);
+      color: var(--bg);
+      padding: 4.5rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    footer h4 {
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage-pale);
+      font-weight: 500;
+      margin-bottom: 1.2rem;
+    }
+    footer .wordmark-lg {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.85rem;
+      color: var(--bg);
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      font-variation-settings: "opsz" 144;
+    }
+    footer a { color: rgba(241, 236, 223, 0.78); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--sage-pale); }
+    footer p { color: rgba(241, 236, 223, 0.7); font-size: 0.95rem; line-height: 1.7; }
+    footer .stack a { display: block; margin-bottom: 0.5rem; font-size: 0.95rem; }
+    .footer-bottom {
+      border-top: 1px solid rgba(241, 236, 223, 0.15);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: rgba(241, 236, 223, 0.45);
+      letter-spacing: 0.04em;
+    }
+    .footer-legal { display: flex; align-items: center; gap: 0.5rem; }
+    .footer-divider { opacity: 0.5; }
+
+    /* Reveal */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    }
+    [data-reveal].is-visible { opacity: 1; transform: none; }
+
+    @media (max-width: 880px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; }
+      .press-utility-inner { gap: 0.75rem; }
+      .article-inner { padding: 0 0.25rem; }
+    }
+
+    /* Copied notification */
+    .copied-toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--sage-deep);
+      color: var(--bg);
+      padding: 0.9rem 1.5rem;
+      border-radius: 999px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+      z-index: 200;
+    }
+    .copied-toast.is-visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="wordmark">The Hobbiest</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="schedule.html" class="nav-link">Skills Schedule</a>
+        <a href="apply.html" class="nav-link">Apply to Teach</a>
+        <a href="press.html" class="nav-link nav-link-current">Press</a>
+        <a href="signup.html" class="nav-link nav-link-primary">Become a Hobbiest</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="press-hero">
+    <div class="container">
+      <div class="press-meta-row" data-reveal>
+        <span class="press-meta-tag">For Immediate Release</span>
+        <span class="press-meta-date">Pittston, Pa. · May 2026</span>
+      </div>
+      <h1 class="press-headline" data-reveal>
+        Harvard-trained, Goldman Sachs–bred AI developer comes home — and opens a <em>phone-free</em> skills club in downtown Pittston.
+      </h1>
+      <p class="press-deck" data-reveal>
+        Clarks Summit native and Harvard-trained data scientist Ashley Fitzgerald — founder of AI company DeliverAI Solutions and a 2026 Harvard President's Innovation Challenge semi-finalist — channels a career in systems and technology into community-building with a phone-free club where adults learn hands-on skills together. Opening July 2026.
+      </p>
+    </div>
+  </header>
+
+  <!-- UTILITY BAR -->
+  <section class="press-utility">
+    <div class="container press-utility-inner">
+      <span class="press-utility-label">Media Resources</span>
+      <div class="press-utility-actions">
+        <a href="the-hobbiest-press-release.pdf" class="btn-press btn-press-primary" download>
+          Download PDF ↓
+        </a>
+        <button class="btn-press" id="copy-link-btn" type="button">
+          Copy Page Link
+        </button>
+        <a href="mailto:pittston@thehobbiestskillsclub.com?subject=Media%20Inquiry%20%E2%80%94%20The%20Hobbiest" class="btn-press">
+          Media Inquiries →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLE BODY -->
+  <article class="article">
+    <div class="container">
+      <div class="article-inner" data-reveal>
+
+        <div class="dateline">
+          <span class="dateline-loc">Pittston, Pa.</span> — May 2026
+        </div>
+
+        <p class="lede-graf">
+          After more than a decade building novel data and AI systems — from the Executive Office at Goldman Sachs to a patent-pending marketing technology named a semi-finalist in the annual Harvard President's Innovation Challenge — Ashley Fitzgerald is turning her attention to a different kind of unsolved problem: helping communities rebalance life in the digital age.
+        </p>
+
+        <p>
+          This July, the Clarks Summit native and Abington Heights High School graduate will open <strong>The Hobbiest: Skills Club</strong>, a private skills club for adults in downtown Pittston. The Hobbiest is a response to the gap Fitzgerald noticed when friends from different backgrounds and locations were all complaining about the same things: the difficulty of meeting new people, developing healthier habits and routines, and feeling burnt out from being accessible 24/7 in the digital age.
+        </p>
+
+        <div class="pull-quote">
+          <p class="pull-quote-text">
+            "My background has uniquely positioned me to quickly recognize flaws in systems and build novel solutions. There was no barrier I could see that would prevent me from using my skills to help optimize the offline, human experience instead of the online, digital ones I have solved for thus far."
+          </p>
+          <span class="pull-quote-attr">— Ashley Fitzgerald, Founder</span>
+        </div>
+
+        <p>
+          There is a deliberate irony in her pitch: Fitzgerald spends her days building artificial intelligence, yet the club she is opening asks members to leave their screens at the door. She sees no contradiction. The same understanding of how technology is designed to capture attention, she says, is exactly what convinced her that people need a place built to take it back.
+        </p>
+
+        <p>
+          That philosophy shapes the space itself. The Hobbiest is intentionally free of electronics and WiFi, adults-only, and food- and alcohol-free, designed so members can be fully present with the experience in front of them. Classes are expert-led and immersive, organized around five curriculum cornerstones: <em>Creative Pursuits, Presence &amp; Entertaining, Essential Life Skills, Hearth &amp; Garden,</em> and <em>Living Well</em> — covering everything from watercolor and calligraphy, to home repair and hosting, to intentional daily practices, all under the motto <em>"Lessons, for Life."</em>
+        </p>
+
+        <p>
+          Lessons begin at $99 for a focused four-session course, two hours per session — roughly $12 an hour. Fitzgerald says that price point is itself an innovation.
+        </p>
+
+        <div class="pull-quote">
+          <p class="pull-quote-text">
+            "There is a significant amount of innovation and IP in how we created our business and operations model that allowed us to offer courses in a financially accessible way while creating a real, for-profit business aimed at driving maximum positive impact on the individual and community. The back-end innovations are only outshined by the front-end innovation of creating a new type of place that enriches every part of what it means to be human, not least of which are creativity, potential, and community."
+          </p>
+          <span class="pull-quote-attr">— Ashley Fitzgerald, Founder</span>
+        </div>
+
+        <p>
+          The Hobbiest plans to expand its offerings in 2027 with curated multi-class <em>Skills Packages</em> and <em>Offsites</em> — immersive experiences taught beyond the classroom.
+        </p>
+
+        <p>
+          The club is also the first piece of a larger plan for the neighborhood. Fitzgerald's family owns the block of renovated historic buildings that will house The Hobbiest, and intends to fill it with additional ventures built around the same idea; for-profit ventures that focus on enriching the offline human experience.
+        </p>
+
+        <div class="pull-quote">
+          <p class="pull-quote-text">
+            "We purchased several historic buildings in Pittston and Wilkes-Barre because we believe more people are beginning to realize that the version of success we've been sold — one centered around big-city living and endless consumption — was better marketing than it was a life. As someone who's been to that mountaintop, I can say that hearing the crickets at night is better than hearing horns, knowing your neighbors is better than hustling past strangers, and building a life rooted in purpose and connection is better than chasing the next thing off the conveyor belt. The Hobbiest is where it starts. The bigger mission is to restore balance in the digital age — and to build businesses that elevate, rather than exploit, the daily human experience."
+          </p>
+          <span class="pull-quote-attr">— Ashley Fitzgerald, Founder</span>
+        </div>
+
+        <p>
+          The club opens in downtown Pittston in July 2026. Members can join, and prospective instructors can apply to teach, at <a href="index.html" style="color: var(--sage); text-decoration: underline; text-underline-offset: 3px;">thehobbiestskillsclub.com</a>.
+        </p>
+
+        <div class="end-mark">· · ·</div>
+
+      </div>
+    </div>
+  </article>
+
+  <!-- INFO BOXES -->
+  <section class="info">
+    <div class="container">
+      <div class="info-grid">
+        <div class="info-card" data-reveal>
+          <span class="info-card-label">About</span>
+          <h3 class="info-card-title">The <em>Hobbiest</em></h3>
+          <p>
+            The Hobbiest is a private skills club for adults in downtown Pittston, Pennsylvania, founded on the belief that confidence comes from capability. Through expert-led, immersive, phone-free classes, members build dynamic skillsets, cultivate taste, and curate a life of their own design. Lessons, for life.
+          </p>
+        </div>
+
+        <div class="info-card" data-reveal>
+          <span class="info-card-label">About</span>
+          <h3 class="info-card-title">The <em>Founder</em></h3>
+          <p>
+            Ashley Fitzgerald is a data scientist and the founder of DeliverAI Solutions, an AI and machine-learning company behind the patent-pending Content Mix Model™. A 2026 semi-finalist in the Harvard President's Innovation Challenge, her career spans more than a decade in data and analytics — including time as an associate in the Executive Office at Goldman Sachs, where she led global analytics for brand marketing, plus senior analytics roles at Ad Results Media and Appnovation. A graduate of Abington Heights High School in Clarks Summit, she is completing a Master of Liberal Arts in Data Science from Harvard Extension School and holds a B.A. in Economics from Ithaca College.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEDIA CONTACT -->
+  <section class="contact">
+    <div class="container">
+      <div class="contact-inner" data-reveal>
+        <span class="info-card-label">Press</span>
+        <h2>Media <em>contact</em>.</h2>
+        <div class="contact-card">
+          <div class="contact-name">Ashley Fitzgerald</div>
+          <div class="contact-role">Founder · The Hobbiest</div>
+          <div class="contact-lines">
+            <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a><br/>
+            <a href="tel:+15703546189">570-354-6189</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="wordmark-lg">The Hobbiest</div>
+          <p>A private members skills club for adults. Opening July 2026 in downtown Pittston, PA.</p>
+        </div>
+        <div>
+          <h4>Visit</h4>
+          <p>131 N Main Street<br />Pittston, PA 18640<br /><br />Wyoming Valley · NEPA</p>
+        </div>
+        <div>
+          <h4>Follow</h4>
+          <div class="stack">
+            <a href="#" rel="noopener">Instagram</a>
+            <a href="#" rel="noopener">Facebook</a>
+            <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 The Hobbiest Skills Club</span>
+        <div class="footer-legal">
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="footer-divider">·</span>
+          <a href="terms.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="copied-toast" id="copied-toast">Link copied</div>
+
+  <script>
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('[data-reveal]');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    reveals.forEach((r) => io.observe(r));
+
+    // Copy link button
+    const copyBtn = document.getElementById('copy-link-btn');
+    const toast = document.getElementById('copied-toast');
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        toast.classList.add('is-visible');
+        setTimeout(() => toast.classList.remove('is-visible'), 1800);
+      } catch (err) {
+        // Fallback
+        const input = document.createElement('input');
+        input.value = window.location.href;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        toast.classList.add('is-visible');
+        setTimeout(() => toast.classList.remove('is-visible'), 1800);
+      }
+    });
+  </script>
+
+</body>
+</html>
