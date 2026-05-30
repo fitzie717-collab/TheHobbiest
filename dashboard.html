@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#7A8A6B" />
+  <title>Your Studio — The Hobbiest Skills Club</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root{
+      --bg:#F1ECDF; --bg-warm:#EAE3D2; --surface:#FAF7F0;
+      --ink:#4E5A41; --ink-soft:#6B7459; --muted:#8A8170; --hairline:#D9D2BE;
+      --sage:#7A8A6B; --sage-deep:#4E5A41; --sage-pale:#B5BFA8; --taupe:#A89878;
+      --font-display:"Fraunces","Times New Roman",serif;
+      --font-body:"DM Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+      --max-w:1180px; --gutter:clamp(1.25rem,4vw,3rem);
+      --ease:cubic-bezier(0.22,1,0.36,1);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    body{margin:0;font-family:var(--font-display);color:var(--ink);background:var(--bg);
+      -webkit-font-smoothing:antialiased;min-height:100vh;min-height:100dvh}
+    button{font-family:var(--font-body);cursor:pointer}
+    a{color:inherit}
+    h1,h2,h3{font-family:var(--font-display);font-weight:400;line-height:1.05;letter-spacing:-0.015em;margin:0;font-variation-settings:"opsz" 100}
+    p{margin:0}
+    .container{max-width:var(--max-w);margin:0 auto;padding:0 var(--gutter);width:100%}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;
+      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      opacity:0.55;mix-blend-mode:multiply}
+
+    /* top bar */
+    .topbar{border-bottom:1px solid var(--hairline);background:var(--surface);position:sticky;top:0;z-index:20}
+    .topbar-inner{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 0}
+    .wordmark{font-family:var(--font-display);font-size:1.2rem;font-style:italic;color:var(--sage);text-decoration:none;font-variation-settings:"opsz" 144}
+    .top-right{display:flex;align-items:center;gap:1rem}
+    .avatar{width:38px;height:38px;border-radius:50%;background:var(--sage);color:var(--bg);display:grid;place-items:center;font-family:var(--font-display);font-weight:500}
+    .btn-logout{font-family:var(--font-body);font-size:0.72rem;letter-spacing:0.16em;text-transform:uppercase;font-weight:500;color:var(--muted);background:none;border:none;padding:0.5rem 0.6rem}
+    .btn-logout:hover{color:var(--sage)}
+
+    .wrap{padding:clamp(1.75rem,4vw,3rem) 0}
+    .eyebrow{font-family:var(--font-body);font-size:0.72rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--sage);font-weight:600;display:inline-block;margin-bottom:0.7rem}
+    .welcome h1{font-size:clamp(2rem,5vw,3rem);color:var(--sage-deep);font-variation-settings:"opsz" 144}
+    .welcome h1 em{font-style:italic;color:var(--sage)}
+
+    /* pills nav */
+    .pills{display:flex;gap:0.5rem;flex-wrap:wrap;margin:1.8rem 0 2.2rem}
+    .pill{font-family:var(--font-body);font-size:0.8rem;letter-spacing:0.04em;font-weight:500;padding:0.55rem 1.1rem;border-radius:999px;border:1px solid var(--hairline);background:var(--surface);color:var(--ink-soft);transition:.2s var(--ease)}
+    .pill:hover{border-color:var(--sage)}
+    .pill.active{background:var(--sage);color:var(--bg);border-color:var(--sage)}
+
+    .panel{display:none;animation:fade .4s var(--ease)}
+    .panel.show{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+    .section-head{margin-bottom:1.4rem}
+    .section-head h2{font-size:1.7rem;color:var(--sage-deep)}
+    .section-head h2 em{font-style:italic;color:var(--sage)}
+    .section-head p{font-family:var(--font-body);font-size:0.92rem;color:var(--ink-soft);margin-top:0.35rem}
+
+    /* class cards */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.1rem}
+    .card{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;overflow:hidden;display:flex;flex-direction:column}
+    .card .thumb{height:104px;display:grid;place-items:center;font-size:2.6rem;background:var(--bg-warm);border-bottom:1px solid var(--hairline)}
+    .card .body{padding:1.2rem;display:flex;flex-direction:column;gap:0.5rem;flex:1}
+    .card h3{font-size:1.3rem;color:var(--sage-deep)}
+    .card .desc{font-family:var(--font-body);font-size:0.85rem;color:var(--ink-soft);line-height:1.5}
+    .card .meta{font-family:var(--font-body);font-size:0.76rem;color:var(--muted);letter-spacing:0.02em;display:flex;flex-wrap:wrap;gap:0.3rem 0.9rem}
+    .card .price{font-family:var(--font-display);font-size:1.45rem;color:var(--ink);margin-top:0.2rem}
+    .card .enroll{margin-top:auto;font-family:var(--font-body);font-size:0.85rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:0.7rem;border-radius:999px;background:var(--sage);color:var(--bg);border:1px solid var(--sage);transition:.2s var(--ease)}
+    .card .enroll:hover{background:var(--sage-deep);border-color:var(--sage-deep)}
+    .card .enroll.added{background:transparent;color:var(--sage-deep)}
+
+    /* forms */
+    .block{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:clamp(1.4rem,3vw,2.2rem);max-width:680px}
+    .field{margin-bottom:1.1rem}
+    .field label{display:block;font-family:var(--font-body);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:0.5rem}
+    .field input,.field textarea,.field select{width:100%;padding:0.85rem 1rem;border:1px solid var(--hairline);border-radius:4px;background:var(--bg);font-family:var(--font-body);font-size:1rem;color:var(--ink)}
+    .field textarea{min-height:110px;resize:vertical}
+    .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(122,138,107,0.15)}
+    .chips{display:flex;flex-wrap:wrap;gap:0.5rem}
+    .chip{font-family:var(--font-body);font-size:0.82rem;font-weight:500;padding:0.45rem 0.9rem;border-radius:999px;border:1px solid var(--hairline);background:var(--bg);color:var(--ink-soft);user-select:none;transition:.2s var(--ease)}
+    .chip.sel{background:var(--sage);color:var(--bg);border-color:var(--sage)}
+    .stars{display:flex;gap:0.35rem;font-size:1.7rem;color:var(--hairline)}
+    .stars span{cursor:pointer}
+    .stars span.lit{color:var(--taupe)}
+    .btn-submit{font-family:var(--font-body);font-size:0.85rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:0.85rem 1.6rem;border-radius:999px;background:var(--sage);color:var(--bg);border:1px solid var(--sage);transition:.2s var(--ease)}
+    .btn-submit:hover{background:var(--sage-deep);border-color:var(--sage-deep)}
+    .btn-submit:disabled{opacity:.5;cursor:default}
+
+    /* schedule */
+    .sched-row{display:flex;gap:1.2rem;align-items:center;background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:1.1rem 1.3rem;margin-bottom:0.9rem}
+    .sched-date{text-align:center;padding-right:1.2rem;border-right:1px solid var(--hairline);min-width:62px}
+    .sched-date .d{font-family:var(--font-display);font-size:1.9rem;color:var(--sage-deep);line-height:1}
+    .sched-date .m{font-family:var(--font-body);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted)}
+    .sched-info{flex:1}
+    .sched-info h3{font-size:1.2rem;color:var(--sage-deep)}
+    .sched-info .meta{font-family:var(--font-body);font-size:0.82rem;color:var(--ink-soft);margin-top:0.2rem}
+    .tag{font-family:var(--font-body);font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.7rem;border-radius:999px}
+    .tag.reserved{background:rgba(168,152,120,0.18);color:#6e5f3f}
+    .tag.paid{background:rgba(122,138,107,0.2);color:var(--sage-deep)}
+
+    /* checkout */
+    .checkout{display:grid;grid-template-columns:1.3fr 1fr;gap:1.3rem}
+    @media(max-width:720px){.checkout{grid-template-columns:1fr}}
+    .cart{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:1.4rem}
+    .cart-item{display:flex;justify-content:space-between;align-items:center;padding:0.85rem 0;border-bottom:1px solid var(--hairline);font-family:var(--font-body)}
+    .cart-item:last-child{border-bottom:none}
+    .cart-item .x{color:var(--muted);font-size:1.1rem;padding:0.2rem 0.5rem;border:none;background:none}
+    .cart-item .x:hover{color:#8a3a28}
+    .total{display:flex;justify-content:space-between;font-family:var(--font-display);font-size:1.4rem;color:var(--sage-deep);margin-top:1rem;padding-top:1rem;border-top:1px solid var(--ink)}
+    .pay-side{background:var(--bg-warm);border:1px solid var(--hairline);border-radius:4px;padding:1.5rem;display:flex;flex-direction:column;gap:0.8rem}
+    .pay-side p{font-family:var(--font-body);font-size:0.85rem;color:var(--ink-soft);line-height:1.5}
+
+    .empty{font-family:var(--font-body);text-align:center;color:var(--muted);padding:2.5rem 1rem}
+    .empty .big{font-size:2.4rem;margin-bottom:0.4rem}
+    .loading{font-family:var(--font-body);color:var(--muted);padding:1.5rem 0}
+
+    .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(150%);background:var(--sage-deep);color:var(--bg);padding:0.85rem 1.4rem;border-radius:999px;font-family:var(--font-body);font-size:0.9rem;font-weight:500;box-shadow:0 10px 30px rgba(78,90,65,0.3);transition:.4s var(--ease);z-index:200}
+    .toast.show{transform:translateX(-50%) translateY(0)}
+
+    #gate{display:grid;place-items:center;min-height:100vh;font-family:var(--font-body);color:var(--muted)}
+  </style>
+</head>
+<body>
+
+  <!-- shown briefly while we check the session -->
+  <div id="gate">Loading your studio…</div>
+
+  <div id="app" style="display:none">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a href="index.html" class="wordmark">The Hobbiest</a>
+        <div class="top-right">
+          <div class="avatar" id="avatar">·</div>
+          <button class="btn-logout" onclick="signOut()">Log out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container wrap">
+      <div class="welcome">
+        <span class="eyebrow">Your Studio</span>
+        <h1>Hello, <em id="memberName">friend</em>.</h1>
+      </div>
+
+      <nav class="pills">
+        <button class="pill active" data-panel="classes"  onclick="showPanel('classes',this)">Classes</button>
+        <button class="pill"        data-panel="schedule" onclick="showPanel('schedule',this)">Schedule</button>
+        <button class="pill"        data-panel="checkout" onclick="showPanel('checkout',this)">Checkout</button>
+        <button class="pill"        data-panel="interests"onclick="showPanel('interests',this)">Interests</button>
+        <button class="pill"        data-panel="feedback" onclick="showPanel('feedback',this)">Feedback</button>
+        <button class="pill"        data-panel="ideas"    onclick="showPanel('ideas',this)">Share an idea</button>
+      </nav>
+
+      <!-- CLASSES -->
+      <section class="panel show" id="panel-classes">
+        <div class="section-head"><h2>Open <em>classes</em></h2><p>Reserve a spot — it lands in your schedule, then you check out.</p></div>
+        <div id="classGrid" class="loading">Loading classes…</div>
+      </section>
+
+      <!-- SCHEDULE -->
+      <section class="panel" id="panel-schedule">
+        <div class="section-head"><h2>Your <em>schedule</em></h2><p>Everything you've reserved, soonest first.</p></div>
+        <div id="scheduleList" class="loading">Loading…</div>
+      </section>
+
+      <!-- CHECKOUT -->
+      <section class="panel" id="panel-checkout">
+        <div class="section-head"><h2><em>Checkout</em></h2><p>Pay for the classes you've reserved.</p></div>
+        <div class="checkout">
+          <div class="cart" id="cart"></div>
+          <div class="pay-side">
+            <h3 style="color:var(--sage-deep)">Total: <span id="cartTotal">$0</span></h3>
+            <p>You'll be taken to Stripe's secure page to pay by card — we never see your card details.</p>
+            <button class="btn-submit" id="payBtn" onclick="startCheckout()">Pay with card</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTERESTS -->
+      <section class="panel" id="panel-interests">
+        <div class="section-head"><h2>What do you want to <em>learn</em>?</h2><p>Tell us your interests and we'll build classes around them.</p></div>
+        <div class="block">
+          <div class="field"><label>I'm curious about… (tap all that apply)</label><div class="chips" id="interestChips"></div></div>
+          <div class="field"><label>Skill level</label>
+            <select id="iSkill"><option>Total beginner</option><option>Dabbled a bit</option><option>Intermediate</option><option>Pretty experienced</option></select>
+          </div>
+          <div class="field"><label>Anything specific you're hoping to make or learn?</label><textarea id="iNotes" placeholder="I'd love to throw a full dinner set on the wheel…"></textarea></div>
+          <button class="btn-submit" onclick="submitInterests(this)">Submit interests</button>
+        </div>
+      </section>
+
+      <!-- FEEDBACK -->
+      <section class="panel" id="panel-feedback">
+        <div class="section-head"><h2>Constructive <em>feedback</em></h2><p>Honest notes help us run a better studio.</p></div>
+        <div class="block">
+          <div class="field"><label>Which class?</label><select id="fbClass"></select></div>
+          <div class="field"><label>Overall</label><div class="stars" id="fbStars"><span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span></div></div>
+          <div class="field"><label>What worked well?</label><textarea id="fbGood" placeholder="The pacing was perfect and the instructor…"></textarea></div>
+          <div class="field"><label>What could be better?</label><textarea id="fbImprove" placeholder="More time on the glazing step would help…"></textarea></div>
+          <button class="btn-submit" onclick="submitFeedback(this)">Send feedback</button>
+        </div>
+      </section>
+
+      <!-- IDEAS -->
+      <section class="panel" id="panel-ideas">
+        <div class="section-head"><h2>Share an <em>idea</em></h2><p>A class you wish existed? A guest you'd love us to invite?</p></div>
+        <div class="block">
+          <div class="field"><label>Your idea</label><textarea id="ideaText" placeholder="A weekend natural-dye workshop using foraged plants…"></textarea></div>
+          <div class="field"><label>Type of idea</label><div class="chips" id="ideaChips"></div></div>
+          <button class="btn-submit" onclick="submitIdea(this)">Share idea</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* ---- Supabase (same project as login.html) ---- */
+    const SUPABASE_URL = "https://uprdczhhgwzfypkudqjg.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const interestTags = ["Pottery","Baking","Painting","Woodworking","Textiles","Cooking","Printmaking","Jewellery","Photography","Gardening","Calligraphy","Candle-making"];
+    const ideaTypes = ["New class","Guest instructor","Studio event","Materials / tools","Something else"];
+
+    let user = null;
+    let classes = [];        // catalogue
+    let enrolledIds = new Set();
+    let fbRating = 0;
+
+    /* ---------- helpers ---------- */
+    const $ = id => document.getElementById(id);
+    let toastTimer;
+    function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),2800); }
+    function money(cents){ return "$" + (cents % 100 === 0 ? cents/100 : (cents/100).toFixed(2)); }
+    function fmtDate(iso){ const d=new Date(iso); return d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}); }
+    function fmtTime(iso){ const d=new Date(iso); return d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}); }
+    function dayNum(iso){ return new Date(iso).getDate(); }
+    function monAbbr(iso){ return new Date(iso).toLocaleDateString("en-US",{month:"short"}); }
+
+    /* ---------- boot: require a session ---------- */
+    (async function boot(){
+      const { data:{ session } } = await sb.auth.getSession();
+      if(!session){ window.location.href = "login.html"; return; }
+      user = session.user;
+
+      // name + avatar
+      let name = user.user_metadata?.full_name || user.user_metadata?.name;
+      if(!name){
+        const { data:prof } = await sb.from("profiles").select("full_name").eq("id",user.id).single();
+        name = prof?.full_name || (user.email||"friend").split("@")[0];
+      }
+      $("memberName").textContent = name;
+      $("avatar").textContent = name.charAt(0).toUpperCase();
+
+      $("gate").style.display = "none";
+      $("app").style.display = "block";
+
+      renderChips("interestChips", interestTags);
+      renderChips("ideaChips", ideaTypes);
+      wireStars();
+      await loadEnrollments();   // sets enrolledIds, used by class buttons
+      await loadClasses();
+      renderSchedule();
+      renderCart();
+      fillFeedbackClasses();
+    })();
+
+    async function signOut(){ await sb.auth.signOut(); window.location.href = "login.html"; }
+
+    /* ---------- panels ---------- */
+    function showPanel(id, btn){
+      document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
+      $("panel-"+id).classList.add("show");
+      document.querySelectorAll(".pill").forEach(p=>p.classList.remove("active"));
+      btn.classList.add("active");
+    }
+
+    /* ---------- classes ---------- */
+    async function loadClasses(){
+      const { data, error } = await sb.from("classes").select("*").eq("is_published",true).order("starts_at",{ascending:true});
+      if(error){ $("classGrid").innerHTML = `<div class="empty">Couldn't load classes. ${error.message}</div>`; return; }
+      classes = data || [];
+      renderClasses();
+    }
+    function renderClasses(){
+      const el = $("classGrid"); el.classList.remove("loading");
+      if(!classes.length){ el.innerHTML = `<div class="empty"><div class="big">🪴</div>No classes published yet.</div>`; return; }
+      el.className = "grid";
+      el.innerHTML = classes.map(c=>{
+        const on = enrolledIds.has(c.id);
+        return `<div class="card">
+          <div class="thumb">${c.emoji||"✦"}</div>
+          <div class="body">
+            <h3>${c.name}</h3>
+            <div class="desc">${c.description||""}</div>
+            <div class="meta"><span>with ${c.instructor||"TBA"}</span><span>${c.starts_at?fmtDate(c.starts_at)+" · "+fmtTime(c.starts_at):""}</span></div>
+            <div class="price">${money(c.price_cents)}</div>
+            <button class="enroll ${on?"added":""}" onclick="toggleEnroll('${c.id}',this)">${on?"✓ In your schedule":"Add to schedule"}</button>
+          </div></div>`;
+      }).join("");
+    }
+
+    /* ---------- enrollments ---------- */
+    async function loadEnrollments(){
+      const { data, error } = await sb.from("enrollments").select("id,status,class_id,classes(*)").eq("user_id",user.id);
+      if(error){ console.error(error); enrolledIds = new Set(); window._enr = []; return; }
+      window._enr = data || [];
+      enrolledIds = new Set(window._enr.map(e=>e.class_id));
+    }
+    async function toggleEnroll(classId, btn){
+      if(enrolledIds.has(classId)){
+        const row = window._enr.find(e=>e.class_id===classId);
+        const { error } = await sb.from("enrollments").delete().eq("id",row.id);
+        if(error){ toast("Couldn't update: "+error.message); return; }
+        toast("Removed from your schedule");
+      } else {
+        const { error } = await sb.from("enrollments").insert({ user_id:user.id, class_id:classId, status:"reserved" });
+        if(error){ toast("Couldn't reserve: "+error.message); return; }
+        toast("Reserved — added to your schedule");
+      }
+      await loadEnrollments();
+      renderClasses(); renderSchedule(); renderCart();
+    }
+
+    /* ---------- schedule ---------- */
+    function renderSchedule(){
+      const el = $("scheduleList"); el.classList.remove("loading");
+      const rows = (window._enr||[]).filter(e=>e.classes).sort((a,b)=> new Date(a.classes.starts_at)-new Date(b.classes.starts_at));
+      if(!rows.length){ el.innerHTML = `<div class="empty"><div class="big">🗓</div>Nothing booked yet — add a class from the catalogue.</div>`; return; }
+      el.innerHTML = rows.map(e=>{
+        const c=e.classes;
+        return `<div class="sched-row">
+          <div class="sched-date"><div class="d">${c.starts_at?dayNum(c.starts_at):"–"}</div><div class="m">${c.starts_at?monAbbr(c.starts_at):""}</div></div>
+          <div class="sched-info"><h3>${c.name}</h3><div class="meta">${c.starts_at?fmtTime(c.starts_at):""} · with ${c.instructor||"TBA"}</div></div>
+          <span class="tag ${e.status==="paid"?"paid":"reserved"}">${e.status==="paid"?"Paid":"Reserved"}</span>
+        </div>`;
+      }).join("");
+    }
+
+    /* ---------- checkout cart ---------- */
+    function renderCart(){
+      const rows = (window._enr||[]).filter(e=>e.classes && e.status!=="paid");
+      const el = $("cart");
+      if(!rows.length){ el.innerHTML=`<div class="empty"><div class="big">🧺</div>Nothing to pay for right now.</div>`; $("cartTotal").textContent="$0"; return; }
+      const total = rows.reduce((s,e)=>s+(e.classes.price_cents||0),0);
+      el.innerHTML = rows.map(e=>`<div class="cart-item"><span>${e.classes.name}</span><span style="display:flex;gap:1rem;align-items:center">${money(e.classes.price_cents)}<button class="x" onclick="toggleEnroll('${e.class_id}',this)">✕</button></span></div>`).join("")
+        + `<div class="total"><span>Total</span><span>${money(total)}</span></div>`;
+      $("cartTotal").textContent = money(total);
+    }
+
+    /* ---------- checkout (Stripe wired in the final step) ---------- */
+    async function startCheckout(){
+      const rows = (window._enr||[]).filter(e=>e.classes && e.status!=="paid");
+      if(!rows.length){ toast("Reserve a class first 🧺"); return; }
+      // TODO (Stripe step): call the create-checkout Edge Function and redirect:
+      //   const { data, error } = await sb.functions.invoke("create-checkout");
+      //   if(data?.url) window.location.href = data.url;
+      toast("Card payments get switched on in the final step ✨");
+    }
+
+    /* ---------- chips & stars ---------- */
+    function renderChips(elId, tags){
+      $(elId).innerHTML = tags.map(t=>`<span class="chip" onclick="this.classList.toggle('sel')">${t}</span>`).join("");
+    }
+    function selectedChips(elId){ return [...document.querySelectorAll(`#${elId} .chip.sel`)].map(c=>c.textContent); }
+    function wireStars(){
+      $("fbStars").addEventListener("click",e=>{
+        if(!e.target.dataset.v) return;
+        fbRating = +e.target.dataset.v;
+        [...document.querySelectorAll("#fbStars span")].forEach(s=>s.classList.toggle("lit", +s.dataset.v<=fbRating));
+      });
+    }
+    function fillFeedbackClasses(){
+      $("fbClass").innerHTML = classes.map(c=>`<option value="${c.id}">${c.name}</option>`).join("") || `<option value="">No classes yet</option>`;
+    }
+
+    /* ---------- form submits ---------- */
+    async function submitInterests(btn){
+      btn.disabled=true;
+      const { error } = await sb.from("interest_forms").insert({
+        user_id:user.id, interests:selectedChips("interestChips"),
+        skill_level:$("iSkill").value, notes:$("iNotes").value.trim()
+      });
+      btn.disabled=false;
+      if(error){ toast("Hmm: "+error.message); return; }
+      toast("Interests saved — thank you! ✨");
+      $("iNotes").value=""; document.querySelectorAll("#interestChips .chip.sel").forEach(c=>c.classList.remove("sel"));
+    }
+    async function submitFeedback(btn){
+      btn.disabled=true;
+      const { error } = await sb.from("feedback").insert({
+        user_id:user.id, class_id:$("fbClass").value||null, rating:fbRating||null,
+        what_worked:$("fbGood").value.trim(), what_could_improve:$("fbImprove").value.trim()
+      });
+      btn.disabled=false;
+      if(error){ toast("Hmm: "+error.message); return; }
+      toast("Feedback sent — we read every word. 💬");
+      $("fbGood").value=""; $("fbImprove").value=""; fbRating=0; document.querySelectorAll("#fbStars span").forEach(s=>s.classList.remove("lit"));
+    }
+    async function submitIdea(btn){
+      const text=$("ideaText").value.trim();
+      if(!text){ toast("Type your idea first 💡"); return; }
+      btn.disabled=true;
+      const { error } = await sb.from("ideas").insert({
+        user_id:user.id, idea:text, idea_type:selectedChips("ideaChips")[0]||null
+      });
+      btn.disabled=false;
+      if(error){ toast("Hmm: "+error.message); return; }
+      toast("Idea shared — love it! 💡");
+      $("ideaText").value=""; document.querySelectorAll("#ideaChips .chip.sel").forEach(c=>c.classList.remove("sel"));
+    }
+  </script>
+</body>
+</html>
