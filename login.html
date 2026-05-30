@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#7A8A6B" />
+
+  <title>Log in — The Hobbiest Skills Club</title>
+  <meta name="description" content="Member sign-in for The Hobbiest Skills Club." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <!-- Fonts: Fraunces (display) + DM Sans (body) — matches index.html -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
+
+  <!-- Supabase JS client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — copied from index.html
+       ============================================================ */
+    :root {
+      --bg:        #F1ECDF;
+      --bg-warm:   #EAE3D2;
+      --surface:   #FAF7F0;
+      --ink:       #4E5A41;
+      --ink-soft:  #6B7459;
+      --muted:     #8A8170;
+      --hairline:  #D9D2BE;
+      --sage:      #7A8A6B;
+      --sage-deep: #4E5A41;
+      --sage-pale: #B5BFA8;
+      --taupe:     #A89878;
+      --font-display: "Fraunces", "Times New Roman", serif;
+      --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      --max-w:    1280px;
+      --gutter:   clamp(1.25rem, 4vw, 3rem);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 16px; line-height: 1.6;
+      color: var(--ink); background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh; min-height: 100dvh;
+      display: flex; flex-direction: column;
+    }
+    button { font-family: var(--font-body); cursor: pointer; }
+    a { color: inherit; }
+
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      font-weight: 400; line-height: 1.05;
+      letter-spacing: -0.015em; margin: 0;
+      font-variation-settings: "opsz" 100;
+    }
+    p { margin: 0; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); width: 100%; }
+
+    /* Paper grain — copied from index.html */
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      opacity: 0.55; mix-blend-mode: multiply;
+    }
+
+    /* ============================================================
+       NAV — matches index.html
+       ============================================================ */
+    .nav { padding: 1.75rem 0; position: relative; z-index: 10; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .wordmark {
+      font-family: var(--font-display); font-size: 1.2rem; font-weight: 400;
+      letter-spacing: -0.01em; font-style: italic; color: var(--sage);
+      text-decoration: none; font-variation-settings: "opsz" 144;
+    }
+    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
+    .nav-link {
+      font-family: var(--font-body); font-size: 0.78rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted); font-weight: 500;
+      text-decoration: none; transition: color 0.2s var(--ease);
+    }
+    .nav-link:hover { color: var(--sage); }
+    .nav-link-primary {
+      color: var(--bg); background: var(--sage); padding: 0.55rem 1.1rem;
+      border-radius: 999px; letter-spacing: 0.12em; transition: background 0.2s var(--ease);
+    }
+    .nav-link-primary:hover { background: var(--sage-deep); color: var(--bg); }
+    @media (max-width: 640px) {
+      .nav-links { gap: 0.9rem; }
+      .nav-link { font-size: 0.68rem; letter-spacing: 0.14em; }
+      .nav-link-hide { display: none; }
+    }
+
+    /* ============================================================
+       AUTH LAYOUT
+       ============================================================ */
+    .auth-main {
+      flex: 1; display: grid; place-items: center;
+      padding: clamp(2rem, 6vw, 5rem) var(--gutter);
+    }
+    .auth-card {
+      width: 100%; max-width: 440px;
+      background: var(--surface); border: 1px solid var(--hairline);
+      border-radius: 4px; padding: clamp(2rem, 5vw, 3.25rem);
+      position: relative; box-shadow: 0 24px 60px rgba(78, 90, 65, 0.08);
+    }
+    .auth-tag {
+      position: absolute; top: -12px; left: 2.5rem;
+      background: var(--sage); color: var(--bg);
+      padding: 0.4rem 1rem; font-family: var(--font-body);
+      font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+      font-weight: 600; border-radius: 999px;
+    }
+    .eyebrow {
+      font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--sage); font-weight: 600;
+      margin-bottom: 1rem; display: inline-block;
+    }
+    .auth-card h1 {
+      font-size: clamp(2rem, 5vw, 2.75rem); color: var(--sage-deep);
+      letter-spacing: -0.02em; margin-bottom: 0.6rem; font-variation-settings: "opsz" 144;
+    }
+    .auth-card h1 em { font-style: italic; color: var(--sage); }
+    .auth-lede {
+      font-family: var(--font-display); font-size: 1.1rem; line-height: 1.5;
+      color: var(--ink-soft); font-weight: 350; margin-bottom: 2rem;
+    }
+
+    /* Google button */
+    .btn-google {
+      width: 100%; display: inline-flex; align-items: center; justify-content: center;
+      gap: 0.7rem; padding: 0.95rem 1.5rem; border-radius: 999px;
+      background: var(--sage); color: var(--bg); border: 1px solid var(--sage);
+      font-family: var(--font-body); font-size: 0.98rem; font-weight: 500;
+      letter-spacing: 0.01em; transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+    }
+    .btn-google:hover { background: var(--sage-deep); border-color: var(--sage-deep); }
+    .btn-google:active { transform: translateY(1px); }
+    .btn-google .g-badge {
+      width: 22px; height: 22px; border-radius: 50%; background: #fff;
+      display: grid; place-items: center; flex-shrink: 0;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex; align-items: center; gap: 1rem; margin: 1.6rem 0;
+      font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--hairline); }
+
+    /* Email field + magic link */
+    .field label {
+      display: block; font-family: var(--font-body); font-size: 0.72rem;
+      letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600;
+      color: var(--muted); margin-bottom: 0.5rem;
+    }
+    .field input {
+      width: 100%; padding: 0.9rem 1rem; border: 1px solid var(--hairline);
+      border-radius: 4px; background: var(--bg); font-family: var(--font-body);
+      font-size: 1rem; color: var(--ink); transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+    .field input:focus { outline: none; border-color: var(--sage); box-shadow: 0 0 0 3px rgba(122, 138, 107, 0.15); }
+    .btn-link {
+      width: 100%; margin-top: 0.9rem; padding: 0.95rem 1.5rem;
+      border-radius: 999px; background: transparent; color: var(--sage-deep);
+      border: 1px solid var(--sage); font-family: var(--font-body);
+      font-size: 0.98rem; font-weight: 500; letter-spacing: 0.01em;
+      transition: background 0.2s var(--ease), color 0.2s var(--ease);
+    }
+    .btn-link:hover { background: var(--sage); color: var(--bg); }
+    .btn-link:disabled { opacity: 0.5; cursor: default; }
+
+    .auth-note {
+      font-family: var(--font-body); font-size: 0.78rem; color: var(--muted);
+      line-height: 1.6; margin-top: 1.6rem; text-align: center;
+    }
+    .auth-note a { color: var(--sage); text-decoration: underline; text-underline-offset: 2px; }
+
+    /* Status / message */
+    .msg {
+      margin-top: 1.2rem; padding: 0.85rem 1rem; border-radius: 4px;
+      font-family: var(--font-body); font-size: 0.88rem; line-height: 1.5;
+      display: none;
+    }
+    .msg.show { display: block; }
+    .msg.ok  { background: rgba(122, 138, 107, 0.14); color: var(--sage-deep); border: 1px solid var(--sage-pale); }
+    .msg.warn{ background: rgba(168, 152, 120, 0.15); color: #6e5f3f; border: 1px solid var(--taupe); }
+    .msg.err { background: rgba(176, 80, 60, 0.10); color: #8a3a28; border: 1px solid #d6a99a; }
+
+    footer {
+      font-family: var(--font-body); font-size: 0.76rem; color: var(--muted);
+      text-align: center; padding: 2rem var(--gutter) 2.5rem;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--sage); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="wordmark">The Hobbiest</a>
+      <div class="nav-links">
+        <a href="schedule.html" class="nav-link nav-link-hide">Skills Schedule</a>
+        <a href="index.html" class="nav-link nav-link-hide">Home</a>
+        <a href="signup.html" class="nav-link nav-link-primary">Become a Hobbiest</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- AUTH -->
+  <main class="auth-main">
+    <div class="auth-card">
+      <span class="auth-tag">Members</span>
+      <span class="eyebrow">Member Sign-in</span>
+      <h1>Welcome <em>back</em>.</h1>
+      <p class="auth-lede">Sign in to manage your classes, schedule, and account.</p>
+
+      <!-- Primary: Google -->
+      <button class="btn-google" id="googleBtn" onclick="signInGoogle()">
+        <span class="g-badge">
+          <svg width="14" height="14" viewBox="0 0 48 48" aria-hidden="true">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+        </span>
+        Continue with Google
+      </button>
+
+      <div class="divider">or</div>
+
+      <!-- Fallback: magic link -->
+      <div class="field">
+        <label for="email">Email a sign-in link</label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email" />
+      </div>
+      <button class="btn-link" id="linkBtn" onclick="sendMagicLink()">Send me a sign-in link</button>
+
+      <div class="msg" id="msg"></div>
+
+      <p class="auth-note">
+        We don't use passwords — sign-in links and Google keep your account safer.<br>
+        New here? <a href="signup.html">Become a Hobbiest</a>.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 The Hobbiest Skills Club · Pittston, PA ·
+    <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>
+  </footer>
+
+  <script>
+    /* ============================================================
+       SUPABASE CONFIG  —  ★ REPLACE THESE TWO VALUES ★
+       Find them in Supabase: Project Settings → API
+       The anon key is meant to be public; your security comes from
+       Row Level Security (RLS) policies, not from hiding this key.
+       ============================================================ */
+    const SUPABASE_URL = "https://uprdczhhgwzfypkudqjg.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ";
+
+    // Where to send members after they log in:
+    const AFTER_LOGIN = window.location.origin + "/dashboard.html";
+
+    const configured = !SUPABASE_URL.includes("YOUR-PROJECT");
+    let sb = null;
+    if (configured && window.supabase) {
+      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+
+    const msgEl = document.getElementById("msg");
+    function showMsg(text, kind) {
+      msgEl.textContent = text;
+      msgEl.className = "msg show " + (kind || "ok");
+    }
+
+    // If already signed in, go straight to the dashboard.
+    (async () => {
+      if (!sb) return;
+      const { data } = await sb.auth.getSession();
+      if (data.session) window.location.href = AFTER_LOGIN;
+    })();
+
+    async function signInGoogle() {
+      if (!sb) {
+        showMsg("Almost there — add your Supabase URL and anon key in the script, then enable the Google provider in Supabase → Authentication → Providers.", "warn");
+        return;
+      }
+      const { error } = await sb.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: AFTER_LOGIN }
+      });
+      if (error) showMsg(error.message, "err");
+    }
+
+    async function sendMagicLink() {
+      const email = document.getElementById("email").value.trim();
+      if (!email) { showMsg("Please enter your email first.", "warn"); return; }
+      if (!sb) {
+        showMsg("Almost there — add your Supabase URL and anon key in the script to start emailing real sign-in links.", "warn");
+        return;
+      }
+      const btn = document.getElementById("linkBtn");
+      btn.disabled = true; btn.textContent = "Sending…";
+      const { error } = await sb.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: AFTER_LOGIN }
+      });
+      btn.disabled = false; btn.textContent = "Send me a sign-in link";
+      if (error) { showMsg(error.message, "err"); return; }
+      showMsg("Check your inbox — we just sent a one-time sign-in link to " + email + ".", "ok");
+    }
+  </script>
+</body>
+</html>
