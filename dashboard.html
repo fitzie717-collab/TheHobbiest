@@ -273,7 +273,24 @@
       renderSchedule();
       renderCart();
       fillFeedbackClasses();
+      handleCheckoutReturn();
     })();
+
+    /* If we just came back from Stripe, show the result. The webhook
+       marks rows paid server-side; we refresh shortly after to catch it. */
+    async function handleCheckoutReturn(){
+      const params = new URLSearchParams(window.location.search);
+      if(params.get("paid")){
+        toast("Payment received — see you in class! 🎉");
+        showPanel("schedule", document.querySelector('.pill[data-panel="schedule"]'));
+        setTimeout(async ()=>{ await loadEnrollments(); renderClasses(); renderSchedule(); renderCart(); }, 2500);
+      } else if(params.get("canceled")){
+        toast("Checkout canceled — your reservations are still saved.");
+      }
+      if(params.get("paid") || params.get("canceled")){
+        history.replaceState({}, "", window.location.pathname);  // clean the URL
+      }
+    }
 
     async function signOut(){ await sb.auth.signOut(); window.location.href = "login.html"; }
 
@@ -362,10 +379,15 @@
     async function startCheckout(){
       const rows = (window._enr||[]).filter(e=>e.classes && e.status!=="paid");
       if(!rows.length){ toast("Reserve a class first 🧺"); return; }
-      // TODO (Stripe step): call the create-checkout Edge Function and redirect:
-      //   const { data, error } = await sb.functions.invoke("create-checkout");
-      //   if(data?.url) window.location.href = data.url;
-      toast("Card payments get switched on in the final step ✨");
+      const btn = $("payBtn"); const old = btn.textContent;
+      btn.disabled = true; btn.textContent = "Redirecting to Stripe…";
+      const { data, error } = await sb.functions.invoke("create-checkout");
+      if(error || !data?.url){
+        btn.disabled = false; btn.textContent = old;
+        toast("Couldn't start checkout: " + (error?.message || data?.error || "unknown error"));
+        return;
+      }
+      window.location.href = data.url;   // Stripe's secure hosted page
     }
 
     /* ---------- chips & stars ---------- */
