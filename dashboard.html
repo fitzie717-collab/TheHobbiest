@@ -66,6 +66,23 @@
 
     /* class cards */
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.1rem}
+    /* Weekly day/time grid */
+    .week-note{font-family:var(--font-body);font-size:0.9rem;color:var(--ink-soft);line-height:1.55;background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:0.9rem 1.1rem;margin-bottom:1.4rem}
+    .week-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;align-items:start}
+    .day-col{display:flex;flex-direction:column;gap:0.7rem}
+    .day-head{font-family:var(--font-body);font-size:0.74rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--sage-deep);padding-bottom:0.5rem;border-bottom:2px solid var(--sage-pale)}
+    .cell{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:0.95rem 1rem;display:flex;flex-direction:column;gap:0.4rem}
+    .cell-time{font-family:var(--font-body);font-size:0.74rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)}
+    .cell-name{font-family:var(--font-display);font-size:1.18rem;color:var(--sage-deep);line-height:1.15}
+    .cell-price{font-family:var(--font-display);font-size:1.15rem;color:var(--ink)}
+    .cell-price .per{font-family:var(--font-body);font-size:0.74rem;color:var(--muted)}
+    .cell .enroll{margin-top:0.3rem;font-family:var(--font-body);font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:0.6rem;border-radius:999px;background:var(--sage);color:var(--bg);border:1px solid var(--sage);transition:.2s var(--ease)}
+    .cell .enroll:hover{background:var(--sage-deep);border-color:var(--sage-deep)}
+    .cell .enroll.added{background:transparent;color:var(--sage-deep)}
+    .cell .enroll[disabled]{background:transparent;color:var(--muted);border-color:var(--hairline);cursor:default}
+    .cell .seats{font-family:var(--font-body);font-size:0.76rem;font-weight:600}
+    .cell .seats.low{color:#9a6a2f}
+    .cell .seats.full{color:var(--muted)}
     .card{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;overflow:hidden;display:flex;flex-direction:column}
     .card .thumb{height:104px;display:grid;place-items:center;font-size:2.6rem;background:var(--bg-warm);border-bottom:1px solid var(--hairline)}
     .card .body{padding:1.2rem;display:flex;flex-direction:column;gap:0.5rem;flex:1}
@@ -95,6 +112,17 @@
     .chips{display:flex;flex-wrap:wrap;gap:0.5rem}
     .chip{font-family:var(--font-body);font-size:0.82rem;font-weight:500;padding:0.45rem 0.9rem;border-radius:999px;border:1px solid var(--hairline);background:var(--bg);color:var(--ink-soft);user-select:none;transition:.2s var(--ease)}
     .chip.sel{background:var(--sage);color:var(--bg);border-color:var(--sage)}
+    /* Availability grid */
+    .avail-hint{font-family:var(--font-body);font-size:0.85rem;color:var(--muted);margin:0 0 0.7rem}
+    .avail-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .avail{border-collapse:separate;border-spacing:5px;width:100%;min-width:460px}
+    .avail th{font-family:var(--font-body);font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--sage-deep);padding:0.2rem;text-align:center}
+    .avail td.rowlab{font-family:var(--font-body);font-size:0.8rem;font-weight:600;color:var(--ink-soft);text-align:left;white-space:nowrap;padding-right:0.7rem;line-height:1.2}
+    .avail td.rowlab small{display:block;font-weight:400;color:var(--muted);font-size:0.68rem}
+    .avail td.slot{background:var(--bg);border:1px solid var(--hairline);border-radius:4px;height:36px;cursor:pointer;text-align:center;vertical-align:middle;transition:.12s var(--ease)}
+    .avail td.slot:hover{border-color:var(--sage-pale)}
+    .avail td.slot.on{background:var(--sage);border-color:var(--sage)}
+    .avail td.slot.on::after{content:"✓";color:var(--bg);font-size:0.85rem;font-weight:600}
     .stars{display:flex;gap:0.35rem;font-size:1.7rem;color:var(--hairline)}
     .stars span{cursor:pointer}
     .stars span.lit{color:var(--taupe)}
@@ -228,16 +256,23 @@
         </div>
       </section>
 
-      <!-- INTERESTS -->
+      <!-- INTERESTS & AVAILABILITY -->
       <section class="panel" id="panel-interests">
-        <div class="section-head"><h2>What do you want to <em>learn</em>?</h2><p>Tell us your interests and we'll build classes around them.</p></div>
+        <div class="section-head"><h2>Your interests &amp; <em>availability</em></h2><p>This is what you shared when you signed up. Update anything that's changed, then save.</p></div>
         <div class="block">
-          <div class="field"><label>I'm curious about… (tap all that apply)</label><div class="chips" id="interestChips"></div></div>
+          <div class="field"><label>Classes you're interested in (tap all that apply)</label><div class="chips" id="interestChips"></div></div>
+
+          <div class="field">
+            <label>When are you usually free?</label>
+            <p class="avail-hint">Tap every time you could attend. Days run across the top; time blocks down the side.</p>
+            <div class="avail-wrap"><table class="avail" id="availGrid"></table></div>
+          </div>
+
           <div class="field"><label>Skill level</label>
             <select id="iSkill"><option>Total beginner</option><option>Dabbled a bit</option><option>Intermediate</option><option>Pretty experienced</option></select>
           </div>
           <div class="field"><label>Anything specific you're hoping to make or learn?</label><textarea id="iNotes" placeholder="I'd love to throw a full dinner set on the wheel…"></textarea></div>
-          <button class="btn-submit" onclick="submitInterests(this)">Submit interests</button>
+          <button class="btn-submit" onclick="saveProfile(this)">Save my interests &amp; availability</button>
         </div>
       </section>
 
@@ -274,6 +309,22 @@
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const interestTags = ["Pottery","Baking","Painting","Woodworking","Textiles","Cooking","Printmaking","Jewellery","Photography","Gardening","Calligraphy","Candle-making"];
+    // The full menu of classes you ask about at signup. Edit this list anytime —
+    // any class a member personally selected is also shown even if not listed here.
+    const BASE_INTEREST_CLASSES = [
+      "Watercolor 101","Modern Calligraphy","Knitting 101","Meditation","Basic Home Repair",
+      "Eating Well (Nutrition 101)","Charcuterie & Cheese Board Styling","Managing Finances",
+      "Creating Habits & Routines","Floral Arranging","Sourdough Starter & Maintenance","Wreath Making"
+    ];
+    // Availability matrix definition
+    const TIME_BLOCKS = [
+      {id:"morning",  label:"Morning",  time:"8–11 AM"},
+      {id:"midday",   label:"Midday",   time:"11 AM–2 PM"},
+      {id:"afternoon",label:"Afternoon",time:"2–5 PM"},
+      {id:"evening",  label:"Evening",  time:"5–8 PM"},
+      {id:"late",     label:"Late",     time:"8–10 PM"},
+    ];
+    const AVAIL_DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
     const ideaTypes = ["New class","Guest instructor","Studio event","Materials / tools","Something else"];
 
     let user = null;
@@ -329,9 +380,9 @@
       $("gate").style.display = "none";
       $("app").style.display = "block";
 
-      renderChips("interestChips", interestTags);
       renderChips("ideaChips", ideaTypes);
       wireStars();
+      await loadProfile();   // builds interest chips + availability grid, pre-filled
       await loadEnrollments();   // sets enrolledIds, used by class buttons
       await loadClasses();
       renderSchedule();
@@ -373,37 +424,57 @@
       classes = data || [];
       renderClasses();
     }
+    const DAY_ORDER = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    function weekdayLong(iso){ return new Date(iso).toLocaleDateString("en-US",{weekday:"long",timeZone:TZ}); }
+    function timeRangeOnly(c){ return c.starts_at ? fmtRange(c.starts_at, c.duration_minutes) : ""; }
+
     function renderClasses(){
       const el = $("classGrid"); el.classList.remove("loading");
       if(!classes.length){ el.innerHTML = `<div class="empty"><div class="big">🪴</div>No classes published yet.</div>`; return; }
-      el.className = "grid";
-      el.innerHTML = classes.map(c=>{
-        const on = enrolledIds.has(c.id);
-        const totalHours = ((c.duration_minutes||0)/60) * (c.weeks||1);   // 2 hrs × 4 weeks = 8
-        const perHour = totalHours ? Math.round(c.price_cents/totalHours) : 0;
-        const remaining = (c.capacity==null) ? null : Math.max(0, c.capacity - (c.seats_taken||0));
-        const full = remaining!==null && remaining<=0;
-        let seatsHtml = "";
-        if(remaining!==null){
-          if(full) seatsHtml = `<div class="seats full">Class full</div>`;
-          else if(remaining<=2) seatsHtml = `<div class="seats low">Only ${remaining} seat${remaining===1?"":"s"} left</div>`;
-        }
-        const button = (full && !on)
-          ? `<button class="enroll" disabled>Class full</button>`
-          : `<button class="enroll ${on?"added":""}" onclick="toggleEnroll('${c.id}',this)">${on?"✓ In your schedule":"Add to schedule"}</button>`;
-        return `<div class="card">
-          <div class="thumb">${c.emoji||"✦"}</div>
-          <div class="body">
-            <h3>${c.name}</h3>
-            <div class="sched-line">${scheduleText(c)}</div>
-            ${c.description ? `<div class="desc">${c.description}</div>` : ``}
-            ${c.materials_included ? `<div class="badge">✓ All materials included</div>` : ``}
-            <div class="note">You'll receive your 4-week syllabus and a bio of your expert instructor by June 14.</div>
-            <div class="price">${money(c.price_cents)}${perHour?` <span class="per">${money(perHour)} per hour · ${totalHours} hrs total</span>`:``}</div>
-            ${seatsHtml}
-            ${button}
-          </div></div>`;
-      }).join("");
+
+      // Group classes by weekday, then by time slot.
+      const byDay = {};
+      classes.forEach(c=>{
+        if(!c.starts_at) return;
+        const d = weekdayLong(c.starts_at);
+        (byDay[d] = byDay[d] || []).push(c);
+      });
+      const days = DAY_ORDER.filter(d=>byDay[d] && byDay[d].length);
+      days.forEach(d=> byDay[d].sort((a,b)=> new Date(a.starts_at)-new Date(b.starts_at)));
+
+      el.className = "week";
+      el.innerHTML = `
+        <p class="week-note">Every course runs <strong>4 weeks · 8 hours total</strong>. <strong>All materials are included</strong>, and you'll receive your full syllabus and a bio of your expert instructor by <strong>June 14</strong>.</p>
+        <div class="week-grid">
+          ${days.map(d=>`
+            <div class="day-col">
+              <div class="day-head">${d}s</div>
+              ${byDay[d].map(c=>cellHTML(c)).join("")}
+            </div>`).join("")}
+        </div>`;
+    }
+
+    function cellHTML(c){
+      const on = enrolledIds.has(c.id);
+      const totalHours = ((c.duration_minutes||0)/60) * (c.weeks||1);
+      const perHour = totalHours ? Math.round(c.price_cents/totalHours) : 0;
+      const remaining = (c.capacity==null) ? null : Math.max(0, c.capacity - (c.seats_taken||0));
+      const full = remaining!==null && remaining<=0;
+      let seatsHtml = "";
+      if(remaining!==null){
+        if(full) seatsHtml = `<div class="seats full">Class full</div>`;
+        else if(remaining<=2) seatsHtml = `<div class="seats low">Only ${remaining} seat${remaining===1?"":"s"} left</div>`;
+      }
+      const button = (full && !on)
+        ? `<button class="enroll" disabled>Class full</button>`
+        : `<button class="enroll ${on?"added":""}" onclick="toggleEnroll('${c.id}',this)">${on?"✓ Reserved":"Reserve"}</button>`;
+      return `<div class="cell">
+        <div class="cell-time">${timeRangeOnly(c)}</div>
+        <div class="cell-name">${c.emoji||""} ${c.name.replace(/\s*\(.*\)\s*$/,"")}</div>
+        <div class="cell-price">${money(c.price_cents)}<span class="per"> · ${money(perHour)}/hr</span></div>
+        ${seatsHtml}
+        ${button}
+      </div>`;
     }
 
     /* ---------- enrollments ---------- */
@@ -487,8 +558,9 @@
     }
 
     /* ---------- chips & stars ---------- */
-    function renderChips(elId, tags){
-      $(elId).innerHTML = tags.map(t=>`<span class="chip" onclick="this.classList.toggle('sel')">${t}</span>`).join("");
+    function renderChips(elId, tags, selected){
+      const sel = selected instanceof Set ? selected : new Set();
+      $(elId).innerHTML = tags.map(t=>`<span class="chip${sel.has(t)?" sel":""}" onclick="this.classList.toggle('sel')">${t}</span>`).join("");
     }
     function selectedChips(elId){ return [...document.querySelectorAll(`#${elId} .chip.sel`)].map(c=>c.textContent); }
     function wireStars(){
@@ -503,16 +575,83 @@
     }
 
     /* ---------- form submits ---------- */
-    async function submitInterests(btn){
-      btn.disabled=true;
-      const { error } = await sb.from("interest_forms").insert({
-        user_id:user.id, interests:selectedChips("interestChips"),
-        skill_level:$("iSkill").value, notes:$("iNotes").value.trim()
+    /* ---------- interests + availability ---------- */
+    function buildAvailGrid(){
+      const head = `<tr><th></th>${AVAIL_DAYS.map(d=>`<th>${d}</th>`).join("")}</tr>`;
+      const rows = TIME_BLOCKS.map(b=>`<tr>
+        <td class="rowlab">${b.label}<small>${b.time}</small></td>
+        ${AVAIL_DAYS.map(d=>`<td class="slot" data-b="${b.id}" data-d="${d}" onclick="this.classList.toggle('on')"></td>`).join("")}
+      </tr>`).join("");
+      $("availGrid").innerHTML = head + rows;
+    }
+    function setAvailability(obj){
+      obj = obj || {};
+      document.querySelectorAll("#availGrid .slot").forEach(td=>{
+        const days = obj[td.dataset.b];
+        td.classList.toggle("on", Array.isArray(days) && days.includes(td.dataset.d));
       });
-      btn.disabled=false;
-      if(error){ toast("Hmm: "+error.message); return; }
-      toast("Interests saved — thank you! ✨");
-      $("iNotes").value=""; document.querySelectorAll("#interestChips .chip.sel").forEach(c=>c.classList.remove("sel"));
+    }
+    function getAvailability(){
+      const out = {};
+      document.querySelectorAll("#availGrid .slot.on").forEach(td=>{
+        (out[td.dataset.b] = out[td.dataset.b] || []).push(td.dataset.d);
+      });
+      return out;
+    }
+    // Parse the signup-sheet availability string into {blockId:[days]}
+    // e.g. "Morning (8–11 AM): Sat, Sun | Evening (5–8 PM): Mon, Tue"
+    function parseAvailabilityString(str){
+      const out = {};
+      if(!str) return out;
+      const ids = ["morning","midday","afternoon","evening","late"];
+      str.split("|").forEach(part=>{
+        const i = part.indexOf(":"); if(i < 0) return;
+        const left = part.slice(0,i).trim().toLowerCase();
+        const id = ids.find(k=>left.startsWith(k)); if(!id) return;
+        out[id] = part.slice(i+1).split(",").map(s=>s.trim()).filter(Boolean)
+          .map(d=>d.slice(0,3)).map(d=>d.charAt(0).toUpperCase()+d.slice(1).toLowerCase());
+      });
+      return out;
+    }
+    function parseClassList(str){ return (str||"").split(",").map(s=>s.trim()).filter(Boolean); }
+
+    async function loadProfile(){
+      buildAvailGrid();
+      let classes = [], avail = {}, skill = null, notes = "";
+      // 1) saved edits take priority
+      const { data:pref } = await sb.from("member_preferences").select("*").eq("user_id",user.id).maybeSingle();
+      if(pref){
+        classes = pref.classes || []; avail = pref.availability || {};
+        skill = pref.skill_level; notes = pref.notes || "";
+      } else {
+        // 2) fall back to the imported signup data (RLS returns only this member's row)
+        const { data:intake } = await sb.from("member_intake").select("*").maybeSingle();
+        if(intake){
+          classes = parseClassList(intake.classes_of_interest);
+          avail   = parseAvailabilityString(intake.availability);
+          notes   = intake.notes || "";
+        }
+      }
+      const universe = Array.from(new Set([...BASE_INTEREST_CLASSES, ...classes]));
+      renderChips("interestChips", universe, new Set(classes));
+      setAvailability(avail);
+      if(skill) $("iSkill").value = skill;
+      $("iNotes").value = notes;
+    }
+
+    async function saveProfile(btn){
+      btn.disabled = true; const old = btn.textContent; btn.textContent = "Saving…";
+      const { error } = await sb.from("member_preferences").upsert({
+        user_id: user.id,
+        classes: selectedChips("interestChips"),
+        availability: getAvailability(),
+        skill_level: $("iSkill").value,
+        notes: $("iNotes").value.trim(),
+        updated_at: new Date().toISOString()
+      }, { onConflict: "user_id" });
+      btn.disabled = false; btn.textContent = old;
+      if(error){ toast("Couldn't save: " + error.message); return; }
+      toast("Saved — thank you! ✨");
     }
     async function submitFeedback(btn){
       btn.disabled=true;

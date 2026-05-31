@@ -658,19 +658,46 @@
     @media (max-width: 900px) {
       .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     }
+  
+    /* === standardized nav (hamburger + active state) === */
+    .nav-inner { position: relative; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--sage-deep); transition: transform 0.2s, opacity 0.2s; }
+    .nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2){ opacity: 0; }
+    .nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+    .nav-link-current { color: var(--sage-deep); }
+    .nav-link-current::after { content: ""; display: block; width: 100%; height: 1px; background: var(--sage); margin-top: 4px; }
+    @media (max-width: 760px) {
+      .nav-toggle { display: flex; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px; padding: 0.5rem; margin-top: 0.75rem; box-shadow: 0 18px 44px rgba(78,90,65,0.16); z-index: 50; }
+      .nav-links.open { display: flex; }
+      .nav-link { font-size: 0.9rem; letter-spacing: 0.12em; padding: 0.85rem 0.9rem; text-align: left; }
+      .nav-link-current::after { display: none; }
+      .nav-link-primary { text-align: center; margin-top: 0.4rem; }
+    }
+    /* === end standardized nav === */
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav class="nav">
+    <nav class="nav">
     <div class="container nav-inner">
       <a href="index.html" class="wordmark">The Hobbiest</a>
-      <div class="nav-links">
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"
+        onclick="this.classList.toggle('open');document.getElementById('navLinks').classList.toggle('open');this.setAttribute('aria-expanded',this.classList.contains('open'));">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
         <a href="index.html" class="nav-link">Home</a>
         <a href="schedule.html" class="nav-link">Skills Schedule</a>
         <a href="apply.html" class="nav-link">Apply to Teach</a>
-        <a href="signup.html" class="nav-link nav-link-primary" aria-current="page">Become a Hobbiest</a>
+        <a href="press.html" class="nav-link">Press</a>
+        <a href="gift.html" class="nav-link">Give a Gift</a>
+        <a href="login.html" class="nav-link">Log in</a>
+        <a href="signup.html" class="nav-link nav-link-primary">Become a Hobbiest</a>
       </div>
     </div>
   </nav>
@@ -900,7 +927,7 @@
       <!-- Thank you state (shown after successful submission) -->
       <div class="form-thanks" id="formThanks">
         <h3>You're in. <em>Welcome.</em></h3>
-        <p>We'll be in touch as classes open and as membership opens this fall. Keep an eye on <strong>pittston@thehobbiestskillsclub.com</strong> — that's where we'll write from.</p>
+        <p>We just emailed a one-tap sign-in link to log in and see your profile — it can take a minute to arrive, so check your inbox (and spam). You can also <a href="login.html" style="color:var(--sage);text-decoration:underline;">log in here</a> anytime with Google.</p>
       </div>
 
       <!-- Share section -->
@@ -965,38 +992,82 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     reveals.forEach((r) => io.observe(r));
 
-    // Form submission via Web3Forms
+    // ============================================================
+    // SIGNUP → save to profile + invite to log in
+    // ============================================================
+    const SUPABASE_URL = "https://uprdczhhgwzfypkudqjg.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const AFTER_LOGIN = window.location.origin + "/dashboard.html";
+
+    // Mirror the dashboard's availability blocks so the saved string parses cleanly.
+    const AVAIL_BLOCKS = [
+      { id: "morning",   label: "Morning (8–11 AM)" },
+      { id: "midday",    label: "Midday (11 AM–2 PM)" },
+      { id: "afternoon", label: "Afternoon (2–5 PM)" },
+      { id: "evening",   label: "Evening (5–8 PM)" },
+      { id: "late",      label: "Late (8–10 PM)" },
+    ];
+    const AVAIL_DAYS = ["mon","tue","wed","thu","fri","sat","sun"];
+    const DAY_LABEL = { mon:"Mon", tue:"Tue", wed:"Wed", thu:"Thu", fri:"Fri", sat:"Sat", sun:"Sun" };
+
+    function collectClasses(){
+      return [...document.querySelectorAll('input[name="classes"]:checked')].map(cb=>{
+        const span = cb.closest("label")?.querySelector(".check-item-text");
+        return span ? span.childNodes[0].textContent.trim() : cb.value;   // main label, not the "begins September" meta
+      });
+    }
+    function collectAvailabilityString(){
+      const on = new Set([...document.querySelectorAll('input[name="availability"]:checked')].map(cb=>cb.value));
+      const parts = [];
+      AVAIL_BLOCKS.forEach(b=>{
+        const days = AVAIL_DAYS.filter(d=>on.has(`${d}-${b.id}`)).map(d=>DAY_LABEL[d]);
+        if(days.length) parts.push(`${b.label}: ${days.join(", ")}`);
+      });
+      return parts.join(" | ");
+    }
+
     const form = document.getElementById('signupForm');
     const thanks = document.getElementById('formThanks');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalLabel = submitBtn.textContent;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending…';
+      submitBtn.disabled = true; submitBtn.textContent = 'Saving…';
+
+      const email = document.getElementById('email').value.trim();
 
       try {
-        const formData = new FormData(form);
-        const response = await fetch(form.action, {
-          method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' },
+        // 1) Save everything they filled out to their profile (Supabase).
+        const { data, error } = await sb.functions.invoke("submit-signup", {
+          body: {
+            first_name: document.getElementById('firstName').value.trim(),
+            last_name:  document.getElementById('lastName').value.trim(),
+            email,
+            phone:      document.getElementById('phone').value.trim(),
+            classes_of_interest: collectClasses().join(", "),
+            availability: collectAvailabilityString(),
+            notes: document.getElementById('notes')?.value.trim() || "",
+            newsletter: document.querySelector('input[name="newsletter"]')?.checked || false,
+          },
         });
-        const result = await response.json();
-        if (response.ok && result.success) {
-          // Hide the form and the "A few quick questions" lede above it
-          form.style.display = 'none';
-          const formHeader = document.querySelector('.form-header');
-          if (formHeader) formHeader.style.display = 'none';
-          thanks.classList.add('active');
-          window.scrollTo({ top: thanks.offsetTop - 100, behavior: 'smooth' });
-        } else {
-          throw new Error(result.message || 'Submission failed');
-        }
+        if (error || data?.error) throw new Error(error?.message || data.error);
+
+        // 2) Notify the studio by email too (non-blocking — fire and forget).
+        try { fetch(form.action, { method:'POST', body:new FormData(form), headers:{ Accept:'application/json' } }); } catch(_) {}
+
+        // 3) Invite them to log in: email a one-tap sign-in link (non-blocking).
+        try { await sb.auth.signInWithOtp({ email, options:{ emailRedirectTo: AFTER_LOGIN } }); } catch(_) {}
+
+        // 4) Show the thank-you.
+        form.style.display = 'none';
+        const formHeader = document.querySelector('.form-header');
+        if (formHeader) formHeader.style.display = 'none';
+        thanks.classList.add('active');
+        window.scrollTo({ top: thanks.offsetTop - 100, behavior: 'smooth' });
       } catch (err) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalLabel;
-        alert("Sorry — something went wrong sending your signup. Please try again, or email us directly at pittston@thehobbiestskillsclub.com and we'll add you to the list.");
+        submitBtn.disabled = false; submitBtn.textContent = originalLabel;
+        alert("Sorry — something went wrong saving your signup. Please try again, or email us at pittston@thehobbiestskillsclub.com and we'll add you.");
       }
     });
 
