@@ -195,7 +195,7 @@
 
       <nav class="pills">
         <button class="pill active" data-panel="classes"  onclick="showPanel('classes',this)">Classes</button>
-        <button class="pill"        data-panel="schedule" onclick="showPanel('schedule',this)">Schedule</button>
+        <button class="pill"        data-panel="schedule" onclick="showPanel('schedule',this)">Your Class Schedule</button>
         <button class="pill"        data-panel="checkout" onclick="showPanel('checkout',this)">Checkout</button>
         <button class="pill"        data-panel="interests"onclick="showPanel('interests',this)">Interests</button>
         <button class="pill"        data-panel="feedback" onclick="showPanel('feedback',this)">Feedback</button>
@@ -210,7 +210,7 @@
 
       <!-- SCHEDULE -->
       <section class="panel" id="panel-schedule">
-        <div class="section-head"><h2>Your <em>schedule</em></h2><p>Everything you've reserved, soonest first.</p></div>
+        <div class="section-head"><h2>Your <em>schedule</em></h2><p>Every class session you've booked, soonest first.</p></div>
         <div id="scheduleList" class="loading">Loading…</div>
       </section>
 
@@ -506,16 +506,30 @@
     }
 
     /* ---------- schedule ---------- */
+    // Every weekly session date for a course: start, +7 days, … × weeks
+    function sessionDates(c){
+      const out=[]; if(!c.starts_at) return out;
+      const start=new Date(c.starts_at), n=c.weeks||1;
+      for(let i=0;i<n;i++) out.push(new Date(start.getTime()+i*7*86400000).toISOString());
+      return out;
+    }
     function renderSchedule(){
       const el = $("scheduleList"); el.classList.remove("loading");
-      const rows = (window._enr||[]).filter(e=>e.classes).sort((a,b)=> new Date(a.classes.starts_at)-new Date(b.classes.starts_at));
-      if(!rows.length){ el.innerHTML = `<div class="empty"><div class="big">🗓</div>Nothing booked yet — add a class from the catalogue.</div>`; return; }
-      el.innerHTML = rows.map(e=>{
-        const c=e.classes;
+      const enrs = (window._enr||[]).filter(e=>e.classes && e.classes.starts_at);
+      if(!enrs.length){ el.innerHTML = `<div class="empty"><div class="big">🗓</div>Nothing booked yet — add a class from the catalogue.</div>`; return; }
+      // Expand each course into one entry per session date.
+      const items = [];
+      enrs.forEach(e=>{
+        const dates = sessionDates(e.classes), n = dates.length;
+        dates.forEach((iso,i)=> items.push({ iso, c:e.classes, status:e.status, idx:i+1, total:n }));
+      });
+      items.sort((a,b)=> new Date(a.iso)-new Date(b.iso));
+      el.innerHTML = items.map(it=>{
+        const c = it.c;
         return `<div class="sched-row">
-          <div class="sched-date"><div class="d">${c.starts_at?dayNum(c.starts_at):"–"}</div><div class="m">${c.starts_at?monAbbr(c.starts_at):""}</div></div>
-          <div class="sched-info"><h3>${c.name}</h3><div class="meta">${scheduleText(c)}</div></div>
-          <span class="tag ${e.status==="paid"?"paid":"reserved"}">${e.status==="paid"?"Paid":"Reserved"}</span>
+          <div class="sched-date"><div class="d">${dayNum(it.iso)}</div><div class="m">${monAbbr(it.iso)}</div></div>
+          <div class="sched-info"><h3>${c.name}</h3><div class="meta">${fmtDate(it.iso)} · ${fmtRange(it.iso,c.duration_minutes)} · Week ${it.idx} of ${it.total}</div></div>
+          <span class="tag ${it.status==="paid"?"paid":"reserved"}">${it.status==="paid"?"Paid":"Reserved"}</span>
         </div>`;
       }).join("");
     }
