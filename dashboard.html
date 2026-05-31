@@ -72,8 +72,15 @@
     .card h3{font-size:1.3rem;color:var(--sage-deep)}
     .card .desc{font-family:var(--font-body);font-size:0.85rem;color:var(--ink-soft);line-height:1.5}
     .card .meta{font-family:var(--font-body);font-size:0.76rem;color:var(--muted);letter-spacing:0.02em;display:flex;flex-wrap:wrap;gap:0.3rem 0.9rem}
-    .card .price{font-family:var(--font-display);font-size:1.45rem;color:var(--ink);margin-top:0.2rem}
+    .card .price{font-family:var(--font-display);font-size:1.45rem;color:var(--ink);margin-top:0.2rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:0.2rem 0.6rem}
+    .card .price .per{font-family:var(--font-body);font-size:0.78rem;font-weight:500;color:var(--muted);letter-spacing:0.02em}
+    .card .badge{align-self:flex-start;font-family:var(--font-body);font-size:0.72rem;font-weight:600;letter-spacing:0.04em;color:var(--sage-deep);background:rgba(122,138,107,0.16);border:1px solid var(--sage-pale);padding:0.3rem 0.7rem;border-radius:999px}
+    .card .note{font-family:var(--font-body);font-size:0.76rem;color:var(--muted);line-height:1.5;font-style:italic}
     .card .enroll{margin-top:auto;font-family:var(--font-body);font-size:0.85rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:0.7rem;border-radius:999px;background:var(--sage);color:var(--bg);border:1px solid var(--sage);transition:.2s var(--ease)}
+    .card .enroll[disabled]{background:transparent;color:var(--muted);border-color:var(--hairline);cursor:default;letter-spacing:0.08em}
+    .card .seats{font-family:var(--font-body);font-size:0.8rem;font-weight:600;letter-spacing:0.02em;margin-top:0.1rem}
+    .card .seats.low{color:#9a6a2f}
+    .card .seats.full{color:var(--muted)}
     .card .enroll:hover{background:var(--sage-deep);border-color:var(--sage-deep)}
     .card .enroll.added{background:transparent;color:var(--sage-deep)}
 
@@ -242,10 +249,16 @@
     let toastTimer;
     function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),2800); }
     function money(cents){ return "$" + (cents % 100 === 0 ? cents/100 : (cents/100).toFixed(2)); }
-    function fmtDate(iso){ const d=new Date(iso); return d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}); }
-    function fmtTime(iso){ const d=new Date(iso); return d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}); }
-    function dayNum(iso){ return new Date(iso).getDate(); }
-    function monAbbr(iso){ return new Date(iso).toLocaleDateString("en-US",{month:"short"}); }
+    const TZ = "America/New_York";   // the club's timezone — show times in Pittston time for everyone
+    function fmtDate(iso){ return new Date(iso).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric",timeZone:TZ}); }
+    function fmtTime(iso){ return new Date(iso).toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",timeZone:TZ}); }
+    function dayNum(iso){ return new Date(iso).toLocaleDateString("en-US",{day:"numeric",timeZone:TZ}); }
+    function monAbbr(iso){ return new Date(iso).toLocaleDateString("en-US",{month:"short",timeZone:TZ}); }
+    function fmtRange(iso, mins){
+      const start=new Date(iso), end=new Date(start.getTime()+(mins||0)*60000);
+      const o={hour:"numeric",minute:"2-digit",timeZone:TZ};
+      return start.toLocaleTimeString("en-US",o).replace(/\s?[AP]M/,"")+"–"+end.toLocaleTimeString("en-US",o);
+    }
 
     /* ---------- boot: require a session ---------- */
     (async function boot(){
@@ -315,14 +328,28 @@
       el.className = "grid";
       el.innerHTML = classes.map(c=>{
         const on = enrolledIds.has(c.id);
+        const hours = (c.duration_minutes||0)/60;
+        const perHour = hours ? Math.round(c.price_cents/hours) : 0;
+        const remaining = (c.capacity==null) ? null : Math.max(0, c.capacity - (c.seats_taken||0));
+        const full = remaining!==null && remaining<=0;
+        let seatsHtml = "";
+        if(remaining!==null){
+          if(full) seatsHtml = `<div class="seats full">Class full</div>`;
+          else if(remaining<=2) seatsHtml = `<div class="seats low">Only ${remaining} seat${remaining===1?"":"s"} left</div>`;
+        }
+        const button = (full && !on)
+          ? `<button class="enroll" disabled>Class full</button>`
+          : `<button class="enroll ${on?"added":""}" onclick="toggleEnroll('${c.id}',this)">${on?"✓ In your schedule":"Add to schedule"}</button>`;
         return `<div class="card">
           <div class="thumb">${c.emoji||"✦"}</div>
           <div class="body">
             <h3>${c.name}</h3>
             <div class="desc">${c.description||""}</div>
-            <div class="meta"><span>with ${c.instructor||"TBA"}</span><span>${c.starts_at?fmtDate(c.starts_at)+" · "+fmtTime(c.starts_at):""}</span></div>
-            <div class="price">${money(c.price_cents)}</div>
-            <button class="enroll ${on?"added":""}" onclick="toggleEnroll('${c.id}',this)">${on?"✓ In your schedule":"Add to schedule"}</button>
+            ${c.materials_included ? `<div class="badge">✓ All materials included</div>` : ``}
+            <div class="note">You'll receive your 4-week syllabus and a bio of your expert instructor by June 14.</div>
+            <div class="price">${money(c.price_cents)}${perHour?` <span class="per">${money(perHour)} / hour of instruction</span>`:``}</div>
+            ${seatsHtml}
+            ${button}
           </div></div>`;
       }).join("");
     }
@@ -342,11 +369,17 @@
         toast("Removed from your schedule");
       } else {
         const { error } = await sb.from("enrollments").insert({ user_id:user.id, class_id:classId, status:"reserved" });
-        if(error){ toast("Couldn't reserve: "+error.message); return; }
+        if(error){
+          if((error.message||"").toLowerCase().includes("full")) toast("Sorry — this class just filled up.");
+          else toast("Couldn't reserve: "+error.message);
+          await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart();
+          return;
+        }
         toast("Reserved — added to your schedule");
       }
       await loadEnrollments();
-      renderClasses(); renderSchedule(); renderCart();
+      await loadClasses();          // refresh seats_taken so "seats left" stays accurate
+      renderSchedule(); renderCart();
     }
 
     /* ---------- schedule ---------- */
@@ -358,7 +391,7 @@
         const c=e.classes;
         return `<div class="sched-row">
           <div class="sched-date"><div class="d">${c.starts_at?dayNum(c.starts_at):"–"}</div><div class="m">${c.starts_at?monAbbr(c.starts_at):""}</div></div>
-          <div class="sched-info"><h3>${c.name}</h3><div class="meta">${c.starts_at?fmtTime(c.starts_at):""} · with ${c.instructor||"TBA"}</div></div>
+          <div class="sched-info"><h3>${c.name}</h3><div class="meta">${c.starts_at?fmtDate(c.starts_at)+" · "+fmtRange(c.starts_at,c.duration_minutes):""}</div></div>
           <span class="tag ${e.status==="paid"?"paid":"reserved"}">${e.status==="paid"?"Paid":"Reserved"}</span>
         </div>`;
       }).join("");
