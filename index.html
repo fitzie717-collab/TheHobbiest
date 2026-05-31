@@ -131,7 +131,24 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: relative;
     }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .nav-toggle span {
+      display: block; width: 24px; height: 2px; background: var(--sage-deep);
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2){ opacity: 0; }
+    .nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
     .wordmark {
       font-family: var(--font-display);
       font-size: 1.2rem;
@@ -245,9 +262,29 @@
       color: var(--sage);
       background: var(--bg);
     }
-    @media (max-width: 640px) {
-      .nav-links { gap: 0.9rem; }
-      .nav-link { font-size: 0.68rem; letter-spacing: 0.14em; }
+    @media (max-width: 760px) {
+      .nav-toggle { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        border-radius: 10px;
+        padding: 0.5rem;
+        margin-top: 0.75rem;
+        box-shadow: 0 18px 44px rgba(78, 90, 65, 0.16);
+      }
+      .nav-links.open { display: flex; }
+      .nav-link {
+        font-size: 0.9rem; letter-spacing: 0.12em;
+        padding: 0.85rem 0.9rem; text-align: left;
+      }
+      .nav-link-current::after { display: none; }
+      .nav-link-primary { text-align: center; margin-top: 0.4rem; }
       .nav-dropdown { right: auto; left: 0; min-width: 180px; }
     }
 
@@ -1427,11 +1464,16 @@
   <nav class="nav">
     <div class="container nav-inner">
       <a href="index.html" class="wordmark">The Hobbiest</a>
-      <div class="nav-links">
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"
+        onclick="this.classList.toggle('open');document.getElementById('navLinks').classList.toggle('open');this.setAttribute('aria-expanded',this.classList.contains('open'));">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
         <a href="index.html" class="nav-link nav-link-current">Home</a>
         <a href="schedule.html" class="nav-link">Skills Schedule</a>
         <a href="apply.html" class="nav-link">Apply to Teach</a>
         <a href="press.html" class="nav-link">Press</a>
+        <a href="gift.html" class="nav-link">Give a Gift</a>
         <a href="login.html" class="nav-link">Log in</a>
         <a href="signup.html" class="nav-link nav-link-primary">Become a Hobbiest</a>
       </div>
@@ -1674,6 +1716,10 @@
       <div class="footer-bottom">
         <span>© 2026 The Hobbiest Skills Club</span>
         <div class="footer-legal">
+          <a href="gift.html">Give a Gift</a>
+          <span class="footer-divider">·</span>
+          <a href="waiver.html">Waiver &amp; Policies</a>
+          <span class="footer-divider">·</span>
           <a href="privacy.html">Privacy Policy</a>
           <span class="footer-divider">·</span>
           <a href="terms.html">Terms of Service</a>
