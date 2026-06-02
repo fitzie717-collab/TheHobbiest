@@ -73,6 +73,7 @@
     .day-head{font-family:var(--font-body);font-size:0.74rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--sage-deep);padding-bottom:0.5rem;border-bottom:2px solid var(--sage-pale)}
     .cell{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:0.95rem 1rem;display:flex;flex-direction:column;gap:0.4rem}
     .cell-time{font-family:var(--font-body);font-size:0.74rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)}
+    .cell-dates{font-family:var(--font-body);font-size:0.78rem;font-weight:500;letter-spacing:0.01em;color:var(--ink-soft)}
     .cell-name{font-family:var(--font-display);font-size:1.18rem;color:var(--sage-deep);line-height:1.15}
     .cell-price{font-family:var(--font-display);font-size:1.15rem;color:var(--ink)}
     .cell-price .per{font-family:var(--font-body);font-size:0.74rem;color:var(--muted)}
@@ -428,6 +429,22 @@
     function weekdayLong(iso){ return new Date(iso).toLocaleDateString("en-US",{weekday:"long",timeZone:TZ}); }
     function timeRangeOnly(c){ return c.starts_at ? fmtRange(c.starts_at, c.duration_minutes) : ""; }
 
+    // Summer term — first session for each weekday (term opens Sat Jul 11, 2026).
+    // Each course is 4 weekly sessions, so the range is first → first + 3 weeks.
+    const TERM_FIRST = {
+      Saturday:"2026-07-11", Sunday:"2026-07-12", Monday:"2026-07-13",
+      Tuesday:"2026-07-14", Wednesday:"2026-07-15", Thursday:"2026-07-16", Friday:"2026-07-17"
+    };
+    function termRange(c){
+      if(!c.starts_at) return "";
+      const firstStr = TERM_FIRST[weekdayLong(c.starts_at)];
+      if(!firstStr) return "";
+      const first = new Date(firstStr + "T12:00:00");                 // noon to avoid TZ rollover
+      const last  = new Date(first.getTime() + ((c.weeks||4)-1)*7*86400000);
+      const o = {month:"short", day:"numeric"};
+      return `${first.toLocaleDateString("en-US",o)} – ${last.toLocaleDateString("en-US",o)}`;
+    }
+
     function renderClasses(){
       const el = $("classGrid"); el.classList.remove("loading");
       if(!classes.length){ el.innerHTML = `<div class="empty"><div class="big">🪴</div>No classes published yet.</div>`; return; }
@@ -471,6 +488,7 @@
       return `<div class="cell">
         <div class="cell-time">${timeRangeOnly(c)}</div>
         <div class="cell-name">${c.emoji||""} ${c.name.replace(/\s*\(.*\)\s*$/,"")}</div>
+        <div class="cell-dates">${termRange(c)}</div>
         <div class="cell-price">${money(c.price_cents)}<span class="per"> · ${money(perHour)}/hr</span></div>
         ${seatsHtml}
         ${button}
