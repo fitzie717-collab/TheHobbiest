@@ -194,6 +194,27 @@
     .switch-link span { color: var(--sage); text-decoration: underline; text-underline-offset: 3px; }
     .switch-link:hover span { color: var(--sage-deep); }
 
+    /* Two-audience explainer (returning vs new) */
+    .who {
+      margin-top: 1.6rem; padding-top: 1.4rem;
+      border-top: 1px solid var(--hairline);
+      display: flex; flex-direction: column; gap: 0.95rem;
+    }
+    .who-row {
+      display: grid; grid-template-columns: 92px 1fr;
+      gap: 0.9rem; align-items: baseline;
+    }
+    .who-label {
+      font-family: var(--font-body); font-size: 0.66rem; letter-spacing: 0.16em;
+      text-transform: uppercase; font-weight: 700; color: var(--sage);
+    }
+    .who-text {
+      font-family: var(--font-body); font-size: 0.9rem; line-height: 1.55; color: var(--ink-soft);
+    }
+    @media (max-width: 380px) {
+      .who-row { grid-template-columns: 1fr; gap: 0.2rem; }
+    }
+
     /* Status / message */
     .msg {
       margin-top: 1.2rem; padding: 0.85rem 1rem; border-radius: 4px;
@@ -256,10 +277,9 @@
   <!-- AUTH -->
   <main class="auth-main">
     <div class="auth-card">
-      <span class="auth-tag">Members</span>
-      <span class="eyebrow">Member Sign-in</span>
-      <h1>Welcome.</h1>
-      <p class="auth-lede">Sign in to manage your classes, schedule, and account.</p>
+      <span class="auth-tag">Sign in or join</span>
+      <h1><em>Welcome</em>.</h1>
+      <p class="auth-lede">The same sign-in works whether you're a returning member or joining The Hobbiest for the first time.</p>
 
       <!-- Primary: Google -->
       <button class="btn-google" id="googleBtn" onclick="signInGoogle()">
@@ -285,13 +305,16 @@
 
       <div class="msg" id="msg"></div>
 
-      <p class="auth-note">
-        No passwords to remember — we'll sign you in with Google,
-        or email you a one-tap link.
-      </p>
-      <p class="auth-note" style="margin-top:1.4rem;padding-top:1.4rem;border-top:1px solid var(--hairline);">
-        First time here? Signing in with Google or your email sets up your account automatically.
-      </p>
+      <div class="who">
+        <div class="who-row">
+          <span class="who-label">Returning</span>
+          <span class="who-text">Use the Google account or email you signed up with, and you'll go straight to your classes and account.</span>
+        </div>
+        <div class="who-row">
+          <span class="who-label">New here</span>
+          <span class="who-text">Pick either option above — we'll create your account on the spot and walk you through a quick setup. No password to remember, ever.</span>
+        </div>
+      </div>
     </div>
   </main>
 
