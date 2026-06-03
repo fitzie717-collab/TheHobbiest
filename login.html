@@ -248,8 +248,7 @@
         <a href="apply.html" class="nav-link">Apply to Teach</a>
         <a href="press.html" class="nav-link">Press</a>
         <a href="gift.html" class="nav-link">Give a Gift</a>
-        <a href="login.html" class="nav-link nav-link-current">Log in</a>
-        <a href="signup.html" class="nav-link nav-link-primary">Become a Hobbiest</a>
+        <a href="login.html" class="nav-link nav-link-current">Log in to purchase</a>
       </div>
     </div>
   </nav>
@@ -290,7 +289,9 @@
         No passwords to remember — we'll sign you in with Google,
         or email you a one-tap link.
       </p>
-      <a class="switch-link" href="signup.html">First time here? <span>Become a Hobbiest →</span></a>
+      <p class="auth-note" style="margin-top:1.4rem;padding-top:1.4rem;border-top:1px solid var(--hairline);">
+        First time here? Signing in with Google or your email sets up your account automatically.
+      </p>
     </div>
   </main>
 
@@ -309,8 +310,10 @@
     const SUPABASE_URL = "https://uprdczhhgwzfypkudqjg.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ";
 
-    // Where to send members after they log in:
-    const AFTER_LOGIN = window.location.origin + "/dashboard.html";
+    // Where to send members after they log in. We send everyone through the
+    // onboarding page (signup.html); it forwards already-onboarded members
+    // straight to the dashboard.
+    const AFTER_LOGIN = window.location.origin + "/signup.html";
 
     const configured = !SUPABASE_URL.includes("YOUR-PROJECT");
     let sb = null;

@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#7A8A6B" />
 
-  <title>Become a Hobbiest — The Hobbiest</title>
-  <meta name="description" content="Become a Hobbiest. Add your name to hear first when classes open this summer, and when membership opens in the fall." />
+  <title>Set up your profile — The Hobbiest</title>
+  <meta name="description" content="Set up your Hobbiest profile after signing in." />
 
-  <meta property="og:title" content="Become a Hobbiest — The Hobbiest" />
-  <meta property="og:description" content="Become a Hobbiest. Add your name to hear first when classes open." />
+  <meta property="og:title" content="Set up your profile — The Hobbiest" />
+  <meta property="og:description" content="Finish setting up your Hobbiest account." />
   <meta property="og:type" content="website" />
 
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -696,8 +696,6 @@
         <a href="apply.html" class="nav-link">Apply to Teach</a>
         <a href="press.html" class="nav-link">Press</a>
         <a href="gift.html" class="nav-link">Give a Gift</a>
-        <a href="login.html" class="nav-link">Log in</a>
-        <a href="signup.html" class="nav-link nav-link-primary">Become a Hobbiest</a>
       </div>
     </div>
   </nav>
@@ -707,12 +705,12 @@
     <div class="container">
       <div class="page-hero-inner">
         <div data-reveal>
-          <span class="page-eyebrow">The Waitlist</span>
-          <h1>Become a <em>Hobbiest</em>.</h1>
+          <span class="page-eyebrow">Your Profile</span>
+          <h1>Let's set you <em>up</em>.</h1>
         </div>
         <div data-reveal>
           <p class="page-hero-lede">
-            Add your name to hear first when classes open this summer, and when membership opens in the fall.
+            You're signed in. Tell us a little about yourself and which classes you're after — this finishes setting up your account so you can book.
           </p>
         </div>
       </div>
@@ -749,7 +747,7 @@
 
           <div class="form-row">
             <div class="form-field">
-              <label for="email" class="form-field-required">Email</label>
+              <label for="email" class="form-field-required">Email (from your account)</label>
               <input type="email" id="email" name="email" required />
             </div>
             <div class="form-field">
@@ -914,38 +912,17 @@
 
         <!-- Submit -->
         <div class="form-submit-row">
-          <button type="submit" class="btn-primary">Sign me up →</button>
+          <button type="submit" class="btn-primary">Save my profile →</button>
         </div>
-        <a href="login.html" style="display:block;text-align:center;margin-top:1.6rem;padding-top:1.6rem;
-           border-top:1px solid var(--hairline);font-family:var(--font-body);font-size:1.02rem;
-           font-weight:600;color:var(--sage-deep);text-decoration:none;">
-          Already a member?
-          <span style="color:var(--sage);text-decoration:underline;text-underline-offset:3px;">Log in →</span>
-        </a>
       </form>
 
       <!-- Thank you state (shown after successful submission) -->
       <div class="form-thanks" id="formThanks">
-        <h3>You're in. <em>Welcome.</em></h3>
-        <p>We just emailed a one-tap sign-in link to log in and see your profile — it can take a minute to arrive, so check your inbox (and spam). You can also <a href="login.html" style="color:var(--sage);text-decoration:underline;">log in here</a> anytime with Google.</p>
+        <h3>You're all set. <em>Welcome.</em></h3>
+        <p>Your profile's saved. Taking you to your dashboard…</p>
       </div>
 
       <!-- Share section -->
-      <div class="share-section" data-reveal>
-        <div class="share-eyebrow">Spread the word</div>
-        <h3 class="share-title">Know someone who'd <em>love this</em>?</h3>
-        <p class="share-note">Send them a link.</p>
-        <div class="share-buttons">
-          <button type="button" class="share-btn" data-share="copy">
-            <span class="share-icon" aria-hidden="true">⌘</span>
-            <span class="share-label">Copy link</span>
-          </button>
-          <a class="share-btn" href="mailto:?subject=The%20Hobbiest%20Skills%20Club&body=I%20just%20signed%20up%20for%20The%20Hobbiest%20—%20a%20private%20skills%20club%20in%20Pittston%20opening%20this%20July.%20Thought%20you%20might%20like%20it%20too%3A%20https%3A%2F%2Fthehobbiestskillsclub.com">
-            <span class="share-icon" aria-hidden="true">✉</span>
-            <span class="share-label">Email</span>
-          </a>
-        </div>
-      </div>
 
 
     </div>
@@ -999,6 +976,33 @@
     const SUPABASE_ANON_KEY = "sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ";
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const AFTER_LOGIN = window.location.origin + "/dashboard.html";
+
+    // ── Gate: this page is now post-login onboarding ──
+    // No session → send to login. Already onboarded → straight to dashboard.
+    // "Already onboarded" = the onboarded flag, OR an existing intake row
+    // (their signup submission), OR saved member preferences. Checking the
+    // real tables means members who signed up before this change aren't
+    // sent through the form again.
+    (async () => {
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) { window.location.replace("login.html"); return; }
+      const user = session.user;
+
+      let done = !!user?.user_metadata?.onboarded;
+      if (!done) {
+        try {
+          const [{ data: intake }, { data: pref }] = await Promise.all([
+            sb.from("member_intake").select("user_id").maybeSingle(),
+            sb.from("member_preferences").select("user_id").eq("user_id", user.id).maybeSingle(),
+          ]);
+          done = !!(intake || pref);
+        } catch (_) { /* if the check fails, fall through and show the form */ }
+      }
+      if (done) { window.location.replace(AFTER_LOGIN); return; }
+
+      const emailEl = document.getElementById("email");
+      if (emailEl && user?.email) { emailEl.value = user.email; emailEl.readOnly = true; }
+    })();
 
     // Mirror the dashboard's availability blocks so the saved string parses cleanly.
     const AVAIL_BLOCKS = [
@@ -1056,15 +1060,16 @@
         // 2) Notify the studio by email too (non-blocking — fire and forget).
         try { fetch(form.action, { method:'POST', body:new FormData(form), headers:{ Accept:'application/json' } }); } catch(_) {}
 
-        // 3) Invite them to log in: email a one-tap sign-in link (non-blocking).
-        try { await sb.auth.signInWithOtp({ email, options:{ emailRedirectTo: AFTER_LOGIN } }); } catch(_) {}
+        // 3) Mark them as onboarded so we don't show this form again.
+        try { await sb.auth.updateUser({ data: { onboarded: true } }); } catch(_) {}
 
-        // 4) Show the thank-you.
+        // 4) Show the thank-you, then head to the dashboard.
         form.style.display = 'none';
         const formHeader = document.querySelector('.form-header');
         if (formHeader) formHeader.style.display = 'none';
         thanks.classList.add('active');
         window.scrollTo({ top: thanks.offsetTop - 100, behavior: 'smooth' });
+        setTimeout(() => { window.location.href = AFTER_LOGIN; }, 1800);
       } catch (err) {
         submitBtn.disabled = false; submitBtn.textContent = originalLabel;
         alert("Sorry — something went wrong saving your signup. Please try again, or email us at pittston@thehobbiestskillsclub.com and we'll add you.");
