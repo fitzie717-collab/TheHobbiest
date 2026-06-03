@@ -1257,6 +1257,7 @@
         <a href="#creative-pursuits" class="rail-link" data-cat="creative-pursuits">01 &nbsp; Creative Pursuits</a>
         <a href="#essential-life-skills" class="rail-link" data-cat="essential-life-skills">02 &nbsp; Essential Life Skills</a>
         <a href="#living-well" class="rail-link" data-cat="living-well">03 &nbsp; Living Well</a>
+        <a href="#hearth-garden" class="rail-link" data-cat="hearth-garden">04 &nbsp; Hearth &amp; Garden</a>
       </nav>
     </aside>
 
@@ -1294,7 +1295,7 @@
           <details class="class-details-wrap">
             <summary class="class-summary">
               <div class="class-summary-main">
-                <div class="class-format">Tuesdays · 6:00–8:00 PM · Jul 14–Aug 4 · In studio</div>
+                <div class="class-format">Fridays · 7:30–9:30 PM · Jul 17–Aug 7 · In studio</div>
                 <h4>Modern Calligraphy</h4>
               </div>
               <div class="class-price">$150</div>
@@ -1311,7 +1312,7 @@
           <details class="class-details-wrap">
             <summary class="class-summary">
               <div class="class-summary-main">
-                <div class="class-format">Sundays · 12:00–2:00 PM · Jul 12–Aug 2 · In studio</div>
+                <div class="class-format">Mondays · 7:15–9:15 PM · Jul 13–Aug 3 · In studio</div>
                 <h4>Knitting 101</h4>
               </div>
               <div class="class-price">$150</div>
@@ -1342,7 +1343,7 @@
           <details class="class-details-wrap">
             <summary class="class-summary">
               <div class="class-summary-main">
-                <div class="class-format">Thursdays · 6:00–8:00 PM · Jul 16–Aug 6 · In studio</div>
+                <div class="class-format">Thursdays · 6:30–8:30 PM · Jul 16–Aug 6 · In studio</div>
                 <h4>Basic Home Repair</h4>
               </div>
               <div class="class-price">$99</div>
@@ -1375,7 +1376,7 @@
           <details class="class-details-wrap">
             <summary class="class-summary">
               <div class="class-summary-main">
-                <div class="class-format">Wednesdays · 6:00–8:00 PM · Jul 15–Aug 5 · In studio</div>
+                <div class="class-format">Wednesdays · 6:30–8:30 PM · Jul 15–Aug 5 · In studio</div>
                 <h4>Meditation</h4>
               </div>
               <div class="class-price">$99</div>
@@ -1401,6 +1402,37 @@
             <div class="class-details-body">
               <p class="class-desc">The daily practice of feeding yourself well — without the diet noise. Meal rhythms that hold, a short list of simple things you'll actually cook, what to keep stocked, how to listen to your own appetite. Four weeks toward a calmer, more sustainable relationship with food.</p>
               <div class="class-price-note">workbook included</div>
+            </div>
+          </details>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       04 — HEARTH & GARDEN
+       ========================================================= -->
+  <section class="category-section" id="hearth-garden">
+    <div class="container">
+      <div class="category-header" data-reveal>
+        <h2 class="category-title">04 — Hearth &amp; <em>Garden</em></h2>
+        <p class="category-desc">Hands in the soil. Growing things with intention, in good company.</p>
+      </div>
+
+      <div class="class-grid" data-reveal>
+        <article class="class-card">
+          <details class="class-details-wrap">
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format">Saturdays &amp; Sundays · 10:00 AM–12:00 PM · Jul 11–Aug 2 · In studio</div>
+                <h4>Gardening</h4>
+              </div>
+              <div class="class-price">$150</div>
+              <span class="class-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">Four weeks with your hands in the dirt — soil, seasons, and how to actually keep things alive. Planting, watering, light, and simple care routines you can carry into your own yard or windowsill. Choose the Saturday or Sunday section.</p>
+              <div class="class-price-note">seeds &amp; tools included</div>
             </div>
           </details>
         </article>
@@ -1460,7 +1492,7 @@
     // ============================================================
     // RAIL NAV — active link highlighting + smooth scroll
     // ============================================================
-    const catSections = ['creative-pursuits','essential-life-skills','living-well']
+    const catSections = ['creative-pursuits','essential-life-skills','living-well','hearth-garden']
       .map(id => document.getElementById(id))
       .filter(Boolean);
     const catButtons = document.querySelectorAll('.rail-link[data-cat]');
