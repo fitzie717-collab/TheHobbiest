@@ -214,7 +214,7 @@
 
       <!-- CLASSES -->
       <section class="panel show" id="panel-classes">
-        <div class="section-head"><h2>Open <em>classes</em></h2><p>Reserve a spot — it lands in your schedule, then you check out.</p></div>
+        <div class="section-head"><h2>Open <em>classes</em></h2><p>Choose a class and pay — your seat is confirmed the moment payment goes through.</p></div>
         <div id="classGrid" class="loading">Loading classes…</div>
       </section>
 
@@ -226,7 +226,7 @@
 
       <!-- CHECKOUT -->
       <section class="panel" id="panel-checkout">
-        <div class="section-head"><h2><em>Checkout</em></h2><p>Pay for the classes you've reserved.</p></div>
+        <div class="section-head"><h2><em>Checkout</em></h2><p>Review and pay — your seat is confirmed once payment completes.</p></div>
         <div class="checkout">
           <div class="cart" id="cart"></div>
           <div class="pay-side">
@@ -495,7 +495,9 @@
       }
       const button = (full && !on)
         ? `<button class="enroll" disabled>Class full</button>`
-        : `<button class="enroll ${on?"added":""}" onclick="toggleEnroll('${c.id}',this)">${on?"✓ Reserved":"Reserve"}</button>`;
+        : on
+          ? `<button class="enroll added" onclick="goCheckout()">✓ Added · Pay now →</button>`
+          : `<button class="enroll" onclick="enrollAndPay('${c.id}',this)">Enroll &amp; pay →</button>`;
       return `<div class="cell">
         <div class="cell-time">${timeRangeOnly(c)}</div>
         <div class="cell-name">${c.emoji||""} ${c.name.replace(/\s*\(.*\)\s*$/,"")}</div>
@@ -512,6 +514,25 @@
       if(error){ console.error(error); enrolledIds = new Set(); window._enr = []; return; }
       window._enr = data || [];
       enrolledIds = new Set(window._enr.map(e=>e.class_id));
+    }
+    function goCheckout(){
+      showPanel("checkout", document.querySelector('.pill[data-panel="checkout"]'));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    async function enrollAndPay(classId, btn){
+      if(!enrolledIds.has(classId)){
+        btn.disabled = true; const old = btn.textContent; btn.textContent = "Adding\u2026";
+        const { error } = await sb.from("enrollments").insert({ user_id:user.id, class_id:classId, status:"reserved" });
+        btn.disabled = false; btn.textContent = old;
+        if(error){
+          if((error.message||"").toLowerCase().includes("full")) toast("Sorry \u2014 this class just filled up.");
+          else toast("Couldn't add: "+error.message);
+          await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart();
+          return;
+        }
+        await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart();
+      }
+      goCheckout();
     }
     async function toggleEnroll(classId, btn){
       if(enrolledIds.has(classId)){
