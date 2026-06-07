@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://js.stripe.com/v3/"></script>
 
   <style>
     :root{
@@ -231,7 +232,7 @@
           <div class="cart" id="cart"></div>
           <div class="pay-side">
             <h3 style="color:var(--sage-deep)">Total: <span id="cartTotal">$0</span></h3>
-            <p>You'll be taken to Stripe's secure page to pay by card — we never see your card details.</p>
+            <p>Pay securely by card right here on the page — the card form is handled by Stripe, so we never see or store your card details.</p>
 
             <div class="field" style="margin:0">
               <label for="giftCode">Gift code (optional)</label>
@@ -262,6 +263,7 @@
             </label>
 
             <button class="btn-submit" id="payBtn" onclick="startCheckout()" disabled>Pay with card</button>
+            <div id="checkout-embed" style="margin-top:1rem"></div>
           </div>
         </div>
       </section>
@@ -318,7 +320,13 @@
     const SUPABASE_ANON_KEY = "sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ";
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const interestTags = ["Pottery","Baking","Painting","Woodworking","Textiles","Cooking","Printmaking","Jewellery","Photography","Gardening 101","Calligraphy","Candle-making"];
+    /* ---- Stripe ---- */
+    // Your PUBLISHABLE key (safe to expose in the browser; the live one
+    // starts with pk_live_). Get it from Stripe → Developers → API keys.
+    const STRIPE_PUBLISHABLE_KEY = "pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS";
+    let stripe = null, embeddedCheckout = null;
+
+    const interestTags = ["Pottery","Baking","Painting","Woodworking","Textiles","Cooking","Printmaking","Jewellery","Photography","Gardening","Calligraphy","Candle-making"];
     // The full menu of classes you ask about at signup. Edit this list anytime —
     // any class a member personally selected is also shown even if not listed here.
     const BASE_INTEREST_CLASSES = [
@@ -470,7 +478,7 @@
 
       el.className = "week";
       el.innerHTML = `
-        <p class="week-note">Sessions run from <strong>7/11-8/7.<strong> Every cohort meets once a week for <strong>4 weeks · 8 hours total</strong>. <strong>All materials are included</strong>, and you'll receive your full syllabus and a bio of your expert instructor by <strong>July 7</strong>.</p>
+        <p class="week-note">Every course runs <strong>4 weeks · 8 hours total</strong>. <strong>All materials are included</strong>, and you'll receive your full syllabus and a bio of your expert instructor by <strong>June 14</strong>.</p>
         <div class="week-rows">
           ${days.map(d=>`
             <div class="day-row">
@@ -607,18 +615,28 @@
       const name = $("signName").value.trim();
       if(name.length < 2 || !$("agreeBox").checked){ toast("Please sign and agree to the policies first."); return; }
       const btn = $("payBtn"); const old = btn.textContent;
-      btn.disabled = true; btn.textContent = "Redirecting to Stripe…";
-      // Record the signed waiver/agreement before sending them to pay.
+      btn.disabled = true; btn.textContent = "Loading payment…";
+      // Record the signed waiver/agreement before showing the payment form.
       const { error: aErr } = await sb.from("agreements").insert({ user_id:user.id, signed_name:name });
       if(aErr){ btn.disabled=false; btn.textContent=old; toast("Couldn't save your agreement: "+aErr.message); return; }
       const giftCode = ($("giftCode").value || "").trim().toUpperCase();
       const { data, error } = await sb.functions.invoke("create-checkout", { body: { giftCode } });
-      if(error || !data?.url){
+      if(error || !data?.clientSecret){
         btn.disabled = false; btn.textContent = old;
         toast("Couldn't start checkout: " + (error?.message || data?.error || "unknown error"));
         return;
       }
-      window.location.href = data.url;   // Stripe's secure hosted page
+      // Mount Stripe's embedded payment form right here — no redirect.
+      try {
+        if(!stripe) stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+        if(embeddedCheckout){ embeddedCheckout.destroy(); embeddedCheckout = null; }
+        embeddedCheckout = await stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
+        embeddedCheckout.mount("#checkout-embed");
+        btn.style.display = "none";   // hide our button; the form has its own Pay button
+      } catch(e){
+        btn.disabled = false; btn.textContent = old; btn.style.display = "";
+        toast("Couldn't load the payment form: " + (e?.message || e));
+      }
     }
 
     /* ---------- chips & stars ---------- */
