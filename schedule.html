@@ -602,6 +602,13 @@
       font-size: 0.85rem;
       color: var(--muted);
     }
+    .class-instructor {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--sage);
+      margin: 0 0 0.5rem;
+    }
 
     @media (max-width: 700px) {
       .class-summary {
@@ -1202,6 +1209,15 @@
       .nav-link-primary { text-align: center; margin-top: 0.4rem; }
     }
     /* === end standardized nav === */
+
+    .schedule-status {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--muted);
+      padding: 2.5rem 0;
+    }
+    .schedule-status a { color: var(--sage); text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -1252,194 +1268,13 @@
   <div class="schedule-layout">
 
     <aside class="schedule-rail">
-      <nav class="rail-nav" aria-label="Curriculum navigation">
+      <nav class="rail-nav" id="railNav" aria-label="Curriculum navigation">
         <div class="rail-eyebrow">Curriculum</div>
-        <a href="#creative-pursuits" class="rail-link" data-cat="creative-pursuits">01 &nbsp; Creative Pursuits</a>
-        <a href="#essential-life-skills" class="rail-link" data-cat="essential-life-skills">02 &nbsp; Essential Life Skills</a>
-        <a href="#living-well" class="rail-link" data-cat="living-well">03 &nbsp; Living Well</a>
-        <a href="#hearth-garden" class="rail-link" data-cat="hearth-garden">04 &nbsp; Hearth &amp; Garden</a>
       </nav>
     </aside>
 
-    <main class="schedule-main">
-
-  <!-- =========================================================
-       01 — CREATIVE PURSUITS
-       ========================================================= -->
-  <section class="category-section" id="creative-pursuits">
-    <div class="container">
-      <div class="category-header" data-reveal>
-        <h2 class="category-title">01 — Creative <em>Pursuits</em></h2>
-        <p class="category-desc">Things made beautifully by hand. Explorations in craftsmanship, creative expression, and traditional arts.</p>
-      </div>
-
-      <div class="class-grid" data-reveal>
-        <article class="class-card">
-          <details class="class-details-wrap">
-            <summary class="class-summary">
-              <div class="class-summary-main">
-                <div class="class-format">Saturdays · 9:30–11:30 AM & 12:00–2:00 PM · Jul 11–Aug 1 · In studio</div>
-                <h4>Watercolor 101</h4>
-              </div>
-              <div class="class-price">$150</div>
-              <span class="class-chevron" aria-hidden="true">+</span>
-            </summary>
-            <div class="class-details-body">
-              <p class="class-desc">Real watercolor instruction for true beginners. By the end of four sessions, a small portfolio of finished pieces and a clear sense of how to keep practicing on your own. Kit included.</p>
-              <div class="class-price-note">kit included</div>
-            </div>
-          </details>
-        </article>
-
-        <article class="class-card">
-          <details class="class-details-wrap">
-            <summary class="class-summary">
-              <div class="class-summary-main">
-                <div class="class-format">Fridays · 7:30–9:30 PM · Jul 17–Aug 7 · In studio</div>
-                <h4>Modern Calligraphy</h4>
-              </div>
-              <div class="class-price">$150</div>
-              <span class="class-chevron" aria-hidden="true">+</span>
-            </summary>
-            <div class="class-details-body">
-              <p class="class-desc">Pointed pen calligraphy from scratch. By the end of four sessions, you'll be writing in a consistent, beautiful hand and have what you need to keep going on your own. Kit included.</p>
-              <div class="class-price-note">kit included</div>
-            </div>
-          </details>
-        </article>
-
-        <article class="class-card">
-          <details class="class-details-wrap">
-            <summary class="class-summary">
-              <div class="class-summary-main">
-                <div class="class-format">Mondays · 7:15–9:15 PM · Jul 13–Aug 3 · In studio</div>
-                <h4>Knitting 101</h4>
-              </div>
-              <div class="class-price">$150</div>
-              <span class="class-chevron" aria-hidden="true">+</span>
-            </summary>
-            <div class="class-details-body">
-              <p class="class-desc">Cast on, knit, purl, bind off. By the fourth session you'll have a finished scarf you can actually wear. Kit included: wool yarn, bamboo needles, project bag, pattern booklet.</p>
-              <div class="class-price-note">kit included</div>
-            </div>
-          </details>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       02 — ESSENTIAL LIFE SKILLS
-       ========================================================= -->
-  <section class="category-section" id="essential-life-skills">
-    <div class="container">
-      <div class="category-header" data-reveal>
-        <h2 class="category-title">02 — Essential <em>Life Skills</em></h2>
-        <p class="category-desc">The things everyone should know. Practical knowledge for everyday competence and self-reliance.</p>
-      </div>
-
-      <div class="class-grid" data-reveal>
-        <article class="class-card">
-          <details class="class-details-wrap">
-            <summary class="class-summary">
-              <div class="class-summary-main">
-                <div class="class-format">Tuesdays &amp; Thursdays · 6:30–8:30 PM · Jul 14–Aug 6 · In studio</div>
-                <h4>Basic Home Repair</h4>
-              </div>
-              <div class="class-price">$150</div>
-              <span class="class-chevron" aria-hidden="true">+</span>
-            </summary>
-            <div class="class-details-body">
-              <p class="class-desc">Patch drywall, fix a leaky faucet, hang things properly (and find the studs), unclog a drain. The 20% of home repair that handles 80% of what you'll actually need. Tools and materials provided. Choose the Tuesday or Thursday section.</p>
-              <div class="class-price-note">tools &amp; materials included</div>
-            </div>
-          </details>
-        </article>
-
-                        
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       03 — LIVING WELL
-       ========================================================= -->
-  <section class="category-section" id="living-well">
-    <div class="container">
-      <div class="category-header" data-reveal>
-        <h2 class="category-title">03 — Living <em>Well</em></h2>
-        <p class="category-desc">The inward side of an intentional life. Daily practices that hold over time.</p>
-      </div>
-
-      <div class="class-grid" data-reveal>
-        <article class="class-card">
-          <details class="class-details-wrap">
-            <summary class="class-summary">
-              <div class="class-summary-main">
-                <div class="class-format">Wednesdays · 6:30–8:30 PM · Jul 15–Aug 5 · In studio</div>
-                <h4>Meditation</h4>
-              </div>
-              <div class="class-price">$99</div>
-              <span class="class-chevron" aria-hidden="true">+</span>
-            </summary>
-            <div class="class-details-body">
-              <p class="class-desc">A real beginning meditation practice. The foundations of breath, posture, and attention. By the end of four sessions, you'll have a daily practice that fits your life — not a wellness app, not a vague intention, but an actual sustained habit.</p>
-              <div class="class-price-note">all materials provided</div>
-            </div>
-          </details>
-        </article>
-
-                        <article class="class-card">
-          <details class="class-details-wrap">
-            <summary class="class-summary">
-              <div class="class-summary-main">
-                <div class="class-format">Sundays · 9:30–11:30 AM · Jul 12–Aug 2 · In studio</div>
-                <h4>Eating Well</h4>
-              </div>
-              <div class="class-price">$99</div>
-              <span class="class-chevron" aria-hidden="true">+</span>
-            </summary>
-            <div class="class-details-body">
-              <p class="class-desc">The daily practice of feeding yourself well — without the diet noise. Meal rhythms that hold, a short list of simple things you'll actually cook, what to keep stocked, how to listen to your own appetite. Four weeks toward a calmer, more sustainable relationship with food.</p>
-              <div class="class-price-note">workbook included</div>
-            </div>
-          </details>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       04 — HEARTH & GARDEN
-       ========================================================= -->
-  <section class="category-section" id="hearth-garden">
-    <div class="container">
-      <div class="category-header" data-reveal>
-        <h2 class="category-title">04 — Hearth &amp; <em>Garden</em></h2>
-        <p class="category-desc">Hands in the soil. Growing things with intention, in good company.</p>
-      </div>
-
-      <div class="class-grid" data-reveal>
-        <article class="class-card">
-          <details class="class-details-wrap">
-            <summary class="class-summary">
-              <div class="class-summary-main">
-                <div class="class-format">Saturdays &amp; Sundays · 10:00 AM–12:00 PM · Jul 11–Aug 2 · In studio</div>
-                <h4>Gardening</h4>
-              </div>
-              <div class="class-price">$150</div>
-              <span class="class-chevron" aria-hidden="true">+</span>
-            </summary>
-            <div class="class-details-body">
-              <p class="class-desc">Four weeks with your hands in the dirt — soil, seasons, and how to actually keep things alive. Planting, watering, light, and simple care routines you can carry into your own yard or windowsill. Choose the Saturday or Sunday section.</p>
-              <div class="class-price-note">seeds &amp; tools included</div>
-            </div>
-          </details>
-        </article>
-      </div>
-    </div>
-  </section>
-
+    <main class="schedule-main" id="scheduleMain">
+      <p class="schedule-status" id="scheduleStatus">Loading the current schedule…</p>
     </main>
   </div>
 
@@ -1475,91 +1310,141 @@
 
   <script>
     // ============================================================
-    // REVEAL ON SCROLL
+    // CONFIG  — paste your anon (public) key from
+    //   Supabase -> Settings -> API -> Project API keys -> "anon public"
+    // The anon key is safe in client-side code.
     // ============================================================
-    const reveals = document.querySelectorAll('[data-reveal]');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('is-visible');
-          io.unobserve(e.target);
+    const SUPABASE_URL      = 'https://uprdczhhgwzfypkudqjg.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ';
+
+    const CATEGORY_ORDER = ['Creative Pursuits','Essential Life Skills','Living Well','Hearth & Garden'];
+    const CATEGORY_DESC = {
+      'Creative Pursuits':     'Things made beautifully by hand. Explorations in craftsmanship, creative expression, and traditional arts.',
+      'Essential Life Skills': 'The things everyone should know. Practical knowledge for everyday competence and self-reliance.',
+      'Living Well':           'The inward side of an intentional life. Daily practices that hold over time.',
+      'Hearth & Garden':       'Hands in the soil. Growing things with intention, in good company.'
+    };
+    const TZ = 'America/New_York';
+
+    const esc = s => { const d = document.createElement('div'); d.textContent = (s == null ? '' : s); return d.innerHTML; };
+    const fmtTime = d => d.toLocaleTimeString('en-US', { timeZone: TZ, hour: 'numeric', minute: '2-digit' });
+    const fmtDate = d => d.toLocaleDateString('en-US', { timeZone: TZ, month: 'short', day: 'numeric' });
+    const weekday = d => d.toLocaleDateString('en-US', { timeZone: TZ, weekday: 'long' });
+    const slug    = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+    function classFormat(c) {
+      const start  = new Date(c.starts_at);
+      const end    = new Date(start.getTime() + (c.duration_minutes || 120) * 60000);
+      const lastWk = new Date(start.getTime() + ((c.weeks || 1) - 1) * 7 * 86400000);
+      return weekday(start) + 's \u00b7 ' + fmtTime(start) + '\u2013' + fmtTime(end) +
+             ' \u00b7 ' + fmtDate(start) + '\u2013' + fmtDate(lastWk) + ' \u00b7 In studio';
+    }
+
+    function titleHtml(cat) {
+      const parts = cat.split(' ');
+      return esc(parts[0]) + (parts.length > 1 ? ' <em>' + esc(parts.slice(1).join(' ')) + '</em>' : '');
+    }
+
+    function cardHtml(c) {
+      const price = '$' + Math.round((c.price_cents || 0) / 100);
+      const instructor = c.instructor ? '<p class="class-instructor">Taught by ' + esc(c.instructor) + '</p>' : '';
+      const note = c.materials_included ? '<div class="class-price-note">materials included</div>' : '';
+      return '' +
+        '<article class="class-card">' +
+          '<details class="class-details-wrap">' +
+            '<summary class="class-summary">' +
+              '<div class="class-summary-main">' +
+                '<div class="class-format">' + esc(classFormat(c)) + '</div>' +
+                '<h4>' + esc(c.name) + '</h4>' +
+              '</div>' +
+              '<div class="class-price">' + price + '</div>' +
+              '<span class="class-chevron" aria-hidden="true">+</span>' +
+            '</summary>' +
+            '<div class="class-details-body">' +
+              '<p class="class-desc">' + esc(c.description) + '</p>' +
+              instructor + note +
+            '</div>' +
+          '</details>' +
+        '</article>';
+    }
+
+    async function loadSchedule() {
+      const main = document.getElementById('scheduleMain');
+      const rail = document.getElementById('railNav');
+      try {
+        const url = SUPABASE_URL + '/rest/v1/classes' +
+          '?select=name,description,instructor,starts_at,duration_minutes,price_cents,materials_included,weeks,category' +
+          '&is_published=eq.true&order=starts_at.asc';
+        const res = await fetch(url, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY } });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const classes = await res.json();
+
+        if (!classes.length) {
+          main.innerHTML = '<p class="schedule-status">No classes are published right now \u2014 check back soon.</p>';
+          return;
         }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-    reveals.forEach((r) => io.observe(r));
 
-    // ============================================================
-    // ============================================================
-    // RAIL NAV — active link highlighting + smooth scroll
-    // ============================================================
-    const catSections = ['creative-pursuits','essential-life-skills','living-well','hearth-garden']
-      .map(id => document.getElementById(id))
-      .filter(Boolean);
-    const catButtons = document.querySelectorAll('.rail-link[data-cat]');
+        const groups = {};
+        classes.forEach(c => { const cat = c.category || 'Other'; (groups[cat] = groups[cat] || []).push(c); });
+        const cats = Object.keys(groups).sort((a, b) => {
+          const ia = CATEGORY_ORDER.indexOf(a), ib = CATEGORY_ORDER.indexOf(b);
+          return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+        });
 
-    const sectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          catButtons.forEach(btn => {
-            btn.classList.toggle('is-active', btn.dataset.cat === id);
-          });
-        }
-      });
-    }, {
-      rootMargin: '-30% 0px -60% 0px',
-      threshold: 0
-    });
+        main.innerHTML = '';
+        rail.innerHTML = '<div class="rail-eyebrow">Curriculum</div>';
+        cats.forEach((cat, i) => {
+          const num = String(i + 1).padStart(2, '0');
+          const id  = slug(cat);
+          const cards = groups[cat].map(cardHtml).join('');
+          main.insertAdjacentHTML('beforeend',
+            '<section class="category-section" id="' + id + '">' +
+              '<div class="container">' +
+                '<div class="category-header">' +
+                  '<h2 class="category-title">' + num + ' \u2014 ' + titleHtml(cat) + '</h2>' +
+                  '<p class="category-desc">' + esc(CATEGORY_DESC[cat] || '') + '</p>' +
+                '</div>' +
+                '<div class="class-grid">' + cards + '</div>' +
+              '</div>' +
+            '</section>');
+          rail.insertAdjacentHTML('beforeend',
+            '<a href="#' + id + '" class="rail-link" data-cat="' + id + '">' + num + ' &nbsp; ' + esc(cat) + '</a>');
+        });
 
-    catSections.forEach(s => sectionObserver.observe(s));
+        initScrollSpy();
+      } catch (err) {
+        console.error('Schedule load failed:', err);
+        main.innerHTML = '<p class="schedule-status">We couldn\u2019t load the schedule just now \u2014 please refresh, or <a href="login.html">log in to purchase</a>.</p>';
+      }
+    }
 
-    // Smooth scroll — only offset for the sticky rail on mobile
-    catButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const targetId = btn.getAttribute('href').slice(1);
-        const target = document.getElementById(targetId);
-        if (target) {
+    function initScrollSpy() {
+      const buttons  = document.querySelectorAll('.rail-link[data-cat]');
+      const sections = [...buttons].map(b => document.getElementById(b.dataset.cat)).filter(Boolean);
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) buttons.forEach(b => b.classList.toggle('is-active', b.dataset.cat === e.target.id)); });
+      }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+      sections.forEach(s => obs.observe(s));
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', e => {
+          const target = document.getElementById(btn.getAttribute('href').slice(1));
+          if (!target) return;
           e.preventDefault();
-          // On mobile (≤880px) the rail is a sticky bar at the top with non-zero height
           const isMobile = window.matchMedia('(max-width: 880px)').matches;
-          const rail = document.querySelector('.schedule-rail');
-          const offset = (isMobile && rail) ? rail.offsetHeight + 8 : 16;
-          const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
+          const railEl = document.querySelector('.schedule-rail');
+          const offset = (isMobile && railEl) ? railEl.offsetHeight + 8 : 16;
+          window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - offset, behavior: 'smooth' });
+        });
       });
-    });
+    }
 
-    // ============================================================
-    // FORM HANDLING
-    // ============================================================
-    // Currently the form posts to "#" — replace the action attribute
-    // on the <form> element above with your form handler endpoint.
-    //
-    // For a graceful in-page confirmation after a successful submit
-    // (when using Formspree, Netlify Forms, or similar), uncomment
-    // the AJAX submission block below and configure ENDPOINT_URL.
-    //
-    // const form = document.getElementById('interestForm');
-    // const thanks = document.getElementById('formThanks');
-    // form.addEventListener('submit', async (e) => {
-    //   e.preventDefault();
-    //   const formData = new FormData(form);
-    //   try {
-    //     const res = await fetch(form.action, {
-    //       method: 'POST',
-    //       body: formData,
-    //       headers: { 'Accept': 'application/json' }
-    //     });
-    //     if (res.ok) {
-    //       form.style.display = 'none';
-    //       thanks.classList.add('active');
-    //       window.scrollTo({ top: thanks.offsetTop - 100, behavior: 'smooth' });
-    //     }
-    //   } catch (err) {
-    //     alert('Something went wrong. Please try again.');
-    //   }
-    // });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('[data-reveal]').forEach((r) => io.observe(r));
+
+    loadSchedule();
   </script>
 
 </body>
