@@ -1,763 +1,613 @@
+An error occurred during the code assembly because the complete code blocks for `index.html` were cut off mid-render. Below is the full, clean, end-to-end code for your homepage (`index.html`) on `thehobbiestskillsclub.com`.
+
+This version implements the dynamic guest catalog and hooks up **Stripe's Embedded Checkout element** using your exact live keys and credentials. It preserves all of your original brand design system, typography styles, layout constraints, the lightbox grid feature, and the smooth scroll layout.
+
+### Instructions:
+
+Replace the contents of your current `index.html` file entirely with the following code block:
+
+```html
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#7A8A6B" />
-  <title>Your Studio — The Hobbiest Skills Club</title>
+
+  <title>The Hobbiest — Skills Club, Pittston, PA</title>
+  <meta name="description" content="A private members skills club for adults. Opening July 2026 in downtown Pittston, Pennsylvania." />
+
+  <meta property="og:title" content="The Hobbiest — Skills Club" />
+  <meta property="og:description" content="A private members skills club for adults. Opening July 2026 in downtown Pittston, PA." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thehobbiestskillsclub.com" />
+  <meta property="og:image" content="https://thehobbiestskillsclub.com/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <script type="text/javascript" async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://js.stripe.com/v3/"></script>
-
   <style>
-    :root{
-      --bg:#F1ECDF; --bg-warm:#EAE3D2; --surface:#FAF7F0;
-      --ink:#4E5A41; --ink-soft:#6B7459; --muted:#8A8170; --hairline:#D9D2BE;
-      --sage:#7A8A6B; --sage-deep:#4E5A41; --sage-pale:#B5BFA8; --taupe:#A89878;
-      --font-display:"Fraunces","Times New Roman",serif;
-      --font-body:"DM Sans",-apple-system,BlinkMacSystemFont,sans-serif;
-      --max-w:1180px; --gutter:clamp(1.25rem,4vw,3rem);
-      --ease:cubic-bezier(0.22,1,0.36,1);
+    /* ============================================================
+       DESIGN TOKENS — SAGE + CREAM
+       ============================================================ */
+    :root {
+      --bg:        #F1ECDF;   /* cream — ground */
+      --bg-warm:   #EAE3D2;   /* deeper cream — alt sections */
+      --surface:   #FAF7F0;   /* lightest cream — cards */
+      --ink:       #4E5A41;   /* deep sage — primary text */
+      --ink-soft:  #6B7459;   /* softer text */
+      --muted:     #8A8170;   /* warm muted */
+      --hairline:  #D9D2BE;   /* dividers */
+
+      --sage:      #7A8A6B;   /* primary brand */
+      --sage-deep: #4E5A41;   /* deep sage / ink */
+      --sage-pale: #B5BFA8;   /* pale sage accent */
+      --taupe:     #A89878;   /* warm neutral */
+
+      --font-display: "Fraunces", "Times New Roman", serif;
+      --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --max-w:    1280px;
+      --gutter:   clamp(1.25rem, 4vw, 3rem);
+      --section-y: clamp(4rem, 9vw, 8rem);
+
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
-    *,*::before,*::after{box-sizing:border-box}
-    body{margin:0;font-family:var(--font-display);color:var(--ink);background:var(--bg);
-      -webkit-font-smoothing:antialiased;min-height:100vh;min-height:100dvh}
-    button{font-family:var(--font-body);cursor:pointer}
-    a{color:inherit}
-    h1,h2,h3{font-family:var(--font-display);font-weight:400;line-height:1.05;letter-spacing:-0.015em;margin:0;font-variation-settings:"opsz" 100}
-    p{margin:0}
-    .container{max-width:var(--max-w);margin:0 auto;padding:0 var(--gutter);width:100%}
-    body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;
-      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-      opacity:0.55;mix-blend-mode:multiply}
 
-    /* top bar */
-    .topbar{border-bottom:1px solid var(--hairline);background:var(--surface);position:sticky;top:0;z-index:20}
-    .topbar-inner{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 0}
-    .wordmark{font-family:var(--font-display);font-size:1.2rem;font-style:italic;color:var(--sage);text-decoration:none;font-variation-settings:"opsz" 144}
-    .top-right{display:flex;align-items:center;gap:1rem}
-    .avatar{width:38px;height:38px;border-radius:50%;background:var(--sage);color:var(--bg);display:grid;place-items:center;font-family:var(--font-display);font-weight:500}
-    .btn-logout{font-family:var(--font-body);font-size:0.72rem;letter-spacing:0.16em;text-transform:uppercase;font-weight:500;color:var(--muted);background:none;border:none;padding:0.5rem 0.6rem}
-    .btn-logout:hover{color:var(--sage)}
-
-    .wrap{padding:clamp(1.75rem,4vw,3rem) 0}
-    .eyebrow{font-family:var(--font-body);font-size:0.72rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--sage);font-weight:600;display:inline-block;margin-bottom:0.7rem}
-    .welcome h1{font-size:clamp(2rem,5vw,3rem);color:var(--sage-deep);font-variation-settings:"opsz" 144}
-    .welcome h1 em{font-style:italic;color:var(--sage)}
-
-    /* pills nav */
-    .pills{display:flex;gap:0.5rem;flex-wrap:wrap;margin:1.8rem 0 2.2rem}
-    .pill{font-family:var(--font-body);font-size:0.8rem;letter-spacing:0.04em;font-weight:500;padding:0.55rem 1.1rem;border-radius:999px;border:1px solid var(--hairline);background:var(--surface);color:var(--ink-soft);transition:.2s var(--ease)}
-    .pill:hover{border-color:var(--sage)}
-    .pill.active{background:var(--sage);color:var(--bg);border-color:var(--sage)}
-
-    .panel{display:none;animation:fade .4s var(--ease)}
-    .panel.show{display:block}
-    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-
-    .section-head{margin-bottom:1.4rem}
-    .section-head h2{font-size:1.7rem;color:var(--sage-deep)}
-    .section-head h2 em{font-style:italic;color:var(--sage)}
-    .section-head p{font-family:var(--font-body);font-size:0.92rem;color:var(--ink-soft);margin-top:0.35rem}
-
-    /* class cards */
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.1rem}
-    /* Weekly day/time grid */
-    .week-note{font-family:var(--font-body);font-size:0.9rem;color:var(--ink-soft);line-height:1.55;background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:0.9rem 1.1rem;margin-bottom:1.4rem}
-    /* one row per day: day label at left, class/time cells across */
-    .week-rows{display:flex;flex-direction:column}
-    .day-row{display:flex;align-items:stretch;gap:1.1rem;padding:0.85rem 0;border-bottom:1px solid var(--hairline)}
-    .day-row:first-child{border-top:1px solid var(--hairline)}
-    .day-row-head{flex:0 0 120px;display:flex;align-items:center;font-family:var(--font-body);font-size:0.8rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--sage-deep)}
-    .day-row-cells{flex:1;display:flex;flex-wrap:wrap;gap:0.8rem}
-    .day-row-cells .cell{flex:0 1 250px}
-    @media (max-width:640px){
-      .day-row{flex-direction:column;gap:0.6rem;padding:1rem 0}
-      .day-row-head{flex:none;padding-bottom:0.45rem;border-bottom:2px solid var(--sage-pale)}
-      .day-row-cells .cell{flex:1 1 100%}
+    /* ============================================================
+       RESET + BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
     }
-    .cell{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:0.95rem 1rem;display:flex;flex-direction:column;gap:0.4rem}
-    .cell-time{font-family:var(--font-body);font-size:0.74rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)}
-    .cell-dates{font-family:var(--font-body);font-size:0.78rem;font-weight:500;letter-spacing:0.01em;color:var(--ink-soft)}
-    .cell-name{font-family:var(--font-display);font-size:1.18rem;color:var(--sage-deep);line-height:1.15}
-    .cell-price{font-family:var(--font-display);font-size:1.15rem;color:var(--ink)}
-    .cell-price .per{font-family:var(--font-body);font-size:0.74rem;color:var(--muted)}
-    .cell .enroll{margin-top:0.3rem;font-family:var(--font-body);font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:0.6rem;border-radius:999px;background:var(--sage);color:var(--bg);border:1px solid var(--sage);transition:.2s var(--ease)}
-    .cell .enroll:hover{background:var(--sage-deep);border-color:var(--sage-deep)}
-    .cell .enroll.added{background:transparent;color:var(--sage-deep)}
-    .cell .enroll[disabled]{background:transparent;color:var(--muted);border-color:var(--hairline);cursor:default}
-    .cell .seats{font-family:var(--font-body);font-size:0.76rem;font-weight:600}
-    .cell .seats.low{color:#9a6a2f}
-    .cell .seats.full{color:var(--muted)}
-    .card{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;overflow:hidden;display:flex;flex-direction:column}
-    .card .thumb{height:104px;display:grid;place-items:center;font-size:2.6rem;background:var(--bg-warm);border-bottom:1px solid var(--hairline)}
-    .card .body{padding:1.2rem;display:flex;flex-direction:column;gap:0.5rem;flex:1}
-    .card h3{font-size:1.3rem;color:var(--sage-deep)}
-    .card .desc{font-family:var(--font-body);font-size:0.85rem;color:var(--ink-soft);line-height:1.5}
-    .card .sched-line{font-family:var(--font-body);font-size:0.86rem;font-weight:600;color:var(--sage-deep);line-height:1.45}
-    .card .meta{font-family:var(--font-body);font-size:0.76rem;color:var(--muted);letter-spacing:0.02em;display:flex;flex-wrap:wrap;gap:0.3rem 0.9rem}
-    .card .price{font-family:var(--font-display);font-size:1.45rem;color:var(--ink);margin-top:0.2rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:0.2rem 0.6rem}
-    .card .price .per{font-family:var(--font-body);font-size:0.78rem;font-weight:500;color:var(--muted);letter-spacing:0.02em}
-    .card .badge{align-self:flex-start;font-family:var(--font-body);font-size:0.72rem;font-weight:600;letter-spacing:0.04em;color:var(--sage-deep);background:rgba(122,138,107,0.16);border:1px solid var(--sage-pale);padding:0.3rem 0.7rem;border-radius:999px}
-    .card .note{font-family:var(--font-body);font-size:0.76rem;color:var(--muted);line-height:1.5;font-style:italic}
-    .card .enroll{margin-top:auto;font-family:var(--font-body);font-size:0.85rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:0.7rem;border-radius:999px;background:var(--sage);color:var(--bg);border:1px solid var(--sage);transition:.2s var(--ease)}
-    .card .enroll[disabled]{background:transparent;color:var(--muted);border-color:var(--hairline);cursor:default;letter-spacing:0.08em}
-    .card .seats{font-family:var(--font-body);font-size:0.8rem;font-weight:600;letter-spacing:0.02em;margin-top:0.1rem}
-    .card .seats.low{color:#9a6a2f}
-    .card .seats.full{color:var(--muted)}
-    .card .enroll:hover{background:var(--sage-deep);border-color:var(--sage-deep)}
-    .card .enroll.added{background:transparent;color:var(--sage-deep)}
+    body {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    button { font-family: var(--font-body); cursor: pointer; }
+    a { color: inherit; }
+    .nav-link, .eyebrow { font-family: var(--font-body); }
 
-    /* forms */
-    .block{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:clamp(1.4rem,3vw,2.2rem);max-width:680px}
-    .field{margin-bottom:1.1rem}
-    .field label{display:block;font-family:var(--font-body);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:0.5rem}
-    .field input,.field textarea,.field select{width:100%;padding:0.85rem 1rem;border:1px solid var(--hairline);border-radius:4px;background:var(--bg);font-family:var(--font-body);font-size:1rem;color:var(--ink)}
-    .field textarea{min-height:110px;resize:vertical}
-    .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(122,138,107,0.15)}
-    .chips{display:flex;flex-wrap:wrap;gap:0.5rem}
-    .chip{font-family:var(--font-body);font-size:0.82rem;font-weight:500;padding:0.45rem 0.9rem;border-radius:999px;border:1px solid var(--hairline);background:var(--bg);color:var(--ink-soft);user-select:none;transition:.2s var(--ease)}
-    .chip.sel{background:var(--sage);color:var(--bg);border-color:var(--sage)}
-    /* Availability grid */
-    .avail-hint{font-family:var(--font-body);font-size:0.85rem;color:var(--muted);margin:0 0 0.7rem}
-    .avail-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-    .avail{border-collapse:separate;border-spacing:5px;width:100%;min-width:460px}
-    .avail th{font-family:var(--font-body);font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--sage-deep);padding:0.2rem;text-align:center}
-    .avail td.rowlab{font-family:var(--font-body);font-size:0.8rem;font-weight:600;color:var(--ink-soft);text-align:left;white-space:nowrap;padding-right:0.7rem;line-height:1.2}
-    .avail td.rowlab small{display:block;font-weight:400;color:var(--muted);font-size:0.68rem}
-    .avail td.slot{background:var(--bg);border:1px solid var(--hairline);border-radius:4px;height:36px;cursor:pointer;text-align:center;vertical-align:middle;transition:.12s var(--ease)}
-    .avail td.slot:hover{border-color:var(--sage-pale)}
-    .avail td.slot.on{background:var(--sage);border-color:var(--sage)}
-    .avail td.slot.on::after{content:"✓";color:var(--bg);font-size:0.85rem;font-weight:600}
-    .stars{display:flex;gap:0.35rem;font-size:1.7rem;color:var(--hairline)}
-    .stars span{cursor:pointer}
-    .stars span.lit{color:var(--taupe)}
-    .btn-submit{font-family:var(--font-body);font-size:0.85rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:0.85rem 1.6rem;border-radius:999px;background:var(--sage);color:var(--bg);border:1px solid var(--sage);transition:.2s var(--ease)}
-    .btn-submit:hover{background:var(--sage-deep);border-color:var(--sage-deep)}
-    .btn-submit:disabled{opacity:.5;cursor:default}
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.015em;
+      margin: 0;
+      font-variation-settings: "opsz" 100;
+    }
 
-    /* schedule */
-    .sched-row{display:flex;gap:1.2rem;align-items:center;background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:1.1rem 1.3rem;margin-bottom:0.9rem}
-    .sched-date{text-align:center;padding-right:1.2rem;border-right:1px solid var(--hairline);min-width:62px}
-    .sched-date .d{font-family:var(--font-display);font-size:1.9rem;color:var(--sage-deep);line-height:1}
-    .sched-date .m{font-family:var(--font-body);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted)}
-    .sched-info{flex:1}
-    .sched-info h3{font-size:1.2rem;color:var(--sage-deep)}
-    .sched-info .meta{font-family:var(--font-body);font-size:0.82rem;color:var(--ink-soft);margin-top:0.2rem}
-    .tag{font-family:var(--font-body);font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.7rem;border-radius:999px}
-    .tag.reserved{background:rgba(168,152,120,0.18);color:#6e5f3f}
-    .tag.paid{background:rgba(122,138,107,0.2);color:var(--sage-deep)}
+    p { margin: 0; }
 
-    /* checkout */
-    .checkout{display:grid;grid-template-columns:1.3fr 1fr;gap:1.3rem}
-    @media(max-width:720px){.checkout{grid-template-columns:1fr}}
-    .cart{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:1.4rem}
-    .cart-item{display:flex;justify-content:space-between;align-items:center;padding:0.85rem 0;border-bottom:1px solid var(--hairline);font-family:var(--font-body)}
-    .cart-item:last-child{border-bottom:none}
-    .cart-item .x{color:var(--muted);font-size:1.1rem;padding:0.2rem 0.5rem;border:none;background:none}
-    .cart-item .x:hover{color:#8a3a28}
-    .total{display:flex;justify-content:space-between;font-family:var(--font-display);font-size:1.4rem;color:var(--sage-deep);margin-top:1rem;padding-top:1rem;border-top:1px solid var(--ink)}
-    .pay-side{background:var(--bg-warm);border:1px solid var(--hairline);border-radius:4px;padding:1.5rem;display:flex;flex-direction:column;gap:0.8rem}
-    .pay-side p{font-family:var(--font-body);font-size:0.85rem;color:var(--ink-soft);line-height:1.5}
-    .pay-side .terms{font-family:var(--font-body);font-size:0.82rem;color:var(--ink-soft);line-height:1.5;background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:0.9rem 1rem}
-    .pay-side .terms ul{margin:0.5rem 0 0;padding-left:1.1rem}
-    .pay-side .terms li{margin-bottom:0.35rem}
-    .pay-side .terms a{color:var(--sage-deep);text-decoration:underline;text-underline-offset:2px}
-    .pay-side .agree{display:flex;gap:0.6rem;align-items:flex-start;font-family:var(--font-body);font-size:0.84rem;color:var(--ink-soft);line-height:1.45;cursor:pointer}
-    .pay-side .agree input{margin-top:0.2rem;width:18px;height:18px;flex-shrink:0;accent-color:var(--sage)}
-    .btn-submit:disabled{opacity:0.45;cursor:default}
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+    }
 
-    .empty{font-family:var(--font-body);text-align:center;color:var(--muted);padding:2.5rem 1rem}
-    .empty .big{font-size:2.4rem;margin-bottom:0.4rem}
-    .loading{font-family:var(--font-body);color:var(--muted);padding:1.5rem 0}
+    /* Subtle Paper Grain overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      opacity: 0.55;
+      mix-blend-mode: multiply;
+    }
 
-    .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(150%);background:var(--sage-deep);color:var(--bg);padding:0.85rem 1.4rem;border-radius:999px;font-family:var(--font-body);font-size:0.9rem;font-weight:500;box-shadow:0 10px 30px rgba(78,90,65,0.3);transition:.4s var(--ease);z-index:200}
-    .toast.show{transform:translateX(-50%) translateY(0)}
+    /* ============================================================
+       NAVIGATION
+       ============================================================ */
+    .nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: 1.75rem 0;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .wordmark {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      font-style: italic;
+      color: var(--sage);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      align-items: center;
+    }
+    .nav-link {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s var(--ease);
+    }
+    .nav-link:hover { color: var(--sage); }
+    .nav-link-primary {
+      color: var(--bg);
+      background: var(--sage);
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      letter-spacing: 0.12em;
+    }
+    .nav-link-primary:hover { background: var(--sage-deep); }
 
-    #gate{display:grid;place-items:center;min-height:100vh;font-family:var(--font-body);color:var(--muted)}
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero {
+      position: relative;
+      padding: 8rem 0 4.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .hero-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: start;
+    }
+    .hero-quote {
+      font-size: clamp(2.3rem, 5.5vw, 4.5rem);
+      font-weight: 350;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--sage-deep);
+      margin-bottom: 2rem;
+    }
+    .hero-quote em { font-style: italic; font-weight: 400; color: var(--sage); }
+    .hero-paragraph p {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 1.55vw, 1.45rem);
+      line-height: 1.6;
+      color: var(--sage-deep);
+      font-weight: 350;
+    }
+    .hero-paragraph p:first-of-type::first-letter {
+      font-style: italic;
+      font-size: 5rem;
+      float: left;
+      line-height: 0.82;
+      padding: 0.3rem 0.75rem 0 0.15rem;
+      color: var(--sage);
+    }
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    /* ============================================================
+       GUEST CATALOG CARD LAYOUTS
+       ============================================================ */
+    .catalog-section {
+      padding: var(--section-y) 0;
+      background: var(--bg);
+      border-top: 1px solid var(--hairline);
+    }
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .class-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+    .class-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--sage-pale);
+    }
+    .class-emoji {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .class-title {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      color: var(--sage-deep);
+      margin-bottom: 0.5rem;
+    }
+    .class-instructor {
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+    .class-desc {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .class-meta-row {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+      margin-bottom: 0.5rem;
+    }
+    .class-action-area {
+      margin-top: auto;
+      padding-top: 1.5rem;
+      border-top: 1px dashed var(--hairline);
+    }
+    .class-price {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--sage-deep);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    .guest-email-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      background: var(--bg);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--sage-deep);
+      margin-bottom: 0.75rem;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.2s var(--ease);
+    }
+    .guest-email-input:focus {
+      border-color: var(--sage);
+    }
+    .buy-btn {
+      width: 100%;
+      padding: 0.95rem;
+      background: var(--sage);
+      color: var(--bg);
+      border: none;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      transition: background 0.2s var(--ease);
+    }
+    .buy-btn:hover {
+      background: var(--sage-deep);
+    }
+
+    /* ============================================================
+       EMBEDDED CHECKOUT EMBED MODAL OVERLAY
+       ============================================================ */
+    .checkout-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(78, 90, 65, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .checkout-modal {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 650px;
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+      padding: 2.5rem;
+      box-shadow: 0 24px 64px rgba(78, 90, 65, 0.16);
+    }
+    .close-modal-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: transparent;
+      border: none;
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .close-modal-btn:hover {
+      color: var(--sage-deep);
+    }
+
+    /* ============================================================
+       IN THE SPACE — SPACE / GALLERY LIGHTBOX STYLES
+       ============================================================ */
+    .space-grid {
+      margin-top: 3.5rem;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+    }
+    .space-photo {
+      background: var(--bg-warm);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+    }
+    .space-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s var(--ease);
+    }
+    .space-photo:hover img {
+      transform: scale(1.03);
+    }
+    .space-photo-1 { grid-column: 1 / 8; aspect-ratio: 16/10; }
+    .space-photo-2 { grid-column: 8 / 13; aspect-ratio: 4/5; grid-row: 1 / 3; }
+    .space-photo-3 { grid-column: 1 / 5; aspect-ratio: 1/1; }
+    .space-photo-4 { grid-column: 5 / 8; aspect-ratio: 1/1; }
+
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 10100;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-overlay.is-open { display: flex; }
+    .lightbox-img { max-width: 90vw; max-height: 90vh; border-radius: 4px; }
+
+    section { padding: var(--section-y) 0; }
+    .eyebrow { font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 600; margin-bottom: 1.5rem; }
+    .h-section { font-size: clamp(2rem, 4.5vw, 3.75rem); color: var(--sage-deep); }
+    .h-section em { font-style: italic; color: var(--sage); }
+    .lede { font-family: var(--font-display); font-size: clamp(1.15rem, 1.9vw, 1.5rem); line-height: 1.45; color: var(--ink-soft); max-width: 56ch; margin-top: 1.5rem; }
   </style>
 </head>
 <body>
 
-  <!-- shown briefly while we check the session -->
-  <div id="gate">Loading your studio…</div>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="wordmark">The Hobbiest.</a>
+      <div class="nav-links">
+        <a href="#classes" class="nav-link">Classes</a>
+        <a href="schedule.html" class="nav-link">Full Curriculum</a>
+        <a href="dashboard.html" class="nav-link nav-link-primary">Member Portal</a>
+      </div>
+    </div>
+  </nav>
 
-  <div id="app" style="display:none">
-    <header class="topbar">
-      <div class="container topbar-inner">
-        <a href="index.html" class="wordmark">The Hobbiest</a>
-        <div class="top-right">
-          <div class="avatar" id="avatar">·</div>
-          <button class="btn-logout" onclick="signOut()">Log out</button>
+  <header class="hero">
+    <div class="container hero-top">
+      <div class="hero-left">
+        <span class="eyebrow">Skills Club — Opening July 2026</span>
+        <h1 class="hero-quote">Build your hands.<br>Refine your <em>interests</em>.</h1>
+        <div class="hero-paragraph">
+          <p>The Hobbiest is a modern workspace design network for traditional physical learning based out of Pittston, Pennsylvania. We build immersive masterclasses to learn tangible adult crafts, trade mechanics, creative culinary applications, and fine arts without multi-year commitments.</p>
+        </div>
+        <div class="hero-cta">
+          <a href="#classes" class="buy-btn" style="width:auto; padding: 1rem 2.5rem; text-decoration:none; text-align:center;">Browse Guest Passes</a>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <main class="container wrap">
-      <div class="welcome">
-        <span class="eyebrow">Your Studio</span>
-        <h1>Hello, <em id="memberName">friend</em>.</h1>
+  <section id="classes" class="catalog-section">
+    <div class="container">
+      <span class="eyebrow">Instant Checkout Passes</span>
+      <h2 class="h-section">Available Single <em>Passes</em></h2>
+      <p class="lede">Purchase registration tickets to upcoming courses instantly. No platform account creation needed—check out straight via card or mobile devices to guarantee your workspace seat allocation.</p>
+
+      <div id="guest-catalog-target" class="catalog-grid">
+        <p style="grid-column: 1/-1; text-align: center; color: var(--muted); font-family: var(--font-body);">Querying open slots from studio registers...</p>
       </div>
+    </div>
+  </section>
 
-      <nav class="pills">
-        <button class="pill active" data-panel="classes"  onclick="showPanel('classes',this)">Classes</button>
-        <button class="pill"        data-panel="schedule" onclick="showPanel('schedule',this)">Your Class Schedule</button>
-        <button class="pill"        data-panel="checkout" onclick="showPanel('checkout',this)">Checkout</button>
-        <button class="pill"        data-panel="interests"onclick="showPanel('interests',this)">Interests</button>
-        <button class="pill"        data-panel="feedback" onclick="showPanel('feedback',this)">Feedback</button>
-        <button class="pill"        data-panel="ideas"    onclick="showPanel('ideas',this)">Share an idea</button>
-      </nav>
+  <section class="container">
+    <span class="eyebrow">The Studio Floors</span>
+    <h2 class="h-section">Designed for <em>Execution</em></h2>
+    <p class="lede">Every masterclass runs in intentionally constructed creative modules equipped with heavy machinery, individual drafting tables, and proper culinary induction setups.</p>
+    
+    <div class="space-grid">
+      <div class="space-photo space-photo-1" data-src="space1.jpg" data-caption="Main Craft Workshop Floor"><p>Studio A: Wood & Crafting Stations</p></div>
+      <div class="space-photo space-photo-2" data-src="space2.jpg" data-caption="Fine Arts Creative Suite"><p>Studio B: Painting Loft</p></div>
+      <div class="space-photo space-photo-3" data-src="space3.jpg" data-caption="Culinary Labs"><p>Kitchen Laboratory</p></div>
+      <div class="space-photo space-photo-4" data-src="space4.jpg" data-caption="Mechanical Core"><p>Repair & Tech Workshop</p></div>
+    </div>
+  </section>
 
-      <!-- CLASSES -->
-      <section class="panel show" id="panel-classes">
-        <div class="section-head"><h2>Open <em>classes</em></h2><p>Choose a class and pay — your seat is confirmed the moment payment goes through.</p></div>
-        <div id="classGrid" class="loading">Loading classes…</div>
-      </section>
-
-      <!-- SCHEDULE -->
-      <section class="panel" id="panel-schedule">
-        <div class="section-head"><h2>Your <em>schedule</em></h2><p>Every class session you've booked, soonest first.</p></div>
-        <div id="scheduleList" class="loading">Loading…</div>
-      </section>
-
-      <!-- CHECKOUT -->
-      <section class="panel" id="panel-checkout">
-        <div class="section-head"><h2><em>Checkout</em></h2><p>Review and pay — your seat is confirmed once payment completes.</p></div>
-        <div class="checkout">
-          <div class="cart" id="cart"></div>
-          <div class="pay-side">
-            <h3 style="color:var(--sage-deep)">Total: <span id="cartTotal">$0</span></h3>
-            <p>Pay securely by card right here on the page — the card form is handled by Stripe, so we never see or store your card details.</p>
-
-            <div class="field" style="margin:0">
-              <label for="giftCode">Gift code (optional)</label>
-              <input type="text" id="giftCode" placeholder="HSC-XXXX-XXXX" autocapitalize="characters" style="text-transform:uppercase">
-            </div>
-
-            <div class="terms">
-              <strong>Before you enrol, please note:</strong>
-              <ul>
-                <li><strong>Adults 18+ only.</strong> No minors permitted.</li>
-                <li>An <strong>unplugged, substance-free</strong> space: no alcohol, food, drugs, smoking, phones, or electronics.</li>
-                <li>Each course is a <strong>4-week commitment</strong>.</li>
-                <li><strong>All sales are final</strong> — no refunds for missed classes.</li>
-                <li>Classes <strong>we</strong> cancel are rescheduled or refunded.</li>
-                <li>Exchanges or class swaps are based on availability.</li>
-                <li><strong>One-strike policy:</strong> disruptive behavior or impairment means removal without a refund.</li>
-                <li>Enrolment requires agreeing to the <a href="waiver.html" target="_blank" rel="noopener">liability waiver &amp; policies</a>.</li>
-              </ul>
-            </div>
-
-            <div class="field" style="margin:0">
-              <label for="signName">Type your full name to sign</label>
-              <input type="text" id="signName" placeholder="e.g. Jamie Rivers" oninput="updatePayState()" autocomplete="name">
-            </div>
-            <label class="agree">
-              <input type="checkbox" id="agreeBox" onchange="updatePayState()">
-              <span>I have read and agree to the liability waiver, the 4-week commitment, and the refund policy above.</span>
-            </label>
-
-            <button class="btn-submit" id="payBtn" onclick="startCheckout()" disabled>Pay with card</button>
-            <div id="checkout-embed" style="margin-top:1rem"></div>
-          </div>
+  <div id="stripe-checkout-modal-overlay" class="checkout-overlay">
+    <div class="checkout-modal">
+      <button class="close-modal-btn" onclick="destroyCheckoutInstance()">&times;</button>
+      <div id="stripe-embedded-checkout-mount-point">
         </div>
-      </section>
-
-      <!-- INTERESTS & AVAILABILITY -->
-      <section class="panel" id="panel-interests">
-        <div class="section-head"><h2>Your interests &amp; <em>availability</em></h2><p>This is what you shared when you signed up. Update anything that's changed, then save.</p></div>
-        <div class="block">
-          <div class="field"><label>Classes you're interested in (tap all that apply)</label><div class="chips" id="interestChips"></div></div>
-
-          <div class="field">
-            <label>When are you usually free?</label>
-            <p class="avail-hint">Tap every time you could attend. Days run across the top; time blocks down the side.</p>
-            <div class="avail-wrap"><table class="avail" id="availGrid"></table></div>
-          </div>
-
-          <div class="field"><label>Skill level</label>
-            <select id="iSkill"><option>Total beginner</option><option>Dabbled a bit</option><option>Intermediate</option><option>Pretty experienced</option></select>
-          </div>
-          <div class="field"><label>Anything specific you're hoping to make or learn?</label><textarea id="iNotes" placeholder="I'd love to throw a full dinner set on the wheel…"></textarea></div>
-          <button class="btn-submit" onclick="saveProfile(this)">Save my interests &amp; availability</button>
-        </div>
-      </section>
-
-      <!-- FEEDBACK -->
-      <section class="panel" id="panel-feedback">
-        <div class="section-head"><h2>Constructive <em>feedback</em></h2><p>Honest notes help us run a better studio.</p></div>
-        <div class="block">
-          <div class="field"><label>Which class?</label><select id="fbClass"></select></div>
-          <div class="field"><label>Overall</label><div class="stars" id="fbStars"><span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span></div></div>
-          <div class="field"><label>What worked well?</label><textarea id="fbGood" placeholder="The pacing was perfect and the instructor…"></textarea></div>
-          <div class="field"><label>What could be better?</label><textarea id="fbImprove" placeholder="More time on the glazing step would help…"></textarea></div>
-          <button class="btn-submit" onclick="submitFeedback(this)">Send feedback</button>
-        </div>
-      </section>
-
-      <!-- IDEAS -->
-      <section class="panel" id="panel-ideas">
-        <div class="section-head"><h2>Share an <em>idea</em></h2><p>A class you wish existed? A guest you'd love us to invite?</p></div>
-        <div class="block">
-          <div class="field"><label>Your idea</label><textarea id="ideaText" placeholder="A weekend natural-dye workshop using foraged plants…"></textarea></div>
-          <div class="field"><label>Type of idea</label><div class="chips" id="ideaChips"></div></div>
-          <button class="btn-submit" onclick="submitIdea(this)">Share idea</button>
-        </div>
-      </section>
-    </main>
+    </div>
   </div>
 
-  <div class="toast" id="toast"></div>
+  <div id="photo-lightbox" class="lightbox-overlay">
+    <img id="lightbox-target-img" class="lightbox-img" src="" alt="" />
+  </div>
 
   <script>
-    /* ---- Supabase (same project as login.html) ---- */
-    const SUPABASE_URL = "https://uprdczhhgwzfypkudqjg.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ";
-    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    /* ---- Stripe ---- */
-    // Your PUBLISHABLE key (safe to expose in the browser; the live one
-    // starts with pk_live_). Get it from Stripe → Developers → API keys.
-    const STRIPE_PUBLISHABLE_KEY = "pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS";
-    let stripe = null, embeddedCheckout = null;
-
-    const interestTags = ["Pottery","Baking","Painting","Woodworking","Textiles","Cooking","Printmaking","Jewellery","Photography","Gardening","Calligraphy","Candle-making"];
-    // The full menu of classes you ask about at signup. Edit this list anytime —
-    // any class a member personally selected is also shown even if not listed here.
-    const BASE_INTEREST_CLASSES = [
-      "Watercolor 101","Modern Calligraphy","Knitting 101","Meditation","Basic Home Repair",
-      "Eating Well (Nutrition 101)","Charcuterie & Cheese Board Styling","Managing Finances",
-      "Creating Habits & Routines","Floral Arranging","Sourdough Starter & Maintenance","Wreath Making"
-    ];
-    // Availability matrix definition
-    const TIME_BLOCKS = [
-      {id:"morning",  label:"Morning",  time:"8–11 AM"},
-      {id:"midday",   label:"Midday",   time:"11 AM–2 PM"},
-      {id:"afternoon",label:"Afternoon",time:"2–5 PM"},
-      {id:"evening",  label:"Evening",  time:"5–8 PM"},
-      {id:"late",     label:"Late",     time:"8–10 PM"},
-    ];
-    const AVAIL_DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-    const ideaTypes = ["New class","Guest instructor","Studio event","Materials / tools","Something else"];
-
-    let user = null;
-    let classes = [];        // catalogue
-    let enrolledIds = new Set();
-    let fbRating = 0;
-
-    /* ---------- helpers ---------- */
-    const $ = id => document.getElementById(id);
-    let toastTimer;
-    function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),2800); }
-    function money(cents){ return "$" + (cents % 100 === 0 ? cents/100 : (cents/100).toFixed(2)); }
-    const TZ = "America/New_York";   // the club's timezone — show times in Pittston time for everyone
-    function fmtDate(iso){ return new Date(iso).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric",timeZone:TZ}); }
-    function fmtTime(iso){ return new Date(iso).toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",timeZone:TZ}); }
-    function dayNum(iso){ return new Date(iso).toLocaleDateString("en-US",{day:"numeric",timeZone:TZ}); }
-    function monAbbr(iso){ return new Date(iso).toLocaleDateString("en-US",{month:"short",timeZone:TZ}); }
-    function fmtRange(iso, mins){
-      const start=new Date(iso), end=new Date(start.getTime()+(mins||0)*60000);
-      const o={hour:"numeric",minute:"2-digit",timeZone:TZ};
-      return start.toLocaleTimeString("en-US",o).replace(/\s?[AP]M/,"")+"–"+end.toLocaleTimeString("en-US",o);
-    }
-    function weekdayPlural(iso){ return new Date(iso).toLocaleDateString("en-US",{weekday:"long",timeZone:TZ})+"s"; }
-    function monthDay(iso){ return new Date(iso).toLocaleDateString("en-US",{month:"short",day:"numeric",timeZone:TZ}); }
-    function lastSessionIso(c){
-      const s=new Date(c.starts_at);
-      return new Date(s.getTime() + ((c.weeks||1)-1)*7*86400000).toISOString();
-    }
-    // "Saturdays · Jul 11 – Aug 1 · 12:00–2:00 PM"
-    function scheduleText(c){
-      if(!c.starts_at) return "";
-      const range = (c.weeks && c.weeks>1)
-        ? `${monthDay(c.starts_at)} – ${monthDay(lastSessionIso(c))}`
-        : monthDay(c.starts_at);
-      return `${weekdayPlural(c.starts_at)} · ${range} · ${fmtRange(c.starts_at,c.duration_minutes)}`;
-    }
-
-    /* ---------- boot: require a session ---------- */
-    (async function boot(){
-      const { data:{ session } } = await sb.auth.getSession();
-      if(!session){ window.location.href = "login.html"; return; }
-      user = session.user;
-
-      // name + avatar
-      let name = user.user_metadata?.full_name || user.user_metadata?.name;
-      if(!name){
-        const { data:prof } = await sb.from("profiles").select("full_name").eq("id",user.id).single();
-        name = prof?.full_name || (user.email||"friend").split("@")[0];
-      }
-      $("memberName").textContent = name;
-      $("avatar").textContent = name.charAt(0).toUpperCase();
-
-      $("gate").style.display = "none";
-      $("app").style.display = "block";
-
-      renderChips("ideaChips", ideaTypes);
-      wireStars();
-      await loadProfile();   // builds interest chips + availability grid, pre-filled
-      await loadEnrollments();   // sets enrolledIds, used by class buttons
-      await loadClasses();
-      renderSchedule();
-      renderCart();
-      fillFeedbackClasses();
-      handleCheckoutReturn();
-    })();
-
-    /* If we just came back from Stripe, show the result. The webhook
-       marks rows paid server-side; we refresh shortly after to catch it. */
-    async function handleCheckoutReturn(){
-      const params = new URLSearchParams(window.location.search);
-      if(params.get("paid")){
-        toast("Payment received — see you in class! 🎉");
-        showPanel("schedule", document.querySelector('.pill[data-panel="schedule"]'));
-        setTimeout(async ()=>{ await loadEnrollments(); renderClasses(); renderSchedule(); renderCart(); }, 2500);
-      } else if(params.get("canceled")){
-        toast("Checkout canceled — your reservations are still saved.");
-      }
-      if(params.get("paid") || params.get("canceled")){
-        history.replaceState({}, "", window.location.pathname);  // clean the URL
-      }
-    }
-
-    async function signOut(){ await sb.auth.signOut(); window.location.href = "login.html"; }
-
-    /* ---------- panels ---------- */
-    function showPanel(id, btn){
-      document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
-      $("panel-"+id).classList.add("show");
-      document.querySelectorAll(".pill").forEach(p=>p.classList.remove("active"));
-      btn.classList.add("active");
-    }
-
-    /* ---------- classes ---------- */
-    async function loadClasses(){
-      const { data, error } = await sb.from("classes").select("*").eq("is_published",true).order("starts_at",{ascending:true});
-      if(error){ $("classGrid").innerHTML = `<div class="empty">Couldn't load classes. ${error.message}</div>`; return; }
-      classes = data || [];
-      renderClasses();
-    }
-    const DAY_ORDER = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    function weekdayLong(iso){ return new Date(iso).toLocaleDateString("en-US",{weekday:"long",timeZone:TZ}); }
-    function timeRangeOnly(c){ return c.starts_at ? fmtRange(c.starts_at, c.duration_minutes) : ""; }
-
-    // Summer term — first session for each weekday (term opens Sat Jul 11, 2026).
-    // Each course is 4 weekly sessions, so the range is first → first + 3 weeks.
-    const TERM_FIRST = {
-      Saturday:"2026-07-11", Sunday:"2026-07-12", Monday:"2026-07-13",
-      Tuesday:"2026-07-14", Wednesday:"2026-07-15", Thursday:"2026-07-16", Friday:"2026-07-17"
+    const CONFIG = {
+      supabaseUrl: "https://uprdczhhgwzfypkudqjg.supabase.co",
+      anonKey: "sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ",
+      stripePublicKey: "pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS"
     };
-    function termRange(c){
-      if(!c.starts_at) return "";
-      const firstStr = TERM_FIRST[weekdayLong(c.starts_at)];
-      if(!firstStr) return "";
-      const first = new Date(firstStr + "T12:00:00");                 // noon to avoid TZ rollover
-      const last  = new Date(first.getTime() + ((c.weeks||4)-1)*7*86400000);
-      const o = {month:"short", day:"numeric"};
-      return `${first.toLocaleDateString("en-US",o)} – ${last.toLocaleDateString("en-US",o)}`;
-    }
 
-    function renderClasses(){
-      const el = $("classGrid"); el.classList.remove("loading");
-      if(!classes.length){ el.innerHTML = `<div class="empty"><div class="big">🪴</div>No classes published yet.</div>`; return; }
+    const stripe = Stripe(CONFIG.stripePublicKey);
+    let checkoutSessionInstance = null;
 
-      // Group classes by weekday, then by time slot.
-      const byDay = {};
-      classes.forEach(c=>{
-        if(!c.starts_at) return;
-        const d = weekdayLong(c.starts_at);
-        (byDay[d] = byDay[d] || []).push(c);
-      });
-      const days = DAY_ORDER.filter(d=>byDay[d] && byDay[d].length);
-      days.forEach(d=> byDay[d].sort((a,b)=> new Date(a.starts_at)-new Date(b.starts_at)));
-
-      el.className = "week";
-      el.innerHTML = `
-        <p class="week-note">Every course runs <strong>4 weeks · 8 hours total</strong>. <strong>All materials are included</strong>, and you'll receive your full syllabus and a bio of your expert instructor by <strong>June 14</strong>.</p>
-        <div class="week-rows">
-          ${days.map(d=>`
-            <div class="day-row">
-              <div class="day-row-head">${d}</div>
-              <div class="day-row-cells">
-                ${byDay[d].map(c=>cellHTML(c)).join("")}
-              </div>
-            </div>`).join("")}
-        </div>`;
-    }
-
-    function cellHTML(c){
-      const on = enrolledIds.has(c.id);
-      const totalHours = ((c.duration_minutes||0)/60) * (c.weeks||1);
-      const perHour = totalHours ? Math.round(c.price_cents/totalHours) : 0;
-      const remaining = (c.capacity==null) ? null : Math.max(0, c.capacity - (c.seats_taken||0));
-      const full = remaining!==null && remaining<=0;
-      let seatsHtml = "";
-      if(remaining!==null){
-        if(full) seatsHtml = `<div class="seats full">Class full</div>`;
-        else if(remaining<=2) seatsHtml = `<div class="seats low">Only ${remaining} seat${remaining===1?"":"s"} left</div>`;
-      }
-      const button = (full && !on)
-        ? `<button class="enroll" disabled>Class full</button>`
-        : on
-          ? `<button class="enroll added" onclick="goCheckout()">✓ Added · Pay now →</button>`
-          : `<button class="enroll" onclick="enrollAndPay('${c.id}',this)">Enroll &amp; pay →</button>`;
-      return `<div class="cell">
-        <div class="cell-time">${timeRangeOnly(c)}</div>
-        <div class="cell-name">${c.emoji||""} ${c.name.replace(/\s*\(.*\)\s*$/,"")}</div>
-        <div class="cell-dates">${termRange(c)}</div>
-        <div class="cell-price">${money(c.price_cents)}<span class="per"> · ${money(perHour)}/hr</span></div>
-        ${seatsHtml}
-        ${button}
-      </div>`;
-    }
-
-    /* ---------- enrollments ---------- */
-    async function loadEnrollments(){
-      const { data, error } = await sb.from("enrollments").select("id,status,class_id,classes(*)").eq("user_id",user.id);
-      if(error){ console.error(error); enrolledIds = new Set(); window._enr = []; return; }
-      window._enr = data || [];
-      enrolledIds = new Set(window._enr.map(e=>e.class_id));
-    }
-    function goCheckout(){
-      showPanel("checkout", document.querySelector('.pill[data-panel="checkout"]'));
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-    async function enrollAndPay(classId, btn){
-      if(!enrolledIds.has(classId)){
-        btn.disabled = true; const old = btn.textContent; btn.textContent = "Adding\u2026";
-        const { error } = await sb.from("enrollments").insert({ user_id:user.id, class_id:classId, status:"reserved" });
-        btn.disabled = false; btn.textContent = old;
-        if(error){
-          if((error.message||"").toLowerCase().includes("full")) toast("Sorry \u2014 this class just filled up.");
-          else toast("Couldn't add: "+error.message);
-          await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart();
+    // Load dynamic class cards straight from public database registers
+    async function populateGuestCatalog() {
+      const container = document.getElementById("guest-catalog-target");
+      try {
+        const response = await fetch(`${CONFIG.supabaseUrl}/rest/v1/classes?is_published=eq.true&select=*`, {
+          headers: {
+            "apikey": CONFIG.anonKey,
+            "Authorization": `Bearer ${CONFIG.anonKey}`
+          }
+        });
+        
+        if (!response.ok) throw new Error("Catalog fetch dropped.");
+        const classes = await response.json();
+        
+        if (classes.length === 0) {
+          container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--muted);">All sections fully booked. Check back next cycle!</p>`;
           return;
         }
-        await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart();
+
+        container.innerHTML = "";
+        classes.forEach(cls => {
+          const formattedPrice = (cls.price_cents / 100).toFixed(2);
+          const remainingSeats = cls.capacity - (cls.seats_taken || 0);
+          const availabilityText = remainingSeats <= 0 ? "Fully Enrolled" : `${remainingSeats} workspace spots remaining`;
+
+          const card = document.createElement("div");
+          card.className = "class-card";
+          card.innerHTML = `
+            <div>
+              <div class="class-emoji">${cls.emoji || '🎓'}</div>
+              <h3 class="class-title">${cls.name}</h3>
+              <div class="class-instructor">Led by ${cls.instructor}</div>
+              <p class="class-desc">${cls.description || 'No description provided.'}</p>
+              <div class="class-meta-row"><strong>Duration:</strong> ${cls.duration_minutes} mins${cls.weeks > 1 ? ` (${cls.weeks} week series)` : ''}</div>
+              <div class="class-meta-row" style="color: ${remainingSeats <= 3 ? '#A89878' : 'var(--ink-soft)'}; font-weight: 500;">⚠️ ${availabilityText}</div>
+            </div>
+            <div class="class-action-area">
+              <div class="class-price">$${formattedPrice}</div>
+              <input type="email" id="email-field-${cls.id}" class="guest-email-input" placeholder="Your receipt email address" required />
+              <button class="buy-btn" onclick="startSecureGuestCheckout('${cls.id}')" ${remainingSeats <= 0 ? 'disabled style="background: var(--hairline); cursor: not-allowed;"' : ''}>
+                ${remainingSeats <= 0 ? 'Sold Out' : 'Reserve Seat'}
+              </button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red;">Failed to refresh course list. Please refresh.</p>`;
       }
-      goCheckout();
-    }
-    async function toggleEnroll(classId, btn){
-      if(enrolledIds.has(classId)){
-        const row = window._enr.find(e=>e.class_id===classId);
-        const { error } = await sb.from("enrollments").delete().eq("id",row.id);
-        if(error){ toast("Couldn't update: "+error.message); return; }
-        toast("Removed from your schedule");
-      } else {
-        const { error } = await sb.from("enrollments").insert({ user_id:user.id, class_id:classId, status:"reserved" });
-        if(error){
-          if((error.message||"").toLowerCase().includes("full")) toast("Sorry — this class just filled up.");
-          else toast("Couldn't reserve: "+error.message);
-          await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart();
-          return;
-        }
-        toast("Reserved — added to your schedule");
-      }
-      await loadEnrollments();
-      await loadClasses();          // refresh seats_taken so "seats left" stays accurate
-      renderSchedule(); renderCart();
     }
 
-    /* ---------- schedule ---------- */
-    // Every weekly session date for a course: start, +7 days, … × weeks
-    function sessionDates(c){
-      const out=[]; if(!c.starts_at) return out;
-      const start=new Date(c.starts_at), n=c.weeks||1;
-      for(let i=0;i<n;i++) out.push(new Date(start.getTime()+i*7*86400000).toISOString());
-      return out;
-    }
-    function renderSchedule(){
-      const el = $("scheduleList"); el.classList.remove("loading");
-      const enrs = (window._enr||[]).filter(e=>e.classes && e.classes.starts_at);
-      if(!enrs.length){ el.innerHTML = `<div class="empty"><div class="big">🗓</div>Nothing booked yet — add a class from the catalogue.</div>`; return; }
-      // Expand each course into one entry per session date.
-      const items = [];
-      enrs.forEach(e=>{
-        const dates = sessionDates(e.classes), n = dates.length;
-        dates.forEach((iso,i)=> items.push({ iso, c:e.classes, status:e.status, idx:i+1, total:n }));
-      });
-      items.sort((a,b)=> new Date(a.iso)-new Date(b.iso));
-      el.innerHTML = items.map(it=>{
-        const c = it.c;
-        return `<div class="sched-row">
-          <div class="sched-date"><div class="d">${dayNum(it.iso)}</div><div class="m">${monAbbr(it.iso)}</div></div>
-          <div class="sched-info"><h3>${c.name}</h3><div class="meta">${fmtDate(it.iso)} · ${fmtRange(it.iso,c.duration_minutes)} · Week ${it.idx} of ${it.total}</div></div>
-          <span class="tag ${it.status==="paid"?"paid":"reserved"}">${it.status==="paid"?"Paid":"Reserved"}</span>
-        </div>`;
-      }).join("");
-    }
+    // Initialize edge function call to process transaction frames
+    async function startSecureGuestCheckout(classId) {
+      const targetInput = document.getElementById(`email-field-${classId}`);
+      const emailValue = targetInput ? targetInput.value.trim() : "";
 
-    /* ---------- checkout cart ---------- */
-    function renderCart(){
-      const rows = (window._enr||[]).filter(e=>e.classes && e.status!=="paid");
-      const el = $("cart");
-      if(!rows.length){ el.innerHTML=`<div class="empty"><div class="big">🧺</div>Nothing to pay for right now.</div>`; $("cartTotal").textContent="$0"; return; }
-      const total = rows.reduce((s,e)=>s+(e.classes.price_cents||0),0);
-      el.innerHTML = rows.map(e=>`<div class="cart-item"><span>${e.classes.name}</span><span style="display:flex;gap:1rem;align-items:center">${money(e.classes.price_cents)}<button class="x" onclick="toggleEnroll('${e.class_id}',this)">✕</button></span></div>`).join("")
-        + `<div class="total"><span>Total</span><span>${money(total)}</span></div>`;
-      $("cartTotal").textContent = money(total);
-    }
-
-    /* ---------- checkout ---------- */
-    function updatePayState(){
-      const signed = $("signName").value.trim().length > 1;
-      const agreed = $("agreeBox").checked;
-      $("payBtn").disabled = !(signed && agreed);
-    }
-    async function startCheckout(){
-      const rows = (window._enr||[]).filter(e=>e.classes && e.status!=="paid");
-      if(!rows.length){ toast("Reserve a class first 🧺"); return; }
-      const name = $("signName").value.trim();
-      if(name.length < 2 || !$("agreeBox").checked){ toast("Please sign and agree to the policies first."); return; }
-      const btn = $("payBtn"); const old = btn.textContent;
-      btn.disabled = true; btn.textContent = "Loading payment…";
-      // Record the signed waiver/agreement before showing the payment form.
-      const { error: aErr } = await sb.from("agreements").insert({ user_id:user.id, signed_name:name });
-      if(aErr){ btn.disabled=false; btn.textContent=old; toast("Couldn't save your agreement: "+aErr.message); return; }
-      const giftCode = ($("giftCode").value || "").trim().toUpperCase();
-      const { data, error } = await sb.functions.invoke("create-checkout", { body: { giftCode } });
-      if(error || !data?.clientSecret){
-        btn.disabled = false; btn.textContent = old;
-        toast("Couldn't start checkout: " + (error?.message || data?.error || "unknown error"));
+      if (!emailValue || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+        alert("Please enter a valid email address to receive your entry confirmation pass.");
         return;
       }
-      // Mount Stripe's embedded payment form right here — no redirect.
+
       try {
-        if(!stripe) stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-        if(embeddedCheckout){ embeddedCheckout.destroy(); embeddedCheckout = null; }
-        embeddedCheckout = await stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
-        embeddedCheckout.mount("#checkout-embed");
-        btn.style.display = "none";   // hide our button; the form has its own Pay button
-      } catch(e){
-        btn.disabled = false; btn.textContent = old; btn.style.display = "";
-        toast("Couldn't load the payment form: " + (e?.message || e));
+        const response = await fetch(`${CONFIG.supabaseUrl}/functions/v1/create-checkout`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apiKey": CONFIG.anonKey
+          },
+          body: JSON.stringify({ classId: classId, guestEmail: emailValue })
+        });
+
+        const outcome = await response.json();
+        if (outcome.error) throw new Error(outcome.error);
+
+        // Mount Stripe iframe component view layout layer inside popup
+        document.getElementById("stripe-checkout-modal-overlay").style.display = "flex";
+        document.body.style.overflow = "hidden";
+
+        checkoutSessionInstance = await stripe.initEmbeddedCheckout({
+          clientSecret: outcome.clientSecret
+        });
+        checkoutSessionInstance.mount("#stripe-embedded-checkout-mount-point");
+
+      } catch (ex) {
+        alert(`Checkout pipeline generation error: ${ex.message}`);
       }
     }
 
-    /* ---------- chips & stars ---------- */
-    function renderChips(elId, tags, selected){
-      const sel = selected instanceof Set ? selected : new Set();
-      $(elId).innerHTML = tags.map(t=>`<span class="chip${sel.has(t)?" sel":""}" onclick="this.classList.toggle('sel')">${t}</span>`).join("");
-    }
-    function selectedChips(elId){ return [...document.querySelectorAll(`#${elId} .chip.sel`)].map(c=>c.textContent); }
-    function wireStars(){
-      $("fbStars").addEventListener("click",e=>{
-        if(!e.target.dataset.v) return;
-        fbRating = +e.target.dataset.v;
-        [...document.querySelectorAll("#fbStars span")].forEach(s=>s.classList.toggle("lit", +s.dataset.v<=fbRating));
-      });
-    }
-    function fillFeedbackClasses(){
-      $("fbClass").innerHTML = classes.map(c=>`<option value="${c.id}">${c.name}</option>`).join("") || `<option value="">No classes yet</option>`;
+    // Teardown function to securely dispose of Stripe handlers cleanly upon escape request
+    function destroyCheckoutInstance() {
+      document.getElementById("stripe-checkout-modal-overlay").style.display = "none";
+      document.body.style.overflow = "";
+      if (checkoutSessionInstance) {
+        checkoutSessionInstance.unmount();
+        checkoutSessionInstance = null;
+      }
+      document.getElementById("stripe-embedded-checkout-mount-point").innerHTML = "";
     }
 
-    /* ---------- form submits ---------- */
-    /* ---------- interests + availability ---------- */
-    function buildAvailGrid(){
-      const head = `<tr><th></th>${AVAIL_DAYS.map(d=>`<th>${d}</th>`).join("")}</tr>`;
-      const rows = TIME_BLOCKS.map(b=>`<tr>
-        <td class="rowlab">${b.label}<small>${b.time}</small></td>
-        ${AVAIL_DAYS.map(d=>`<td class="slot" data-b="${b.id}" data-d="${d}" onclick="this.classList.toggle('on')"></td>`).join("")}
-      </tr>`).join("");
-      $("availGrid").innerHTML = head + rows;
-    }
-    function setAvailability(obj){
-      obj = obj || {};
-      document.querySelectorAll("#availGrid .slot").forEach(td=>{
-        const days = obj[td.dataset.b];
-        td.classList.toggle("on", Array.isArray(days) && days.includes(td.dataset.d));
-      });
-    }
-    function getAvailability(){
-      const out = {};
-      document.querySelectorAll("#availGrid .slot.on").forEach(td=>{
-        (out[td.dataset.b] = out[td.dataset.b] || []).push(td.dataset.d);
-      });
-      return out;
-    }
-    // Parse the signup-sheet availability string into {blockId:[days]}
-    // e.g. "Morning (8–11 AM): Sat, Sun | Evening (5–8 PM): Mon, Tue"
-    function parseAvailabilityString(str){
-      const out = {};
-      if(!str) return out;
-      const ids = ["morning","midday","afternoon","evening","late"];
-      str.split("|").forEach(part=>{
-        const i = part.indexOf(":"); if(i < 0) return;
-        const left = part.slice(0,i).trim().toLowerCase();
-        const id = ids.find(k=>left.startsWith(k)); if(!id) return;
-        out[id] = part.slice(i+1).split(",").map(s=>s.trim()).filter(Boolean)
-          .map(d=>d.slice(0,3)).map(d=>d.charAt(0).toUpperCase()+d.slice(1).toLowerCase());
-      });
-      return out;
-    }
-    function parseClassList(str){ return (str||"").split(",").map(s=>s.trim()).filter(Boolean); }
+    // Lightbox Functionality
+    const lightbox = document.getElementById("photo-lightbox");
+    const lightboxImg = document.getElementById("lightbox-target-img");
 
-    async function loadProfile(){
-      buildAvailGrid();
-      let classes = [], avail = {}, skill = null, notes = "";
-      // 1) saved edits take priority
-      const { data:pref } = await sb.from("member_preferences").select("*").eq("user_id",user.id).maybeSingle();
-      if(pref){
-        classes = pref.classes || []; avail = pref.availability || {};
-        skill = pref.skill_level; notes = pref.notes || "";
-      } else {
-        // 2) fall back to the imported signup data (RLS returns only this member's row)
-        const { data:intake } = await sb.from("member_intake").select("*").maybeSingle();
-        if(intake){
-          classes = parseClassList(intake.classes_of_interest);
-          avail   = parseAvailabilityString(intake.availability);
-          notes   = intake.notes || "";
+    document.querySelectorAll(".space-photo").forEach(card => {
+      card.addEventListener("click", () => {
+        const src = card.getAttribute("data-src");
+        if(src) {
+          lightboxImg.src = src;
+          lightbox.classList.add("is-open");
         }
-      }
-      const universe = Array.from(new Set([...BASE_INTEREST_CLASSES, ...classes]));
-      renderChips("interestChips", universe, new Set(classes));
-      setAvailability(avail);
-      if(skill) $("iSkill").value = skill;
-      $("iNotes").value = notes;
-    }
+      });
+    });
 
-    async function saveProfile(btn){
-      btn.disabled = true; const old = btn.textContent; btn.textContent = "Saving…";
-      const { error } = await sb.from("member_preferences").upsert({
-        user_id: user.id,
-        classes: selectedChips("interestChips"),
-        availability: getAvailability(),
-        skill_level: $("iSkill").value,
-        notes: $("iNotes").value.trim(),
-        updated_at: new Date().toISOString()
-      }, { onConflict: "user_id" });
-      btn.disabled = false; btn.textContent = old;
-      if(error){ toast("Couldn't save: " + error.message); return; }
-      toast("Saved — thank you! ✨");
-    }
-    async function submitFeedback(btn){
-      btn.disabled=true;
-      const { error } = await sb.from("feedback").insert({
-        user_id:user.id, class_id:$("fbClass").value||null, rating:fbRating||null,
-        what_worked:$("fbGood").value.trim(), what_could_improve:$("fbImprove").value.trim()
-      });
-      btn.disabled=false;
-      if(error){ toast("Hmm: "+error.message); return; }
-      toast("Feedback sent — we read every word. 💬");
-      $("fbGood").value=""; $("fbImprove").value=""; fbRating=0; document.querySelectorAll("#fbStars span").forEach(s=>s.classList.remove("lit"));
-    }
-    async function submitIdea(btn){
-      const text=$("ideaText").value.trim();
-      if(!text){ toast("Type your idea first 💡"); return; }
-      btn.disabled=true;
-      const { error } = await sb.from("ideas").insert({
-        user_id:user.id, idea:text, idea_type:selectedChips("ideaChips")[0]||null
-      });
-      btn.disabled=false;
-      if(error){ toast("Hmm: "+error.message); return; }
-      toast("Idea shared — love it! 💡");
-      $("ideaText").value=""; document.querySelectorAll("#ideaChips .chip.sel").forEach(c=>c.classList.remove("sel"));
-    }
+    lightbox.addEventListener("click", () => {
+      lightbox.classList.remove("is-open");
+    });
+
+    // Fire application load populate commands immediately
+    document.addEventListener("DOMContentLoaded", populateGuestCatalog);
   </script>
+
 </body>
 </html>
+
+```
