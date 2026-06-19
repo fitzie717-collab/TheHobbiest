@@ -1248,161 +1248,236 @@
       margin-top: 0.5rem;
     }
 <!-- =========================================================
-     CURRICULUM WIDGET (Guest Checkout)
+     INSTANT ENROLLMENT WIDGET (Guest Checkout)
      ========================================================= -->
-<section id="purchase" style="padding: var(--section-y) 0; background: var(--surface); border-top: 1px solid var(--hairline);">
+<section id="enroll" style="padding: var(--section-y) 0; background: var(--surface); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);">
   <div class="container">
     <div data-reveal>
-      <span class="eyebrow">Instant Enrollment</span>
-      <h2 class="h-section">Secure your <em>spot</em>.</h2>
-      <p class="lede">Choose a class below to enroll instantly. No account required.</p>
+      <span class="eyebrow">Summer 2026 Enrollment</span>
+      <h2 class="h-section">Join a <em>Session</em>.</h2>
+      <p class="lede">Select a course below to secure your seat instantly. Guest checkout available—no account required.</p>
     </div>
 
-    <div id="guestClassGrid" class="bundle-grid" style="margin-top: 3rem;">
-      <!-- Classes will load here via the script below -->
-      <p style="font-family: var(--font-display); font-style: italic; color: var(--muted);">Preparing the curriculum...</p>
+    <!-- This grid is populated by the script below -->
+    <div id="guestClassGrid" class="bundle-grid" style="margin-top: 4rem;">
+      <p style="font-family: var(--font-display); font-style: italic; color: var(--muted);">Opening the studio doors...</p>
     </div>
   </div>
 </section>
 
-<!-- Simple Email Overlay -->
-<div id="emailOverlay" style="display:none; position:fixed; inset:0; background:rgba(78,90,65,0.9); z-index:1000; align-items:center; justify-content:center; padding:2rem;">
-  <div style="background:var(--bg); padding:2.5rem; border-radius:8px; max-width:400px; width:100%; position:relative;">
-    <h3 style="margin-bottom:1rem; color:var(--sage-deep);">Where should we send your receipt?</h3>
-    <input type="email" id="guestEmailInput" placeholder="your@email.com" style="width:100%; padding:0.85rem; border:1px solid var(--hairline); border-radius:4px; margin-bottom:1.5rem; font-family:var(--font-body);">
-    <div id="checkout-embed-guest"></div>
-    <button id="startPayBtn" class="btn-primary" style="width:100%;">Continue to Payment</button>
-    <button onclick="closeGuestCheckout()" style="background:none; border:none; color:var(--muted); margin-top:1rem; width:100%; cursor:pointer; font-family:var(--font-body); text-decoration:underline;">Cancel</button>
+<!-- THE LAUNCH (Existing Section) -->
+<section class="launch" id="launch">
+  <div class="container">
+    <div class="launch-grid">
+      <div class="launch-photo" data-reveal>
+        <img src="data:image/jpeg;base64,...(your image data)..." alt="The Hobbiest interior" />
+      </div>
+      <div class="launch-info" data-reveal>
+        <span class="eyebrow">The Launch</span>
+        <h2 class="h-section">Summer courses, <em>fall memberships</em>.</h2>
+        <p class="launch-lede">Opening on Main Street in two phases.</p>
+        <div class="launch-phases">
+          <div class="launch-phase">
+            <div class="launch-phase-date">July 2026</div>
+            <p>Summer course launch — classes open to the public.</p>
+          </div>
+          <div class="launch-phase">
+            <div class="launch-phase-date">September 2026</div>
+            <p>Fall memberships begin — founder pricing for early members.</p>
+          </div>
+        </div>
+        <a href="login.html" class="btn-hero btn-hero-primary launch-cta">Member Login →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER (Existing) -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="wordmark-lg">The Hobbiest</div>
+        <p>A private members skills club for adults. Opening July 2026 in downtown Pittston, PA.</p>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <p>131 N Main Street<br />Pittston, PA 18640<br /><br />Wyoming Valley · NEPA</p>
+      </div>
+      <div>
+        <h4>Follow</h4>
+        <div class="stack">
+          <a href="#" rel="noopener">Instagram</a>
+          <a href="#" rel="noopener">Facebook</a>
+          <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 The Hobbiest Skills Club</span>
+      <div class="footer-legal">
+        <a href="gift.html">Give a Gift</a>
+        <span class="footer-divider">·</span>
+        <a href="waiver.html">Waiver &amp; Policies</a>
+        <span class="footer-divider">·</span>
+        <a href="privacy.html">Privacy Policy</a>
+        <span class="footer-divider">·</span>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- GUEST CHECKOUT MODAL -->
+<div id="emailOverlay" style="display:none; position:fixed; inset:0; background:rgba(45, 52, 38, 0.95); z-index:1000; align-items:center; justify-content:center; padding:1.5rem; backdrop-filter: blur(5px);">
+  <div style="background:var(--bg); padding:2.5rem; border-radius:8px; max-width:450px; width:100%; position:relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 1px solid var(--hairline);">
+    <button onclick="closeGuestCheckout()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--muted);">×</button>
+    
+    <div id="modalStep1">
+      <h3 style="margin-bottom:0.5rem; color:var(--sage-deep); font-family:var(--font-display);">Join the session.</h3>
+      <p style="margin-bottom:1.5rem; color:var(--ink-soft); font-family:var(--font-body); font-size:0.9rem;">Where should we send your receipt and course syllabus?</p>
+      <input type="email" id="guestEmailInput" placeholder="your@email.com" style="width:100%; padding:1rem; border:1px solid var(--hairline); border-radius:4px; margin-bottom:1rem; font-family:var(--font-body); font-size:1rem; background:var(--surface);">
+      <button id="startPayBtn" class="nav-link-primary" style="width:100%; border:none; padding:1rem; font-size:1rem; cursor:pointer;">Continue to Payment →</button>
+    </div>
+
+    <div id="modalStep2" style="display:none;">
+      <h3 style="margin-bottom:1.5rem; color:var(--sage-deep); font-family:var(--font-display);">Secure Checkout</h3>
+      <div id="checkout-embed-guest"></div>
+    </div>
   </div>
 </div>
-    /* ============================================================
-       THE LAUNCH — combined space + dates + CTA
-       ============================================================ */
-    .launch {
-      background: var(--bg-warm);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      min-height: 100vh;
-      min-height: 100dvh;
-      scroll-snap-align: start;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .launch-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 1fr;
-      gap: clamp(2rem, 5vw, 4.5rem);
-      align-items: center;
-    }
-    .launch-photo {
-      border-radius: 4px;
-      overflow: hidden;
-      border: 1px solid var(--hairline);
-      aspect-ratio: 4/3;
-      background: var(--bg);
-    }
-    .launch-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .launch-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .launch-info .h-section { margin-bottom: 0.25rem; }
-    .launch-lede {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      line-height: 1.5;
-      color: var(--ink-soft);
-      font-weight: 350;
-      font-style: italic;
-    }
-    .launch-phases {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      margin-top: 0.5rem;
-    }
-    .launch-phase {
-      padding-top: 1.1rem;
-      border-top: 1px solid var(--hairline);
-    }
-    .launch-phase-date {
-      font-size: 0.72rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--sage);
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-    }
-    .launch-phase p {
-      color: var(--ink-soft);
-      font-size: 1rem;
-      line-height: 1.55;
-    }
-    .launch-cta {
-      align-self: flex-start;
-      margin-top: 0.5rem;
-    }
 
-    /* ============================================================
-       FOOTER
-       ============================================================ */
-    footer {
-      background: var(--sage-deep);
-      color: var(--bg);
-      padding: 4.5rem 0 2rem;
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  const SB_URL = 'https://uprdczhhgwzfypkudqjg.supabase.co';
+  const SB_KEY = 'sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ';
+  let selectedClassId = null;
+  const stripeGuest = Stripe('pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS');
+
+  async function loadGuestCurriculum() {
+    const grid = document.getElementById('guestClassGrid');
+    try {
+      const res = await fetch(`${SB_URL}/rest/v1/classes?is_published=eq.true&select=*&order=starts_at.asc`, {
+        headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
+      });
+      const classes = await res.json();
+      
+      grid.innerHTML = classes.map(c => {
+        const remaining = c.capacity - (c.seats_taken || 0);
+        let statusTag = '';
+        let buttonText = 'Buy Seat — ' + '$' + Math.round(c.price_cents/100);
+        let btnDisabled = '';
+
+        // Marketing Scarcity Logic
+        if (remaining <= 0) {
+          statusTag = `<div style="color:#8a3a28; font-weight:600; font-family:var(--font-body); font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem;">Sold Out</div>`;
+          buttonText = 'Class Full';
+          btnDisabled = 'disabled style="opacity:0.5; cursor:not-allowed; background:var(--muted);"';
+        } else if (remaining === 1) {
+          statusTag = `<div style="color:#A89878; font-weight:600; font-family:var(--font-body); font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem;">Only 1 seat left</div>`;
+        }
+
+        return `
+          <div class="bundle-card">
+            <div class="bundle-tag">${c.emoji || '🎓'} ${c.category || 'Curriculum'}</div>
+            <h4 class="bundle-card-title">${c.name}</h4>
+            <p class="bundle-card-body" style="margin-bottom:1.5rem;">${c.description.substring(0, 120)}...</p>
+            ${statusTag}
+            <button onclick="openGuestCheckout('${c.id}')" class="nav-link-primary" ${btnDisabled} style="border:none; cursor:pointer; width:100%; text-align:center; display:block;">
+              ${buttonText}
+            </button>
+          </div>
+        `;
+      }).join('');
+    } catch (e) {
+      grid.innerHTML = "<p>Curriculum currently offline. Please refresh.</p>";
     }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 3rem;
-      margin-bottom: 3rem;
+  }
+
+  function openGuestCheckout(classId) {
+    selectedClassId = classId;
+    document.getElementById('emailOverlay').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeGuestCheckout() {
+    document.getElementById('emailOverlay').style.display = 'none';
+    document.getElementById('modalStep1').style.display = 'block';
+    document.getElementById('modalStep2').style.display = 'none';
+    document.getElementById('checkout-embed-guest').innerHTML = '';
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('startPayBtn').addEventListener('click', async () => {
+    const email = document.getElementById('guestEmailInput').value;
+    if (!email || !email.includes('@')) return alert("Please provide a valid email address.");
+
+    const btn = document.getElementById('startPayBtn');
+    btn.innerText = "Verifying Spot...";
+    btn.disabled = true;
+
+    try {
+      const response = await fetch(`${SB_URL}/functions/v1/create-checkout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY },
+        body: JSON.stringify({ classId: selectedClassId, guestEmail: email })
+      });
+
+      const data = await response.json();
+      if (data.error) throw new Error(data.error);
+
+      document.getElementById('modalStep1').style.display = 'none';
+      document.getElementById('modalStep2').style.display = 'block';
+
+      const checkout = await stripeGuest.initEmbeddedCheckout({ clientSecret: data.clientSecret });
+      checkout.mount('#checkout-embed-guest');
+
+    } catch (err) {
+      alert(err.message);
+      btn.innerText = "Continue to Payment →";
+      btn.disabled = false;
     }
-    footer h4 {
-      font-family: var(--font-body);
-      font-size: 0.68rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--sage-pale);
-      font-weight: 500;
-      margin-bottom: 1.2rem;
-    }
-    footer .wordmark-lg {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1.85rem;
-      color: var(--bg);
-      letter-spacing: -0.01em;
-      margin-bottom: 1rem;
-      font-variation-settings: "opsz" 144;
-    }
-    footer a { color: rgba(241, 236, 223, 0.78); text-decoration: none; transition: color 0.2s; }
-    footer a:hover { color: var(--sage-pale); }
-    footer p { color: rgba(241, 236, 223, 0.7); font-size: 0.95rem; line-height: 1.7; }
-    footer .stack a { display: block; margin-bottom: 0.5rem; font-size: 0.95rem; }
-    .footer-bottom {
-      border-top: 1px solid rgba(241, 236, 223, 0.15);
-      padding-top: 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.78rem;
-      color: rgba(241, 236, 223, 0.45);
-      letter-spacing: 0.04em;
-    }
-    .footer-legal {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .footer-divider {
-      opacity: 0.5;
-    }
+  });
+
+  loadGuestCurriculum();
+</script>
+
+<script>
+    // Existing Reveal logic
+    const reveals = document.querySelectorAll('[data-reveal]');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    reveals.forEach((r) => io.observe(r));
+
+    // Existing Lightbox logic
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    document.querySelectorAll('.space-photo').forEach((el) => {
+      el.addEventListener('click', () => {
+        const src = el.getAttribute('data-src');
+        if (!src) return;
+        lightboxImg.src = src;
+        lightbox.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('is-open');
+      document.body.style.overflow = '';
+    };
+    if(lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+</script>
+</body>
+</html>
 
     /* ============================================================
        LIGHTBOX (for clickable photos)
