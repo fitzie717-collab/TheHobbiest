@@ -380,13 +380,41 @@
       return `${weekdayPlural(c.starts_at)} · ${range} · ${fmtRange(c.starts_at,c.duration_minutes)}`;
     }
 
-    /* ---------- boot: require a session ---------- */
+/* ---------- e2e boot: Handles Members and Guests ---------- */
     (async function boot(){
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get("session_id"); // Stripe's return variable
+      const isPaidMember = params.get("paid");    // Your existing member variable
+
       const { data:{ session } } = await sb.auth.getSession();
-      if(!session){ window.location.href = "login.html"; return; }
+
+      // 1. GATEKEEPER: If no session AND not a successful checkout, redirect to login
+      if(!session && !sessionId){ 
+        window.location.href = "login.html"; 
+        return; 
+      }
+
+      // 2. GUEST SUCCESS: If no session but just paid, show Guest Receipt
+      if (!session && sessionId) {
+         document.getElementById('gate').innerHTML = `
+            <div style="text-align:center; padding: 4rem 2rem; font-family:var(--font-display); background:var(--bg); min-height:100vh;">
+              <span class="eyebrow">Enrollment Complete</span>
+              <h1 style="font-size:3rem; color:var(--sage-deep); margin: 1rem 0;">Success!</h1>
+              <p style="font-size:1.2rem; color:var(--ink-soft); max-width:450px; margin: 0 auto 2rem auto; line-height:1.6;">
+                Your seat is secured. We've sent a confirmation and your course syllabus to your email address.
+              </p>
+              <a href="index.html" class="btn-submit" style="display:inline-block; text-decoration:none; padding: 1rem 2rem;">Return to Homepage</a>
+            </div>
+         `;
+         // Clean URL
+         history.replaceState({}, "", window.location.pathname);
+         return;
+      }
+
+      // 3. MEMBER PATH: If we reach here, the user is logged in
       user = session.user;
 
-      // name + avatar
+      // Set name + avatar
       let name = user.user_metadata?.full_name || user.user_metadata?.name;
       if(!name){
         const { data:prof } = await sb.from("profiles").select("full_name").eq("id",user.id).single();
@@ -395,38 +423,41 @@
       $("memberName").textContent = name;
       $("avatar").textContent = name.charAt(0).toUpperCase();
 
+      // Show the app
       $("gate").style.display = "none";
       $("app").style.display = "block";
 
+      // Initialize the portal
       renderChips("ideaChips", ideaTypes);
       wireStars();
-      await loadProfile();   // builds interest chips + availability grid, pre-filled
-      await loadEnrollments();   // sets enrolledIds, used by class buttons
+      await loadProfile();   
+      await loadEnrollments();
       await loadClasses();
       renderSchedule();
       renderCart();
       fillFeedbackClasses();
-      handleCheckoutReturn();
+      
+      // Handle the "Paid" toast for logged-in members
+      if(isPaidMember || sessionId) {
+          handleMemberSuccess();
+      }
     })();
 
-    /* If we just came back from Stripe, show the result. The webhook
-       marks rows paid server-side; we refresh shortly after to catch it. */
-    async function handleCheckoutReturn(){
-      const params = new URLSearchParams(window.location.search);
-      if(params.get("paid")){
+    /* Specifically for logged-in members to refresh their data after paying */
+    async function handleMemberSuccess(){
         toast("Payment received — see you in class! 🎉");
         showPanel("schedule", document.querySelector('.pill[data-panel="schedule"]'));
-        setTimeout(async ()=>{ await loadEnrollments(); renderClasses(); renderSchedule(); renderCart(); }, 2500);
-      } else if(params.get("canceled")){
-        toast("Checkout canceled — your reservations are still saved.");
-      }
-      if(params.get("paid") || params.get("canceled")){
-        history.replaceState({}, "", window.location.pathname);  // clean the URL
-      }
+        // Refresh data to show 'Paid' tags
+        setTimeout(async ()=>{ 
+            await loadEnrollments(); 
+            renderClasses(); 
+            renderSchedule(); 
+            renderCart(); 
+        }, 1500);
+        history.replaceState({}, "", window.location.pathname);
     }
 
     async function signOut(){ await sb.auth.signOut(); window.location.href = "login.html"; }
-
     /* ---------- panels ---------- */
     function showPanel(id, btn){
       document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
