@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#7A8A6B" />
 
   <title>The Hobbiest — Skills Club, Pittston, PA</title>
-  <meta name="description" content="A private members skills club for adults. Opening July 2026 in downtown Pittston, Pennsylvania." />
+  <meta name="description" content="A private members skills club for adults. Single sessions and full courses available." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,31 +15,26 @@
 
   <style>
     /* ============================================================
-       DESIGN TOKENS — SAGE + CREAM
+       DESIGN TOKENS
        ============================================================ */
     :root {
-      --bg:        #F1ECDF;
-      --bg-warm:   #EAE3D2;
-      --surface:   #FAF7F0;
-      --ink:       #4E5A41;
+      --bg:        #F1ECDF;   /* cream */
+      --bg-warm:   #EAE3D2;   /* deeper cream */
+      --surface:   #FAF7F0;   /* lightest cream */
+      --ink:       #4E5A41;   /* deep sage */
       --ink-soft:  #6B7459;
       --muted:     #8A8170;
       --hairline:  #D9D2BE;
       --sage:      #7A8A6B;
       --sage-deep: #4E5A41;
-      --sage-pale: #B5BFA8;
-      --taupe:     #A89878;
       --font-display: "Fraunces", "Times New Roman", serif;
-      --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body:    "DM Sans", sans-serif;
       --max-w:    1280px;
       --gutter:   clamp(1.25rem, 4vw, 3rem);
       --section-y: clamp(4rem, 9vw, 8rem);
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* ============================================================
-       RESET + BASE
-       ============================================================ */
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
@@ -53,6 +48,7 @@
       overflow-x: hidden;
     }
     
+    /* Paper Grain Overlay */
     body::before {
       content: "";
       position: fixed;
@@ -64,91 +60,89 @@
       mix-blend-mode: multiply;
     }
 
-    .container { max-width: var(--max-w); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); }
 
     /* ============================================================
-       NAV
+       NAVIGATION (Fixed Overlap)
        ============================================================ */
     .nav { position: absolute; top: 0; left: 0; right: 0; z-index: 100; padding: 1.75rem 0; }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; }
-    .wordmark { font-family: var(--font-display); font-size: 1.2rem; font-weight: 400; font-style: italic; color: var(--sage); text-decoration: none; }
-    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
-    .nav-link { font-family: var(--font-body); font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); text-decoration: none; font-weight: 500; transition: color 0.3s var(--ease); }
+    .wordmark { font-family: var(--font-display); font-size: 1.25rem; font-style: italic; color: var(--sage); text-decoration: none; }
+    
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .nav-link { font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); font-weight: 600; transition: color 0.3s; }
     .nav-link:hover { color: var(--sage); }
-    .nav-link-primary { color: var(--bg); background: var(--sage); padding: 0.55rem 1.1rem; border-radius: 999px; }
+    .nav-link-primary { background: var(--sage); color: var(--bg); padding: 0.6rem 1.2rem; border-radius: 999px; }
 
     /* ============================================================
        HERO
        ============================================================ */
-    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 80px; }
-    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; width: 100%; }
-    .hero-quote { font-family: var(--font-display); font-size: clamp(2.3rem, 5.5vw, 4.5rem); font-weight: 350; line-height: 1.05; color: var(--sage-deep); margin-bottom: 2rem; }
+    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 100px; }
+    .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; width: 100%; }
+    .hero-quote { font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1.05; color: var(--sage-deep); margin-bottom: 2rem; }
     .hero-quote em { font-style: italic; font-weight: 400; color: var(--sage); }
-    .lede { font-size: 1.4rem; max-width: 32rem; color: var(--ink-soft); margin-bottom: 2.5rem; font-weight: 350; }
-    .btn-hero { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1.1rem 2.2rem; border-radius: 999px; font-family: var(--font-body); font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.3s var(--ease); }
-    .btn-hero-primary { background: var(--sage); color: var(--bg); border: 1px solid var(--sage); }
-    .btn-hero-primary:hover { background: var(--sage-deep); transform: translateY(-2px); }
-
-    .hero-seal-wrap { position: relative; max-width: 540px; width: 100%; margin-left: auto; }
-    .hero-seal { width: 100%; height: auto; display: block; }
+    .lede { font-size: 1.35rem; color: var(--ink-soft); max-width: 32rem; margin-bottom: 2.5rem; font-weight: 350; }
+    
+    .hero-seal-wrap { width: 100%; max-width: 500px; margin-left: auto; }
 
     /* ============================================================
-       CURRICULUM
+       ENROLLMENT SECTION (Moved Up / Immediate)
        ============================================================ */
-    .eyebrow { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 600; margin-bottom: 1.5rem; display: block; }
-    .h-section { font-size: clamp(2rem, 4.5vw, 3.75rem); color: var(--sage-deep); line-height: 1.1; margin-bottom: 3rem; }
-    .h-section em { font-style: italic; color: var(--sage); }
-
-    .pillars-grid { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--hairline); border-left: 1px solid var(--hairline); }
-    .pillar { padding: 2.5rem 1.5rem; border-right: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); background: var(--surface); transition: background 0.3s var(--ease); }
-    .pillar:hover { background: var(--bg); }
-    .pillar-num { font-family: var(--font-display); font-style: italic; font-size: 1rem; color: var(--sage); margin-bottom: 1rem; display: block; }
-    .pillar h3 { font-size: 1.6rem; color: var(--sage-deep); margin-bottom: 1rem; }
-    .pillar p { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.6; }
-
-    /* ============================================================
-       HOUSE RULES
-       ============================================================ */
-    .house { background: var(--surface); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
-    .house-rules-list { list-style: none; padding: 0; margin: 0; }
-    .house-rules-list li { font-family: var(--font-display); font-style: italic; font-size: clamp(1.5rem, 2.8vw, 2.05rem); color: var(--sage-deep); padding: 1rem 0; border-bottom: 1px dashed var(--hairline); }
-
-    /* ============================================================
-       ENROLLMENT (NEW FEATURE)
-       ============================================================ */
-    .enroll-section { background: var(--surface); padding: var(--section-y) 0; border-top: 1px solid var(--hairline); }
-    .enroll-card { background: var(--bg); padding: 3.5rem; border-radius: 8px; border: 1px solid var(--hairline); box-shadow: 0 10px 40px rgba(78, 90, 65, 0.08); max-width: 650px; margin: 0 auto; text-align: center; }
+    .enroll-section { background: var(--surface); padding: 4rem 0 6rem; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+    .enroll-card { 
+      background: var(--bg); 
+      padding: 3.5rem; 
+      border-radius: 12px; 
+      border: 1px solid var(--hairline); 
+      box-shadow: 0 30px 60px rgba(78,90,65,0.06); 
+      max-width: 600px; 
+      margin: 0 auto; 
+      text-align: center;
+    }
+    .eyebrow { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 1rem; display: block; }
     
     #classSelector {
-      width: 100%; padding: 1.2rem; font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: var(--sage-deep); background: white; border: 1px solid var(--hairline); border-radius: 8px; margin-bottom: 2rem; appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%237A8A6B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 1rem center; background-size: 1.2em;
+      width: 100%; padding: 1.25rem; font-family: var(--font-display); font-style: italic; font-size: 1.15rem; 
+      color: var(--sage-deep); background: white; border: 1px solid var(--hairline); border-radius: 8px; margin-bottom: 2rem;
+      appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%237A8A6B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1.2rem center; background-size: 1.2em;
+      cursor: pointer;
     }
 
+    .btn-hero { display: inline-flex; align-items: center; justify-content: center; padding: 1.1rem 2.2rem; border-radius: 999px; font-family: var(--font-body); font-size: 1rem; font-weight: 600; transition: all 0.3s var(--ease); width: 100%; }
+    .btn-hero-primary { background: var(--sage); color: var(--bg); }
+    .btn-hero-primary:hover { background: var(--sage-deep); transform: translateY(-2px); }
+
     /* ============================================================
-       MODAL & STRIPE
+       PILLARS / CURRICULUM
        ============================================================ */
-    #emailOverlay { display: none; position: fixed; inset: 0; background: rgba(45, 52, 38, 0.96); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
-    .modal-content { background: var(--bg); padding: 3rem; border-radius: 8px; max-width: 480px; width: 90%; position: relative; border: 1px solid var(--hairline); text-align: center; }
-    .close-modal { position: absolute; top: 1rem; right: 1rem; font-size: 2rem; color: var(--muted); cursor: pointer; }
+    .pillars-grid { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--hairline); border-left: 1px solid var(--hairline); margin-top: 4rem; }
+    .pillar { padding: 2.5rem 1.5rem; border-right: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); background: var(--surface); transition: background 0.3s; }
+    .pillar:hover { background: var(--bg); }
+    .pillar h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--sage-deep); }
+
+    /* ============================================================
+       MODAL
+       ============================================================ */
+    #emailOverlay { display: none; position: fixed; inset: 0; background: rgba(45, 52, 38, 0.96); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+    .modal-box { background: var(--bg); padding: 3.5rem; border-radius: 12px; width: 95%; max-width: 480px; position: relative; border: 1px solid var(--hairline); text-align: center; }
+    .close-modal { position: absolute; top: 1.2rem; right: 1.5rem; font-size: 2rem; color: var(--muted); cursor: pointer; }
 
     /* ============================================================
        FOOTER
        ============================================================ */
-    footer { background: var(--bg-warm); padding: 5rem 0; border-top: 1px solid var(--hairline); }
+    footer { background: var(--bg-warm); padding: 5rem 0 3rem; border-top: 1px solid var(--hairline); }
     .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; }
-    .footer-bottom { border-top: 1px solid var(--hairline); margin-top: 4rem; padding-top: 2rem; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--muted); }
+    .footer-bottom { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--hairline); display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--muted); }
 
-    /* Reveal animations */
-    [data-reveal] { opacity: 0; transform: translateY(30px); transition: all 0.8s var(--ease); }
+    [data-reveal] { opacity: 0; transform: translateY(20px); transition: all 0.8s var(--ease); }
     [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
 
-    @media (max-width: 768px) {
-      .hero-grid { grid-template-columns: 1fr; text-align: center; }
-      .hero-seal-wrap { order: -1; margin: 0 auto; max-width: 280px; }
-      .pillars-grid { grid-template-columns: 1fr; }
+    @media (max-width: 900px) {
+      .hero-grid, .footer-grid { grid-template-columns: 1fr; text-align: center; }
       .nav-links { display: none; }
-      .footer-grid { grid-template-columns: 1fr; }
+      .hero-seal-wrap { order: -1; margin: 0 auto; max-width: 300px; }
+      .pillars-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -156,11 +150,13 @@
 
   <nav class="nav">
     <div class="container nav-inner">
-      <a href="/" class="wordmark">The Hobbiest</a>
+      <a href="#" class="wordmark">The Hobbiest</a>
       <div class="nav-links">
         <a href="#home" class="nav-link">Home</a>
-        <a href="#curriculum" class="nav-link">Curriculum</a>
-        <a href="#enroll" class="nav-link nav-link-primary">Join a Session</a>
+        <a href="#enroll" class="nav-link">Schedule</a>
+        <a href="#" class="nav-link">Teach</a>
+        <a href="#" class="nav-link">Press</a>
+        <a href="#enroll" class="nav-link nav-link-primary">Buy Seat</a>
       </div>
     </div>
   </nav>
@@ -172,22 +168,23 @@
           <h1 class="hero-quote" data-reveal>Lessons, <br><em>for Life</em>.</h1>
           <p class="lede" data-reveal>The Hobbiest is a private skills club built around the belief that confidence comes from capability. Build dynamic skillsets, cultivate taste, and curate a life of your own design.</p>
           <div data-reveal>
-            <a href="#enroll" class="btn-hero btn-hero-primary">Purchase to Enroll →</a>
+            <a href="#enroll" class="btn-hero btn-hero-primary" style="max-width: 300px;">Explore the Schedule ↓</a>
           </div>
         </div>
+        
         <div class="hero-seal-wrap" data-reveal>
           <svg class="hero-seal" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-            <defs><path id="seal-arc" d="M 75,300 A 225,225 0 0,0 525,300"/></defs>
+            <defs><path id="seal-path" d="M 75,300 A 225,225 0 0,0 525,300"/></defs>
             <circle cx="300" cy="300" r="275" fill="none" stroke="#7A8A6B" stroke-width="3"/>
             <circle cx="300" cy="300" r="258" fill="none" stroke="#7A8A6B" stroke-width="1.1"/>
             <text x="300" y="290" font-family="Fraunces" font-style="italic" font-size="90" fill="#7A8A6B" text-anchor="middle">The Hobbiest</text>
             <g fill="#7A8A6B">
                 <line x1="85" y1="330" x2="140" y2="330" stroke="#7A8A6B" stroke-width="1.2"/>
-                <text x="300" y="340" font-family="Fraunces" font-weight="500" font-size="28" text-anchor="middle" letter-spacing="10">SKILLS CLUB</text>
+                <text x="300" y="340" font-family="Fraunces" font-weight="600" font-size="28" text-anchor="middle" letter-spacing="10">SKILLS CLUB</text>
                 <line x1="460" y1="330" x2="515" y2="330" stroke="#7A8A6B" stroke-width="1.2"/>
             </g>
             <text font-family="Fraunces" font-weight="500" font-size="22" fill="#7A8A6B" letter-spacing="7">
-              <textPath href="#seal-arc" startOffset="50%" text-anchor="middle">PITTSTON, PENNSYLVANIA</textPath>
+              <textPath href="#seal-path" startOffset="50%" text-anchor="middle">PITTSTON, PENNSYLVANIA</textPath>
             </text>
           </svg>
         </div>
@@ -195,78 +192,41 @@
     </div>
   </header>
 
-  <section id="curriculum">
-    <div class="container">
-      <span class="eyebrow" data-reveal>Lectiones ad vitam</span>
-      <h2 class="h-section" data-reveal>Curriculum <em>Cornerstones</em>.</h2>
-      <div class="pillars-grid">
-        <div class="pillar" data-reveal>
-          <span class="pillar-num">01</span>
-          <h3>Creative <em>Pursuits</em></h3>
-          <p>Watercolor, calligraphy, knitting, drawing, and other craft traditions.</p>
-        </div>
-        <div class="pillar" data-reveal>
-          <span class="pillar-num">02</span>
-          <h3>Presence & <em>Entertaining</em></h3>
-          <p>Hosting, modern etiquette, personal styling, and social grace.</p>
-        </div>
-        <div class="pillar" data-reveal>
-          <span class="pillar-num">03</span>
-          <h3>Essential <em>Life Skills</em></h3>
-          <p>Home repair, finances, first aid, and habits that compound over years.</p>
-        </div>
-        <div class="pillar" data-reveal>
-          <span class="pillar-num">04</span>
-          <h3>Hearth & <em>Garden</em></h3>
-          <p>Sourdough, floral arranging, herb gardens, and seasonal rituals.</p>
-        </div>
-        <div class="pillar" data-reveal>
-          <span class="pillar-num">05</span>
-          <h3>Living <em>Well</em></h3>
-          <p>Meditation, journaling, intention-setting, and intentional daily practices.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="house">
-    <div class="container">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
-            <div data-reveal>
-                <span class="eyebrow">In the Space</span>
-                <h2 class="h-section">Environment <em>Curation</em>.</h2>
-                <p class="lede">To preserve the atmosphere, we keep the environment intentionally simple.</p>
-            </div>
-            <div data-reveal>
-                <ul class="house-rules-list">
-                    <li>No electronics or WiFi.</li>
-                    <li>Adults-only environment (18+).</li>
-                    <li>No smoking or alcohol.</li>
-                    <li>No outside food.</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-  </section>
-
+  <!-- =========================================================
+       ENROLLMENT SECTION (UPDATED TEXT)
+       ========================================================= -->
   <section class="enroll-section" id="enroll">
     <div class="container">
       <div class="enroll-card" data-reveal>
         <span class="eyebrow">Instant Enrollment</span>
-        <h2 class="h-section" style="margin-bottom: 1rem;">Join a <em>Session</em>.</h2>
-        <p style="margin-bottom: 3rem; color: var(--ink-soft);">Select a course and date to secure your seat instantly.</p>
+        <h2 style="font-family: var(--font-display); font-size: 2.5rem; color: var(--sage-deep); margin-bottom: 0.5rem;">Purchase to Enroll</h2>
+        <p style="color: var(--ink-soft); margin-bottom: 2.5rem;">Select a single session or full course below.</p>
         
         <select id="classSelector">
           <option value="">Loading curriculum...</option>
         </select>
 
-        <button id="enrollBtn" class="btn-hero btn-hero-primary" style="width: 100%; justify-content: center; border:none;">
-          Purchase to Enroll →
+        <button id="enrollBtn" class="btn-hero btn-hero-primary">
+          Check Out
         </button>
 
         <p style="margin-top: 2rem; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--hairline); padding-top: 1.5rem;">
-          Having trouble? Contact <a href="mailto:pittston@thehobbiestskillsclub.com" style="color: var(--sage-deep); text-decoration: underline;">pittston@thehobbiestskillsclub.com</a>
+          Difficulty? Contact <a href="mailto:pittston@thehobbiestskillsclub.com" style="color: var(--sage-deep); text-decoration: underline;">pittston@thehobbiestskillsclub.com</a>
         </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="curriculum">
+    <div class="container">
+      <span class="eyebrow" data-reveal>Curriculum Cornerstones</span>
+      <h2 class="h-section" data-reveal>Five Pillars of <em>Capability</em>.</h2>
+      <div class="pillars-grid">
+        <div class="pillar" data-reveal><h3>Creative Pursuits</h3><p>Calligraphy, watercolor, and craft traditions.</p></div>
+        <div class="pillar" data-reveal><h3>Presence</h3><p>The art of making guests feel welcome.</p></div>
+        <div class="pillar" data-reveal><h3>Life Skills</h3><p>Home repair, finance, and safety.</p></div>
+        <div class="pillar" data-reveal><h3>The Hearth</h3><p>Sourdough, gardening, and slow cooking.</p></div>
+        <div class="pillar" data-reveal><h3>Living Well</h3><p>Journaling and intentional daily rituals.</p></div>
       </div>
     </div>
   </section>
@@ -274,38 +234,25 @@
   <footer>
     <div class="container">
       <div class="footer-grid">
-        <div>
-          <div style="font-size: 1.5rem; font-style: italic; margin-bottom: 1rem; color: var(--sage-deep);">The Hobbiest</div>
-          <p style="font-size: 0.9rem; color: var(--ink-soft);">A private members skills club for adults. Opening July 2026 in downtown Pittston, PA.</p>
-        </div>
-        <div>
-          <h4 style="text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--sage);">Visit</h4>
-          <p style="font-size: 0.9rem;">131 N Main Street<br>Pittston, PA 18640</p>
-        </div>
-        <div>
-          <h4 style="text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--sage);">Contact</h4>
-          <p style="font-size: 0.9rem;"><a href="mailto:pittston@thehobbiestskillsclub.com">Email Us</a></p>
-        </div>
+        <div><div style="font-size: 1.5rem; font-style: italic; margin-bottom: 1rem;">The Hobbiest</div><p>A private members skills club for adults. Opening July 2026 in downtown Pittston, PA.</p></div>
+        <div><h4 style="font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;">Visit</h4><p>131 N Main Street<br>Pittston, PA 18640</p></div>
+        <div><h4 style="font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;">Contact</h4><p><a href="mailto:pittston@thehobbiestskillsclub.com">Email Us</a></p></div>
       </div>
-      <div class="footer-bottom">
-        <span>© 2026 The Hobbiest Skills Club</span>
-        <span>July 2026 Launch Phase</span>
-      </div>
+      <div class="footer-bottom"><span>© 2026 The Hobbiest Skills Club</span><span>July 2026 Launch Phase</span></div>
     </div>
   </footer>
 
   <!-- CHECKOUT MODAL -->
   <div id="emailOverlay">
-    <div class="modal-content">
+    <div class="modal-box">
       <div class="close-modal" onclick="closeGuestCheckout()">×</div>
       <div id="modalStep1">
-        <h3 style="font-family: var(--font-display); color: var(--sage-deep); margin-bottom: 0.5rem;">Secure your seat.</h3>
-        <p style="margin-bottom: 2rem; color: var(--ink-soft); font-size: 0.9rem;">Where should we send your receipt and course syllabus?</p>
+        <h3 style="font-family: var(--font-display); margin-bottom: 0.5rem;">One last step.</h3>
+        <p style="font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 1.5rem;">Where should we send your receipt and course syllabus?</p>
         <input type="email" id="guestEmailInput" placeholder="your@email.com" style="width:100%; padding:1rem; border:1px solid var(--hairline); border-radius:4px; margin-bottom:1.5rem; font-size:1rem; background:var(--surface);">
-        <button id="startPayBtn" class="btn-hero btn-hero-primary" style="width:100%; justify-content: center; border:none;">Continue to Payment →</button>
+        <button id="startPayBtn" class="btn-hero btn-hero-primary">Continue to Payment →</button>
       </div>
       <div id="modalStep2" style="display:none;">
-        <h3 style="margin-bottom: 1.5rem; font-family: var(--font-display);">Secure Checkout</h3>
         <div id="checkout-embed-guest"></div>
       </div>
     </div>
@@ -313,14 +260,13 @@
 
   <script src="https://js.stripe.com/v3/"></script>
   <script>
-    // --- Configuration ---
     const SB_URL = 'https://uprdczhhgwzfypkudqjg.supabase.co';
     const SB_KEY = 'sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ';
     const stripe = Stripe('pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS');
     let selectedClassId = null;
 
-    // --- 1. Load Classes ---
-    async function initClasses() {
+    // --- 1. Load All Published Sessions (Single & Multi) ---
+    async function loadClasses() {
       const selector = document.getElementById('classSelector');
       try {
         const res = await fetch(`${SB_URL}/rest/v1/classes?is_published=eq.true&select=*&order=starts_at.asc`, {
@@ -338,6 +284,7 @@
           const date = new Date(c.starts_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'});
           const opt = document.createElement('option');
           opt.value = c.id;
+          // Determine label based on price/metadata if provided
           opt.textContent = `${c.name} — ${date} ($${Math.round(c.price_cents/100)})`;
           selector.appendChild(opt);
         });
@@ -388,13 +335,13 @@
         const checkout = await stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
         checkout.mount('#checkout-embed-guest');
       } catch (err) {
-        alert("Error: " + err.message);
+        alert(err.message);
         btn.innerText = "Continue to Payment →";
         btn.disabled = false;
       }
     });
 
-    // --- 4. Scroll reveals ---
+    // --- 4. Animations ---
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('is-visible');
@@ -402,7 +349,7 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
 
-    initClasses();
+    loadClasses();
   </script>
 </body>
 </html>
