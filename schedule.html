@@ -21,6 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
 
+  <script src="https://js.stripe.com/v3/"></script>
   <style>
     /* ============================================================
        DESIGN TOKENS — SAGE + CREAM (matches index.html exactly)
@@ -1218,6 +1219,204 @@
       padding: 2.5rem 0;
     }
     .schedule-status a { color: var(--sage); text-decoration: underline; }
+
+    /* ============================================================
+       SESSION LIST (inside accordion)
+       ============================================================ */
+    .session-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin: 1rem 0 0.5rem;
+    }
+    .session-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.7rem 1rem;
+      background: var(--bg-warm);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      flex-wrap: wrap;
+    }
+    .session-row-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .session-date {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--sage-deep);
+      font-weight: 400;
+    }
+    .session-label {
+      font-family: var(--font-body);
+      font-size: 0.74rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .session-price {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--ink);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-book {
+      font-family: var(--font-body);
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.1rem;
+      border-radius: 999px;
+      background: var(--sage);
+      color: var(--bg);
+      border: 1px solid var(--sage);
+      cursor: pointer;
+      transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-book:hover { background: var(--sage-deep); border-color: var(--sage-deep); }
+    .session-note {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.35rem;
+      display: block;
+    }
+
+    /* ============================================================
+       CHECKOUT MODAL
+       ============================================================ */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(78, 90, 65, 0.45);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      width: 100%;
+      max-width: 540px;
+      max-height: 90dvh;
+      overflow-y: auto;
+      box-shadow: 0 24px 64px rgba(78, 90, 65, 0.25);
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 1.6rem 1.75rem 1.2rem;
+      border-bottom: 1px solid var(--hairline);
+      gap: 1rem;
+    }
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      color: var(--sage-deep);
+      line-height: 1.2;
+      font-weight: 400;
+    }
+    .modal-subtitle {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--sage-deep); }
+    .modal-body {
+      padding: 1.5rem 1.75rem 2rem;
+      flex: 1;
+    }
+    .modal-summary {
+      background: var(--bg-warm);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      padding: 1rem 1.15rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .modal-summary-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--sage-deep);
+    }
+    .modal-summary-meta {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+    .modal-summary-price {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--sage-deep);
+      white-space: nowrap;
+    }
+    #checkout-embed { min-height: 200px; }
+
+    /* success state */
+    .modal-success {
+      display: none;
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .modal-success.show { display: block; }
+    .modal-success-mark {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .modal-success h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--sage-deep);
+      margin-bottom: 0.6rem;
+    }
+    .modal-success h3 em { font-style: italic; color: var(--sage); }
+    .modal-success p {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      max-width: 34ch;
+      margin: 0 auto;
+    }
   </style>
 </head>
 <body>
@@ -1279,6 +1478,36 @@
   </div>
 
   <!-- =========================================================
+       GUEST CHECKOUT MODAL
+       ========================================================= -->
+  <div class="modal-backdrop" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="modalTitle">Book your session</div>
+          <div class="modal-subtitle" id="modalSubtitle"></div>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-summary" id="modalSummary">
+          <div>
+            <div class="modal-summary-name" id="modalClassName"></div>
+            <div class="modal-summary-meta" id="modalSessionMeta"></div>
+          </div>
+          <div class="modal-summary-price" id="modalPrice"></div>
+        </div>
+        <div id="checkout-embed"></div>
+        <div class="modal-success" id="modalSuccess">
+          <div class="modal-success-mark">✦</div>
+          <h3>You're <em>booked</em>.</h3>
+          <p>Check your email for confirmation. We'll see you in studio.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
        FOOTER (matches main site)
        ========================================================= -->
   <footer>
@@ -1310,12 +1539,11 @@
 
   <script>
     // ============================================================
-    // CONFIG  — paste your anon (public) key from
-    //   Supabase -> Settings -> API -> Project API keys -> "anon public"
-    // The anon key is safe in client-side code.
+    // CONFIG
     // ============================================================
     const SUPABASE_URL      = 'https://uprdczhhgwzfypkudqjg.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ';
+    const STRIPE_PK         = 'pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS';
 
     const CATEGORY_ORDER = ['Creative Pursuits','Essential Life Skills','Living Well','Hearth & Garden'];
     const CATEGORY_DESC = {
@@ -1327,10 +1555,12 @@
     const TZ = 'America/New_York';
 
     const esc = s => { const d = document.createElement('div'); d.textContent = (s == null ? '' : s); return d.innerHTML; };
-    const fmtTime = d => d.toLocaleTimeString('en-US', { timeZone: TZ, hour: 'numeric', minute: '2-digit' });
-    const fmtDate = d => d.toLocaleDateString('en-US', { timeZone: TZ, month: 'short', day: 'numeric' });
-    const weekday = d => d.toLocaleDateString('en-US', { timeZone: TZ, weekday: 'long' });
-    const slug    = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const fmtTime  = d => d.toLocaleTimeString('en-US', { timeZone: TZ, hour: 'numeric', minute: '2-digit' });
+    const fmtDate  = d => d.toLocaleDateString('en-US', { timeZone: TZ, month: 'short', day: 'numeric' });
+    const fmtDateLong = d => d.toLocaleDateString('en-US', { timeZone: TZ, weekday: 'long', month: 'long', day: 'numeric' });
+    const weekday  = d => d.toLocaleDateString('en-US', { timeZone: TZ, weekday: 'long' });
+    const slug     = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const money    = cents => '$' + Math.round(cents / 100);
 
     function classFormat(c) {
       const start  = new Date(c.starts_at);
@@ -1345,10 +1575,40 @@
       return esc(parts[0]) + (parts.length > 1 ? ' <em>' + esc(parts.slice(1).join(' ')) + '</em>' : '');
     }
 
+    // Compute each session's date for a class (mirrors dashboard sessionDates())
+    function sessionDates(c) {
+      const dates = [];
+      const base = new Date(c.starts_at);
+      for (let i = 0; i < (c.weeks || 1); i++) {
+        dates.push(new Date(base.getTime() + i * 7 * 24 * 60 * 60 * 1000));
+      }
+      return dates;
+    }
+
     function cardHtml(c) {
-      const price = '$' + Math.round((c.price_cents || 0) / 100);
+      const weeks     = c.weeks || 1;
+      const perSession = Math.round((c.price_cents || 0) / weeks);
       const instructor = c.instructor ? '<p class="class-instructor">Taught by ' + esc(c.instructor) + '</p>' : '';
       const note = c.materials_included ? '<div class="class-price-note">materials included</div>' : '';
+
+      const dates = sessionDates(c);
+      const sessionRows = dates.map((d, i) => {
+        const label = 'Session ' + (i + 1) + ' of ' + weeks;
+        const dateStr = fmtDateLong(d);
+        return '<div class="session-row">' +
+          '<div class="session-row-info">' +
+            '<div class="session-date">' + esc(dateStr) + '</div>' +
+            '<div class="session-label">' + esc(label) + '</div>' +
+          '</div>' +
+          '<div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">' +
+            '<span class="session-price">' + money(perSession) + '</span>' +
+            '<button class="btn-book" onclick="openCheckout(' + JSON.stringify(c.id) + ',' + i + ',event)">Book →</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      const fullPrice = money(c.price_cents || 0);
+
       return '' +
         '<article class="class-card">' +
           '<details class="class-details-wrap">' +
@@ -1357,12 +1617,14 @@
                 '<div class="class-format">' + esc(classFormat(c)) + '</div>' +
                 '<h4>' + esc(c.name) + '</h4>' +
               '</div>' +
-              '<div class="class-price">' + price + '</div>' +
+              '<div class="class-price">' + fullPrice + '</div>' +
               '<span class="class-chevron" aria-hidden="true">+</span>' +
             '</summary>' +
             '<div class="class-details-body">' +
               '<p class="class-desc">' + esc(c.description) + '</p>' +
               instructor + note +
+              '<div class="session-list">' + sessionRows + '</div>' +
+              '<span class="session-note">Book individual sessions at ' + money(perSession) + ' each, or enroll in the full course for ' + fullPrice + ' via your member account.</span>' +
             '</div>' +
           '</details>' +
         '</article>';
@@ -1373,7 +1635,7 @@
       const rail = document.getElementById('railNav');
       try {
         const url = SUPABASE_URL + '/rest/v1/classes' +
-          '?select=name,description,instructor,starts_at,duration_minutes,price_cents,materials_included,weeks,category' +
+          '?select=id,name,description,instructor,starts_at,duration_minutes,price_cents,materials_included,weeks,category' +
           '&is_published=eq.true&order=starts_at.asc';
         const res = await fetch(url, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY } });
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -1394,8 +1656,8 @@
         main.innerHTML = '';
         rail.innerHTML = '<div class="rail-eyebrow">Curriculum</div>';
         cats.forEach((cat, i) => {
-          const num = String(i + 1).padStart(2, '0');
-          const id  = slug(cat);
+          const num  = String(i + 1).padStart(2, '0');
+          const id   = slug(cat);
           const cards = groups[cat].map(cardHtml).join('');
           main.insertAdjacentHTML('beforeend',
             '<section class="category-section" id="' + id + '">' +
@@ -1412,6 +1674,7 @@
         });
 
         initScrollSpy();
+        handleReturnFromStripe();
       } catch (err) {
         console.error('Schedule load failed:', err);
         main.innerHTML = '<p class="schedule-status">We couldn\u2019t load the schedule just now \u2014 please refresh, or <a href="login.html">log in to purchase</a>.</p>';
@@ -1432,13 +1695,97 @@
           if (!target) return;
           e.preventDefault();
           const isMobile = window.matchMedia('(max-width: 880px)').matches;
-          const railEl = document.querySelector('.schedule-rail');
-          const offset = (isMobile && railEl) ? railEl.offsetHeight + 8 : 16;
+          const railEl   = document.querySelector('.schedule-rail');
+          const offset   = (isMobile && railEl) ? railEl.offsetHeight + 8 : 16;
           window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - offset, behavior: 'smooth' });
         });
       });
     }
 
+    // ============================================================
+    // GUEST CHECKOUT
+    // ============================================================
+    let stripe = null;
+    let embeddedCheckout = null;
+
+    async function openCheckout(classId, sessionIndex, event) {
+      event.stopPropagation(); // don't toggle the accordion
+
+      const modal    = document.getElementById('checkoutModal');
+      const embedEl  = document.getElementById('checkout-embed');
+      const successEl = document.getElementById('modalSuccess');
+
+      // Reset modal state
+      embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:var(--muted);padding:1rem 0">Preparing checkout…</p>';
+      successEl.classList.remove('show');
+      document.getElementById('modalSummary').style.display = 'flex';
+
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      try {
+        // Call the edge function
+        const res = await fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+          },
+          body: JSON.stringify({ guest: true, class_id: classId, session_index: sessionIndex }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.clientSecret) throw new Error(data.error || 'Checkout failed');
+
+        // Mount Stripe embedded checkout
+        if (!stripe) stripe = Stripe(STRIPE_PK);
+        if (embeddedCheckout) { embeddedCheckout.destroy(); embeddedCheckout = null; }
+
+        embeddedCheckout = await stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
+        embedEl.innerHTML = '';
+        embeddedCheckout.mount('#checkout-embed');
+      } catch (err) {
+        embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:#c04;">Couldn\'t start checkout — please try again or <a href=\"login.html\">log in</a>.</p>';
+        console.error('Checkout error:', err);
+      }
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('checkoutModal');
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      if (embeddedCheckout) { embeddedCheckout.destroy(); embeddedCheckout = null; }
+      document.getElementById('checkout-embed').innerHTML = '';
+    }
+
+    // Close on backdrop click
+    document.getElementById('checkoutModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    // Handle return from Stripe (embedded checkout fires a return_url redirect)
+    function handleReturnFromStripe() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('status') === 'complete') {
+        // Show success modal briefly
+        const modal     = document.getElementById('checkoutModal');
+        const embedEl   = document.getElementById('checkout-embed');
+        const successEl = document.getElementById('modalSuccess');
+        const summaryEl = document.getElementById('modalSummary');
+        embedEl.innerHTML = '';
+        summaryEl.style.display = 'none';
+        successEl.classList.add('show');
+        modal.classList.add('open');
+        // Clean URL
+        history.replaceState({}, '', window.location.pathname);
+      }
+    }
+
+    // ============================================================
+    // SCROLL REVEAL
+    // ============================================================
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
