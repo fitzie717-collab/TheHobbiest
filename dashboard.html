@@ -180,6 +180,45 @@
     .toast.show{transform:translateX(-50%) translateY(0)}
 
     #gate{display:grid;place-items:center;min-height:100vh;font-family:var(--font-body);color:var(--muted)}
+
+    /* ── PURCHASE WIDGET ── */
+    .purchase-widget{background:var(--surface);border:1px solid var(--hairline);border-radius:6px;padding:1.5rem 1.75rem 1.75rem;max-width:520px;margin-top:1.5rem}
+    .purchase-widget-label{font-family:var(--font-body);font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--sage);font-weight:600;margin-bottom:1.1rem;display:flex;align-items:center;gap:0.5rem}
+    .purchase-widget-label::before{content:"";display:inline-block;width:20px;height:1px;background:var(--sage)}
+    .pw-select-wrap{position:relative;margin-bottom:0.75rem}
+    .pw-select{width:100%;padding:0.85rem 2.5rem 0.85rem 1rem;font-family:var(--font-display);font-size:1rem;color:var(--ink);background:var(--bg);border:1px solid var(--hairline);border-radius:4px;appearance:none;-webkit-appearance:none;cursor:pointer;outline:none;transition:border-color 0.2s var(--ease);font-style:italic}
+    .pw-select:focus{border-color:var(--sage)}
+    .pw-select:disabled{opacity:0.45;cursor:default}
+    .pw-select option{font-style:normal}
+    .pw-select-arrow{position:absolute;right:1rem;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--muted);font-size:0.75rem}
+    .pw-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;gap:1rem}
+    .pw-price-display{font-family:var(--font-display);font-size:1.5rem;color:var(--sage-deep);letter-spacing:-0.02em;transition:opacity 0.2s}
+    .pw-price-display.dim{opacity:0.3}
+    .btn-pay-now{font-family:var(--font-body);font-size:0.82rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.8rem 1.75rem;border-radius:999px;background:var(--sage);color:var(--bg);border:1px solid var(--sage);cursor:pointer;transition:background 0.2s var(--ease),transform 0.15s var(--ease);white-space:nowrap}
+    .btn-pay-now:hover:not(:disabled){background:var(--sage-deep);border-color:var(--sage-deep)}
+    .btn-pay-now:disabled{opacity:0.4;cursor:default}
+
+    /* ── CHECKOUT MODAL (single session) ── */
+    .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(78,90,65,0.45);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);z-index:200;align-items:center;justify-content:center;padding:1rem}
+    .modal-backdrop.open{display:flex}
+    .modal{background:var(--surface);border:1px solid var(--hairline);border-radius:8px;width:100%;max-width:540px;max-height:90dvh;overflow-y:auto;box-shadow:0 24px 64px rgba(78,90,65,0.25);display:flex;flex-direction:column}
+    .modal-header{display:flex;align-items:flex-start;justify-content:space-between;padding:1.6rem 1.75rem 1.2rem;border-bottom:1px solid var(--hairline);gap:1rem}
+    .modal-title{font-family:var(--font-display);font-size:1.35rem;color:var(--sage-deep);line-height:1.2;font-weight:400}
+    .modal-subtitle{font-family:var(--font-display);font-style:italic;font-size:0.9rem;color:var(--muted);margin-top:0.2rem}
+    .modal-close{background:none;border:none;font-size:1.5rem;color:var(--muted);cursor:pointer;padding:0;line-height:1;flex-shrink:0;transition:color 0.2s}
+    .modal-close:hover{color:var(--sage-deep)}
+    .modal-body{padding:1.5rem 1.75rem 2rem;flex:1}
+    .modal-summary{background:var(--bg-warm);border:1px solid var(--hairline);border-radius:4px;padding:1rem 1.15rem;margin-bottom:1.25rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+    .modal-summary-name{font-family:var(--font-display);font-size:1.1rem;color:var(--sage-deep)}
+    .modal-summary-meta{font-family:var(--font-display);font-style:italic;font-size:0.85rem;color:var(--muted);margin-top:0.15rem}
+    .modal-summary-price{font-family:var(--font-display);font-size:1.25rem;color:var(--sage-deep);white-space:nowrap}
+    #session-checkout-embed{min-height:200px}
+    .modal-success{display:none;text-align:center;padding:2rem 0}
+    .modal-success.show{display:block}
+    .modal-success-mark{font-size:2.5rem;margin-bottom:1rem}
+    .modal-success h3{font-family:var(--font-display);font-size:1.6rem;color:var(--sage-deep);margin-bottom:0.6rem}
+    .modal-success h3 em{font-style:italic;color:var(--sage)}
+    .modal-success p{font-size:0.95rem;color:var(--ink-soft);line-height:1.6;max-width:34ch;margin:0 auto}
   </style>
 </head>
 <body>
@@ -215,8 +254,27 @@
 
       <!-- CLASSES -->
       <section class="panel show" id="panel-classes">
-        <div class="section-head"><h2>Open <em>classes</em></h2><p>Choose a class and pay — your seat is confirmed the moment payment goes through.</p></div>
-        <div id="classGrid" class="loading">Loading classes…</div>
+        <div class="section-head"><h2>Open <em>classes</em></h2><p>Pick a class, pick a session or the full course, and pay right here.</p></div>
+
+        <div class="purchase-widget" id="purchaseWidget">
+          <div class="purchase-widget-label">Purchase now</div>
+          <div class="pw-select-wrap">
+            <select class="pw-select" id="pwClass" onchange="pwOnClassChange()">
+              <option value="">Loading classes…</option>
+            </select>
+            <span class="pw-select-arrow">▾</span>
+          </div>
+          <div class="pw-select-wrap">
+            <select class="pw-select" id="pwOption" onchange="pwOnOptionChange()" disabled>
+              <option value="">— then pick an option —</option>
+            </select>
+            <span class="pw-select-arrow">▾</span>
+          </div>
+          <div class="pw-footer">
+            <div class="pw-price-display dim" id="pwPrice">—</div>
+            <button class="btn-pay-now" id="pwBtn" disabled onclick="pwCheckout()">Pay now →</button>
+          </div>
+        </div>
       </section>
 
       <!-- SCHEDULE -->
@@ -313,6 +371,34 @@
   </div>
 
   <div class="toast" id="toast"></div>
+
+  <!-- SINGLE SESSION MODAL -->
+  <div class="modal-backdrop" id="sessionModal" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="smTitle">Book a starter session</div>
+          <div class="modal-subtitle" id="smSubtitle"></div>
+        </div>
+        <button class="modal-close" onclick="closeSessionModal()" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-summary" id="smSummary">
+          <div>
+            <div class="modal-summary-name" id="smClassName"></div>
+            <div class="modal-summary-meta" id="smSessionMeta"></div>
+          </div>
+          <div class="modal-summary-price" id="smPrice"></div>
+        </div>
+        <div id="session-checkout-embed"></div>
+        <div class="modal-success" id="smSuccess">
+          <div class="modal-success-mark">✦</div>
+          <h3>You're <em>booked</em>.</h3>
+          <p>Check your email for confirmation. We'll see you in studio.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
     /* ---- Supabase (same project as login.html) ---- */
@@ -415,7 +501,7 @@
       if(params.get("paid")){
         toast("Payment received — see you in class! 🎉");
         showPanel("schedule", document.querySelector('.pill[data-panel="schedule"]'));
-        setTimeout(async ()=>{ await loadEnrollments(); renderClasses(); renderSchedule(); renderCart(); }, 2500);
+        setTimeout(async ()=>{ await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart(); }, 2500);
       } else if(params.get("canceled")){
         toast("Checkout canceled — your reservations are still saved.");
       }
@@ -434,158 +520,137 @@
       btn.classList.add("active");
     }
 
-    /* ---------- classes ---------- */
+    /* ---------- purchase widget ---------- */
     async function loadClasses(){
-      const { data, error } = await sb.from("classes").select("*").eq("is_published",true).order("starts_at",{ascending:true});
-      if(error){ $("classGrid").innerHTML = `<div class="empty">Couldn't load classes. ${error.message}</div>`; return; }
+      const { data, error } = await sb.from("classes")
+        .select("id,name,starts_at,duration_minutes,price_cents,session_price_cents,weeks,capacity,seats_taken,emoji,is_published")
+        .eq("is_published",true).order("starts_at",{ascending:true});
+      if(error){ console.error("loadClasses:",error); return; }
       classes = data || [];
-      renderClasses();
-    }
-    const DAY_ORDER = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    function weekdayLong(iso){ return new Date(iso).toLocaleDateString("en-US",{weekday:"long",timeZone:TZ}); }
-    function timeRangeOnly(c){ return c.starts_at ? fmtRange(c.starts_at, c.duration_minutes) : ""; }
-
-    // Summer term — first session for each weekday (term opens Sat Jul 11, 2026).
-    // Each course is 4 weekly sessions, so the range is first → first + 3 weeks.
-    const TERM_FIRST = {
-      Saturday:"2026-07-11", Sunday:"2026-07-12", Monday:"2026-07-13",
-      Tuesday:"2026-07-14", Wednesday:"2026-07-15", Thursday:"2026-07-16", Friday:"2026-07-17"
-    };
-    function termRange(c){
-      if(!c.starts_at) return "";
-      const firstStr = TERM_FIRST[weekdayLong(c.starts_at)];
-      if(!firstStr) return "";
-      const first = new Date(firstStr + "T12:00:00");                 // noon to avoid TZ rollover
-      const last  = new Date(first.getTime() + ((c.weeks||4)-1)*7*86400000);
-      const o = {month:"short", day:"numeric"};
-      return `${first.toLocaleDateString("en-US",o)} – ${last.toLocaleDateString("en-US",o)}`;
+      pwPopulate(classes);
     }
 
-    function renderClasses(){
-      const el = $("classGrid"); el.classList.remove("loading");
-      if(!classes.length){ el.innerHTML = `<div class="empty"><div class="big">🪴</div>No classes published yet.</div>`; return; }
+    function sessionDates(c){
+      const out=[]; if(!c.starts_at) return out;
+      const start=new Date(c.starts_at), n=c.weeks||1;
+      for(let i=0;i<n;i++) out.push(new Date(start.getTime()+i*7*86400000));
+      return out;
+    }
+    const _fmtDate = d => d.toLocaleDateString("en-US",{timeZone:TZ,month:"short",day:"numeric"});
+    const _fmtLong = d => d.toLocaleDateString("en-US",{timeZone:TZ,weekday:"long",month:"long",day:"numeric"});
+    const sessionPrice = c => c.session_price_cents || Math.round((c.price_cents||0)/(c.weeks||1));
 
-      // Group classes by weekday, then by time slot.
-      const byDay = {};
-      classes.forEach(c=>{
-        if(!c.starts_at) return;
-        const d = weekdayLong(c.starts_at);
-        (byDay[d] = byDay[d] || []).push(c);
-      });
-      const days = DAY_ORDER.filter(d=>byDay[d] && byDay[d].length);
-      days.forEach(d=> byDay[d].sort((a,b)=> new Date(a.starts_at)-new Date(b.starts_at)));
-
-      el.className = "week";
-      el.innerHTML = `
-        <p class="week-note">Summer 2026 term runs <strong>July 11 – August 7</strong>. Every course is <strong>4 sessions · 8 hours total</strong>. <strong>All materials are included</strong> — your syllabus and instructor bio will be sent before your first session.</p>
-        <div class="week-rows">
-          ${days.map(d=>`
-            <div class="day-row">
-              <div class="day-row-head">${d}</div>
-              <div class="day-row-cells">
-                ${byDay[d].map(c=>cellHTML(c)).join("")}
-              </div>
-            </div>`).join("")}
-        </div>`;
+    function pwPopulate(list){
+      const sel = $("pwClass");
+      if(!list.length){ sel.innerHTML = '<option value="">No classes available</option>'; return; }
+      sel.innerHTML = '<option value="">\u2014 choose a class \u2014</option>' +
+        list.map((c,i)=>`<option value="${i}">${c.emoji||""} ${c.name.replace(/\s*\(.*\)\s*$/,"")}</option>`).join("");
     }
 
-    function cellHTML(c){
-      const on = enrolledIds.has(c.id);
-      const totalHours = ((c.duration_minutes||0)/60) * (c.weeks||1);
-      const sessionCents = c.session_price_cents || Math.round((c.price_cents||0) / (c.weeks||1));
-      const remaining = (c.capacity==null) ? null : Math.max(0, c.capacity - (c.seats_taken||0));
-      const full = remaining!==null && remaining<=0;
-      let seatsHtml = "";
-      if(remaining!==null){
-        if(full) seatsHtml = `<div class="seats full">Class full</div>`;
-        else if(remaining<=2) seatsHtml = `<div class="seats low">Only ${remaining} seat${remaining===1?"":"s"} left</div>`;
+    function pwOnClassChange(){
+      const idx=$("pwClass").value, optSel=$("pwOption"), priceEl=$("pwPrice"), btn=$("pwBtn");
+      if(idx===""){
+        optSel.innerHTML='<option value="">\u2014 then pick an option \u2014</option>';
+        optSel.disabled=true; priceEl.textContent="\u2014"; priceEl.classList.add("dim"); btn.disabled=true; return;
       }
-      const button = (full && !on)
-        ? `<button class="enroll" disabled>Class full</button>`
-        : on
-          ? `<button class="enroll added" onclick="goCheckout()">✓ Added · Pay now →</button>`
-          : `<button class="enroll" onclick="enrollAndPay('${c.id}',this)">Enroll &amp; pay →</button>`;
-      return `<div class="cell">
-        <div class="cell-time">${timeRangeOnly(c)}</div>
-        <div class="cell-name">${c.emoji||""} ${c.name.replace(/\s*\(.*\)\s*$/,"")}</div>
-        <div class="cell-dates">${termRange(c)}</div>
-        <div class="cell-price">${money(c.price_cents)}<span class="per"> full course · ${money(sessionCents)} starter session</span></div>
-        ${seatsHtml}
-        ${button}
-      </div>`;
+      const c=classes[parseInt(idx)], weeks=c.weeks||1, perSession=sessionPrice(c), dates=sessionDates(c);
+      let opts='<option value="">\u2014 pick a session or course \u2014</option>';
+      dates.forEach((d,i)=>{ opts+=`<option value="session:${i}">${_fmtDate(d)} \u00b7 Starter session \u2014 ${money(perSession)}</option>`; });
+      opts+=`<option value="full">Full course (all ${weeks} sessions) \u2014 ${money(c.price_cents)}</option>`;
+      optSel.innerHTML=opts; optSel.disabled=false;
+      priceEl.textContent="\u2014"; priceEl.classList.add("dim"); btn.disabled=true;
     }
+
+    function pwOnOptionChange(){
+      const classIdx=$("pwClass").value, optVal=$("pwOption").value;
+      const priceEl=$("pwPrice"), btn=$("pwBtn");
+      if(!classIdx||!optVal){ priceEl.textContent="\u2014"; priceEl.classList.add("dim"); btn.disabled=true; return; }
+      const c=classes[parseInt(classIdx)];
+      priceEl.textContent=optVal==="full"?money(c.price_cents):money(sessionPrice(c));
+      priceEl.classList.remove("dim"); btn.disabled=false;
+    }
+
+    async function pwCheckout(){
+      const classIdx=$("pwClass").value, optVal=$("pwOption").value;
+      if(!classIdx||!optVal) return;
+      const c=classes[parseInt(classIdx)];
+      const btn=$("pwBtn"); btn.disabled=true; btn.textContent="Opening\u2026";
+      if(optVal==="full"){
+        if(!enrolledIds.has(c.id)){
+          const {error}=await sb.from("enrollments").insert({user_id:user.id,class_id:c.id,status:"reserved"});
+          if(error){ toast("Couldn't add: "+error.message); btn.disabled=false; btn.textContent="Pay now \u2192"; return; }
+          await loadEnrollments(); renderSchedule(); renderCart();
+        }
+        showPanel("checkout",document.querySelector('.pill[data-panel="checkout"]'));
+        window.scrollTo({top:0,behavior:"smooth"});
+      } else {
+        const sessionIndex=parseInt(optVal.split(":")[1]);
+        const dates=sessionDates(c);
+        $("smTitle").textContent="Book a starter session";
+        $("smSubtitle").textContent=c.name.replace(/\s*\(.*\)\s*$/,"");
+        $("smClassName").textContent=c.name.replace(/\s*\(.*\)\s*$/,"");
+        $("smSessionMeta").textContent="Starter session \u00b7 "+_fmtLong(dates[sessionIndex]);
+        $("smPrice").textContent=money(sessionPrice(c));
+        await openSessionModal(c.id, sessionIndex);
+      }
+      btn.disabled=false; btn.textContent="Pay now \u2192";
+    }
+
+    async function openSessionModal(classId, sessionIndex){
+      const modal=$("sessionModal"), embedEl=$("session-checkout-embed"), successEl=$("smSuccess");
+      embedEl.innerHTML='<p style="font-family:var(--font-display);font-style:italic;color:var(--muted);padding:1rem 0">Preparing checkout\u2026</p>';
+      successEl.classList.remove("show"); $("smSummary").style.display="flex";
+      modal.classList.add("open"); document.body.style.overflow="hidden";
+      try{
+        const res=await fetch(SUPABASE_URL+"/functions/v1/create-checkout",{
+          method:"POST",
+          headers:{"Content-Type":"application/json","apikey":SUPABASE_ANON_KEY},
+          body:JSON.stringify({guest:true,class_id:classId,session_index:sessionIndex})
+        });
+        const data=await res.json();
+        if(!res.ok||!data.clientSecret) throw new Error(data.error||"Checkout failed");
+        if(!stripe) stripe=Stripe(STRIPE_PUBLISHABLE_KEY);
+        if(embeddedCheckout){embeddedCheckout.destroy();embeddedCheckout=null;}
+        embeddedCheckout=await stripe.initEmbeddedCheckout({clientSecret:data.clientSecret});
+        embedEl.innerHTML=""; embeddedCheckout.mount("#session-checkout-embed");
+      }catch(err){
+        embedEl.innerHTML='<p style="font-family:var(--font-display);font-style:italic;color:#c04;">Couldn\'t start checkout \u2014 please try again.</p>';
+        console.error(err);
+      }
+    }
+
+    function closeSessionModal(){
+      $("sessionModal").classList.remove("open"); document.body.style.overflow="";
+      if(embeddedCheckout){embeddedCheckout.destroy();embeddedCheckout=null;}
+      $("session-checkout-embed").innerHTML="";
+    }
+
+    document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSessionModal();});
+    document.getElementById("sessionModal").addEventListener("click",function(e){if(e.target===this)closeSessionModal();});
 
     /* ---------- enrollments ---------- */
     async function loadEnrollments(){
       const { data, error } = await sb.from("enrollments").select("id,status,class_id,classes(*)").eq("user_id",user.id);
-      if(error){ console.error(error); enrolledIds = new Set(); window._enr = []; return; }
-      window._enr = data || [];
-      enrolledIds = new Set(window._enr.map(e=>e.class_id));
-    }
-    function goCheckout(){
-      showPanel("checkout", document.querySelector('.pill[data-panel="checkout"]'));
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-    async function enrollAndPay(classId, btn){
-      if(!enrolledIds.has(classId)){
-        btn.disabled = true; const old = btn.textContent; btn.textContent = "Adding\u2026";
-        const { error } = await sb.from("enrollments").insert({ user_id:user.id, class_id:classId, status:"reserved" });
-        btn.disabled = false; btn.textContent = old;
-        if(error){
-          if((error.message||"").toLowerCase().includes("full")) toast("Sorry \u2014 this class just filled up.");
-          else toast("Couldn't add: "+error.message);
-          await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart();
-          return;
-        }
-        await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart();
-      }
-      goCheckout();
-    }
-    async function toggleEnroll(classId, btn){
-      if(enrolledIds.has(classId)){
-        const row = window._enr.find(e=>e.class_id===classId);
-        const { error } = await sb.from("enrollments").delete().eq("id",row.id);
-        if(error){ toast("Couldn't update: "+error.message); return; }
-        toast("Removed from your schedule");
-      } else {
-        const { error } = await sb.from("enrollments").insert({ user_id:user.id, class_id:classId, status:"reserved" });
-        if(error){
-          if((error.message||"").toLowerCase().includes("full")) toast("Sorry — this class just filled up.");
-          else toast("Couldn't reserve: "+error.message);
-          await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart();
-          return;
-        }
-        toast("Reserved — added to your schedule");
-      }
-      await loadEnrollments();
-      await loadClasses();          // refresh seats_taken so "seats left" stays accurate
-      renderSchedule(); renderCart();
+      if(error){ console.error(error); enrolledIds=new Set(); window._enr=[]; return; }
+      window._enr=data||[]; enrolledIds=new Set(window._enr.map(e=>e.class_id));
     }
 
     /* ---------- schedule ---------- */
-    // Every weekly session date for a course: start, +7 days, … × weeks
-    function sessionDates(c){
-      const out=[]; if(!c.starts_at) return out;
-      const start=new Date(c.starts_at), n=c.weeks||1;
-      for(let i=0;i<n;i++) out.push(new Date(start.getTime()+i*7*86400000).toISOString());
-      return out;
-    }
     function renderSchedule(){
-      const el = $("scheduleList"); el.classList.remove("loading");
-      const enrs = (window._enr||[]).filter(e=>e.classes && e.classes.starts_at);
-      if(!enrs.length){ el.innerHTML = `<div class="empty"><div class="big">🗓</div>Nothing booked yet — add a class from the catalogue.</div>`; return; }
-      // Expand each course into one entry per session date.
-      const items = [];
+      const el=$("scheduleList"); el.classList.remove("loading");
+      const enrs=(window._enr||[]).filter(e=>e.classes&&e.classes.starts_at);
+      if(!enrs.length){el.innerHTML='<div class="empty"><div class="big">\ud83d\uddd3</div>Nothing booked yet \u2014 pick a class above.</div>';return;}
+      const items=[];
       enrs.forEach(e=>{
-        const dates = sessionDates(e.classes), n = dates.length;
-        dates.forEach((iso,i)=> items.push({ iso, c:e.classes, status:e.status, idx:i+1, total:n }));
+        const dates=sessionDates(e.classes),n=dates.length;
+        dates.forEach((d,i)=>items.push({iso:d.toISOString(),c:e.classes,status:e.status,idx:i+1,total:n}));
       });
-      items.sort((a,b)=> new Date(a.iso)-new Date(b.iso));
-      el.innerHTML = items.map(it=>{
-        const c = it.c;
+      items.sort((a,b)=>new Date(a.iso)-new Date(b.iso));
+      el.innerHTML=items.map(it=>{
+        const c=it.c;
         return `<div class="sched-row">
           <div class="sched-date"><div class="d">${dayNum(it.iso)}</div><div class="m">${monAbbr(it.iso)}</div></div>
-          <div class="sched-info"><h3>${c.name}</h3><div class="meta">${fmtDate(it.iso)} · ${fmtRange(it.iso,c.duration_minutes)} · Week ${it.idx} of ${it.total}</div></div>
+          <div class="sched-info"><h3>${c.name}</h3><div class="meta">${fmtDate(it.iso)} \u00b7 ${fmtRange(it.iso,c.duration_minutes)} \u00b7 Week ${it.idx} of ${it.total}</div></div>
           <span class="tag ${it.status==="paid"?"paid":"reserved"}">${it.status==="paid"?"Paid":"Reserved"}</span>
         </div>`;
       }).join("");
@@ -593,15 +658,25 @@
 
     /* ---------- checkout cart ---------- */
     function renderCart(){
-      const rows = (window._enr||[]).filter(e=>e.classes && e.status!=="paid");
-      const el = $("cart");
-      if(!rows.length){ el.innerHTML=`<div class="empty"><div class="big">🧺</div>Nothing to pay for right now.</div>`; $("cartTotal").textContent="$0"; return; }
-      const total = rows.reduce((s,e)=>s+(e.classes.price_cents||0),0);
-      el.innerHTML = rows.map(e=>`<div class="cart-item"><span>${e.classes.name}</span><span style="display:flex;gap:1rem;align-items:center">${money(e.classes.price_cents)}<button class="x" onclick="toggleEnroll('${e.class_id}',this)">✕</button></span></div>`).join("")
-        + `<div class="total"><span>Total</span><span>${money(total)}</span></div>`;
-      $("cartTotal").textContent = money(total);
+      const rows=(window._enr||[]).filter(e=>e.classes&&e.status!=="paid");
+      const el=$("cart");
+      if(!rows.length){el.innerHTML='<div class="empty"><div class="big">\ud83e\uddf9</div>Nothing to pay for right now.</div>';$("cartTotal").textContent="$0";return;}
+      const total=rows.reduce((s,e)=>s+(e.classes.price_cents||0),0);
+      el.innerHTML=rows.map(e=>`<div class="cart-item"><span>${e.classes.name}</span><span style="display:flex;gap:1rem;align-items:center">${money(e.classes.price_cents)}<button class="x" onclick="removeEnrollment('${e.class_id}',this)">\u2715</button></span></div>`).join("")
+        +`<div class="total"><span>Total</span><span>${money(total)}</span></div>`;
+      $("cartTotal").textContent=money(total);
     }
 
+    async function removeEnrollment(classId,btn){
+      const row=(window._enr||[]).find(e=>e.class_id===classId);
+      if(!row) return;
+      const {error}=await sb.from("enrollments").delete().eq("id",row.id);
+      if(error){toast("Couldn't remove: "+error.message);return;}
+      toast("Removed from cart");
+      await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart();
+    }
+
+    /* ---------- checkout ---------- */
     /* ---------- checkout ---------- */
     function updatePayState(){
       const signed = $("signName").value.trim().length > 1;
