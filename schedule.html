@@ -1722,12 +1722,11 @@
 
       const dates = sessionDates(c);
       const sessionRows = dates.map((d, i) => {
-        const label = 'Session ' + (i + 1) + ' of ' + weeks;
         const dateStr = fmtDateLong(d);
         return '<div class="session-row">' +
           '<div class="session-row-info">' +
             '<div class="session-date">' + esc(dateStr) + '</div>' +
-            '<div class="session-label">' + esc(label) + '</div>' +
+            '<div class="session-label">Starter session · ' + (i + 1) + ' of ' + weeks + '</div>' +
           '</div>' +
           '<div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">' +
             '<span class="session-price">' + money(perSession) + '</span>' +
@@ -1746,14 +1745,14 @@
                 '<div class="class-format">' + esc(classFormat(c)) + '</div>' +
                 '<h4>' + esc(c.name) + '</h4>' +
               '</div>' +
-              '<div class="class-price">' + fullPrice + '</div>' +
+              '<div class="class-price">' + fullPrice + ' full course</div>' +
               '<span class="class-chevron" aria-hidden="true">+</span>' +
             '</summary>' +
             '<div class="class-details-body">' +
               '<p class="class-desc">' + esc(c.description) + '</p>' +
               instructor + note +
               '<div class="session-list">' + sessionRows + '</div>' +
-              '<span class="session-note">Book individual sessions at ' + money(perSession) + ' each, or enroll in the full course for ' + fullPrice + ' via your member account.</span>' +
+              '<span class="session-note">' + money(perSession) + ' starter session · ' + fullPrice + ' full course via member account</span>' +
             '</div>' +
           '</details>' +
         '</article>';
@@ -1851,7 +1850,7 @@
         document.getElementById('modalSubtitle').textContent  = c.name;
         document.getElementById('modalClassName').textContent = c.name;
         document.getElementById('modalSessionMeta').textContent =
-          'Session ' + (sessionIndex + 1) + ' of ' + weeks + ' · ' + fmtDateLong(dates[sessionIndex]);
+          'Starter session · ' + fmtDateLong(dates[sessionIndex]);
         document.getElementById('modalPrice').textContent = money(perSession);
       }
 
@@ -1961,7 +1960,7 @@
       // Build options: one per session + full course at bottom
       let opts = '<option value="">— pick a session or course —</option>';
       dates.forEach((d, i) => {
-        const label = fmtDate(d) + ' · Session ' + (i + 1) + ' of ' + weeks;
+        const label = fmtDate(d) + ' · Starter session';
         opts += `<option value="session:${i}">${label} — ${money(perSession)}</option>`;
       });
       opts += `<option value="full">Full course (all ${weeks} sessions) — ${money(c.price_cents)}</option>`;
@@ -2029,7 +2028,7 @@
       document.getElementById('modalTitle').textContent    = 'Book your session';
       document.getElementById('modalSubtitle').textContent = c.name;
       document.getElementById('modalClassName').textContent = c.name;
-      document.getElementById('modalSessionMeta').textContent = 'Session ' + (sessionIndex + 1) + ' of ' + weeks + ' · ' + dateLabel;
+      document.getElementById('modalSessionMeta').textContent = 'Starter session · ' + dateLabel;
       document.getElementById('modalPrice').textContent    = money(perSession);
 
       const fakeEvent = { stopPropagation: () => {} };

@@ -2126,7 +2126,7 @@
 
       let opts = '<option value="">— pick a session or course —</option>';
       dates.forEach((d, i) => {
-        opts += `<option value="session:${i}">${_fmtDate(d)} · Session ${i + 1} of ${weeks} — ${_money(perSession)}</option>`;
+        opts += `<option value="session:${i}">${_fmtDate(d)} · Starter session — ${_money(perSession)}</option>`;
       });
       opts += `<option value="full">Full course (all ${weeks} sessions) — ${_money(c.price_cents)}</option>`;
 
@@ -2182,7 +2182,7 @@
       document.getElementById('modalSubtitle').textContent   = c.name;
       document.getElementById('modalClassName').textContent  = c.name;
       document.getElementById('modalSessionMeta').textContent =
-        'Session ' + (sessionIndex + 1) + ' of ' + weeks + ' · ' + _fmtDateLong(dates[sessionIndex]);
+        'Starter session · ' + _fmtDateLong(dates[sessionIndex]);
       document.getElementById('modalPrice').textContent      = _money(perSession);
 
       await _openCheckout(c.id, sessionIndex);
