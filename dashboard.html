@@ -380,41 +380,13 @@
       return `${weekdayPlural(c.starts_at)} · ${range} · ${fmtRange(c.starts_at,c.duration_minutes)}`;
     }
 
-/* ---------- e2e boot: Handles Members and Guests ---------- */
+    /* ---------- boot: require a session ---------- */
     (async function boot(){
-      const params = new URLSearchParams(window.location.search);
-      const sessionId = params.get("session_id"); // Stripe's return variable
-      const isPaidMember = params.get("paid");    // Your existing member variable
-
       const { data:{ session } } = await sb.auth.getSession();
-
-      // 1. GATEKEEPER: If no session AND not a successful checkout, redirect to login
-      if(!session && !sessionId){ 
-        window.location.href = "login.html"; 
-        return; 
-      }
-
-      // 2. GUEST SUCCESS: If no session but just paid, show Guest Receipt
-      if (!session && sessionId) {
-         document.getElementById('gate').innerHTML = `
-            <div style="text-align:center; padding: 4rem 2rem; font-family:var(--font-display); background:var(--bg); min-height:100vh;">
-              <span class="eyebrow">Enrollment Complete</span>
-              <h1 style="font-size:3rem; color:var(--sage-deep); margin: 1rem 0;">Success!</h1>
-              <p style="font-size:1.2rem; color:var(--ink-soft); max-width:450px; margin: 0 auto 2rem auto; line-height:1.6;">
-                Your seat is secured. We've sent a confirmation and your course syllabus to your email address.
-              </p>
-              <a href="index.html" class="btn-submit" style="display:inline-block; text-decoration:none; padding: 1rem 2rem;">Return to Homepage</a>
-            </div>
-         `;
-         // Clean URL
-         history.replaceState({}, "", window.location.pathname);
-         return;
-      }
-
-      // 3. MEMBER PATH: If we reach here, the user is logged in
+      if(!session){ window.location.href = "login.html"; return; }
       user = session.user;
 
-      // Set name + avatar
+      // name + avatar
       let name = user.user_metadata?.full_name || user.user_metadata?.name;
       if(!name){
         const { data:prof } = await sb.from("profiles").select("full_name").eq("id",user.id).single();
@@ -423,41 +395,38 @@
       $("memberName").textContent = name;
       $("avatar").textContent = name.charAt(0).toUpperCase();
 
-      // Show the app
       $("gate").style.display = "none";
       $("app").style.display = "block";
 
-      // Initialize the portal
       renderChips("ideaChips", ideaTypes);
       wireStars();
-      await loadProfile();   
-      await loadEnrollments();
+      await loadProfile();   // builds interest chips + availability grid, pre-filled
+      await loadEnrollments();   // sets enrolledIds, used by class buttons
       await loadClasses();
       renderSchedule();
       renderCart();
       fillFeedbackClasses();
-      
-      // Handle the "Paid" toast for logged-in members
-      if(isPaidMember || sessionId) {
-          handleMemberSuccess();
-      }
+      handleCheckoutReturn();
     })();
 
-    /* Specifically for logged-in members to refresh their data after paying */
-    async function handleMemberSuccess(){
+    /* If we just came back from Stripe, show the result. The webhook
+       marks rows paid server-side; we refresh shortly after to catch it. */
+    async function handleCheckoutReturn(){
+      const params = new URLSearchParams(window.location.search);
+      if(params.get("paid")){
         toast("Payment received — see you in class! 🎉");
         showPanel("schedule", document.querySelector('.pill[data-panel="schedule"]'));
-        // Refresh data to show 'Paid' tags
-        setTimeout(async ()=>{ 
-            await loadEnrollments(); 
-            renderClasses(); 
-            renderSchedule(); 
-            renderCart(); 
-        }, 1500);
-        history.replaceState({}, "", window.location.pathname);
+        setTimeout(async ()=>{ await loadEnrollments(); renderClasses(); renderSchedule(); renderCart(); }, 2500);
+      } else if(params.get("canceled")){
+        toast("Checkout canceled — your reservations are still saved.");
+      }
+      if(params.get("paid") || params.get("canceled")){
+        history.replaceState({}, "", window.location.pathname);  // clean the URL
+      }
     }
 
     async function signOut(){ await sb.auth.signOut(); window.location.href = "login.html"; }
+
     /* ---------- panels ---------- */
     function showPanel(id, btn){
       document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
@@ -547,195 +516,129 @@
       </div>`;
     }
 
-/* ---------- ENROLLMENTS & PRICING ---------- */
-
-    // Helper to calculate price based on enrollment type
-    function getPrice(enrollment) {
-      if (enrollment.is_single_session) {
-        return Math.round(enrollment.classes.price_cents / (enrollment.classes.weeks || 4)) + 500;
-      }
-      return enrollment.classes.price_cents;
-    }
-
-    async function loadEnrollments() {
-      const { data, error } = await sb.from("enrollments").select("id,status,class_id,is_single_session,classes(*)").eq("user_id", user.id);
-      if (error) { console.error(error); enrolledIds = new Set(); window._enr = []; return; }
+    /* ---------- enrollments ---------- */
+    async function loadEnrollments(){
+      const { data, error } = await sb.from("enrollments").select("id,status,class_id,classes(*)").eq("user_id",user.id);
+      if(error){ console.error(error); enrolledIds = new Set(); window._enr = []; return; }
       window._enr = data || [];
-      enrolledIds = new Set(window._enr.map(e => e.class_id));
+      enrolledIds = new Set(window._enr.map(e=>e.class_id));
     }
-
-    function cellHTML(c) {
-      const on = enrolledIds.has(c.id);
-      const existingEnr = window._enr ? window._enr.find(e => e.class_id === c.id) : null;
-      const isSingle = existingEnr?.is_single_session;
-
-      const fullPrice = c.price_cents;
-      const singlePrice = Math.round(fullPrice / (c.weeks || 4)) + 500;
-
-      const remaining = (c.capacity == null) ? null : Math.max(0, c.capacity - (c.seats_taken || 0));
-      const full = remaining !== null && remaining <= 0;
-
-      let seatsHtml = "";
-      if (remaining !== null) {
-        if (full) seatsHtml = `<div class="seats full">Class full</div>`;
-        else if (remaining <= 2) seatsHtml = `<div class="seats low">Only ${remaining} seat${remaining === 1 ? "" : "s"} left</div>`;
-      }
-
-      if (on) {
-        return `<div class="cell">
-          <div class="cell-time">${timeRangeOnly(c)}</div>
-          <div class="cell-name">${c.emoji || ""} ${c.name}</div>
-          <div class="cell-dates">${isSingle ? 'Single Session: ' + monthDay(c.starts_at) : termRange(c)}</div>
-          <button class="enroll added" onclick="goCheckout()">✓ ${isSingle ? 'Taster' : 'Full Course'} Added · Pay now →</button>
-        </div>`;
-      }
-
-      return `<div class="cell">
-        <div class="cell-time">${timeRangeOnly(c)}</div>
-        <div class="cell-name">${c.emoji || ""} ${c.name}</div>
-        <div class="cell-dates">${termRange(c)}</div>
-        <div style="margin-top:0.8rem; display:flex; flex-direction:column; gap:0.6rem;">
-          <button class="enroll" ${full ? 'disabled' : ''} onclick="enrollAndPay('${c.id}', false, this)">
-            Full 4-Week Course — ${money(fullPrice)}
-          </button>
-          <button class="enroll" style="background:transparent; color:var(--sage-deep); border-color:var(--sage-pale)" 
-            ${full ? 'disabled' : ''} onclick="enrollAndPay('${c.id}', true, this)">
-            Single Session Taster — ${money(singlePrice)}
-          </button>
-        </div>
-        ${seatsHtml}
-      </div>`;
+    function goCheckout(){
+      showPanel("checkout", document.querySelector('.pill[data-panel="checkout"]'));
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-
-    async function enrollAndPay(classId, isSingle, btn) {
-      btn.disabled = true;
-      const old = btn.textContent;
-      btn.textContent = "Adding...";
-      
-      const { error } = await sb.from("enrollments").insert({ 
-        user_id: user.id, 
-        class_id: classId, 
-        status: "reserved",
-        is_single_session: isSingle 
-      });
-
-      if (error) {
+    async function enrollAndPay(classId, btn){
+      if(!enrolledIds.has(classId)){
+        btn.disabled = true; const old = btn.textContent; btn.textContent = "Adding\u2026";
+        const { error } = await sb.from("enrollments").insert({ user_id:user.id, class_id:classId, status:"reserved" });
         btn.disabled = false; btn.textContent = old;
-        if ((error.message || "").toLowerCase().includes("full")) toast("Sorry — this class just filled up.");
-        else toast("Couldn't add: " + error.message);
-        return;
+        if(error){
+          if((error.message||"").toLowerCase().includes("full")) toast("Sorry \u2014 this class just filled up.");
+          else toast("Couldn't add: "+error.message);
+          await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart();
+          return;
+        }
+        await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart();
       }
-
-      await loadEnrollments();
-      await loadClasses();
-      renderSchedule();
-      renderCart();
       goCheckout();
     }
-
-    async function toggleEnroll(classId) {
-      const row = window._enr.find(e => e.class_id === classId);
-      if (!row) return;
-      const { error } = await sb.from("enrollments").delete().eq("id", row.id);
-      if (error) { toast("Couldn't remove: " + error.message); return; }
-      
+    async function toggleEnroll(classId, btn){
+      if(enrolledIds.has(classId)){
+        const row = window._enr.find(e=>e.class_id===classId);
+        const { error } = await sb.from("enrollments").delete().eq("id",row.id);
+        if(error){ toast("Couldn't update: "+error.message); return; }
+        toast("Removed from your schedule");
+      } else {
+        const { error } = await sb.from("enrollments").insert({ user_id:user.id, class_id:classId, status:"reserved" });
+        if(error){
+          if((error.message||"").toLowerCase().includes("full")) toast("Sorry — this class just filled up.");
+          else toast("Couldn't reserve: "+error.message);
+          await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart();
+          return;
+        }
+        toast("Reserved — added to your schedule");
+      }
       await loadEnrollments();
-      await loadClasses();
-      renderSchedule();
-      renderCart();
+      await loadClasses();          // refresh seats_taken so "seats left" stays accurate
+      renderSchedule(); renderCart();
     }
 
-    /* ---------- SCHEDULE & CART RENDERING ---------- */
-
-    function renderSchedule() {
+    /* ---------- schedule ---------- */
+    // Every weekly session date for a course: start, +7 days, … × weeks
+    function sessionDates(c){
+      const out=[]; if(!c.starts_at) return out;
+      const start=new Date(c.starts_at), n=c.weeks||1;
+      for(let i=0;i<n;i++) out.push(new Date(start.getTime()+i*7*86400000).toISOString());
+      return out;
+    }
+    function renderSchedule(){
       const el = $("scheduleList"); el.classList.remove("loading");
-      const enrs = (window._enr || []).filter(e => e.classes && e.classes.starts_at);
-      if (!enrs.length) { el.innerHTML = `<div class="empty"><div class="big">🗓</div>Nothing booked yet.</div>`; return; }
-
+      const enrs = (window._enr||[]).filter(e=>e.classes && e.classes.starts_at);
+      if(!enrs.length){ el.innerHTML = `<div class="empty"><div class="big">🗓</div>Nothing booked yet — add a class from the catalogue.</div>`; return; }
+      // Expand each course into one entry per session date.
       const items = [];
-      enrs.forEach(e => {
-        const dates = sessionDates(e.classes);
-        const visibleDates = e.is_single_session ? [dates[0]] : dates;
-        visibleDates.forEach((iso, i) => {
-          items.push({ iso, c: e.classes, status: e.status, idx: i + 1, total: dates.length, isSingle: e.is_single_session });
-        });
+      enrs.forEach(e=>{
+        const dates = sessionDates(e.classes), n = dates.length;
+        dates.forEach((iso,i)=> items.push({ iso, c:e.classes, status:e.status, idx:i+1, total:n }));
       });
-
-      items.sort((a, b) => new Date(a.iso) - new Date(b.iso));
-      el.innerHTML = items.map(it => `
-        <div class="sched-row">
+      items.sort((a,b)=> new Date(a.iso)-new Date(b.iso));
+      el.innerHTML = items.map(it=>{
+        const c = it.c;
+        return `<div class="sched-row">
           <div class="sched-date"><div class="d">${dayNum(it.iso)}</div><div class="m">${monAbbr(it.iso)}</div></div>
-          <div class="sched-info">
-            <h3>${it.c.name} ${it.isSingle ? '(Taster)' : ''}</h3>
-            <div class="meta">${fmtDate(it.iso)} · ${fmtRange(it.iso, it.c.duration_minutes)} · ${it.isSingle ? 'Single Session' : `Week ${it.idx} of ${it.total}`}</div>
-          </div>
-          <span class="tag ${it.status === "paid" ? "paid" : "reserved"}">${it.status === "paid" ? "Paid" : "Reserved"}</span>
-        </div>`).join("");
+          <div class="sched-info"><h3>${c.name}</h3><div class="meta">${fmtDate(it.iso)} · ${fmtRange(it.iso,c.duration_minutes)} · Week ${it.idx} of ${it.total}</div></div>
+          <span class="tag ${it.status==="paid"?"paid":"reserved"}">${it.status==="paid"?"Paid":"Reserved"}</span>
+        </div>`;
+      }).join("");
     }
 
-    function renderCart() {
-      const rows = (window._enr || []).filter(e => e.classes && e.status !== "paid");
+    /* ---------- checkout cart ---------- */
+    function renderCart(){
+      const rows = (window._enr||[]).filter(e=>e.classes && e.status!=="paid");
       const el = $("cart");
-      if (!rows.length) { el.innerHTML = `<div class="empty"><div class="big">🧺</div>Nothing to pay for right now.</div>`; $("cartTotal").textContent = "$0"; return; }
-
-      let total = 0;
-      const html = rows.map(e => {
-        const price = getPrice(e);
-        total += price;
-        return `
-          <div class="cart-item">
-            <span><strong>${e.classes.name}</strong><br><small>${e.is_single_session ? 'Single Session' : 'Full Course'}</small></span>
-            <span style="display:flex; gap:1rem; align-items:center">${money(price)}<button class="x" onclick="toggleEnroll('${e.class_id}')">✕</button></span>
-          </div>`;
-      }).join("");
-
-      el.innerHTML = html + `<div class="total"><span>Total</span><span>${money(total)}</span></div>`;
+      if(!rows.length){ el.innerHTML=`<div class="empty"><div class="big">🧺</div>Nothing to pay for right now.</div>`; $("cartTotal").textContent="$0"; return; }
+      const total = rows.reduce((s,e)=>s+(e.classes.price_cents||0),0);
+      el.innerHTML = rows.map(e=>`<div class="cart-item"><span>${e.classes.name}</span><span style="display:flex;gap:1rem;align-items:center">${money(e.classes.price_cents)}<button class="x" onclick="toggleEnroll('${e.class_id}',this)">✕</button></span></div>`).join("")
+        + `<div class="total"><span>Total</span><span>${money(total)}</span></div>`;
       $("cartTotal").textContent = money(total);
     }
 
-    /* ---------- CHECKOUT ---------- */
-
-    function updatePayState() {
+    /* ---------- checkout ---------- */
+    function updatePayState(){
       const signed = $("signName").value.trim().length > 1;
       const agreed = $("agreeBox").checked;
       $("payBtn").disabled = !(signed && agreed);
     }
-
-    async function startCheckout() {
-      const rows = (window._enr || []).filter(e => e.classes && e.status !== "paid");
-      if (!rows.length) { toast("Reserve a class first 🧺"); return; }
+    async function startCheckout(){
+      const rows = (window._enr||[]).filter(e=>e.classes && e.status!=="paid");
+      if(!rows.length){ toast("Reserve a class first 🧺"); return; }
       const name = $("signName").value.trim();
-      if (name.length < 2 || !$("agreeBox").checked) { toast("Please sign and agree to the policies first."); return; }
-
-      const btn = $("payBtn"); 
-      btn.disabled = true; btn.textContent = "Loading payment...";
-
-      const { error: aErr } = await sb.from("agreements").insert({ user_id: user.id, signed_name: name });
-      if (aErr) { btn.disabled = false; btn.textContent = "Pay with card"; toast("Agreement error: " + aErr.message); return; }
-
+      if(name.length < 2 || !$("agreeBox").checked){ toast("Please sign and agree to the policies first."); return; }
+      const btn = $("payBtn"); const old = btn.textContent;
+      btn.disabled = true; btn.textContent = "Loading payment…";
+      // Record the signed waiver/agreement before showing the payment form.
+      const { error: aErr } = await sb.from("agreements").insert({ user_id:user.id, signed_name:name });
+      if(aErr){ btn.disabled=false; btn.textContent=old; toast("Couldn't save your agreement: "+aErr.message); return; }
       const giftCode = ($("giftCode").value || "").trim().toUpperCase();
       const { data, error } = await sb.functions.invoke("create-checkout", { body: { giftCode } });
-
-      if (error || !data?.clientSecret) {
-        btn.disabled = false; btn.textContent = "Pay with card";
-        toast("Checkout error: " + (error?.message || data?.error || "Check your internet"));
+      if(error || !data?.clientSecret){
+        btn.disabled = false; btn.textContent = old;
+        toast("Couldn't start checkout: " + (error?.message || data?.error || "unknown error"));
         return;
       }
-
+      // Mount Stripe's embedded payment form right here — no redirect.
       try {
-        if (!stripe) stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-        if (embeddedCheckout) { embeddedCheckout.destroy(); }
+        if(!stripe) stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+        if(embeddedCheckout){ embeddedCheckout.destroy(); embeddedCheckout = null; }
         embeddedCheckout = await stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
         embeddedCheckout.mount("#checkout-embed");
-        btn.style.display = "none";
-      } catch (e) {
-        btn.disabled = false; btn.textContent = "Pay with card";
-        toast("Stripe error: " + e.message);
+        btn.style.display = "none";   // hide our button; the form has its own Pay button
+      } catch(e){
+        btn.disabled = false; btn.textContent = old; btn.style.display = "";
+        toast("Couldn't load the payment form: " + (e?.message || e));
       }
     }
 
-
-    
     /* ---------- chips & stars ---------- */
     function renderChips(elId, tags, selected){
       const sel = selected instanceof Set ? selected : new Set();
