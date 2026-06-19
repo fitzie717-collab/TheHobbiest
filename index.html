@@ -387,7 +387,7 @@
       margin-top: 1rem;
     }
 
-    /* Hero CTA — dual button */
+    /* Hero CTA — Purchase Button */
     .hero-cta {
       margin-top: 2.5rem;
       display: flex;
@@ -398,38 +398,71 @@
     .btn-hero {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 1.05rem 1.9rem;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1.1rem 2.2rem;
       border-radius: 999px;
-      font-family: inherit;
-      font-size: 0.98rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
       font-weight: 500;
-      letter-spacing: 0.01em;
+      letter-spacing: 0.02em;
       text-decoration: none;
-      transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease);
+      transition: all 0.3s var(--ease);
       white-space: nowrap;
+      border: 1px solid var(--sage);
     }
     .btn-hero-primary {
       background: var(--sage);
       color: var(--bg);
-      border: 1px solid var(--sage);
     }
     .btn-hero-primary:hover {
       background: var(--sage-deep);
       border-color: var(--sage-deep);
-    }
-    .btn-hero-primary:active { transform: translateY(1px); }
-    .btn-hero-secondary {
-      background: transparent;
-      color: var(--sage-deep);
-      border: 1px solid var(--sage);
-    }
-    .btn-hero-secondary:hover {
-      background: var(--sage);
-      color: var(--bg);
+      transform: translateY(-2px);
     }
 
-    /* Hero seal */
+    /* Style for the Class Dropdown Menu */
+    #classSelector {
+      width: 100%;
+      max-width: 500px;
+      padding: 1.2rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--sage-deep);
+      background-color: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      /* Custom arrow icon */
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%237A8A6B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1.2em;
+    }
+
+    #classSelector:focus {
+      outline: none;
+      border-color: var(--sage);
+      box-shadow: 0 0 0 3px rgba(122, 138, 107, 0.1);
+    }
+
+    /* Help / Contact link style */
+    .enroll-help {
+      margin-top: 1.5rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .enroll-help a {
+      color: var(--sage-deep);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Hero seal wrap */
     .hero-seal-wrap {
       position: relative;
       max-width: 540px;
@@ -1249,24 +1282,27 @@
     }
 
 <!-- =========================================================
-       ENROLLMENT SECTION (The Button's Destination)
-       ========================================================= -->
-  <section id="enroll" style="padding: var(--section-y) 0; background: var(--surface); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);">
-    <div class="container">
-      <div data-reveal>
-        <span class="eyebrow">Instant Enrollment</span>
-        <h2 class="h-section">Join a <em>Session</em>.</h2>
-        <p class="lede">Choose a course below to secure your seat instantly. Guest checkout available.</p>
-      </div>
+       ENROLLMENT SECTION
+     ========================================================= -->
+<section id="enroll" style="padding: var(--section-y) 0; background: var(--surface);">
+  <div class="container" style="max-width: 600px; text-align: center;">
+    <span class="eyebrow">Instant Enrollment</span>
+    <h2 class="h-section" style="margin-bottom: 2rem;">Join a <em>Session</em>.</h2>
+    
+    <select id="classSelector">
+       <option value="" disabled selected>Select a class and date...</option>
+       <!-- The Javascript will automatically fill this -->
+    </select>
 
-      <div id="guestClassGrid" class="bundle-grid" style="margin-top: 4rem;">
-        <!-- Javascript fills this with your Supabase data -->
-        <p style="font-family: var(--font-display); font-style: italic; color: var(--muted);">Loading curriculum...</p>
-      </div>
-    </div>
-  </section>
+    <button id="enrollBtn" class="btn-hero btn-hero-primary" style="width: 100%; border:none;">Purchase to Enroll →</button>
 
-<!-- THE LAUNCH (Existing Section) -->
+    <p class="enroll-help">
+      Having trouble? Contact <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+    </p>
+  </div>
+</section>
+
+<!-- THE LAUNCH (Phase info) -->
 <section class="launch" id="launch">
   <div class="container">
     <div class="launch-grid">
@@ -1293,7 +1329,7 @@
   </div>
 </section>
 
-<!-- FOOTER (Existing) -->
+<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -1329,7 +1365,7 @@
   </div>
 </footer>
 
-<!-- GUEST CHECKOUT MODAL -->
+<!-- GUEST CHECKOUT MODAL (Hidden by default) -->
 <div id="emailOverlay" style="display:none; position:fixed; inset:0; background:rgba(45, 52, 38, 0.95); z-index:1000; align-items:center; justify-content:center; padding:1.5rem; backdrop-filter: blur(5px);">
   <div style="background:var(--bg); padding:2.5rem; border-radius:8px; max-width:450px; width:100%; position:relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 1px solid var(--hairline);">
     <button onclick="closeGuestCheckout()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--muted);">×</button>
@@ -1348,6 +1384,7 @@
   </div>
 </div>
 
+<!-- SCRIPTS -->
 <script src="https://js.stripe.com/v3/"></script>
 <script>
   const SB_URL = 'https://uprdczhhgwzfypkudqjg.supabase.co';
@@ -1355,45 +1392,46 @@
   let selectedClassId = null;
   const stripeGuest = Stripe('pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS');
 
-  async function loadGuestCurriculum() {
-    const grid = document.getElementById('guestClassGrid');
+  // Load classes into the dropdown
+  async function loadDropdownCurriculum() {
+    const selector = document.getElementById('classSelector');
     try {
       const res = await fetch(`${SB_URL}/rest/v1/classes?is_published=eq.true&select=*&order=starts_at.asc`, {
         headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
       });
       const classes = await res.json();
       
-      grid.innerHTML = classes.map(c => {
+      if (classes.length === 0) {
+        selector.innerHTML = '<option>No sessions currently scheduled</option>';
+        return;
+      }
+
+      selector.innerHTML = '<option value="" disabled selected>Choose a skill session...</option>';
+      classes.forEach(c => {
         const remaining = c.capacity - (c.seats_taken || 0);
-        let statusTag = '';
-        let buttonText = 'Buy Seat — ' + '$' + Math.round(c.price_cents/100);
-        let btnDisabled = '';
-
-        // Marketing Scarcity Logic
-        if (remaining <= 0) {
-          statusTag = `<div style="color:#8a3a28; font-weight:600; font-family:var(--font-body); font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem;">Sold Out</div>`;
-          buttonText = 'Class Full';
-          btnDisabled = 'disabled style="opacity:0.5; cursor:not-allowed; background:var(--muted);"';
-        } else if (remaining === 1) {
-          statusTag = `<div style="color:#A89878; font-weight:600; font-family:var(--font-body); font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem;">Only 1 seat left</div>`;
+        if (remaining > 0) {
+          const dateObj = new Date(c.starts_at);
+          const dateString = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+          const option = document.createElement('option');
+          option.value = c.id;
+          option.textContent = `${c.name} — ${dateString} ($${Math.round(c.price_cents/100)})`;
+          selector.appendChild(option);
         }
-
-        return `
-          <div class="bundle-card">
-            <div class="bundle-tag">${c.emoji || '🎓'} ${c.category || 'Curriculum'}</div>
-            <h4 class="bundle-card-title">${c.name}</h4>
-            <p class="bundle-card-body" style="margin-bottom:1.5rem;">${c.description.substring(0, 120)}...</p>
-            ${statusTag}
-            <button onclick="openGuestCheckout('${c.id}')" class="nav-link-primary" ${btnDisabled} style="border:none; cursor:pointer; width:100%; text-align:center; display:block;">
-              ${buttonText}
-            </button>
-          </div>
-        `;
-      }).join('');
+      });
     } catch (e) {
-      grid.innerHTML = "<p>Curriculum currently offline. Please refresh.</p>";
+      selector.innerHTML = "<option>Curriculum offline. Please refresh.</option>";
     }
   }
+
+  // Handle the Enroll Button Click
+  document.getElementById('enrollBtn').addEventListener('click', () => {
+    const val = document.getElementById('classSelector').value;
+    if (!val) {
+      alert("Please select a class first.");
+      return;
+    }
+    openGuestCheckout(val);
+  });
 
   function openGuestCheckout(classId) {
     selectedClassId = classId;
@@ -1409,6 +1447,7 @@
     document.body.style.overflow = '';
   }
 
+  // Stripe Checkout Logic
   document.getElementById('startPayBtn').addEventListener('click', async () => {
     const email = document.getElementById('guestEmailInput').value;
     if (!email || !email.includes('@')) return alert("Please provide a valid email address.");
@@ -1440,46 +1479,22 @@
     }
   });
 
-  loadGuestCurriculum();
-</script>
+  // Init Data
+  loadDropdownCurriculum();
 
-<script>
-    // Existing Reveal logic
-    const reveals = document.querySelectorAll('[data-reveal]');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('is-visible');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-    reveals.forEach((r) => io.observe(r));
-
-    // Existing Lightbox logic
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxClose = document.getElementById('lightbox-close');
-
-    document.querySelectorAll('.space-photo').forEach((el) => {
-      el.addEventListener('click', () => {
-        const src = el.getAttribute('data-src');
-        if (!src) return;
-        lightboxImg.src = src;
-        lightbox.classList.add('is-open');
-        document.body.style.overflow = 'hidden';
-      });
+  // Scroll Reveal Logic
+  const reveals = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
     });
-
-    const closeLightbox = () => {
-      lightbox.classList.remove('is-open');
-      document.body.style.overflow = '';
-    };
-    if(lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  reveals.forEach((r) => io.observe(r));
 </script>
-</body>
-</html>
-
+    
     /* ============================================================
        LIGHTBOX (for clickable photos)
        ============================================================ */
@@ -1597,9 +1612,9 @@
             <p>The Hobbiest is a private skills club built around the belief that confidence comes from capability. Through expert-led, immersive experiences across a range of topics, members build dynamic skillsets, cultivate taste, and curate a life of their own design.</p>
           </div>
             <!-- ADD THIS BUTTON BLOCK HERE -->
-  <div class="hero-cta" data-reveal style="margin-top: 2.5rem;">
-    <a href="#enroll" class="btn-hero btn-hero-primary" style="text-decoration:none;">Join a Session →</a>
-  </div>
+<div class="hero-cta" data-reveal style="margin-top: 2.5rem;">
+    <a href="#enroll" class="btn-hero btn-hero-primary">Purchase to Enroll →</a>
+</div>
 </div>
        
 
