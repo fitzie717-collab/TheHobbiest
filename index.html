@@ -8,25 +8,103 @@
   <title>The Hobbiest — Skills Club, Pittston, PA</title>
   <meta name="description" content="A private members skills club for adults. Opening July 2026 in downtown Pittston, Pennsylvania." />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="The Hobbiest — Skills Club" />
-  <meta property="og:description" content="A private members skills club for adults. Opening July 2026 in downtown Pittston, PA." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://thehobbiestskillsclub.com" />
-  <meta property="og:image" content="https://thehobbiestskillsclub.com/og-image.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-
-  <!-- Beehiiv attribution tracking (tracks signup sources) -->
-  <script type="text/javascript" async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
-
-  <!-- Fonts: Fraunces (display) + DM Sans (body) -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
 
+  <style>
+    :root {
+      --bg:        #F1ECDF;
+      --bg-warm:   #EAE3D2;
+      --surface:   #FAF7F0;
+      --ink:       #4E5A41;
+      --ink-soft:  #6B7459;
+      --muted:     #8A8170;
+      --hairline:  #D9D2BE;
+      --sage:      #7A8A6B;
+      --sage-deep: #4E5A41;
+      --sage-pale: #B5BFA8;
+      --taupe:     #A89878;
+      --font-display: "Fraunces", "Times New Roman", serif;
+      --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      --max-w:    1280px;
+      --gutter:   clamp(1.25rem, 4vw, 3rem);
+      --section-y: clamp(4rem, 9vw, 8rem);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: var(--font-display); font-size: 16px; line-height: 1.6; color: var(--ink); background: var(--bg); overflow-x: hidden; }
+    
+    .container { max-width: var(--max-w); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+
+    /* Nav */
+    .nav { position: absolute; top: 0; left: 0; right: 0; z-index: 10; padding: 1.75rem 0; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .wordmark { font-family: var(--font-display); font-size: 1.2rem; font-weight: 400; font-style: italic; color: var(--sage); text-decoration: none; }
+    .nav-link { font-family: var(--font-body); font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); text-decoration: none; font-weight: 500; }
+
+    /* Buttons */
+    .btn-hero { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1.1rem 2.2rem; border-radius: 999px; font-family: var(--font-body); font-size: 1rem; font-weight: 500; text-decoration: none; transition: all 0.3s var(--ease); border: 1px solid var(--sage); cursor: pointer; }
+    .btn-hero-primary { background: var(--sage); color: var(--bg); }
+    .btn-hero-primary:hover { background: var(--sage-deep); transform: translateY(-2px); }
+
+    /* Dropdown Styling */
+    #classSelector {
+      width: 100%; max-width: 500px; padding: 1.2rem; font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: var(--sage-deep); background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px; cursor: pointer; margin-bottom: 1.5rem;
+      appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%237A8A6B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center; background-size: 1.2em;
+    }
+
+    /* Sections */
+    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 80px; }
+    .eyebrow { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 600; margin-bottom: 1.5rem; display: block; }
+    .h-section { font-size: clamp(2.3rem, 5vw, 4rem); color: var(--sage-deep); line-height: 1.1; }
+    .h-section em { font-style: italic; color: var(--sage); font-weight: 400; }
+    .lede { font-size: 1.4rem; max-width: 32rem; color: var(--sage-deep); margin: 1.5rem 0; }
+
+    /* Footer */
+    footer { background: var(--bg-warm); padding: 4rem 0; border-top: 1px solid var(--hairline); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; margin-bottom: 3rem; }
+    .footer-bottom { border-top: 1px solid var(--hairline); padding-top: 2rem; font-size: 0.8rem; color: var(--muted); display: flex; justify-content: space-between; }
+
+    /* Reveal animations */
+    [data-reveal] { opacity: 0; transform: translateY(20px); transition: all 0.8s var(--ease); }
+    [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; } .hero-top { grid-template-columns: 1fr; text-align: center; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="wordmark">The Hobbiest</a>
+      <a href="login.html" class="nav-link">Member Log In</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-top" style="display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 4rem;">
+        <div class="hero-left">
+          <h1 class="hero-quote" data-reveal>Lessons, <em>for Life</em>.</h1>
+          <p class="lede" data-reveal>The Hobbiest is a private skills club built around the belief that confidence comes from capability. Build dynamic skillsets, cultivate taste, and curate a life of your own design.</p>
+          <div class="hero-cta" data-reveal>
+            <a href="#enroll" class="btn-hero btn-hero-primary">Purchase to Enroll →</a>
+          </div>
+        </div>
+        <div class="hero-right" data-reveal>
+          <!-- Seal Image/SVG can stay here -->
+           <img src="https://thehobbiestskillsclub.com/og-image.jpg" style="width: 100%; border-radius: 4px;" alt="The Hobbiest">
+        </div>
+      </div>
+    </div>
+  </header>
+  
   <style>
     /* ============================================================
        DESIGN TOKENS — SAGE + CREAM
@@ -1284,276 +1362,171 @@
 <!-- =========================================================
        ENROLLMENT SECTION
      ========================================================= -->
-<section id="enroll" style="padding: var(--section-y) 0; background: var(--surface);">
-  <div class="container" style="max-width: 600px; text-align: center;">
-    <span class="eyebrow">Instant Enrollment</span>
-    <h2 class="h-section" style="margin-bottom: 2rem;">Join a <em>Session</em>.</h2>
-    
-    <select id="classSelector">
-       <option value="" disabled selected>Select a class and date...</option>
-       <!-- The Javascript will automatically fill this -->
-    </select>
-
-    <button id="enrollBtn" class="btn-hero btn-hero-primary" style="width: 100%; border:none;">Purchase to Enroll →</button>
-
-    <p class="enroll-help">
-      Having trouble? Contact <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
-    </p>
-  </div>
-</section>
-
-<!-- THE LAUNCH (Phase info) -->
-<section class="launch" id="launch">
-  <div class="container">
-    <div class="launch-grid">
-      <div class="launch-photo" data-reveal>
-        <img src="data:image/jpeg;base64,...(your image data)..." alt="The Hobbiest interior" />
+  <section id="enroll" style="padding: var(--section-y) 0; background: var(--surface); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);">
+    <div class="container" style="max-width: 650px; text-align: center;">
+      <div data-reveal>
+        <span class="eyebrow">Instant Enrollment</span>
+        <h2 class="h-section" style="margin-bottom: 1rem;">Join a <em>Session</em>.</h2>
+        <p style="font-family: var(--font-body); color: var(--ink-soft); margin-bottom: 3rem;">Select your course and date below to secure your seat instantly.</p>
       </div>
-      <div class="launch-info" data-reveal>
-        <span class="eyebrow">The Launch</span>
-        <h2 class="h-section">Summer courses, <em>fall memberships</em>.</h2>
-        <p class="launch-lede">Opening on Main Street in two phases.</p>
-        <div class="launch-phases">
-          <div class="launch-phase">
-            <div class="launch-phase-date">July 2026</div>
-            <p>Summer course launch — classes open to the public.</p>
-          </div>
-          <div class="launch-phase">
-            <div class="launch-phase-date">September 2026</div>
-            <p>Fall memberships begin — founder pricing for early members.</p>
-          </div>
+
+      <div style="background: var(--bg); padding: 3rem 2rem; border-radius: 8px; border: 1px solid var(--hairline); box-shadow: 0 10px 40px rgba(78, 90, 65, 0.08);">
+        <div style="text-align: left; margin-bottom: 2rem;">
+          <label style="font-family: var(--font-body); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--sage); font-weight: 600; display: block; margin-bottom: 0.8rem;">Available Skill Sessions</label>
+          <select id="classSelector">
+            <option value="">Loading curriculum...</option>
+          </select>
         </div>
-        <a href="login.html" class="btn-hero btn-hero-primary launch-cta">Member Login →</a>
+
+        <button id="enrollBtn" class="btn-hero btn-hero-primary" style="width: 100%; border: none;">
+          Purchase to Enroll →
+        </button>
+
+        <p style="margin-top: 2rem; font-family: var(--font-body); font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--hairline); padding-top: 1.5rem;">
+          Having trouble? Contact <a href="mailto:pittston@thehobbiestskillsclub.com" style="color: var(--sage-deep); text-decoration: underline;">pittston@thehobbiestskillsclub.com</a>
+        </p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <div class="wordmark-lg">The Hobbiest</div>
-        <p>A private members skills club for adults. Opening July 2026 in downtown Pittston, PA.</p>
-      </div>
-      <div>
-        <h4>Visit</h4>
-        <p>131 N Main Street<br />Pittston, PA 18640<br /><br />Wyoming Valley · NEPA</p>
-      </div>
-      <div>
-        <h4>Follow</h4>
-        <div class="stack">
-          <a href="#" rel="noopener">Instagram</a>
-          <a href="#" rel="noopener">Facebook</a>
-          <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div style="font-size: 1.5rem; font-style: italic; margin-bottom: 1rem; color: var(--sage-deep);">The Hobbiest</div>
+          <p style="font-size: 0.9rem; color: var(--ink-soft);">A private members skills club for adults. Opening July 2026 in downtown Pittston, PA.</p>
+        </div>
+        <div>
+          <h4 style="font-family: var(--font-body); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em;">Location</h4>
+          <p style="font-size: 0.9rem;">131 N Main Street<br>Pittston, PA 18640</p>
+        </div>
+        <div>
+          <h4 style="font-family: var(--font-body); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em;">Contact</h4>
+          <p style="font-size: 0.9rem;"><a href="mailto:pittston@thehobbiestskillsclub.com">Email Us</a></p>
         </div>
       </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 The Hobbiest Skills Club</span>
-      <div class="footer-legal">
-        <a href="gift.html">Give a Gift</a>
-        <span class="footer-divider">·</span>
-        <a href="waiver.html">Waiver &amp; Policies</a>
-        <span class="footer-divider">·</span>
-        <a href="privacy.html">Privacy Policy</a>
-        <span class="footer-divider">·</span>
-        <a href="terms.html">Terms of Service</a>
+      <div class="footer-bottom">
+        <span>© 2026 The Hobbiest Skills Club</span>
+        <div>July 2026 Launch</div>
       </div>
     </div>
-  </div>
-</footer>
+  </footer>
 
-<!-- GUEST CHECKOUT MODAL (Hidden by default) -->
-<div id="emailOverlay" style="display:none; position:fixed; inset:0; background:rgba(45, 52, 38, 0.95); z-index:1000; align-items:center; justify-content:center; padding:1.5rem; backdrop-filter: blur(5px);">
-  <div style="background:var(--bg); padding:2.5rem; border-radius:8px; max-width:450px; width:100%; position:relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 1px solid var(--hairline);">
-    <button onclick="closeGuestCheckout()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--muted);">×</button>
-    
-    <div id="modalStep1">
-      <h3 style="margin-bottom:0.5rem; color:var(--sage-deep); font-family:var(--font-display);">Join the session.</h3>
-      <p style="margin-bottom:1.5rem; color:var(--ink-soft); font-family:var(--font-body); font-size:0.9rem;">Where should we send your receipt and course syllabus?</p>
-      <input type="email" id="guestEmailInput" placeholder="your@email.com" style="width:100%; padding:1rem; border:1px solid var(--hairline); border-radius:4px; margin-bottom:1rem; font-family:var(--font-body); font-size:1rem; background:var(--surface);">
-      <button id="startPayBtn" class="nav-link-primary" style="width:100%; border:none; padding:1rem; font-size:1rem; cursor:pointer;">Continue to Payment →</button>
-    </div>
-
-    <div id="modalStep2" style="display:none;">
-      <h3 style="margin-bottom:1.5rem; color:var(--sage-deep); font-family:var(--font-display);">Secure Checkout</h3>
-      <div id="checkout-embed-guest"></div>
-    </div>
-  </div>
-</div>
-
-<!-- SCRIPTS -->
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-  const SB_URL = 'https://uprdczhhgwzfypkudqjg.supabase.co';
-  const SB_KEY = 'sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ';
-  let selectedClassId = null;
-  const stripeGuest = Stripe('pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS');
-
-  // Load classes into the dropdown
-  async function loadDropdownCurriculum() {
-    const selector = document.getElementById('classSelector');
-    try {
-      const res = await fetch(`${SB_URL}/rest/v1/classes?is_published=eq.true&select=*&order=starts_at.asc`, {
-        headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
-      });
-      const classes = await res.json();
+  <!-- CHECKOUT OVERLAY MODAL -->
+  <div id="emailOverlay" style="display:none; position:fixed; inset:0; background:rgba(45, 52, 38, 0.96); z-index:1000; align-items:center; justify-content:center; padding:1.5rem; backdrop-filter: blur(8px);">
+    <div style="background:var(--bg); padding:2.5rem; border-radius:8px; max-width:450px; width:100%; position:relative; border: 1px solid var(--hairline);">
+      <button onclick="closeGuestCheckout()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.8rem; cursor:pointer; color:var(--muted);">×</button>
       
-      if (classes.length === 0) {
-        selector.innerHTML = '<option>No sessions currently scheduled</option>';
-        return;
-      }
+      <div id="modalStep1">
+        <h3 style="margin-bottom:0.5rem; color:var(--sage-deep); font-family:var(--font-display);">Join the session.</h3>
+        <p style="margin-bottom:1.5rem; color:var(--ink-soft); font-family:var(--font-body); font-size:0.9rem;">Where should we send your receipt and course syllabus?</p>
+        <input type="email" id="guestEmailInput" placeholder="your@email.com" style="width:100%; padding:1rem; border:1px solid var(--hairline); border-radius:4px; margin-bottom:1rem; font-size:1rem; background:var(--surface);">
+        <button id="startPayBtn" class="btn-hero btn-hero-primary" style="width:100%; border:none; justify-content: center;">Continue to Payment →</button>
+      </div>
 
-      selector.innerHTML = '<option value="" disabled selected>Choose a skill session...</option>';
-      classes.forEach(c => {
-        const remaining = c.capacity - (c.seats_taken || 0);
-        if (remaining > 0) {
-          const dateObj = new Date(c.starts_at);
-          const dateString = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+      <div id="modalStep2" style="display:none;">
+        <h3 style="margin-bottom:1.5rem; color:var(--sage-deep); font-family:var(--font-display);">Secure Checkout</h3>
+        <div id="checkout-embed-guest"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    const SB_URL = 'https://uprdczhhgwzfypkudqjg.supabase.co';
+    const SB_KEY = 'sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ';
+    let selectedClassId = null;
+    const stripeGuest = Stripe('pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS');
+
+    // 1. Fetch Classes for Dropdown
+    async function loadDropdown() {
+      const selector = document.getElementById('classSelector');
+      try {
+        const res = await fetch(`${SB_URL}/rest/v1/classes?is_published=eq.true&select=*&order=starts_at.asc`, {
+          headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
+        });
+        const classes = await res.json();
+        
+        if (!classes.length) {
+          selector.innerHTML = '<option>No sessions scheduled.</option>';
+          return;
+        }
+
+        selector.innerHTML = '<option value="" disabled selected>Choose a skill session...</option>';
+        classes.forEach(c => {
+          const date = new Date(c.starts_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'});
           const option = document.createElement('option');
           option.value = c.id;
-          option.textContent = `${c.name} — ${dateString} ($${Math.round(c.price_cents/100)})`;
+          option.textContent = `${c.name} — ${date} ($${Math.round(c.price_cents/100)})`;
           selector.appendChild(option);
-        }
-      });
-    } catch (e) {
-      selector.innerHTML = "<option>Curriculum offline. Please refresh.</option>";
+        });
+      } catch (e) {
+        selector.innerHTML = "<option>Offline. Please refresh.</option>";
+      }
     }
-  }
 
-  // Handle the Enroll Button Click
-  document.getElementById('enrollBtn').addEventListener('click', () => {
-    const val = document.getElementById('classSelector').value;
-    if (!val) {
-      alert("Please select a class first.");
-      return;
+    // 2. Open Modal
+    document.getElementById('enrollBtn').addEventListener('click', () => {
+      const val = document.getElementById('classSelector').value;
+      if (!val) return alert("Please select a session first.");
+      selectedClassId = val;
+      document.getElementById('emailOverlay').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+
+    function closeGuestCheckout() {
+      document.getElementById('emailOverlay').style.display = 'none';
+      document.getElementById('modalStep1').style.display = 'block';
+      document.getElementById('modalStep2').style.display = 'none';
+      document.getElementById('checkout-embed-guest').innerHTML = '';
+      document.body.style.overflow = '';
     }
-    openGuestCheckout(val);
-  });
 
-  function openGuestCheckout(classId) {
-    selectedClassId = classId;
-    document.getElementById('emailOverlay').style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  }
+    // 3. Payment Flow
+    document.getElementById('startPayBtn').addEventListener('click', async () => {
+      const email = document.getElementById('guestEmailInput').value;
+      if (!email || !email.includes('@')) return alert("Please enter a valid email.");
 
-  function closeGuestCheckout() {
-    document.getElementById('emailOverlay').style.display = 'none';
-    document.getElementById('modalStep1').style.display = 'block';
-    document.getElementById('modalStep2').style.display = 'none';
-    document.getElementById('checkout-embed-guest').innerHTML = '';
-    document.body.style.overflow = '';
-  }
+      const btn = document.getElementById('startPayBtn');
+      btn.innerText = "Connecting to Stripe...";
+      btn.disabled = true;
 
-  // Stripe Checkout Logic
-  document.getElementById('startPayBtn').addEventListener('click', async () => {
-    const email = document.getElementById('guestEmailInput').value;
-    if (!email || !email.includes('@')) return alert("Please provide a valid email address.");
+      try {
+        const response = await fetch(`${SB_URL}/functions/v1/create-checkout`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY },
+          body: JSON.stringify({ classId: selectedClassId, guestEmail: email })
+        });
 
-    const btn = document.getElementById('startPayBtn');
-    btn.innerText = "Verifying Spot...";
-    btn.disabled = true;
+        const data = await response.json();
+        if (data.error) throw new Error(data.error);
 
-    try {
-      const response = await fetch(`${SB_URL}/functions/v1/create-checkout`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY },
-        body: JSON.stringify({ classId: selectedClassId, guestEmail: email })
-      });
+        document.getElementById('modalStep1').style.display = 'none';
+        document.getElementById('modalStep2').style.display = 'block';
 
-      const data = await response.json();
-      if (data.error) throw new Error(data.error);
-
-      document.getElementById('modalStep1').style.display = 'none';
-      document.getElementById('modalStep2').style.display = 'block';
-
-      const checkout = await stripeGuest.initEmbeddedCheckout({ clientSecret: data.clientSecret });
-      checkout.mount('#checkout-embed-guest');
-
-    } catch (err) {
-      alert(err.message);
-      btn.innerText = "Continue to Payment →";
-      btn.disabled = false;
-    }
-  });
-
-  // Init Data
-  loadDropdownCurriculum();
-
-  // Scroll Reveal Logic
-  const reveals = document.querySelectorAll('[data-reveal]');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) {
-        e.target.classList.add('is-visible');
-        io.unobserve(e.target);
+        const checkout = await stripeGuest.initEmbeddedCheckout({ clientSecret: data.clientSecret });
+        checkout.mount('#checkout-embed-guest');
+      } catch (err) {
+        alert(err.message);
+        btn.innerText = "Continue to Payment →";
+        btn.disabled = false;
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-  reveals.forEach((r) => io.observe(r));
-</script>
-    
-    /* ============================================================
-       LIGHTBOX (for clickable photos)
-       ============================================================ */
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(45, 52, 38, 0.92);
-      z-index: 200;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      cursor: zoom-out;
-      opacity: 0;
-      transition: opacity 0.3s var(--ease);
-    }
-    .lightbox.is-open {
-      display: flex;
-      opacity: 1;
-    }
-    .lightbox-img {
-      max-width: 90vw;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: 4px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    }
-    .lightbox-close {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      background: transparent;
-      border: 1px solid rgba(241, 236, 223, 0.4);
-      color: var(--bg);
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      font-size: 1.4rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s var(--ease);
-    }
-    .lightbox-close:hover {
-      background: rgba(241, 236, 223, 0.15);
-    }
 
-    /* ============================================================
-       REVEAL ANIMATION
-       ============================================================ */
-    [data-reveal] {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
-    }
-    [data-reveal].is-visible {
-      opacity: 1;
-      transform: none;
-    }
+    // Initialize
+    loadDropdown();
+
+    // Reveal Logic
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('is-visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
 
     /* ============================================================
        RESPONSIVE
