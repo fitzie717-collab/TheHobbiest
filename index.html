@@ -1247,7 +1247,34 @@
       justify-content: center;
       margin-top: 0.5rem;
     }
+<!-- =========================================================
+     CURRICULUM WIDGET (Guest Checkout)
+     ========================================================= -->
+<section id="purchase" class="form-section" style="background: var(--surface);">
+  <div class="container">
+    <div data-reveal>
+      <span class="eyebrow">Instant Enrollment</span>
+      <h2 class="h-section">Secure your <em>spot</em>.</h2>
+      <p class="lede">Choose a class below to enroll instantly. No account required for guest checkout.</p>
+    </div>
 
+    <div id="guestClassGrid" class="bundle-grid" style="margin-top: 3rem;">
+      <!-- Classes will load here -->
+      <p style="font-family: var(--font-display); font-style: italic; color: var(--muted);">Preparing the curriculum...</p>
+    </div>
+  </div>
+</section>
+
+<!-- Simple Email Overlay -->
+<div id="emailOverlay" style="display:none; position:fixed; inset:0; background:rgba(78,90,65,0.9); z-index:1000; align-items:center; justify-content:center; padding:2rem;">
+  <div style="background:var(--bg); padding:2.5rem; border-radius:8px; max-width:400px; width:100%; position:relative;">
+    <h3 style="margin-bottom:1rem; color:var(--sage-deep);">Where should we send your receipt?</h3>
+    <input type="email" id="guestEmailInput" placeholder="your@email.com" style="width:100%; padding:0.85rem; border:1px solid var(--hairline); border-radius:4px; margin-bottom:1.5rem; font-family:var(--font-body);">
+    <div id="checkout-embed-guest"></div>
+    <button id="startPayBtn" class="btn-primary" style="width:100%;">Continue to Payment</button>
+    <button onclick="closeGuestCheckout()" style="background:none; border:none; color:var(--muted); margin-top:1rem; width:100%; cursor:pointer; font-family:var(--font-body); text-decoration:underline;">Cancel</button>
+  </div>
+</div>
     /* ============================================================
        THE LAUNCH — combined space + dates + CTA
        ============================================================ */
@@ -1797,6 +1824,79 @@
     // Signups flow directly to your Beehiiv publication and trigger
     // the welcome automation. No additional JS needed here.
   </script>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  const SB_URL = 'https://uprdczhhgwzfypkudqjg.supabase.co';
+  const SB_KEY = 'sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ';
+  let selectedClassId = null;
+  let stripeGuest = Stripe('pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS');
 
+  // Load classes onto the homepage
+  async function loadGuestCurriculum() {
+    const grid = document.getElementById('guestClassGrid');
+    try {
+      const res = await fetch(`${SB_URL}/rest/v1/classes?is_published=eq.true&select=*&order=starts_at.asc`, {
+        headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
+      });
+      const classes = await res.json();
+      
+      grid.innerHTML = classes.map(c => `
+        <div class="bundle-card">
+          <div class="bundle-tag">${c.emoji || '🎓'} ${c.category || 'Workshop'}</div>
+          <h4 class="bundle-card-title">${c.name}</h4>
+          <p class="bundle-card-body">${c.description.substring(0, 100)}...</p>
+          <div class="bundle-price" style="color:var(--sage-deep); font-size:1.5rem; margin: 1rem 0;">$${Math.round(c.price_cents/100)}</div>
+          <button onclick="openGuestCheckout('${c.id}')" class="nav-link-primary" style="border:none; cursor:pointer; text-align:center;">Buy Seat →</button>
+        </div>
+      `).join('');
+    } catch (e) {
+      grid.innerHTML = "<p>Error loading classes. Please refresh.</p>";
+    }
+  }
+
+  function openGuestCheckout(classId) {
+    selectedClassId = classId;
+    document.getElementById('emailOverlay').style.display = 'flex';
+  }
+
+  function closeGuestCheckout() {
+    document.getElementById('emailOverlay').style.display = 'none';
+    document.getElementById('checkout-embed-guest').innerHTML = '';
+    document.getElementById('startPayBtn').style.display = 'block';
+  }
+
+  document.getElementById('startPayBtn').addEventListener('click', async () => {
+    const email = document.getElementById('guestEmailInput').value;
+    if (!email || !email.includes('@')) return alert("Please enter a valid email.");
+
+    const btn = document.getElementById('startPayBtn');
+    btn.innerText = "Loading...";
+    btn.disabled = true;
+
+    try {
+      // Call your Edge Function
+      const response = await fetch(`${SB_URL}/functions/v1/create-checkout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY },
+        body: JSON.stringify({ classId: selectedClassId, guestEmail: email })
+      });
+
+      const { clientSecret, error } = await response.json();
+      if (error) throw new Error(error);
+
+      // Initialize Stripe Embedded Checkout
+      const checkout = await stripeGuest.initEmbeddedCheckout({ clientSecret });
+      btn.style.display = 'none'; // Hide the email button to show Stripe
+      checkout.mount('#checkout-embed-guest');
+
+    } catch (err) {
+      alert(err.message);
+      btn.innerText = "Continue to Payment";
+      btn.disabled = false;
+    }
+  });
+
+  loadGuestCurriculum();
+</script>
 </body>
 </html>
