@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#7A8A6B" />
-  <title>Your Studio — The Hobbiest Skills Club</title>
+  <title>Member Dashboard — The Hobbiest Skills Club</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -200,8 +200,8 @@
 
     <main class="container wrap">
       <div class="welcome">
-        <span class="eyebrow">Your Studio</span>
-        <h1>Hello, <em id="memberName">friend</em>.</h1>
+        <span class="eyebrow">The Hobbiest</span>
+        <h1>Welcome back, <em id="memberName">friend</em>.</h1>
       </div>
 
       <nav class="pills">
@@ -330,9 +330,8 @@
     // The full menu of classes you ask about at signup. Edit this list anytime —
     // any class a member personally selected is also shown even if not listed here.
     const BASE_INTEREST_CLASSES = [
-      "Watercolor 101","Modern Calligraphy","Knitting 101","Meditation","Basic Home Repair",
-      "Eating Well (Nutrition 101)","Charcuterie & Cheese Board Styling","Managing Finances",
-      "Creating Habits & Routines","Floral Arranging","Sourdough Starter & Maintenance","Wreath Making"
+      "Watercolor 101","Modern Calligraphy","Knitting 101","Meditation",
+      "Basic Home Repair","Nutrition 101","Personal Finance 101","Gardening 101"
     ];
     // Availability matrix definition
     const TIME_BLOCKS = [
@@ -478,7 +477,7 @@
 
       el.className = "week";
       el.innerHTML = `
-        <p class="week-note">Every course runs <strong>4 weeks · 8 hours total</strong>. <strong>All materials are included</strong>, and you'll receive your full syllabus and a bio of your expert instructor by <strong>June 14</strong>.</p>
+        <p class="week-note">Summer 2026 term runs <strong>July 11 – August 7</strong>. Every course is <strong>4 sessions · 8 hours total</strong>. <strong>All materials are included</strong> — your syllabus and instructor bio will be sent before your first session.</p>
         <div class="week-rows">
           ${days.map(d=>`
             <div class="day-row">
