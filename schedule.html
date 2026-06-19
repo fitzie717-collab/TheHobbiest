@@ -1689,6 +1689,7 @@
     const weekday  = d => d.toLocaleDateString('en-US', { timeZone: TZ, weekday: 'long' });
     const slug     = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     const money    = cents => '$' + Math.round(cents / 100);
+    const sessionPrice = c => c.session_price_cents || Math.round((c.price_cents || 0) / (c.weeks || 1));
 
     function classFormat(c) {
       const start  = new Date(c.starts_at);
@@ -1715,7 +1716,7 @@
 
     function cardHtml(c) {
       const weeks     = c.weeks || 1;
-      const perSession = Math.round((c.price_cents || 0) / weeks);
+      const perSession = sessionPrice(c);
       const instructor = c.instructor ? '<p class="class-instructor">Taught by ' + esc(c.instructor) + '</p>' : '';
       const note = c.materials_included ? '<div class="class-price-note">materials included</div>' : '';
 
@@ -1763,7 +1764,7 @@
       const rail = document.getElementById('railNav');
       try {
         const url = SUPABASE_URL + '/rest/v1/classes' +
-          '?select=id,name,description,instructor,starts_at,duration_minutes,price_cents,materials_included,weeks,category' +
+          '?select=id,name,description,instructor,starts_at,duration_minutes,price_cents,session_price_cents,materials_included,weeks,category' +
           '&is_published=eq.true&order=starts_at.asc';
         const res = await fetch(url, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY } });
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -1844,7 +1845,7 @@
       const c = _pwClasses.find(x => x.id === classId);
       if (c) {
         const weeks      = c.weeks || 1;
-        const perSession = Math.round((c.price_cents || 0) / weeks);
+        const perSession = sessionPrice(c);
         const dates      = sessionDates(c);
         document.getElementById('modalTitle').textContent     = 'Book your session';
         document.getElementById('modalSubtitle').textContent  = c.name;
@@ -1954,7 +1955,7 @@
 
       const c     = _pwClasses[parseInt(idx)];
       const weeks = c.weeks || 1;
-      const perSession = Math.round((c.price_cents || 0) / weeks);
+      const perSession = sessionPrice(c);
       const dates = sessionDates(c);
 
       // Build options: one per session + full course at bottom
@@ -1990,7 +1991,7 @@
       if (optVal === 'full') {
         priceEl.textContent = money(c.price_cents);
       } else {
-        const perSession = Math.round((c.price_cents || 0) / weeks);
+        const perSession = sessionPrice(c);
         priceEl.textContent = money(perSession);
       }
       priceEl.classList.remove('dim');
@@ -2021,7 +2022,7 @@
       // Reuse openCheckout from the accordion cards
       // but we need to populate the modal header first
       const weeks      = c.weeks || 1;
-      const perSession = Math.round((c.price_cents || 0) / weeks);
+      const perSession = sessionPrice(c);
       const dates      = sessionDates(c);
       const dateLabel  = fmtDateLong(dates[sessionIndex]);
 

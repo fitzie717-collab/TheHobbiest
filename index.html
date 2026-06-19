@@ -2068,6 +2068,7 @@
 
     const _esc = s => { const d = document.createElement('div'); d.textContent = (s == null ? '' : s); return d.innerHTML; };
     const _money    = cents => '$' + Math.round(cents / 100);
+    const _sessionPrice = c => c.session_price_cents || Math.round((c.price_cents || 0) / (c.weeks || 1));
     const _fmtDate  = d => d.toLocaleDateString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric' });
     const _fmtDateLong = d => d.toLocaleDateString('en-US', { timeZone: 'America/New_York', weekday: 'long', month: 'long', day: 'numeric' });
 
@@ -2084,7 +2085,7 @@
     async function _loadClasses() {
       try {
         const url = SUPABASE_URL + '/rest/v1/classes' +
-          '?select=id,name,starts_at,price_cents,weeks,instructor&is_published=eq.true&order=starts_at.asc';
+          '?select=id,name,starts_at,price_cents,session_price_cents,weeks,instructor&is_published=eq.true&order=starts_at.asc';
         const res = await fetch(url, {
           headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
         });
@@ -2120,7 +2121,7 @@
 
       const c     = _pwClasses[parseInt(idx)];
       const weeks = c.weeks || 1;
-      const perSession = Math.round((c.price_cents || 0) / weeks);
+      const perSession = _sessionPrice(c);
       const dates = _sessionDates(c);
 
       let opts = '<option value="">— pick a session or course —</option>';
@@ -2151,7 +2152,7 @@
       const weeks = c.weeks || 1;
       priceEl.textContent = optVal === 'full'
         ? _money(c.price_cents)
-        : _money(Math.round((c.price_cents || 0) / weeks));
+        : _money(_sessionPrice(c));
       priceEl.classList.remove('dim');
       btn.disabled = false;
     }
@@ -2174,7 +2175,7 @@
 
       const sessionIndex = parseInt(optVal.split(':')[1]);
       const weeks        = c.weeks || 1;
-      const perSession   = Math.round((c.price_cents || 0) / weeks);
+      const perSession   = _sessionPrice(c);
       const dates        = _sessionDates(c);
 
       document.getElementById('modalTitle').textContent      = 'Book your session';
