@@ -1221,6 +1221,108 @@
     .schedule-status a { color: var(--sage); text-decoration: underline; }
 
     /* ============================================================
+       PURCHASE WIDGET (hero)
+       ============================================================ */
+    .purchase-widget {
+      margin-top: 2.5rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      padding: 1.5rem 1.75rem 1.75rem;
+      max-width: 520px;
+    }
+    .purchase-widget-label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .purchase-widget-label::before {
+      content: "";
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--sage);
+    }
+    .purchase-widget-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .pw-select-wrap {
+      position: relative;
+    }
+    .pw-select {
+      width: 100%;
+      padding: 0.85rem 2.5rem 0.85rem 1rem;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s var(--ease);
+      font-style: italic;
+    }
+    .pw-select:focus { border-color: var(--sage); }
+    .pw-select:disabled { opacity: 0.45; cursor: default; }
+    .pw-select option { font-style: normal; }
+    .pw-select-arrow {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+    .pw-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .pw-price-display {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--sage-deep);
+      letter-spacing: -0.02em;
+      min-width: 4rem;
+      transition: opacity 0.2s;
+    }
+    .pw-price-display.dim { opacity: 0.3; }
+    .btn-pay-now {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.75rem;
+      border-radius: 999px;
+      background: var(--sage);
+      color: var(--bg);
+      border: 1px solid var(--sage);
+      cursor: pointer;
+      transition: background 0.2s var(--ease), transform 0.15s var(--ease);
+      white-space: nowrap;
+    }
+    .btn-pay-now:hover:not(:disabled) { background: var(--sage-deep); border-color: var(--sage-deep); }
+    .btn-pay-now:active:not(:disabled) { transform: translateY(1px); }
+    .btn-pay-now:disabled { opacity: 0.4; cursor: default; }
+
+    /* ============================================================
        SESSION LIST (inside accordion)
        ============================================================ */
     .session-list {
@@ -1456,6 +1558,32 @@
           <p class="page-hero-lede">
             Six classes running this session, beginning July 11. Each is a focused four-session course — two hours per session — held <em>in studio</em>. This is the current schedule; classes change monthly, so the lineup rotates as new courses open.
           </p>
+
+          <!-- PURCHASE WIDGET -->
+          <div class="purchase-widget" id="purchaseWidget">
+            <div class="purchase-widget-label">Purchase now</div>
+            <div class="purchase-widget-fields">
+
+              <div class="pw-select-wrap">
+                <select class="pw-select" id="pwClass" onchange="pwOnClassChange()">
+                  <option value="">Loading classes…</option>
+                </select>
+                <span class="pw-select-arrow">▾</span>
+              </div>
+
+              <div class="pw-select-wrap">
+                <select class="pw-select" id="pwOption" onchange="pwOnOptionChange()" disabled>
+                  <option value="">— then pick an option —</option>
+                </select>
+                <span class="pw-select-arrow">▾</span>
+              </div>
+
+            </div>
+            <div class="pw-footer">
+              <div class="pw-price-display dim" id="pwPrice">—</div>
+              <button class="btn-pay-now" id="pwBtn" disabled onclick="pwCheckout()">Pay now →</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1675,6 +1803,7 @@
 
         initScrollSpy();
         handleReturnFromStripe();
+        pwPopulate(classes); // populate the hero purchase widget
       } catch (err) {
         console.error('Schedule load failed:', err);
         main.innerHTML = '<p class="schedule-status">We couldn\u2019t load the schedule just now \u2014 please refresh, or <a href="login.html">log in to purchase</a>.</p>';
@@ -1710,6 +1839,20 @@
 
     async function openCheckout(classId, sessionIndex, event) {
       event.stopPropagation(); // don't toggle the accordion
+
+      // Find the class data so we can populate the modal header
+      const c = _pwClasses.find(x => x.id === classId);
+      if (c) {
+        const weeks      = c.weeks || 1;
+        const perSession = Math.round((c.price_cents || 0) / weeks);
+        const dates      = sessionDates(c);
+        document.getElementById('modalTitle').textContent     = 'Book your session';
+        document.getElementById('modalSubtitle').textContent  = c.name;
+        document.getElementById('modalClassName').textContent = c.name;
+        document.getElementById('modalSessionMeta').textContent =
+          'Session ' + (sessionIndex + 1) + ' of ' + weeks + ' · ' + fmtDateLong(dates[sessionIndex]);
+        document.getElementById('modalPrice').textContent = money(perSession);
+      }
 
       const modal    = document.getElementById('checkoutModal');
       const embedEl  = document.getElementById('checkout-embed');
@@ -1781,6 +1924,118 @@
         // Clean URL
         history.replaceState({}, '', window.location.pathname);
       }
+    }
+
+    // ============================================================
+    // PURCHASE WIDGET
+    // ============================================================
+    let _pwClasses = []; // populated by loadSchedule
+
+    function pwPopulate(classes) {
+      _pwClasses = classes;
+      const sel = document.getElementById('pwClass');
+      sel.innerHTML = '<option value="">— choose a class —</option>' +
+        classes.map((c, i) => `<option value="${i}">${esc(c.name)}</option>`).join('');
+    }
+
+    function pwOnClassChange() {
+      const idx    = document.getElementById('pwClass').value;
+      const optSel = document.getElementById('pwOption');
+      const priceEl = document.getElementById('pwPrice');
+      const btn    = document.getElementById('pwBtn');
+
+      if (idx === '') {
+        optSel.innerHTML = '<option value="">— then pick an option —</option>';
+        optSel.disabled = true;
+        priceEl.textContent = '—'; priceEl.classList.add('dim');
+        btn.disabled = true;
+        return;
+      }
+
+      const c     = _pwClasses[parseInt(idx)];
+      const weeks = c.weeks || 1;
+      const perSession = Math.round((c.price_cents || 0) / weeks);
+      const dates = sessionDates(c);
+
+      // Build options: one per session + full course at bottom
+      let opts = '<option value="">— pick a session or course —</option>';
+      dates.forEach((d, i) => {
+        const label = fmtDate(d) + ' · Session ' + (i + 1) + ' of ' + weeks;
+        opts += `<option value="session:${i}">${label} — ${money(perSession)}</option>`;
+      });
+      opts += `<option value="full">Full course (all ${weeks} sessions) — ${money(c.price_cents)}</option>`;
+
+      optSel.innerHTML = opts;
+      optSel.disabled = false;
+
+      priceEl.textContent = '—'; priceEl.classList.add('dim');
+      btn.disabled = true;
+    }
+
+    function pwOnOptionChange() {
+      const classIdx  = document.getElementById('pwClass').value;
+      const optVal    = document.getElementById('pwOption').value;
+      const priceEl   = document.getElementById('pwPrice');
+      const btn       = document.getElementById('pwBtn');
+
+      if (!classIdx || !optVal) {
+        priceEl.textContent = '—'; priceEl.classList.add('dim');
+        btn.disabled = true;
+        return;
+      }
+
+      const c     = _pwClasses[parseInt(classIdx)];
+      const weeks = c.weeks || 1;
+
+      if (optVal === 'full') {
+        priceEl.textContent = money(c.price_cents);
+      } else {
+        const perSession = Math.round((c.price_cents || 0) / weeks);
+        priceEl.textContent = money(perSession);
+      }
+      priceEl.classList.remove('dim');
+      btn.disabled = false;
+    }
+
+    async function pwCheckout() {
+      const classIdx = document.getElementById('pwClass').value;
+      const optVal   = document.getElementById('pwOption').value;
+      if (!classIdx || !optVal) return;
+
+      const c   = _pwClasses[parseInt(classIdx)];
+      const btn = document.getElementById('pwBtn');
+      btn.disabled = true;
+      btn.textContent = 'Opening…';
+
+      if (optVal === 'full') {
+        // Full course — requires member account
+        // Store intent and redirect to login, which can redirect back
+        sessionStorage.setItem('pwIntent', JSON.stringify({ class_id: c.id, type: 'full' }));
+        window.location.href = 'login.html?next=schedule.html';
+        return;
+      }
+
+      // Single session — guest checkout via modal
+      const sessionIndex = parseInt(optVal.split(':')[1]);
+
+      // Reuse openCheckout from the accordion cards
+      // but we need to populate the modal header first
+      const weeks      = c.weeks || 1;
+      const perSession = Math.round((c.price_cents || 0) / weeks);
+      const dates      = sessionDates(c);
+      const dateLabel  = fmtDateLong(dates[sessionIndex]);
+
+      document.getElementById('modalTitle').textContent    = 'Book your session';
+      document.getElementById('modalSubtitle').textContent = c.name;
+      document.getElementById('modalClassName').textContent = c.name;
+      document.getElementById('modalSessionMeta').textContent = 'Session ' + (sessionIndex + 1) + ' of ' + weeks + ' · ' + dateLabel;
+      document.getElementById('modalPrice').textContent    = money(perSession);
+
+      const fakeEvent = { stopPropagation: () => {} };
+      await openCheckout(c.id, sessionIndex, fakeEvent);
+
+      btn.disabled = false;
+      btn.textContent = 'Pay now →';
     }
 
     // ============================================================
