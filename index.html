@@ -1247,23 +1247,24 @@
       justify-content: center;
       margin-top: 0.5rem;
     }
-<!-- =========================================================
-     INSTANT ENROLLMENT WIDGET (Guest Checkout)
-     ========================================================= -->
-<section id="enroll" style="padding: var(--section-y) 0; background: var(--surface); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);">
-  <div class="container">
-    <div data-reveal>
-      <span class="eyebrow">Summer 2026 Enrollment</span>
-      <h2 class="h-section">Join a <em>Session</em>.</h2>
-      <p class="lede">Select a course below to secure your seat instantly. Guest checkout available—no account required.</p>
-    </div>
 
-    <!-- This grid is populated by the script below -->
-    <div id="guestClassGrid" class="bundle-grid" style="margin-top: 4rem;">
-      <p style="font-family: var(--font-display); font-style: italic; color: var(--muted);">Opening the studio doors...</p>
+<!-- =========================================================
+       ENROLLMENT SECTION (The Button's Destination)
+       ========================================================= -->
+  <section id="enroll" style="padding: var(--section-y) 0; background: var(--surface); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);">
+    <div class="container">
+      <div data-reveal>
+        <span class="eyebrow">Instant Enrollment</span>
+        <h2 class="h-section">Join a <em>Session</em>.</h2>
+        <p class="lede">Choose a course below to secure your seat instantly. Guest checkout available.</p>
+      </div>
+
+      <div id="guestClassGrid" class="bundle-grid" style="margin-top: 4rem;">
+        <!-- Javascript fills this with your Supabase data -->
+        <p style="font-family: var(--font-display); font-style: italic; color: var(--muted);">Loading curriculum...</p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
 <!-- THE LAUNCH (Existing Section) -->
 <section class="launch" id="launch">
@@ -1595,7 +1596,12 @@
           <div class="hero-paragraph" data-reveal>
             <p>The Hobbiest is a private skills club built around the belief that confidence comes from capability. Through expert-led, immersive experiences across a range of topics, members build dynamic skillsets, cultivate taste, and curate a life of their own design.</p>
           </div>
-        </div>
+            <!-- ADD THIS BUTTON BLOCK HERE -->
+  <div class="hero-cta" data-reveal style="margin-top: 2.5rem;">
+    <a href="#enroll" class="btn-hero btn-hero-primary" style="text-decoration:none;">Join a Session →</a>
+  </div>
+</div>
+       
 
         <div class="hero-seal-wrap" data-reveal>
           <svg class="hero-seal" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-label="The Hobbiest seal — Pittston, Pennsylvania">
