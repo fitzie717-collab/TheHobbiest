@@ -1454,7 +1454,217 @@
       .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
       .footer-bottom { flex-direction: column; gap: 0.5rem; }
     }
+
+    /* ============================================================
+       PURCHASE WIDGET (hero)
+       ============================================================ */
+    .purchase-widget {
+      margin-top: 2.5rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      padding: 1.5rem 1.75rem 1.75rem;
+      max-width: 460px;
+    }
+    .purchase-widget-label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .purchase-widget-label::before {
+      content: "";
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--sage);
+    }
+    .pw-select-wrap { position: relative; margin-bottom: 0.75rem; }
+    .pw-select {
+      width: 100%;
+      padding: 0.85rem 2.5rem 0.85rem 1rem;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s var(--ease);
+      font-style: italic;
+    }
+    .pw-select:focus { border-color: var(--sage); }
+    .pw-select:disabled { opacity: 0.45; cursor: default; }
+    .pw-select option { font-style: normal; }
+    .pw-select-arrow {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+    .pw-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1rem;
+      gap: 1rem;
+    }
+    .pw-price-display {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--sage-deep);
+      letter-spacing: -0.02em;
+      transition: opacity 0.2s;
+    }
+    .pw-price-display.dim { opacity: 0.3; }
+    .btn-pay-now {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.75rem;
+      border-radius: 999px;
+      background: var(--sage);
+      color: var(--bg);
+      border: 1px solid var(--sage);
+      cursor: pointer;
+      transition: background 0.2s var(--ease), transform 0.15s var(--ease);
+      white-space: nowrap;
+    }
+    .btn-pay-now:hover:not(:disabled) { background: var(--sage-deep); border-color: var(--sage-deep); }
+    .btn-pay-now:active:not(:disabled) { transform: translateY(1px); }
+    .btn-pay-now:disabled { opacity: 0.4; cursor: default; }
+
+    /* ============================================================
+       CHECKOUT MODAL
+       ============================================================ */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(78, 90, 65, 0.45);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      width: 100%;
+      max-width: 540px;
+      max-height: 90dvh;
+      overflow-y: auto;
+      box-shadow: 0 24px 64px rgba(78, 90, 65, 0.25);
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 1.6rem 1.75rem 1.2rem;
+      border-bottom: 1px solid var(--hairline);
+      gap: 1rem;
+    }
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      color: var(--sage-deep);
+      line-height: 1.2;
+      font-weight: 400;
+    }
+    .modal-subtitle {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--sage-deep); }
+    .modal-body { padding: 1.5rem 1.75rem 2rem; flex: 1; }
+    .modal-summary {
+      background: var(--bg-warm);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      padding: 1rem 1.15rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .modal-summary-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--sage-deep);
+    }
+    .modal-summary-meta {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+    .modal-summary-price {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--sage-deep);
+      white-space: nowrap;
+    }
+    #checkout-embed { min-height: 200px; }
+    .modal-success {
+      display: none;
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .modal-success.show { display: block; }
+    .modal-success-mark { font-size: 2.5rem; margin-bottom: 1rem; }
+    .modal-success h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--sage-deep);
+      margin-bottom: 0.6rem;
+    }
+    .modal-success h3 em { font-style: italic; color: var(--sage); }
+    .modal-success p {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      max-width: 34ch;
+      margin: 0 auto;
+    }
   </style>
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
@@ -1492,6 +1702,27 @@
           </h1>
           <div class="hero-paragraph" data-reveal>
             <p>The Hobbiest is a private skills club built around the belief that confidence comes from capability. Through expert-led, immersive experiences across a range of topics, members build dynamic skillsets, cultivate taste, and curate a life of their own design.</p>
+          </div>
+
+          <!-- PURCHASE WIDGET -->
+          <div class="purchase-widget" data-reveal id="purchaseWidget">
+            <div class="purchase-widget-label">Purchase now</div>
+            <div class="pw-select-wrap">
+              <select class="pw-select" id="pwClass" onchange="pwOnClassChange()">
+                <option value="">Loading classes…</option>
+              </select>
+              <span class="pw-select-arrow">▾</span>
+            </div>
+            <div class="pw-select-wrap">
+              <select class="pw-select" id="pwOption" onchange="pwOnOptionChange()" disabled>
+                <option value="">— then pick an option —</option>
+              </select>
+              <span class="pw-select-arrow">▾</span>
+            </div>
+            <div class="pw-footer">
+              <div class="pw-price-display dim" id="pwPrice">—</div>
+              <button class="btn-pay-now" id="pwBtn" disabled onclick="pwCheckout()">Pay now →</button>
+            </div>
           </div>
         </div>
 
@@ -1689,6 +1920,37 @@
     </div>
   </section>
 
+
+  <!-- =========================================================
+       GUEST CHECKOUT MODAL
+       ========================================================= -->
+  <div class="modal-backdrop" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="modalTitle">Book your session</div>
+          <div class="modal-subtitle" id="modalSubtitle"></div>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-summary" id="modalSummary">
+          <div>
+            <div class="modal-summary-name" id="modalClassName"></div>
+            <div class="modal-summary-meta" id="modalSessionMeta"></div>
+          </div>
+          <div class="modal-summary-price" id="modalPrice"></div>
+        </div>
+        <div id="checkout-embed"></div>
+        <div class="modal-success" id="modalSuccess">
+          <div class="modal-success-mark">✦</div>
+          <h3>You're <em>booked</em>.</h3>
+          <p>Check your email for confirmation. We'll see you in studio.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- =========================================================
        FOOTER
        ========================================================= -->
@@ -1796,6 +2058,196 @@
     // Subscribe forms are handled by Beehiiv's embed scripts above.
     // Signups flow directly to your Beehiiv publication and trigger
     // the welcome automation. No additional JS needed here.
+
+    // ============================================================
+    // PURCHASE WIDGET
+    // ============================================================
+    const SUPABASE_URL      = 'https://uprdczhhgwzfypkudqjg.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ';
+    const STRIPE_PK         = 'pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS';
+
+    const _esc = s => { const d = document.createElement('div'); d.textContent = (s == null ? '' : s); return d.innerHTML; };
+    const _money    = cents => '$' + Math.round(cents / 100);
+    const _fmtDate  = d => d.toLocaleDateString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric' });
+    const _fmtDateLong = d => d.toLocaleDateString('en-US', { timeZone: 'America/New_York', weekday: 'long', month: 'long', day: 'numeric' });
+
+    function _sessionDates(c) {
+      const dates = [], base = new Date(c.starts_at);
+      for (let i = 0; i < (c.weeks || 1); i++)
+        dates.push(new Date(base.getTime() + i * 7 * 24 * 60 * 60 * 1000));
+      return dates;
+    }
+
+    let _pwClasses = [];
+    let _stripe = null, _embeddedCheckout = null;
+
+    async function _loadClasses() {
+      try {
+        const url = SUPABASE_URL + '/rest/v1/classes' +
+          '?select=id,name,starts_at,price_cents,weeks,instructor&is_published=eq.true&order=starts_at.asc';
+        const res = await fetch(url, {
+          headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        _pwClasses = await res.json();
+
+        const sel = document.getElementById('pwClass');
+        if (!_pwClasses.length) {
+          sel.innerHTML = '<option value="">No classes available yet</option>';
+          return;
+        }
+        sel.innerHTML = '<option value="">— choose a class —</option>' +
+          _pwClasses.map((c, i) => `<option value="${i}">${_esc(c.name)}</option>`).join('');
+      } catch (e) {
+        console.error('Widget class load failed:', e);
+        document.getElementById('pwClass').innerHTML = '<option value="">Couldn\'t load classes</option>';
+      }
+    }
+
+    function pwOnClassChange() {
+      const idx    = document.getElementById('pwClass').value;
+      const optSel = document.getElementById('pwOption');
+      const priceEl = document.getElementById('pwPrice');
+      const btn    = document.getElementById('pwBtn');
+
+      if (idx === '') {
+        optSel.innerHTML = '<option value="">— then pick an option —</option>';
+        optSel.disabled = true;
+        priceEl.textContent = '—'; priceEl.classList.add('dim');
+        btn.disabled = true;
+        return;
+      }
+
+      const c     = _pwClasses[parseInt(idx)];
+      const weeks = c.weeks || 1;
+      const perSession = Math.round((c.price_cents || 0) / weeks);
+      const dates = _sessionDates(c);
+
+      let opts = '<option value="">— pick a session or course —</option>';
+      dates.forEach((d, i) => {
+        opts += `<option value="session:${i}">${_fmtDate(d)} · Session ${i + 1} of ${weeks} — ${_money(perSession)}</option>`;
+      });
+      opts += `<option value="full">Full course (all ${weeks} sessions) — ${_money(c.price_cents)}</option>`;
+
+      optSel.innerHTML = opts;
+      optSel.disabled = false;
+      priceEl.textContent = '—'; priceEl.classList.add('dim');
+      btn.disabled = true;
+    }
+
+    function pwOnOptionChange() {
+      const classIdx = document.getElementById('pwClass').value;
+      const optVal   = document.getElementById('pwOption').value;
+      const priceEl  = document.getElementById('pwPrice');
+      const btn      = document.getElementById('pwBtn');
+
+      if (!classIdx || !optVal) {
+        priceEl.textContent = '—'; priceEl.classList.add('dim');
+        btn.disabled = true;
+        return;
+      }
+
+      const c     = _pwClasses[parseInt(classIdx)];
+      const weeks = c.weeks || 1;
+      priceEl.textContent = optVal === 'full'
+        ? _money(c.price_cents)
+        : _money(Math.round((c.price_cents || 0) / weeks));
+      priceEl.classList.remove('dim');
+      btn.disabled = false;
+    }
+
+    async function pwCheckout() {
+      const classIdx = document.getElementById('pwClass').value;
+      const optVal   = document.getElementById('pwOption').value;
+      if (!classIdx || !optVal) return;
+
+      const c   = _pwClasses[parseInt(classIdx)];
+      const btn = document.getElementById('pwBtn');
+      btn.disabled = true;
+      btn.textContent = 'Opening…';
+
+      if (optVal === 'full') {
+        sessionStorage.setItem('pwIntent', JSON.stringify({ class_id: c.id, type: 'full' }));
+        window.location.href = 'login.html?next=schedule.html';
+        return;
+      }
+
+      const sessionIndex = parseInt(optVal.split(':')[1]);
+      const weeks        = c.weeks || 1;
+      const perSession   = Math.round((c.price_cents || 0) / weeks);
+      const dates        = _sessionDates(c);
+
+      document.getElementById('modalTitle').textContent      = 'Book your session';
+      document.getElementById('modalSubtitle').textContent   = c.name;
+      document.getElementById('modalClassName').textContent  = c.name;
+      document.getElementById('modalSessionMeta').textContent =
+        'Session ' + (sessionIndex + 1) + ' of ' + weeks + ' · ' + _fmtDateLong(dates[sessionIndex]);
+      document.getElementById('modalPrice').textContent      = _money(perSession);
+
+      await _openCheckout(c.id, sessionIndex);
+
+      btn.disabled = false;
+      btn.textContent = 'Pay now →';
+    }
+
+    async function _openCheckout(classId, sessionIndex) {
+      const modal     = document.getElementById('checkoutModal');
+      const embedEl   = document.getElementById('checkout-embed');
+      const successEl = document.getElementById('modalSuccess');
+
+      embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:var(--muted);padding:1rem 0">Preparing checkout…</p>';
+      successEl.classList.remove('show');
+      document.getElementById('modalSummary').style.display = 'flex';
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      try {
+        const res = await fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+          body: JSON.stringify({ guest: true, class_id: classId, session_index: sessionIndex }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.clientSecret) throw new Error(data.error || 'Checkout failed');
+
+        if (!_stripe) _stripe = Stripe(STRIPE_PK);
+        if (_embeddedCheckout) { _embeddedCheckout.destroy(); _embeddedCheckout = null; }
+
+        _embeddedCheckout = await _stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
+        embedEl.innerHTML = '';
+        _embeddedCheckout.mount('#checkout-embed');
+      } catch (err) {
+        embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:#c04;">Couldn\'t start checkout — please try again or <a href="login.html">log in</a>.</p>';
+        console.error('Checkout error:', err);
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('checkoutModal').classList.remove('open');
+      document.body.style.overflow = '';
+      if (_embeddedCheckout) { _embeddedCheckout.destroy(); _embeddedCheckout = null; }
+      document.getElementById('checkout-embed').innerHTML = '';
+    }
+
+    document.getElementById('checkoutModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // Handle Stripe return redirect
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('status') === 'complete') {
+        const modal     = document.getElementById('checkoutModal');
+        const successEl = document.getElementById('modalSuccess');
+        document.getElementById('checkout-embed').innerHTML = '';
+        document.getElementById('modalSummary').style.display = 'none';
+        successEl.classList.add('show');
+        modal.classList.add('open');
+        history.replaceState({}, '', window.location.pathname);
+      }
+    })();
+
+    _loadClasses();
   </script>
 
 </body>
