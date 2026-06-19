@@ -492,7 +492,7 @@
     function cellHTML(c){
       const on = enrolledIds.has(c.id);
       const totalHours = ((c.duration_minutes||0)/60) * (c.weeks||1);
-      const perHour = totalHours ? Math.round(c.price_cents/totalHours) : 0;
+      const sessionCents = c.session_price_cents || Math.round((c.price_cents||0) / (c.weeks||1));
       const remaining = (c.capacity==null) ? null : Math.max(0, c.capacity - (c.seats_taken||0));
       const full = remaining!==null && remaining<=0;
       let seatsHtml = "";
@@ -509,7 +509,7 @@
         <div class="cell-time">${timeRangeOnly(c)}</div>
         <div class="cell-name">${c.emoji||""} ${c.name.replace(/\s*\(.*\)\s*$/,"")}</div>
         <div class="cell-dates">${termRange(c)}</div>
-        <div class="cell-price">${money(c.price_cents)}<span class="per"> · ${money(perHour)}/hr</span></div>
+        <div class="cell-price">${money(c.price_cents)}<span class="per"> full course · ${money(sessionCents)} starter session</span></div>
         ${seatsHtml}
         ${button}
       </div>`;
