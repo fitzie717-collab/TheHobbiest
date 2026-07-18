@@ -168,13 +168,17 @@
     /* ============================================================
        NAV
        ============================================================ */
-    .nav {
-      position: absolute;
+    .header-wrap {
+      position: sticky;
       top: 0;
-      left: 0;
-      right: 0;
+      z-index: 1000;
+      background: var(--bg);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+    .nav {
+      position: relative;
       z-index: 10;
-      padding: 1.75rem 0;
+      padding: 1.25rem 0;
     }
     .nav-inner {
       display: flex;
@@ -342,7 +346,7 @@
        ============================================================ */
     .hero {
       position: relative;
-      padding: 8rem 0 4.5rem;
+      padding: 3rem 0 4.5rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -1493,7 +1497,7 @@
       .pillars-grid { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 880px) {
-      .hero { padding: 7rem 0 4rem; gap: 2.5rem; }
+      .hero { padding: 3rem 0 4rem; gap: 2.5rem; }
       .hero-top { grid-template-columns: 1fr; }
       .hero-seal-wrap { order: -1; max-width: 280px; margin: 0 auto; }
       .hero-quote { text-align: left; }
@@ -1712,7 +1716,193 @@
       max-width: 34ch;
       margin: 0 auto;
     }
+
+    /* ============================================================
+       HOW IT WORKS & INTEREST REGISTRATION SECTION
+       ============================================================ */
+    .how-it-works-section {
+      background: var(--bg-warm);
+      padding: 6rem 0;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .how-it-works-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: start;
+    }
+    .how-it-works-left {
+      display: flex;
+      flex-direction: column;
+    }
+    .section-lead {
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: var(--ink-soft);
+      margin-bottom: 2.5rem;
+    }
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .step-item {
+      display: flex;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .step-number {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 300;
+      color: var(--sage);
+      line-height: 1;
+      border-bottom: 1px solid var(--sage-pale);
+      padding-bottom: 4px;
+    }
+    .step-content h4 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 0.5rem 0;
+    }
+    .step-content p {
+      font-size: 0.9rem;
+      line-height: 1.45;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+    
+    /* Interest Card Form */
+    .interest-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(78, 90, 65, 0.05);
+    }
+    .interest-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--sage-deep);
+      margin: 0 0 0.5rem 0;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .form-group {
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .form-group label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"] {
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      background: var(--bg);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--ink);
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--sage);
+      background: var(--surface);
+    }
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: 0.2rem;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      cursor: pointer;
+    }
+    .checkbox-label input {
+      accent-color: var(--sage);
+      width: 14px;
+      height: 14px;
+    }
+    .btn-submit-interest {
+      width: 100%;
+      background: var(--sage-deep);
+      color: #fff;
+      border: none;
+      padding: 0.9rem 1.5rem;
+      border-radius: 4px;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      margin-top: 1rem;
+    }
+    .btn-submit-interest:hover {
+      background: var(--sage);
+    }
+    .btn-submit-interest:active {
+      transform: scale(0.98);
+    }
+    .btn-submit-interest:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .form-msg {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      text-align: center;
+      padding: 0.75rem;
+      border-radius: 4px;
+      display: none;
+    }
+    .form-msg.ok {
+      display: block;
+      background: rgba(122, 138, 107, 0.1);
+      color: var(--sage-deep);
+      border: 1px solid var(--sage-pale);
+    }
+    .form-msg.err {
+      display: block;
+      background: rgba(217, 83, 79, 0.1);
+      color: #c9302c;
+      border: 1px solid rgba(217, 83, 79, 0.2);
+    }
+
+    @media (max-width: 880px) {
+      .how-it-works-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .interest-card {
+        padding: 1.75rem;
+      }
+      .checkbox-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
@@ -1720,43 +1910,45 @@
   <!-- =========================================================
        NAV
        ========================================================= -->
-  <!-- CONTACT BAR -->
-  <div class="contact-bar">
-    <div class="container contact-bar-inner">
-      <div class="contact-bar-items">
-        <div class="contact-bar-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          135 N. Main Street, Pittston, PA
-        </div>
-        <div class="contact-bar-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <a href="tel:+15703546189">(570) 354-6189</a>
-        </div>
-        <div class="contact-bar-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+  <header class="header-wrap">
+    <!-- CONTACT BAR -->
+    <div class="contact-bar">
+      <div class="container contact-bar-inner">
+        <div class="contact-bar-items">
+          <div class="contact-bar-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            135 N. Main Street, Pittston, PA
+          </div>
+          <div class="contact-bar-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+15703546189">(570) 354-6189</a>
+          </div>
+          <div class="contact-bar-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a href="index.html" class="wordmark">The Hobbiest</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"
-        onclick="this.classList.toggle('open');document.getElementById('navLinks').classList.toggle('open');this.setAttribute('aria-expanded',this.classList.contains('open'));">
-        <span></span><span></span><span></span>
-      </button>
-      <div class="nav-links" id="navLinks">
-        <a href="index.html" class="nav-link nav-link-current">Home</a>
-        <a href="schedule.html" class="nav-link">Skills Schedule</a>
-        <a href="apply.html" class="nav-link">Apply to Teach</a>
-        <a href="press.html" class="nav-link">Press</a>
-        <a href="gift.html" class="nav-link">Give a Gift</a>
-        <a href="login.html" class="nav-link">Member Log In</a>
+    <nav class="nav">
+      <div class="container nav-inner">
+        <a href="index.html" class="wordmark">The Hobbiest</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"
+          onclick="this.classList.toggle('open');document.getElementById('navLinks').classList.toggle('open');this.setAttribute('aria-expanded',this.classList.contains('open'));">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+          <a href="index.html" class="nav-link nav-link-current">Home</a>
+          <a href="schedule.html" class="nav-link">Skills Schedule</a>
+          <a href="apply.html" class="nav-link">Apply to Teach</a>
+          <a href="press.html" class="nav-link">Press</a>
+          <a href="gift.html" class="nav-link">Give a Gift</a>
+          <a href="login.html" class="nav-link">Member Log In</a>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </header>
 
   <!-- =========================================================
        HERO — heading + paragraph (left column) / seal (right column)
@@ -1842,6 +2034,124 @@
 
     </div>
   </header>
+
+  <!-- =========================================================
+       HOW IT WORKS & INTEREST REGISTRATION
+       ========================================================= -->
+  <section class="how-it-works-section" id="how-it-works">
+    <div class="container">
+      <div class="how-it-works-grid">
+        <!-- Left: Explanation -->
+        <div class="how-it-works-left" data-reveal>
+          <span class="eyebrow">THE CONCEPT</span>
+          <h2 class="h-section" style="margin: 0 0 1.5rem 0;">What It <em>Is</em>.</h2>
+          <p class="section-lead">The Hobbiest operates differently. Instead of fixed, empty schedules, our classes are shaped directly by your interest and availability.</p>
+          
+          <div class="steps-list">
+            <div class="step-item">
+              <div class="step-number">01</div>
+              <div class="step-content">
+                <h4>Enroll for a Class</h4>
+                <p>Choose your topics and register interest. A standard 2-hour immersive session is just <strong>$35</strong>, guided by local artisans and experts.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">02</div>
+              <div class="step-content">
+                <h4>Mark Your Availability</h4>
+                <p>Tell us when you are free (mornings, evenings, or weekends) using the registration form. No commitments or payment upfront.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">03</div>
+              <div class="step-content">
+                <h4>Confirm &amp; Attend</h4>
+                <p>Once a class fills up (typically 4-6 members), we lock in the schedule, activate your slot, and send you the details to meet up.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="how-it-works-right" data-reveal>
+          <div class="interest-card">
+            <h3>Register Your Interest</h3>
+            <p style="font-size:0.85rem;color:var(--ink-soft);margin-bottom:1.5rem;line-height:1.4;">Fill out this form with your availability. We'll set up your member account and email you a sign-in link.</p>
+            
+            <form id="interestForm" onsubmit="submitInterest(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="interestFirstName">First Name</label>
+                  <input type="text" id="interestFirstName" required placeholder="Jane" />
+                </div>
+                <div class="form-group">
+                  <label for="interestLastName">Last Name</label>
+                  <input type="text" id="interestLastName" required placeholder="Doe" />
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="interestEmail">Email Address</label>
+                <input type="email" id="interestEmail" required placeholder="jane.doe@example.com" />
+              </div>
+
+              <div class="form-group">
+                <label for="interestPhone">Phone Number</label>
+                <input type="tel" id="interestPhone" required placeholder="(570) 555-0199" />
+              </div>
+
+              <div class="form-group">
+                <label>Topics of Interest</label>
+                <div class="checkbox-grid">
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="interestTopics" value="Creative Pursuits" />
+                    <span>Creative Pursuits</span>
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="interestTopics" value="Presence &amp; Entertaining" />
+                    <span>Presence &amp; Entertaining</span>
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="interestTopics" value="Essential Life Skills" />
+                    <span>Essential Life Skills</span>
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="interestTopics" value="Taste &amp; Curation" />
+                    <span>Taste &amp; Curation</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Your Availability</label>
+                <div class="checkbox-grid">
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="interestAvail" value="Weekday Mornings" />
+                    <span>Weekday Mornings</span>
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="interestAvail" value="Weekday Evenings" />
+                    <span>Weekday Evenings</span>
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="interestAvail" value="Saturdays" />
+                    <span>Saturdays</span>
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="interestAvail" value="Sundays" />
+                    <span>Sundays</span>
+                  </label>
+                </div>
+              </div>
+
+              <button type="submit" class="btn-submit-interest" id="interestSubmitBtn">Submit &amp; Create Account →</button>
+              <div id="interestMsg" class="form-msg"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- =========================================================
        CURRICULUM VITAE — four pillars + three class formats
@@ -2316,6 +2626,75 @@
         history.replaceState({}, '', window.location.pathname);
       }
     })();
+
+    async function submitInterest(e) {
+      e.preventDefault();
+      const btn = document.getElementById('interestSubmitBtn');
+      const msg = document.getElementById('interestMsg');
+      const originalText = btn.textContent;
+      
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+      msg.className = 'form-msg';
+      msg.style.display = 'none';
+
+      const firstName = document.getElementById('interestFirstName').value.trim();
+      const lastName = document.getElementById('interestLastName').value.trim();
+      const email = document.getElementById('interestEmail').value.trim();
+      const phone = document.getElementById('interestPhone').value.trim();
+      
+      const topics = Array.from(document.querySelectorAll('input[name="interestTopics"]:checked')).map(cb => cb.value).join(', ');
+      const availability = Array.from(document.querySelectorAll('input[name="interestAvail"]:checked')).map(cb => cb.value).join(', ');
+
+      const SUPABASE_URL = "https://uprdczhhgwzfypkudqjg.supabase.co";
+      const SUPABASE_ANON_KEY = "sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ";
+      
+      try {
+        if (!window.supabase) {
+          throw new Error("Supabase is not loaded. Please try again.");
+        }
+        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // 1. Call submit-signup Edge Function
+        const { data, error } = await sb.functions.invoke("submit-signup", {
+          body: {
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            phone: phone,
+            classes_of_interest: topics,
+            availability: availability,
+            notes: "Self-registered via homepage Interest Form",
+            newsletter: true
+          }
+        });
+
+        if (error || data?.error) {
+          throw new Error(error?.message || data?.error);
+        }
+
+        // 2. Trigger Magic Link sign-in link creation so it registers them as a user in Supabase auth and emails them a login link!
+        const { error: otpError } = await sb.auth.signInWithOtp({
+          email,
+          options: { emailRedirectTo: window.location.origin + '/signup.html' }
+        });
+
+        if (otpError) {
+          throw otpError;
+        }
+
+        msg.className = 'form-msg ok';
+        msg.innerHTML = `<strong>Success!</strong> Account created for <strong>${email}</strong>.<br />We've emailed you a member login link! Click the link in your inbox to access the skills catalog.`;
+        document.getElementById('interestForm').reset();
+      } catch (err) {
+        console.error("Interest form error:", err);
+        msg.className = 'form-msg err';
+        msg.textContent = err.message || "An unexpected error occurred. Please try again.";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
+    }
 
     _loadClasses();
   </script>
