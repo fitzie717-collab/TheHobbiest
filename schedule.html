@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#7A8A6B" />
 
-  <title>Curriculum — The Hobbiest</title>
-  <meta name="description" content="Soft launch curriculum options for The Hobbiest. Tell us what interests you and when you'd come. Opening July 2026 in Pittston, PA." />
+  <title>Summer Curriculum — The Hobbiest</title>
+  <meta name="description" content="Summer 2026 curriculum options for The Hobbiest. Single 2-hour sessions in Pittston, PA." />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Curriculum — The Hobbiest" />
-  <meta property="og:description" content="Help us build the schedule. Tell us what classes interest you and when you'd come." />
+  <meta property="og:title" content="Summer Curriculum — The Hobbiest" />
+  <meta property="og:description" content="Summer 2026 curriculum options for The Hobbiest in Pittston, PA." />
   <meta property="og:type" content="website" />
 
   <!-- Favicon -->
@@ -19,7 +19,7 @@
   <!-- Fonts: Fraunces (display) + DM Sans (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght9..40,300..600&display=swap" rel="stylesheet" />
 
   <script src="https://js.stripe.com/v3/"></script>
   <style>
@@ -105,25 +105,46 @@
     }
 
     /* ============================================================
-       REVEAL ON SCROLL
+       NAV (matches main site)
        ============================================================ */
-    [data-reveal] {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
-    }
-    [data-reveal].is-visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ============================================================
-       NAV
-       ============================================================ */
-    .nav {
-      position: relative;
-      padding: 1.75rem 0;
+    .header-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--bg);
       border-bottom: 1px solid var(--hairline);
+    }
+    .contact-bar {
+      background: var(--sage-deep);
+      color: #FAF7F0;
+      padding: 0.4rem 0;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+    }
+    .contact-bar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .contact-bar-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .contact-bar-item svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--sage-pale);
+    }
+    .contact-bar a {
+      color: #FAF7F0;
+      text-decoration: none;
+    }
+    .contact-bar a:hover {
+      text-decoration: underline;
+    }
+    .nav {
+      padding: 1.25rem 0;
     }
     .nav-inner {
       display: flex;
@@ -132,7 +153,7 @@
     }
     .wordmark {
       font-family: var(--font-display);
-      font-size: 1.2rem;
+      font-size: 1.5rem;
       font-weight: 400;
       letter-spacing: -0.01em;
       font-style: italic;
@@ -142,11 +163,12 @@
     }
     .nav-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.75rem;
       align-items: center;
     }
     .nav-link {
-      font-size: 0.75rem;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--muted);
@@ -154,15 +176,10 @@
       text-decoration: none;
       transition: color 0.2s var(--ease);
     }
-    .nav-link:hover { color: var(--sage); }
-    .nav-link-purchase { color: var(--sage); font-weight: 600; }
-    .nav-link-purchase:hover { color: var(--sage-deep); }
-    .nav-link-current { color: var(--sage-deep); }
-    .nav-link-current::after {
-      content: ""; display: block; width: 100%; height: 1px;
-      background: var(--sage); margin-top: 4px;
+    .nav-link:hover, .nav-link-current {
+      color: var(--sage);
     }
-    .nav-link-primary {
+    .nav-link-purchase {
       color: var(--bg);
       background: var(--sage);
       padding: 0.55rem 1.1rem;
