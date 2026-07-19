@@ -1571,10 +1571,9 @@
         <div data-reveal>
           <span class="page-eyebrow">Summer 2026</span>
           <h1>The Summer <em>Curriculum</em>.</h1>
-        </div>
         <div data-reveal>
           <p class="page-hero-lede">
-            Explore our featured lineup of 10 hands-on courses across creative arts, personal styling, life skills, and hearth &amp; garden. Available as single 2-hour sessions ($25–$35) or 4-week 101 packages — all materials included.
+            Explore our featured lineup of 10 hands-on courses across creative arts, personal styling, life skills, and hearth &amp; garden. Available as single 2-hour sessions ($25 for no-materials classes, $45–$65 for materials-included classes).
           </p>
 
           <!-- PURCHASE WIDGET -->
@@ -1710,28 +1709,28 @@
     const sessionPrice = c => c.session_price_cents || Math.round((c.price_cents || 0) / (c.weeks || 1));
 
     const DEFAULT_CLASSES = [
-      { id: 'wreath-making', name: 'Wreath Making', category: 'Creative Pursuits', description: 'Craft a stunning, seasonal door wreath using fresh greens, dried florals, and traditional wiring techniques.', instructor: 'Studio Florist', price_cents: 4500, materials_included: true },
+      { id: 'wreath-making', name: 'Wreath Making', category: 'Creative Pursuits', description: 'Craft a stunning, seasonal door wreath using fresh greens, dried florals, and traditional wiring techniques.', instructor: 'Studio Florist', price_cents: 6500, materials_included: true },
       { id: 'sketch-art', name: 'Sketch Art & Drawing Basics', category: 'Creative Pursuits', description: 'Master fundamental shading, perspective, line weight, and quick-sketch techniques in a relaxing environment.', instructor: 'Resident Artist', price_cents: 2500, materials_included: false },
       { id: 'makeup-daily', name: 'Makeup Tutorial — Daily Application', category: 'Living Well', description: 'Learn a flawless 10-minute everyday makeup routine tailored to your skin tone and features.', instructor: 'Beauty Specialist', price_cents: 4500, materials_included: true },
       { id: 'makeup-night', name: 'Makeup Tutorial — Night Out Glam', category: 'Living Well', description: 'Step-by-step evening makeup techniques: subtle smokey eyes, long-lasting skin prep, and bold lip application.', instructor: 'Beauty Specialist', price_cents: 4500, materials_included: true },
       { id: 'hair-blowouts', name: 'Hair Tutorial — Professional Blowouts', category: 'Living Well', description: 'Master the round-brush blowout at home! Learn sectioning, heat protection, volume lifting, and finishing oils.', instructor: 'Stylist Lead', price_cents: 4500, materials_included: true },
-      { id: 'modern-calligraphy', name: 'Modern Calligraphy & Pointed Pen', category: 'Creative Pursuits', description: 'Explore pointed pen lettering, stroke contrast, letterforms, and custom stationery design.', instructor: 'Calligrapher', price_cents: 4500, materials_included: true },
-      { id: 'watercolor-painting', name: 'Watercolor Painting 101', category: 'Creative Pursuits', description: 'Learn color blending, wet-on-wet washes, and botanical watercolor painting techniques.', instructor: 'Fine Artist', price_cents: 4500, materials_included: true },
-      { id: 'flower-arranging', name: 'Flower Arranging & Floral Design', category: 'Hearth & Garden', description: 'Principles of color, vessel selection, stem preparation, and creating balanced fresh floral arrangements.', instructor: 'Master Florist', price_cents: 4500, materials_included: true },
+      { id: 'modern-calligraphy', name: 'Modern Calligraphy & Pointed Pen', category: 'Creative Pursuits', description: 'Explore pointed pen lettering, stroke contrast, letterforms, and custom stationery design.', instructor: 'Calligrapher', price_cents: 5500, materials_included: true },
+      { id: 'watercolor-painting', name: 'Watercolor Painting 101', category: 'Creative Pursuits', description: 'Learn color blending, wet-on-wet washes, and botanical watercolor painting techniques.', instructor: 'Fine Artist', price_cents: 5500, materials_included: true },
+      { id: 'flower-arranging', name: 'Flower Arranging & Floral Design', category: 'Hearth & Garden', description: 'Principles of color, vessel selection, stem preparation, and creating balanced fresh floral arrangements.', instructor: 'Master Florist', price_cents: 6500, materials_included: true },
       { id: 'beginner-knitting', name: 'Beginner Knitting — Chunky Scarf', category: 'Creative Pursuits', description: 'Cast on, knit stitch, purl stitch, and cast off. Walk away with your first cozy handmade creation.', instructor: 'Textile Artisan', price_cents: 4500, materials_included: true },
-      { id: 'sourdough-bread', name: 'Sourdough Bread Making', category: 'Essential Life Skills', description: 'De-mystify starter maintenance, bulk fermentation, shaping, scoring, and baking golden rustic loaves.', instructor: 'Artisan Baker', price_cents: 4500, materials_included: true }
+      { id: 'sourdough-bread', name: 'Sourdough Bread Making', category: 'Essential Life Skills', description: 'De-mystify starter maintenance, bulk fermentation, shaping, scoring, and baking golden rustic loaves.', instructor: 'Artisan Baker', price_cents: 5500, materials_included: true }
     ];
 
     function classPriceCents(c) {
-      if (c.price_cents === 2500 || c.price_cents === 4500) return c.price_cents;
+      if (c.price_cents) return c.price_cents;
       return c.materials_included === false ? 2500 : 4500;
     }
 
     function cardHtml(c) {
       const priceCents = classPriceCents(c);
       const priceFormatted = money(priceCents);
-      const materialsNote = (priceCents === 4500) ? 'All materials included ($45)' : 'No materials required ($25)';
-      const instructor = c.instructor ? '<p class="class-instructor">Taught by ' + esc(c.instructor) + '</p>' : '';
+      const materialsNote = (priceCents > 2500) ? `All materials included (${priceFormatted})` : 'No materials required ($25)';
+      const instructor = c.instructor ? '<p class="class-instructor">Taught by ' + esc(c.instructor) + '</p>' : '';tor">Taught by ' + esc(c.instructor) + '</p>' : '';
 
       return '' +
         '<article class="class-card">' +
