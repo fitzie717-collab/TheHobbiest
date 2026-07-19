@@ -1949,6 +1949,7 @@
         </button>
         <div class="nav-links" id="navLinks">
           <a href="index.html" class="nav-link nav-link-current">Home</a>
+          <a href="#membership" class="nav-link">Studio Membership</a>
           <a href="schedule.html" class="nav-link">Skills Schedule</a>
           <a href="apply.html" class="nav-link">Apply to Teach</a>
           <a href="press.html" class="nav-link">Press</a>
@@ -2137,25 +2138,18 @@
               </div>
 
               <div class="form-group">
-                <label>Topics of Interest</label>
-                <div class="checkbox-grid">
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="interestTopics" value="Creative Pursuits" />
-                    <span>Creative Pursuits</span>
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="interestTopics" value="Presence &amp; Entertaining" />
-                    <span>Presence &amp; Entertaining</span>
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="interestTopics" value="Essential Life Skills" />
-                    <span>Essential Life Skills</span>
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="interestTopics" value="Taste &amp; Curation" />
-                    <span>Taste &amp; Curation</span>
-                  </label>
+                <label for="interestClass">Class of Interest</label>
+                <div style="position: relative;">
+                  <select id="interestClass" required style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--hairline); border-radius: 4px; background: var(--bg); font-family: var(--font-body); font-size: 0.9rem; color: var(--ink); appearance: none;">
+                    <option value="">Loading classes…</option>
+                  </select>
+                  <span style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--muted); font-size: 0.8rem;">▾</span>
                 </div>
+              </div>
+
+              <div class="form-group">
+                <label for="interestSuggestion">Topics or Suggestions</label>
+                <textarea id="interestSuggestion" placeholder="What other classes or topics would you like to see? Knitting, paint, etc." style="width: 100%; min-height: 80px; padding: 0.75rem 1rem; border: 1px solid var(--hairline); border-radius: 4px; background: var(--bg); font-family: var(--font-body); font-size: 0.9rem; color: var(--ink); resize: vertical; transition: border-color 0.2s, background-color 0.2s;"></textarea>
               </div>
 
               <div class="form-group">
@@ -2185,6 +2179,48 @@
             </form>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       STUDIO MEMBERSHIP SECTION
+       ========================================================= -->
+  <section class="studio-membership-section" id="membership" style="background: var(--bg); padding: 6rem 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto; text-align: center;" data-reveal>
+        <span class="eyebrow">THE STUDIO</span>
+        <h2 class="h-section" style="margin: 0 0 1.5rem 0;">Studio <em>Membership</em></h2>
+        <p class="section-lead" style="margin-bottom: 3rem;">Get direct access to our physical space for independent projects, open studio time, and creative pursuits — knitting, painting, meditating in the garden, or simply having a quiet place to make something.</p>
+        
+        <div style="background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px; padding: clamp(1.5rem, 4vw, 3rem); text-align: left; box-shadow: 0 10px 30px rgba(78, 90, 65, 0.04); margin-bottom: 3rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--hairline); padding-bottom: 1.5rem; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+            <h3 style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 400; color: var(--sage-deep); margin: 0;">Club Member Dues</h3>
+            <span style="font-family: var(--font-display); font-size: 2.2rem; font-weight: 300; color: var(--ink);">$45<span style="font-size: 1rem; font-family: var(--font-body); color: var(--ink-soft);"> / month</span></span>
+          </div>
+          
+          <h4 style="font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 1.25rem;">What's Included:</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1.25rem; font-size: 0.95rem; color: var(--ink-soft);">
+            <li style="display: flex; gap: 1rem; align-items: start;">
+              <span style="color: var(--sage); font-weight: bold; font-size: 1.2rem; line-height: 1;">✓</span>
+              <span><strong>Open Studio Access:</strong> Weekdays M-F from 6:00 PM – 9:30 PM, and all day on weekends (7:00 AM – 9:00 PM).</span>
+            </li>
+            <li style="display: flex; gap: 1rem; align-items: start;">
+              <span style="color: var(--sage); font-weight: bold; font-size: 1.2rem; line-height: 1;">✓</span>
+              <span><strong>Complimentary Amenities:</strong> Free hot black coffee and filtered water are always available during open studio hours.</span>
+            </li>
+            <li style="display: flex; gap: 1rem; align-items: start;">
+              <span style="color: var(--sage); font-weight: bold; font-size: 1.2rem; line-height: 1;">✓</span>
+              <span><strong>100% Class Credits:</strong> Your entire $45 monthly dues are applied as credit toward any class or package you enroll in.</span>
+            </li>
+          </ul>
+          
+          <div style="margin-top: 2.5rem; border-top: 1px solid var(--hairline); padding-top: 1.5rem; font-size: 0.88rem; font-style: italic; color: var(--muted); line-height: 1.5;">
+            We ask that members be mindful of classes in session and keep the space respectful for everyone learning.
+          </div>
+        </div>
+        
+        <a href="#how-it-works" class="catalog-cta-link" style="font-size: 1.1rem;">Register for Studio Membership <span class="catalog-cta-arrow">→</span></a>
       </div>
     </div>
   </section>
@@ -2508,16 +2544,21 @@
         if (!res.ok) throw new Error('HTTP ' + res.status);
         _pwClasses = await res.json();
 
-        const sel = document.getElementById('pwClass');
-        if (!_pwClasses.length) {
-          sel.innerHTML = '<option value="">No classes available yet</option>';
-          return;
+        // Populate interestClass select dropdown
+        const sel = document.getElementById('interestClass');
+        if (sel) {
+          if (!_pwClasses.length) {
+            sel.innerHTML = '<option value="">No classes available yet</option>';
+            return;
+          }
+          sel.innerHTML = '<option value="">— choose a class —</option>' +
+            _pwClasses.map((c) => `<option value="${_esc(c.name)}">${_esc(c.name)}</option>`).join('') +
+            '<option value="Other">Other / Suggestion (tell us below)</option>';
         }
-        sel.innerHTML = '<option value="">— choose a class —</option>' +
-          _pwClasses.map((c, i) => `<option value="${i}">${_esc(c.name)}</option>`).join('');
       } catch (e) {
         console.error('Widget class load failed:', e);
-        document.getElementById('pwClass').innerHTML = '<option value="">Couldn\'t load classes</option>';
+        const sel = document.getElementById('interestClass');
+        if (sel) sel.innerHTML = '<option value="">Couldn\'t load classes</option>';
       }
     }
 
@@ -2680,7 +2721,8 @@
       const email = document.getElementById('interestEmail').value.trim();
       const phone = document.getElementById('interestPhone').value.trim();
       
-      const topics = Array.from(document.querySelectorAll('input[name="interestTopics"]:checked')).map(cb => cb.value).join(', ');
+      const interestClass = document.getElementById('interestClass').value;
+      const suggestions = document.getElementById('interestSuggestion').value.trim();
       const availability = Array.from(document.querySelectorAll('input[name="interestAvail"]:checked')).map(cb => cb.value).join(', ');
 
       const SUPABASE_URL = "https://uprdczhhgwzfypkudqjg.supabase.co";
@@ -2699,9 +2741,9 @@
             last_name: lastName,
             email: email,
             phone: phone,
-            classes_of_interest: topics,
+            classes_of_interest: interestClass || "General Interest",
             availability: availability,
-            notes: "Self-registered via homepage Interest Form",
+            notes: suggestions || "Self-registered via homepage Interest Form",
             newsletter: true
           }
         });
