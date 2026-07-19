@@ -1709,68 +1709,48 @@
     const money    = cents => '$' + Math.round(cents / 100);
     const sessionPrice = c => c.session_price_cents || Math.round((c.price_cents || 0) / (c.weeks || 1));
 
-    function classFormat(c) {
-      const start  = new Date(c.starts_at);
-      const end    = new Date(start.getTime() + (c.duration_minutes || 120) * 60000);
-      const lastWk = new Date(start.getTime() + ((c.weeks || 1) - 1) * 7 * 86400000);
-      return weekday(start) + 's \u00b7 ' + fmtTime(start) + '\u2013' + fmtTime(end) +
-             ' \u00b7 ' + fmtDate(start) + '\u2013' + fmtDate(lastWk) + ' \u00b7 In studio';
-    }
+    const DEFAULT_CLASSES = [
+      { id: 'wreath-making', name: 'Wreath Making', category: 'Creative Pursuits', description: 'Craft a stunning, seasonal door wreath using fresh greens, dried florals, and traditional wiring techniques.', instructor: 'Studio Florist', price_cents: 4500, materials_included: true },
+      { id: 'sketch-art', name: 'Sketch Art & Drawing Basics', category: 'Creative Pursuits', description: 'Master fundamental shading, perspective, line weight, and quick-sketch techniques in a relaxing environment.', instructor: 'Resident Artist', price_cents: 2500, materials_included: false },
+      { id: 'makeup-daily', name: 'Makeup Tutorial — Daily Application', category: 'Living Well', description: 'Learn a flawless 10-minute everyday makeup routine tailored to your skin tone and features.', instructor: 'Beauty Specialist', price_cents: 4500, materials_included: true },
+      { id: 'makeup-night', name: 'Makeup Tutorial — Night Out Glam', category: 'Living Well', description: 'Step-by-step evening makeup techniques: subtle smokey eyes, long-lasting skin prep, and bold lip application.', instructor: 'Beauty Specialist', price_cents: 4500, materials_included: true },
+      { id: 'hair-blowouts', name: 'Hair Tutorial — Professional Blowouts', category: 'Living Well', description: 'Master the round-brush blowout at home! Learn sectioning, heat protection, volume lifting, and finishing oils.', instructor: 'Stylist Lead', price_cents: 4500, materials_included: true },
+      { id: 'modern-calligraphy', name: 'Modern Calligraphy & Pointed Pen', category: 'Creative Pursuits', description: 'Explore pointed pen lettering, stroke contrast, letterforms, and custom stationery design.', instructor: 'Calligrapher', price_cents: 4500, materials_included: true },
+      { id: 'watercolor-painting', name: 'Watercolor Painting 101', category: 'Creative Pursuits', description: 'Learn color blending, wet-on-wet washes, and botanical watercolor painting techniques.', instructor: 'Fine Artist', price_cents: 4500, materials_included: true },
+      { id: 'flower-arranging', name: 'Flower Arranging & Floral Design', category: 'Hearth & Garden', description: 'Principles of color, vessel selection, stem preparation, and creating balanced fresh floral arrangements.', instructor: 'Master Florist', price_cents: 4500, materials_included: true },
+      { id: 'beginner-knitting', name: 'Beginner Knitting — Chunky Scarf', category: 'Creative Pursuits', description: 'Cast on, knit stitch, purl stitch, and cast off. Walk away with your first cozy handmade creation.', instructor: 'Textile Artisan', price_cents: 4500, materials_included: true },
+      { id: 'sourdough-bread', name: 'Sourdough Bread Making', category: 'Essential Life Skills', description: 'De-mystify starter maintenance, bulk fermentation, shaping, scoring, and baking golden rustic loaves.', instructor: 'Artisan Baker', price_cents: 4500, materials_included: true }
+    ];
 
-    function titleHtml(cat) {
-      const parts = cat.split(' ');
-      return esc(parts[0]) + (parts.length > 1 ? ' <em>' + esc(parts.slice(1).join(' ')) + '</em>' : '');
-    }
-
-    // Compute each session's date for a class (mirrors dashboard sessionDates())
-    function sessionDates(c) {
-      const dates = [];
-      const base = new Date(c.starts_at);
-      for (let i = 0; i < (c.weeks || 1); i++) {
-        dates.push(new Date(base.getTime() + i * 7 * 24 * 60 * 60 * 1000));
-      }
-      return dates;
+    function classPriceCents(c) {
+      if (c.price_cents === 2500 || c.price_cents === 4500) return c.price_cents;
+      return c.materials_included === false ? 2500 : 4500;
     }
 
     function cardHtml(c) {
-      const weeks     = c.weeks || 1;
-      const perSession = sessionPrice(c);
+      const priceCents = classPriceCents(c);
+      const priceFormatted = money(priceCents);
+      const materialsNote = (priceCents === 4500) ? 'All materials included ($45)' : 'No materials required ($25)';
       const instructor = c.instructor ? '<p class="class-instructor">Taught by ' + esc(c.instructor) + '</p>' : '';
-      const note = c.materials_included ? '<div class="class-price-note">materials included</div>' : '';
-
-      const dates = sessionDates(c);
-      const sessionRows = dates.map((d, i) => {
-        const dateStr = fmtDateLong(d);
-        return '<div class="session-row">' +
-          '<div class="session-row-info">' +
-            '<div class="session-date">' + esc(dateStr) + '</div>' +
-            '<div class="session-label">Starter session · ' + (i + 1) + ' of ' + weeks + '</div>' +
-          '</div>' +
-          '<div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">' +
-            '<span class="session-price">' + money(perSession) + '</span>' +
-            '<button class="btn-book" onclick="openCheckout(' + JSON.stringify(c.id) + ',' + i + ',event)">Book →</button>' +
-          '</div>' +
-        '</div>';
-      }).join('');
-
-      const fullPrice = money(c.price_cents || 0);
 
       return '' +
         '<article class="class-card">' +
-          '<details class="class-details-wrap">' +
+          '<details class="class-details-wrap" open>' +
             '<summary class="class-summary">' +
               '<div class="class-summary-main">' +
-                '<div class="class-format">' + esc(classFormat(c)) + '</div>' +
+                '<div class="class-format">Scheduled when course fills to 12 members · 2-Hour Session · In studio</div>' +
                 '<h4>' + esc(c.name) + '</h4>' +
               '</div>' +
-              '<div class="class-price">' + fullPrice + ' full course</div>' +
+              '<div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">' +
+                '<div class="class-price">' + priceFormatted + '</div>' +
+                '<button class="btn-book" onclick="openCheckout(' + JSON.stringify(c.id) + ', 0, event)">Buy Class →</button>' +
+              '</div>' +
               '<span class="class-chevron" aria-hidden="true">+</span>' +
             '</summary>' +
             '<div class="class-details-body">' +
               '<p class="class-desc">' + esc(c.description) + '</p>' +
-              instructor + note +
-              '<div class="session-list">' + sessionRows + '</div>' +
-              '<span class="session-note">' + money(perSession) + ' starter session · ' + fullPrice + ' full course via member account</span>' +
+              instructor +
+              '<div class="class-price-note" style="margin-top:0.5rem;font-weight:600;color:var(--sage-deep);">' + materialsNote + '</div>' +
             '</div>' +
           '</details>' +
         '</article>';
@@ -1790,7 +1770,7 @@
           if (data && data.length) classes = data;
         }
       } catch (err) {
-        console.error('Schedule load error, using lineup:', err);
+        console.error('Schedule load error, using default lineup:', err);
       }
 
       if (!classes || !classes.length) {
@@ -1826,7 +1806,7 @@
 
       initScrollSpy();
       handleReturnFromStripe();
-      pwPopulate(classes); // populate the hero purchase widget
+      pwPopulate(classes);
     }
 
     function initScrollSpy() {
@@ -1857,27 +1837,21 @@
     let embeddedCheckout = null;
 
     async function openCheckout(classId, sessionIndex, event) {
-      event.stopPropagation(); // don't toggle the accordion
+      if (event) event.stopPropagation();
 
-      // Find the class data so we can populate the modal header
-      const c = _pwClasses.find(x => x.id === classId);
-      if (c) {
-        const weeks      = c.weeks || 1;
-        const perSession = sessionPrice(c);
-        const dates      = sessionDates(c);
-        document.getElementById('modalTitle').textContent     = 'Book your session';
-        document.getElementById('modalSubtitle').textContent  = c.name;
-        document.getElementById('modalClassName').textContent = c.name;
-        document.getElementById('modalSessionMeta').textContent =
-          'Starter session · ' + fmtDateLong(dates[sessionIndex]);
-        document.getElementById('modalPrice').textContent = money(perSession);
-      }
+      const c = _pwClasses.find(x => x.id === classId) || { id: classId, name: 'Single Class', price_cents: 4500 };
+      const priceCents = classPriceCents(c);
 
-      const modal    = document.getElementById('checkoutModal');
-      const embedEl  = document.getElementById('checkout-embed');
+      document.getElementById('modalTitle').textContent = 'Book Single Session';
+      document.getElementById('modalSubtitle').textContent = c.name;
+      document.getElementById('modalClassName').textContent = c.name;
+      document.getElementById('modalSessionMeta').textContent = 'Scheduled when course fills to 12 members · In studio';
+      document.getElementById('modalPrice').textContent = money(priceCents);
+
+      const modal = document.getElementById('checkoutModal');
+      const embedEl = document.getElementById('checkout-embed');
       const successEl = document.getElementById('modalSuccess');
 
-      // Reset modal state
       embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:var(--muted);padding:1rem 0">Preparing checkout…</p>';
       successEl.classList.remove('show');
       document.getElementById('modalSummary').style.display = 'flex';
@@ -1886,19 +1860,17 @@
       document.body.style.overflow = 'hidden';
 
       try {
-        // Call the edge function
         const res = await fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'apikey': SUPABASE_ANON_KEY,
           },
-          body: JSON.stringify({ guest: true, class_id: classId, session_index: sessionIndex }),
+          body: JSON.stringify({ guest: true, class_id: classId, session_index: 0 }),
         });
         const data = await res.json();
         if (!res.ok || !data.clientSecret) throw new Error(data.error || 'Checkout failed');
 
-        // Mount Stripe embedded checkout
         if (!stripe) stripe = Stripe(STRIPE_PK);
         if (embeddedCheckout) { embeddedCheckout.destroy(); embeddedCheckout = null; }
 
@@ -1906,7 +1878,7 @@
         embedEl.innerHTML = '';
         embeddedCheckout.mount('#checkout-embed');
       } catch (err) {
-        embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:#c04;">Couldn\'t start checkout — please try again or <a href=\"login.html\">log in</a>.</p>';
+        embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:#c04;">Couldn\'t start checkout — please try again or <a href="login.html">log in</a>.</p>';
         console.error('Checkout error:', err);
       }
     }
@@ -1919,19 +1891,15 @@
       document.getElementById('checkout-embed').innerHTML = '';
     }
 
-    // Close on backdrop click
     document.getElementById('checkoutModal').addEventListener('click', function(e) {
       if (e.target === this) closeModal();
     });
 
-    // Close on Escape
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    // Handle return from Stripe (embedded checkout fires a return_url redirect)
     function handleReturnFromStripe() {
       const params = new URLSearchParams(window.location.search);
       if (params.get('status') === 'complete') {
-        // Show success modal briefly
         const modal     = document.getElementById('checkoutModal');
         const embedEl   = document.getElementById('checkout-embed');
         const successEl = document.getElementById('modalSuccess');
@@ -1940,7 +1908,6 @@
         summaryEl.style.display = 'none';
         successEl.classList.add('show');
         modal.classList.add('open');
-        // Clean URL
         history.replaceState({}, '', window.location.pathname);
       }
     }
@@ -1948,13 +1915,16 @@
     // ============================================================
     // PURCHASE WIDGET
     // ============================================================
-    let _pwClasses = []; // populated by loadSchedule
+    let _pwClasses = [];
 
     function pwPopulate(classes) {
       _pwClasses = classes;
       const sel = document.getElementById('pwClass');
       sel.innerHTML = '<option value="">— choose a class —</option>' +
-        classes.map((c, i) => `<option value="${i}">${esc(c.name)}</option>`).join('');
+        classes.map((c, i) => {
+          const price = money(classPriceCents(c));
+          return `<option value="${i}">${esc(c.name)} (${price})</option>`;
+        }).join('');
     }
 
     function pwOnClassChange() {
@@ -1971,87 +1941,32 @@
         return;
       }
 
-      const c     = _pwClasses[parseInt(idx)];
-      const weeks = c.weeks || 1;
-      const perSession = sessionPrice(c);
-      const dates = sessionDates(c);
+      const c = _pwClasses[parseInt(idx)];
+      const price = classPriceCents(c);
 
-      // Build options: one per session + full course at bottom
-      let opts = '<option value="">— pick a session or course —</option>';
-      dates.forEach((d, i) => {
-        const label = fmtDate(d) + ' · Starter session';
-        opts += `<option value="session:${i}">${label} — ${money(perSession)}</option>`;
-      });
-      opts += `<option value="full">Full course (all ${weeks} sessions) — ${money(c.price_cents)}</option>`;
-
-      optSel.innerHTML = opts;
+      optSel.innerHTML = `<option value="single" selected>Single 2-Hour Session — ${money(price)}</option>`;
       optSel.disabled = false;
 
-      priceEl.textContent = '—'; priceEl.classList.add('dim');
-      btn.disabled = true;
-    }
-
-    function pwOnOptionChange() {
-      const classIdx  = document.getElementById('pwClass').value;
-      const optVal    = document.getElementById('pwOption').value;
-      const priceEl   = document.getElementById('pwPrice');
-      const btn       = document.getElementById('pwBtn');
-
-      if (!classIdx || !optVal) {
-        priceEl.textContent = '—'; priceEl.classList.add('dim');
-        btn.disabled = true;
-        return;
-      }
-
-      const c     = _pwClasses[parseInt(classIdx)];
-      const weeks = c.weeks || 1;
-
-      if (optVal === 'full') {
-        priceEl.textContent = money(c.price_cents);
-      } else {
-        const perSession = sessionPrice(c);
-        priceEl.textContent = money(perSession);
-      }
+      priceEl.textContent = money(price);
       priceEl.classList.remove('dim');
       btn.disabled = false;
     }
 
+    function pwOnOptionChange() {
+      pwOnClassChange();
+    }
+
     async function pwCheckout() {
       const classIdx = document.getElementById('pwClass').value;
-      const optVal   = document.getElementById('pwOption').value;
-      if (!classIdx || !optVal) return;
+      if (!classIdx) return;
 
       const c   = _pwClasses[parseInt(classIdx)];
       const btn = document.getElementById('pwBtn');
       btn.disabled = true;
       btn.textContent = 'Opening…';
 
-      if (optVal === 'full') {
-        // Full course — requires member account
-        // Store intent and redirect to login, which can redirect back
-        sessionStorage.setItem('pwIntent', JSON.stringify({ class_id: c.id, type: 'full' }));
-        window.location.href = 'login.html?next=schedule.html';
-        return;
-      }
-
-      // Single session — guest checkout via modal
-      const sessionIndex = parseInt(optVal.split(':')[1]);
-
-      // Reuse openCheckout from the accordion cards
-      // but we need to populate the modal header first
-      const weeks      = c.weeks || 1;
-      const perSession = sessionPrice(c);
-      const dates      = sessionDates(c);
-      const dateLabel  = fmtDateLong(dates[sessionIndex]);
-
-      document.getElementById('modalTitle').textContent    = 'Book your session';
-      document.getElementById('modalSubtitle').textContent = c.name;
-      document.getElementById('modalClassName').textContent = c.name;
-      document.getElementById('modalSessionMeta').textContent = 'Starter session · ' + dateLabel;
-      document.getElementById('modalPrice').textContent    = money(perSession);
-
       const fakeEvent = { stopPropagation: () => {} };
-      await openCheckout(c.id, sessionIndex, fakeEvent);
+      await openCheckout(c.id, 0, fakeEvent);
 
       btn.disabled = false;
       btn.textContent = 'Pay now →';
