@@ -2060,7 +2060,7 @@
                   </li>
                   <li style="display: flex; gap: 0.5rem; align-items: start;">
                     <span style="color: var(--sage); font-weight: bold; margin-top: 2px;">•</span>
-                    <span><strong>101 Package:</strong> 4 weekly 2-hour classes (Varies by course)</span>
+                    <span><strong>101 Package:</strong> 4 weekly 2-hour classes (Coming Fall 2026)</span>
                   </li>
                   <li style="display: flex; gap: 0.5rem; align-items: start;">
                     <span style="color: var(--sage); font-weight: bold; margin-top: 2px;">•</span>
@@ -2080,40 +2080,44 @@
               <div class="step-number">03</div>
               <div class="step-content">
                 <h4>We'll Handle the Rest</h4>
-                <p>Once a class fills (typically 10–15 members), we lock in the date and time, confirm your spot, and send you everything you need to show up ready.</p>
+                <p>Once a class fills (typically 10–12 members), we lock in the date and time, confirm your spot, and send you everything you need to show up ready.</p>
               </div>
             </div>
-            <div class="step-item">
-              <div class="step-number">04</div>
-              <div class="step-content">
-                <h4>Studio Membership — $45/month</h4>
-                <p style="margin-bottom: 0.5rem;">Get direct access to our physical space for independent projects, open studio time, and creative pursuits — knitting, painting, meditating in the garden, or simply having a quiet place to make something.</p>
-                <div style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 0.75rem 0 0.4rem 0;">What's included:</div>
-                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem; color: var(--ink-soft);">
-                  <li style="display: flex; gap: 0.5rem; align-items: start;">
-                    <span style="color: var(--sage); font-weight: bold; margin-top: 2px;">•</span>
-                    <span>Open studio access (weekdays 6–9:30 PM, weekends 7 AM–9 PM)</span>
-                  </li>
-                  <li style="display: flex; gap: 0.5rem; align-items: start;">
-                    <span style="color: var(--sage); font-weight: bold; margin-top: 2px;">•</span>
-                    <span>Free black coffee and filtered water, always</span>
-                  </li>
-                  <li style="display: flex; gap: 0.5rem; align-items: start;">
-                    <span style="color: var(--sage); font-weight: bold; margin-top: 2px;">•</span>
-                    <span>$45 monthly dues apply as credit toward any class or package</span>
-                  </li>
-                </ul>
-                <p style="font-size: 0.85rem; font-style: italic; color: var(--ink-soft); margin-top: 0.75rem; line-height: 1.45;">We ask that members be mindful of classes in session and keep the space respectful for everyone learning.</p>
+          </div>
+
+          <!-- THREE ACTION BUTTONS -->
+          <div style="margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem;">
+            <a href="#interest-card-form" onclick="document.getElementById('interestFirstName').focus();" style="display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; background: var(--surface); border: 1.5px solid var(--sage); border-radius: 6px; text-decoration: none; color: var(--sage-deep); transition: all 0.2s; box-shadow: 0 4px 12px rgba(78,90,65,0.04);">
+              <div>
+                <div style="font-family: var(--font-body); font-weight: 600; font-size: 0.98rem; color: var(--sage-deep);">1. Submit Interest Form (Free)</div>
+                <div style="font-size: 0.83rem; color: var(--ink-soft); font-family: var(--font-body); margin-top: 0.15rem;">Select topics &amp; share availability with zero commitment</div>
               </div>
-            </div>
+              <span style="font-size: 1.25rem; font-weight: bold; color: var(--sage);">→</span>
+            </a>
+
+            <a href="schedule.html" style="display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; background: var(--surface); border: 1px solid var(--hairline); border-radius: 6px; text-decoration: none; color: var(--sage-deep); transition: all 0.2s;">
+              <div>
+                <div style="font-family: var(--font-body); font-weight: 600; font-size: 0.98rem; color: var(--sage-deep);">2. Buy a Single Class ($25–$35)</div>
+                <div style="font-size: 0.83rem; color: var(--ink-soft); font-family: var(--font-body); margin-top: 0.15rem;">Browse Summer Curriculum &amp; book a single 2-hour session</div>
+              </div>
+              <span style="font-size: 1.25rem; font-weight: bold; color: var(--sage);">→</span>
+            </a>
+
+            <button onclick="purchaseMembership()" style="display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; background: var(--sage-deep); color: #FAF7F0; border: none; border-radius: 6px; text-decoration: none; width: 100%; text-align: left; cursor: pointer; transition: all 0.2s;">
+              <div>
+                <div style="font-family: var(--font-body); font-weight: 600; font-size: 0.98rem; color: #FAF7F0;">3. Purchase a Membership ($45/month)</div>
+                <div style="font-size: 0.83rem; color: var(--sage-pale); font-family: var(--font-body); margin-top: 0.15rem;">Open studio access · 100% credited toward any class or package</div>
+              </div>
+              <span style="font-size: 1.25rem; font-weight: bold; color: #FAF7F0;">→</span>
+            </button>
           </div>
         </div>
 
         <!-- Right: Form -->
-        <div class="how-it-works-right" data-reveal>
+        <div class="how-it-works-right" data-reveal id="interest-card-form">
           <div class="interest-card">
-            <h3>Register Your Interest</h3>
-            <p style="font-size:0.85rem;color:var(--ink-soft);margin-bottom:1.5rem;line-height:1.4;">Fill out this form with your availability. We'll set up your member account and email you a sign-in link.</p>
+            <h3>Submit Interest Form (Free)</h3>
+            <p style="font-size:0.85rem;color:var(--ink-soft);margin-bottom:1.5rem;line-height:1.4;">Fill out this form with your class choices and availability. No payment required — we'll set up your member account and email you when classes fill.</p>
             
             <form id="interestForm" onsubmit="submitInterest(event)">
               <div class="form-row">
