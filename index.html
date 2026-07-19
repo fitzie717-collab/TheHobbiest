@@ -2041,75 +2041,57 @@
   <section class="how-it-works-section" id="how-it-works">
     <div class="container">
       <div class="how-it-works-grid">
-        <!-- Left: Explanation & Action Buttons 1 & 2 -->
+        <!-- Left: Single Sessions Header & Steps -->
         <div class="how-it-works-left" data-reveal>
           <span class="eyebrow">THE CONCEPT</span>
-          <h2 class="h-section" style="margin: 0 0 1.5rem 0;">How It <em>Works</em>.</h2>
-          <p class="section-lead">The Hobbiest operates differently. Instead of fixed, empty schedules, our classes are shaped directly by your interest and availability.</p>
+          <h2 class="h-section" style="margin: 0 0 1.5rem 0;">Single <em>Sessions</em>.</h2>
+          <p class="section-lead" style="margin-bottom: 2rem;">The Hobbiest operates differently. Instead of fixed, empty schedules, our classes are shaped directly by your interest and availability.</p>
           
-          <div class="steps-list">
-            <div class="step-item">
-              <div class="step-number">01</div>
-              <div class="step-content">
-                <h4>Single Sessions</h4>
-                <p style="margin-bottom: 0.75rem;">Pick the topics that interest you and select how you want to learn:</p>
-                <ul style="list-style: none; padding: 0; margin: 0 0 0.5rem 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem; color: var(--ink-soft);">
-                  <li style="display: flex; gap: 0.5rem; align-items: start;">
-                    <span style="color: var(--sage); font-weight: bold; margin-top: 2px;">•</span>
-                    <span><strong>Single Session:</strong> One 2-hour class ($25 no-materials, $45–$65 materials included)</span>
-                  </li>
-                  <li style="display: flex; gap: 0.5rem; align-items: start;">
-                    <span style="color: var(--sage); font-weight: bold; margin-top: 2px;">•</span>
-                    <span><strong>101 Package:</strong> 4 weekly 2-hour classes (Coming Fall 2026)</span>
-                  </li>
-                  <li style="display: flex; gap: 0.5rem; align-items: start;">
-                    <span style="color: var(--sage); font-weight: bold; margin-top: 2px;">•</span>
-                    <span><strong>Skills Packages &amp; Offsites:</strong> Group experiences and off-site events (Coming 2027)</span>
-                  </li>
-                </ul>
+          <div class="steps-list" style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <!-- Step 01 = Button 1 -->
+            <div class="step-item" style="align-items: flex-start;">
+              <div class="step-number" style="margin-top: 0.2rem;">01</div>
+              <div class="step-content" style="width: 100%;">
+                <a href="#interest-form-section" onclick="document.getElementById('interestFirstName').focus();" style="display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; background: var(--surface); border: 1.5px solid var(--sage); border-radius: 6px; text-decoration: none; color: var(--sage-deep); transition: all 0.2s; box-shadow: 0 4px 12px rgba(78,90,65,0.04);">
+                  <div>
+                    <div style="font-family: var(--font-body); font-weight: 600; font-size: 0.98rem; color: var(--sage-deep);">Submit an interest form to select your classes and availability</div>
+                    <div style="font-size: 0.83rem; color: var(--ink-soft); font-family: var(--font-body); margin-top: 0.15rem;">Select topics &amp; mark your preferred time slots with zero commitment</div>
+                  </div>
+                  <span style="font-size: 1.25rem; font-weight: bold; color: var(--sage); flex-shrink: 0; margin-left: 0.75rem;">→</span>
+                </a>
               </div>
             </div>
-            <div class="step-item">
-              <div class="step-number">02</div>
-              <div class="step-content">
-                <h4>Fill Out Interest Form</h4>
-                <p>Tell us when you're free — mornings, evenings, or weekends. No payment, no commitment. Just let us know you're interested.</p>
+
+            <!-- Step 02 = Button 2 -->
+            <div class="step-item" style="align-items: flex-start;">
+              <div class="step-number" style="margin-top: 0.2rem;">02</div>
+              <div class="step-content" style="width: 100%;">
+                <a href="schedule.html" style="display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; background: var(--surface); border: 1.5px solid var(--sage); border-radius: 6px; text-decoration: none; color: var(--sage-deep); transition: all 0.2s; box-shadow: 0 4px 12px rgba(78,90,65,0.04);">
+                  <div>
+                    <div style="font-family: var(--font-body); font-weight: 600; font-size: 0.98rem; color: var(--sage-deep);">Buy a Single Class ($45–$65)</div>
+                    <div style="font-size: 0.83rem; color: var(--ink-soft); font-family: var(--font-body); margin-top: 0.15rem;">Browse Summer Curriculum &amp; book a single 2-hour session</div>
+                  </div>
+                  <span style="font-size: 1.25rem; font-weight: bold; color: var(--sage); flex-shrink: 0; margin-left: 0.75rem;">→</span>
+                </a>
               </div>
             </div>
+
+            <!-- Step 03 = Stays the same -->
             <div class="step-item">
               <div class="step-number">03</div>
               <div class="step-content">
-                <h4>We'll Handle the Rest</h4>
-                <p>Once a class fills (typically 10–12 members), we lock in the date and time, confirm your spot, and send you everything you need to show up ready.</p>
+                <h4 style="font-family: var(--font-display); font-size: 1.25rem; color: var(--sage-deep); margin-bottom: 0.35rem; font-weight: 400;">We'll Handle the Rest</h4>
+                <p style="font-size: 0.9rem; color: var(--ink-soft); line-height: 1.5;">Once a class fills (typically 10–12 members), we lock in the date and time, confirm your spot, and send you everything you need to show up ready.</p>
               </div>
             </div>
           </div>
-
-          <!-- ACTION BUTTONS 1 & 2 (White with Green) -->
-          <div style="margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem;">
-            <a href="#interest-form-section" onclick="document.getElementById('interestFirstName').focus();" style="display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; background: var(--surface); border: 1.5px solid var(--sage); border-radius: 6px; text-decoration: none; color: var(--sage-deep); transition: all 0.2s; box-shadow: 0 4px 12px rgba(78,90,65,0.04);">
-              <div>
-                <div style="font-family: var(--font-body); font-weight: 600; font-size: 0.98rem; color: var(--sage-deep);">1. Submit an interest form to select your classes and availability</div>
-                <div style="font-size: 0.83rem; color: var(--ink-soft); font-family: var(--font-body); margin-top: 0.15rem;">Select topics &amp; mark your preferred time slots with zero commitment</div>
-              </div>
-              <span style="font-size: 1.25rem; font-weight: bold; color: var(--sage);">→</span>
-            </a>
-
-            <a href="schedule.html" style="display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; background: var(--surface); border: 1.5px solid var(--sage); border-radius: 6px; text-decoration: none; color: var(--sage-deep); transition: all 0.2s; box-shadow: 0 4px 12px rgba(78,90,65,0.04);">
-              <div>
-                <div style="font-family: var(--font-body); font-weight: 600; font-size: 0.98rem; color: var(--sage-deep);">2. Buy a Single Class ($25–$65)</div>
-                <div style="font-size: 0.83rem; color: var(--ink-soft); font-family: var(--font-body); margin-top: 0.15rem;">Browse Summer Curriculum &amp; book a single 2-hour session</div>
-              </div>
-              <span style="font-size: 1.25rem; font-weight: bold; color: var(--sage);">→</span>
-            </a>
-          </div>
         </div>
 
-        <!-- Right: Studio Membership Information & Action Button 3 -->
+        <!-- Right: Studio Membership Header & Information -->
         <div class="how-it-works-right" data-reveal id="membership">
           <div class="interest-card" style="background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px; padding: 2.25rem; box-shadow: 0 10px 30px rgba(78, 90, 65, 0.05);">
             <div style="font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--sage); font-weight: 600; margin-bottom: 0.5rem;">THE STUDIO</div>
-            <h3 style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 400; color: var(--sage-deep); margin: 0 0 0.5rem 0;">Studio Membership — <span style="font-weight: 300; color: var(--ink);">$45<span style="font-size: 1rem; font-family: var(--font-body); color: var(--ink-soft);">/month</span></span></h3>
+            <h3 style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 400; color: var(--sage-deep); margin: 0 0 0.5rem 0;">Studio <em>Membership</em> — <span style="font-weight: 300; color: var(--ink);">$45<span style="font-size: 1rem; font-family: var(--font-body); color: var(--ink-soft);">/month</span></span></h3>
             
             <p style="font-size: 0.92rem; color: var(--ink-soft); line-height: 1.55; margin-bottom: 1.5rem;">
               Get direct access to our physical space for independent projects, open studio time, and creative pursuits — knitting, painting, meditating in the garden, or simply having a quiet place to make something.
@@ -2136,13 +2118,13 @@
               We ask that members be mindful of classes in session and keep the space respectful for everyone learning.
             </div>
 
-            <!-- BUTTON 3 (White with Green) -->
+            <!-- BUTTON IN RIGHT COLUMN (No "3." inside) -->
             <button onclick="purchaseMembership()" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 1.15rem 1.4rem; background: var(--surface); border: 1.5px solid var(--sage); border-radius: 6px; color: var(--sage-deep); font-weight: 600; font-family: var(--font-body); font-size: 0.98rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(78,90,65,0.04);">
               <div>
-                <div style="font-family: var(--font-body); font-weight: 600; font-size: 0.98rem; color: var(--sage-deep);">3. Purchase a Membership ($45/month)</div>
+                <div style="font-family: var(--font-body); font-weight: 600; font-size: 0.98rem; color: var(--sage-deep);">Purchase a Membership ($45/month)</div>
                 <div style="font-size: 0.82rem; color: var(--ink-soft); font-family: var(--font-body); margin-top: 0.15rem; font-weight: normal;">Studio opens 8/1 — memberships begin 8/1</div>
               </div>
-              <span style="font-size: 1.25rem; font-weight: bold; color: var(--sage);">→</span>
+              <span style="font-size: 1.25rem; font-weight: bold; color: var(--sage); flex-shrink: 0; margin-left: 0.75rem;">→</span>
             </button>
           </div>
         </div>
