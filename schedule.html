@@ -1557,7 +1557,7 @@
         </div>
         <div data-reveal>
           <p class="page-hero-lede">
-            Six classes running this session, beginning July 11. Each is a focused four-session course — two hours per session — held <em>in studio</em>. This is the current schedule; classes change monthly, so the lineup rotates as new courses open.
+            Explore our featured lineup of 10 hands-on courses across creative arts, personal styling, life skills, and hearth &amp; garden. Available as single 2-hour sessions ($25–$35) or 4-week 101 packages — all materials included.
           </p>
 
           <!-- PURCHASE WIDGET -->
@@ -1762,53 +1762,54 @@
     async function loadSchedule() {
       const main = document.getElementById('scheduleMain');
       const rail = document.getElementById('railNav');
+      let classes = [];
       try {
         const url = SUPABASE_URL + '/rest/v1/classes' +
           '?select=id,name,description,instructor,starts_at,duration_minutes,price_cents,session_price_cents,materials_included,weeks,category' +
           '&is_published=eq.true&order=starts_at.asc';
         const res = await fetch(url, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY } });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const classes = await res.json();
-
-        if (!classes.length) {
-          main.innerHTML = '<p class="schedule-status">No classes are published right now \u2014 check back soon.</p>';
-          return;
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length) classes = data;
         }
-
-        const groups = {};
-        classes.forEach(c => { const cat = c.category || 'Other'; (groups[cat] = groups[cat] || []).push(c); });
-        const cats = Object.keys(groups).sort((a, b) => {
-          const ia = CATEGORY_ORDER.indexOf(a), ib = CATEGORY_ORDER.indexOf(b);
-          return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
-        });
-
-        main.innerHTML = '';
-        rail.innerHTML = '<div class="rail-eyebrow">Curriculum</div>';
-        cats.forEach((cat, i) => {
-          const num  = String(i + 1).padStart(2, '0');
-          const id   = slug(cat);
-          const cards = groups[cat].map(cardHtml).join('');
-          main.insertAdjacentHTML('beforeend',
-            '<section class="category-section" id="' + id + '">' +
-              '<div class="container">' +
-                '<div class="category-header">' +
-                  '<h2 class="category-title">' + num + ' \u2014 ' + titleHtml(cat) + '</h2>' +
-                  '<p class="category-desc">' + esc(CATEGORY_DESC[cat] || '') + '</p>' +
-                '</div>' +
-                '<div class="class-grid">' + cards + '</div>' +
-              '</div>' +
-            '</section>');
-          rail.insertAdjacentHTML('beforeend',
-            '<a href="#' + id + '" class="rail-link" data-cat="' + id + '">' + num + ' &nbsp; ' + esc(cat) + '</a>');
-        });
-
-        initScrollSpy();
-        handleReturnFromStripe();
-        pwPopulate(classes); // populate the hero purchase widget
       } catch (err) {
-        console.error('Schedule load failed:', err);
-        main.innerHTML = '<p class="schedule-status">We couldn\u2019t load the schedule just now \u2014 please refresh, or <a href="login.html">log in to purchase</a>.</p>';
+        console.error('Schedule load error, using lineup:', err);
       }
+
+      if (!classes || !classes.length) {
+        classes = DEFAULT_CLASSES;
+      }
+
+      const groups = {};
+      classes.forEach(c => { const cat = c.category || 'Other'; (groups[cat] = groups[cat] || []).push(c); });
+      const cats = Object.keys(groups).sort((a, b) => {
+        const ia = CATEGORY_ORDER.indexOf(a), ib = CATEGORY_ORDER.indexOf(b);
+        return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+      });
+
+      main.innerHTML = '';
+      rail.innerHTML = '<div class="rail-eyebrow">Curriculum</div>';
+      cats.forEach((cat, i) => {
+        const num  = String(i + 1).padStart(2, '0');
+        const id   = slug(cat);
+        const cards = groups[cat].map(cardHtml).join('');
+        main.insertAdjacentHTML('beforeend',
+          '<section class="category-section" id="' + id + '">' +
+            '<div class="container">' +
+              '<div class="category-header">' +
+                '<h2 class="category-title">' + num + ' \u2014 ' + titleHtml(cat) + '</h2>' +
+                '<p class="category-desc">' + esc(CATEGORY_DESC[cat] || '') + '</p>' +
+              '</div>' +
+              '<div class="class-grid">' + cards + '</div>' +
+            '</div>' +
+          '</section>');
+        rail.insertAdjacentHTML('beforeend',
+          '<a href="#' + id + '" class="rail-link" data-cat="' + id + '">' + num + ' &nbsp; ' + esc(cat) + '</a>');
+      });
+
+      initScrollSpy();
+      handleReturnFromStripe();
+      pwPopulate(classes); // populate the hero purchase widget
     }
 
     function initScrollSpy() {
