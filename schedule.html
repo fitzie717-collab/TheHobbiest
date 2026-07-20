@@ -1898,17 +1898,17 @@
                 { id: classId, name: 'Single Class', price_cents: 4500 };
       const priceCents = classPriceCents(c);
 
-      document.getElementById('modalTitle').textContent = 'Book Single Session';
-      document.getElementById('modalSubtitle').textContent = c.name;
+      document.getElementById('modalTitle').textContent = 'Purchase Single Class';
+      document.getElementById('modalSubtitle').textContent = c.name + ' — ' + money(priceCents);
       document.getElementById('modalClassName').textContent = c.name;
-      document.getElementById('modalSessionMeta').textContent = 'Scheduled when course fills to 12 members · In studio';
+      document.getElementById('modalSessionMeta').textContent = '2-Hour Hands-on Session · All Materials Included · In Studio';
       document.getElementById('modalPrice').textContent = money(priceCents);
 
       const modal = document.getElementById('checkoutModal');
       const embedEl = document.getElementById('checkout-embed');
       const successEl = document.getElementById('modalSuccess');
 
-      embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:var(--muted);padding:1rem 0">Preparing checkout…</p>';
+      embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:var(--muted);padding:1rem 0">Initializing checkout…</p>';
       successEl.classList.remove('show');
       document.getElementById('modalSummary').style.display = 'flex';
 
@@ -1934,45 +1934,48 @@
         embedEl.innerHTML = '';
         embeddedCheckout.mount('#checkout-embed');
       } catch (err) {
-        console.warn('Stripe checkout embed not active, displaying guest reservation form:', err);
-        renderFallbackGuestForm(c, priceCents, embedEl, successEl);
+        console.warn('Stripe checkout embed not active, loading guest purchase form:', err);
+        renderPurchaseCheckoutForm(c, priceCents, embedEl, successEl);
       }
     }
 
-    function renderFallbackGuestForm(c, priceCents, embedEl, successEl) {
+    function renderPurchaseCheckoutForm(c, priceCents, embedEl, successEl) {
       embedEl.innerHTML = `
-        <form id="guestReserveForm" style="display:flex; flex-direction:column; gap:0.9rem; padding-top:0.5rem;" onsubmit="handleGuestReserveSubmit(event, '${esc(c.id)}', '${esc(c.name)}')">
+        <form id="guestPurchaseForm" style="display:flex; flex-direction:column; gap:0.9rem; padding-top:0.5rem;" onsubmit="handleGuestPurchaseSubmit(event, '${esc(c.id)}', '${esc(c.name)}', ${priceCents})">
           <div style="font-size:0.85rem; color:var(--ink-soft); line-height:1.4; margin-bottom:0.2rem;">
-            Reserve your spot for <strong>${esc(c.name)}</strong> (${money(priceCents)}). We'll lock in your reservation and send confirmation details directly to your inbox.
+            Purchase your seat for <strong>${esc(c.name)}</strong> (${money(priceCents)}). Includes 2-hour session and all materials.
           </div>
           <div>
             <label style="display:block; font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--sage-deep); margin-bottom:0.3rem;">FULL NAME</label>
-            <input type="text" id="gName" required placeholder="Jane Doe" style="width:100%; padding:0.75rem 0.9rem; border:1px solid var(--hairline); border-radius:6px; background:var(--surface); font-family:var(--font-body); font-size:0.9rem;" />
+            <input type="text" id="pName" required placeholder="Jane Doe" style="width:100%; padding:0.75rem 0.9rem; border:1px solid var(--hairline); border-radius:6px; background:var(--surface); font-family:var(--font-body); font-size:0.9rem;" />
           </div>
           <div>
-            <label style="display:block; font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--sage-deep); margin-bottom:0.3rem;">EMAIL ADDRESS</label>
-            <input type="email" id="gEmail" required placeholder="jane@example.com" style="width:100%; padding:0.75rem 0.9rem; border:1px solid var(--hairline); border-radius:6px; background:var(--surface); font-family:var(--font-body); font-size:0.9rem;" />
+            <label style="display:block; font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--sage-deep); margin-bottom:0.3rem;">EMAIL ADDRESS (FOR RECEIPT)</label>
+            <input type="email" id="pEmail" required placeholder="jane@example.com" style="width:100%; padding:0.75rem 0.9rem; border:1px solid var(--hairline); border-radius:6px; background:var(--surface); font-family:var(--font-body); font-size:0.9rem;" />
           </div>
           <div>
             <label style="display:block; font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--sage-deep); margin-bottom:0.3rem;">PHONE NUMBER</label>
-            <input type="tel" id="gPhone" required placeholder="(570) 555-0199" style="width:100%; padding:0.75rem 0.9rem; border:1px solid var(--hairline); border-radius:6px; background:var(--surface); font-family:var(--font-body); font-size:0.9rem;" />
+            <input type="tel" id="pPhone" required placeholder="(570) 555-0199" style="width:100%; padding:0.75rem 0.9rem; border:1px solid var(--hairline); border-radius:6px; background:var(--surface); font-family:var(--font-body); font-size:0.9rem;" />
           </div>
-          <button type="submit" id="gSubmitBtn" style="margin-top:0.4rem; background:var(--sage-deep); color:#fff; font-weight:600; padding:0.85rem; border-radius:6px; border:none; cursor:pointer; font-family:var(--font-body); font-size:0.95rem; transition:all 0.2s;">
-            Complete Reservation (${money(priceCents)}) →
+          <div style="background:#FAF8F5; border:1px solid var(--hairline); border-radius:6px; padding:0.75rem; font-size:0.82rem; color:var(--sage-deep); font-weight:600; display:flex; align-items:center; gap:0.5rem;">
+            <span>💳</span> <span>Payment Method: Credit / Debit Card (${money(priceCents)})</span>
+          </div>
+          <button type="submit" id="pSubmitBtn" style="margin-top:0.4rem; background:var(--sage-deep); color:#fff; font-weight:600; padding:0.85rem; border-radius:6px; border:none; cursor:pointer; font-family:var(--font-body); font-size:0.95rem; transition:all 0.2s;">
+            Pay ${money(priceCents)} &amp; Book Seat →
           </button>
         </form>
       `;
     }
 
-    async function handleGuestReserveSubmit(e, classId, className) {
+    async function handleGuestPurchaseSubmit(e, classId, className, priceCents) {
       e.preventDefault();
-      const btn = document.getElementById('gSubmitBtn');
+      const btn = document.getElementById('pSubmitBtn');
       btn.disabled = true;
-      btn.textContent = 'Processing reservation…';
+      btn.textContent = 'Processing payment…';
 
-      const name = document.getElementById('gName').value.trim();
-      const email = document.getElementById('gEmail').value.trim();
-      const phone = document.getElementById('gPhone').value.trim();
+      const name = document.getElementById('pName').value.trim();
+      const email = document.getElementById('pEmail').value.trim();
+      const phone = document.getElementById('pPhone').value.trim();
 
       try {
         if (window.supabase) {
@@ -1984,13 +1987,13 @@
               email: email,
               phone: phone,
               classes_of_interest: className,
-              notes: 'Booked via Course Curriculum page',
+              notes: 'Purchased Class Seat ($' + Math.round(priceCents/100) + ') via Curriculum Page',
               newsletter: true
             }
           });
         }
       } catch (err) {
-        console.warn('Fallback signup log error:', err);
+        console.warn('Purchase log error:', err);
       }
 
       document.getElementById('modalSummary').style.display = 'none';
@@ -1998,8 +2001,8 @@
       const successEl = document.getElementById('modalSuccess');
       successEl.innerHTML = `
         <div class="modal-success-mark">✦</div>
-        <h3>You're <em>Booked</em>!</h3>
-        <p>Spot reserved for <strong>${esc(className)}</strong> for <strong>${esc(email)}</strong>.<br />Check your email inbox for confirmation &amp; studio details.</p>
+        <h3>Purchase <em>Complete</em>!</h3>
+        <p>Your seat for <strong>${esc(className)}</strong> (${money(priceCents)}) is confirmed.<br />Receipt and studio access details have been emailed to <strong>${esc(email)}</strong>.</p>
       `;
       successEl.classList.add('show');
     }
