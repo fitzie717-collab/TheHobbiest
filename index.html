@@ -4,103 +4,69 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#7A8A6B" />
-
   <title>The Hobbiest — Skills Club, Pittston, PA</title>
   <meta name="description" content="A private members skills club for adults. Opening July 2026 in downtown Pittston, Pennsylvania." />
-
-  <!-- Open Graph -->
   <meta property="og:title" content="The Hobbiest — Skills Club" />
   <meta property="og:description" content="A private members skills club for adults. Opening July 2026 in downtown Pittston, PA." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://thehobbiestskillsclub.com" />
   <meta property="og:image" content="https://thehobbiestskillsclub.com/og-image.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-
-  <!-- Favicon -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-
-  <!-- Beehiiv attribution tracking (tracks signup sources) -->
   <script type="text/javascript" async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
-
-  <!-- Fonts: Fraunces (display) + DM Sans (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
 
   <style>
     /* ============================================================
-       DESIGN TOKENS — SAGE + CREAM
+       DESIGN TOKENS
        ============================================================ */
     :root {
-      /* Palette */
-      --bg:        #F1ECDF;   /* cream — ground */
-      --bg-warm:   #EAE3D2;   /* deeper cream — alt sections */
-      --surface:   #FAF7F0;   /* lightest cream — cards */
-      --ink:       #4E5A41;   /* deep sage — primary text */
-      --ink-soft:  #6B7459;   /* softer text */
-      --muted:     #8A8170;   /* warm muted */
-      --hairline:  #D9D2BE;   /* dividers */
-
-      --sage:      #7A8A6B;   /* primary brand */
-      --sage-deep: #4E5A41;   /* deep sage / ink */
-      --sage-pale: #B5BFA8;   /* pale sage accent */
-      --taupe:     #A89878;   /* warm neutral */
-
-      /* Type */
-      --font-display: "Fraunces", "Times New Roman", serif;
-      --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-
-      /* Layout */
-      --max-w:    1280px;
-      --gutter:   clamp(1.25rem, 4vw, 3rem);
-      --section-y: clamp(4rem, 9vw, 8rem);
-
-      /* Motion */
+      --bg:        #F1ECDF;
+      --bg-warm:   #EAE3D2;
+      --surface:   #FAF7F0;
+      --ink:       #4E5A41;
+      --ink-soft:  #6B7459;
+      --muted:     #8A8170;
+      --hairline:  #D9D2BE;
+      --sage:      #7A8A6B;
+      --sage-deep: #4E5A41;
+      --sage-pale: #B5BFA8;
+      --taupe:     #A89878;
+      --font-d: "Fraunces", "Times New Roman", serif;
+      --font-b: "DM Sans", -apple-system, sans-serif;
+      --max-w: 1200px;
+      --gutter: clamp(1.25rem, 4vw, 3rem);
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    #how-it-works, #interest-form-section, #curriculum, #house {
-      scroll-margin-top: 40px;
     }
 
     /* ============================================================
        RESET + BASE
        ============================================================ */
     *, *::before, *::after { box-sizing: border-box; }
-    html {
-      scroll-behavior: smooth;
-      scroll-snap-type: y proximity;
-    }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: var(--font-display);
+      font-family: var(--font-d);
       font-size: 16px;
       line-height: 1.6;
       color: var(--ink);
       background: var(--bg);
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
     img { max-width: 100%; height: auto; display: block; }
-    button { font-family: var(--font-body); cursor: pointer; }
+    button { font-family: var(--font-b); cursor: pointer; }
     a { color: inherit; }
-    /* Keep small UI text (nav, eyebrows) in sans for crisp uppercase tracking */
-    .nav-link, .eyebrow { font-family: var(--font-body); }
-
     h1, h2, h3, h4 {
-      font-family: var(--font-display);
+      font-family: var(--font-d);
       font-weight: 400;
       line-height: 1.05;
       letter-spacing: -0.015em;
       margin: 0;
       font-variation-settings: "opsz" 100;
     }
-
     p { margin: 0; }
 
     .container {
@@ -111,7 +77,7 @@
     }
 
     /* ============================================================
-       PAPER GRAIN (subtle)
+       PAPER GRAIN
        ============================================================ */
     body::before {
       content: "";
@@ -119,204 +85,27 @@
       inset: 0;
       pointer-events: none;
       z-index: 100;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-      opacity: 0.55;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      opacity: 0.5;
       mix-blend-mode: multiply;
     }
 
     /* ============================================================
-       TOP HEADER BAR (Row 1) & SUBNAV STRIP (Row 3)
-       ============================================================ */
-    .top-header-bar {
-      background: var(--bg);
-      padding: 1.1rem 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .top-header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .top-header-link {
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 600;
-      text-decoration: none;
-      position: relative;
-      transition: color 0.2s;
-    }
-    .top-header-link:hover {
-      color: var(--sage-deep);
-    }
-    .top-header-link.active {
-      color: var(--sage-deep);
-      font-weight: 700;
-    }
-    .top-header-link.active::after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--sage-deep);
-    }
-
-    .hero-paragraph p::first-letter {
-      font-family: var(--font-display);
-      font-size: 3.4rem;
-      float: left;
-      line-height: 0.8;
-      padding-right: 0.55rem;
-      padding-top: 0.15rem;
-      color: var(--sage-deep);
-      font-style: italic;
-    }
-
-    /* FULL-HEIGHT INITIAL LANDING FRAME */
-    .homepage-landing-frame {
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background: var(--bg);
-      position: relative;
-    }
-    .hero-body {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      padding: clamp(1.5rem, 3.5vw, 3rem) 0;
-    }
-
-    /* STICKY SUBNAV STRIP (EXACT MATCH TO ANNOTATED USER SCREENSHOT) */
-    .subnav-strip {
-      background: var(--surface, #FAF8F5);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      padding: 0.9rem 0;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 4px 16px rgba(78, 90, 65, 0.08);
-    }
-    .subnav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .subnav-section {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      align-items: flex-start;
-    }
-    .subnav-header {
-      font-family: var(--font-body);
-      font-size: 0.65rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--sage-deep);
-      font-weight: 700;
-      opacity: 0.85;
-    }
-    .subnav-group {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
-    .subnav-divider {
-      width: 1px;
-      height: 38px;
-      background: var(--hairline);
-      flex-shrink: 0;
-    }
-
-    .subnav-link {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #666C5E;
-      font-weight: 600;
-      text-decoration: none;
-      line-height: 1.25;
-      transition: color 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .subnav-link:hover {
-      color: var(--sage-deep);
-    }
-    .subnav-link.active {
-      color: var(--sage-deep);
-      font-weight: 700;
-    }
-
-    .subnav-link-pill {
-      background: var(--sage-deep, #4E5A41);
-      color: #FFFFFF !important;
-      padding: 0.45rem 1rem;
-      border-radius: 20px;
-      font-family: var(--font-body);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 3px 10px rgba(78, 90, 65, 0.18);
-      transition: all 0.2s ease;
-      text-decoration: none !important;
-    }
-    .subnav-link-pill:hover {
-      background: var(--sage, #7A8A6B);
-      color: #FFFFFF !important;
-      transform: translateY(-1px);
-      box-shadow: 0 5px 14px rgba(78, 90, 65, 0.28);
-    }
-
-    @media (max-width: 900px) {
-      .subnav-inner {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .subnav-divider {
-        display: none;
-      }
-      .subnav-group {
-        gap: 1.25rem;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-    }
-
-    /* ============================================================
-       CONTACT BAR (above nav)
+       CONTACT BAR
        ============================================================ */
     .contact-bar {
       background: var(--sage-deep);
-      color: rgba(241, 236, 223, 0.75);
-      font-family: var(--font-body);
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      padding: 0.55rem 0;
-      border-bottom: 1px solid rgba(241, 236, 223, 0.1);
+      color: rgba(241,236,223,0.7);
+      font-family: var(--font-b);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      padding: 0.5rem 0;
     }
     .contact-bar-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1.5rem;
+      gap: 1rem;
       flex-wrap: wrap;
     }
     .contact-bar-items {
@@ -328,1513 +117,552 @@
     .contact-bar-item {
       display: flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: 0.4rem;
       white-space: nowrap;
     }
-    .contact-bar-item svg {
-      width: 11px;
-      height: 11px;
-      opacity: 0.6;
-      flex-shrink: 0;
-    }
-    .contact-bar a {
-      color: inherit;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
+    .contact-bar-item svg { width: 10px; height: 10px; opacity: 0.55; flex-shrink: 0; }
+    .contact-bar a { color: inherit; text-decoration: none; transition: color 0.2s; }
     .contact-bar a:hover { color: var(--bg); }
     @media (max-width: 640px) {
       .contact-bar-inner { justify-content: center; }
-      .contact-bar-items { gap: 1rem; justify-content: center; }
-      .contact-bar-item:first-child { display: none; } /* hide address on mobile, keep phone + email */
+      .contact-bar-item:first-child { display: none; }
     }
 
     /* ============================================================
-       NAV
+       STICKY NAV
        ============================================================ */
-    .header-wrap {
+    .sticky-nav {
       position: sticky;
       top: 0;
-      z-index: 1000;
-      background: var(--bg);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      z-index: 500;
+      background: var(--surface);
+      border-bottom: 1px solid var(--hairline);
+      box-shadow: 0 2px 20px rgba(78,90,65,0.07);
     }
-    .nav {
-      position: relative;
-      z-index: 10;
-      padding: 1.25rem 0;
-    }
-    .nav-inner {
+    .sticky-nav-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      position: relative;
+      padding: 1rem 0;
+      gap: 1.5rem;
     }
+    .wordmark {
+      font-family: var(--font-d);
+      font-size: 1.25rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--sage);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      font-variation-settings: "opsz" 144;
+      flex-shrink: 0;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .nav-link {
+      font-family: var(--font-b);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      text-decoration: none;
+      padding: 0.45rem 0.75rem;
+      border-radius: 4px;
+      transition: color 0.2s var(--ease), background 0.2s var(--ease);
+      white-space: nowrap;
+    }
+    .nav-link:hover { color: var(--sage-deep); background: var(--bg-warm); }
+    .nav-link-pill {
+      background: var(--sage-deep);
+      color: #fff !important;
+      padding: 0.45rem 1rem;
+      border-radius: 20px;
+      font-family: var(--font-b);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      text-decoration: none;
+      transition: background 0.2s var(--ease), transform 0.15s var(--ease);
+      white-space: nowrap;
+    }
+    .nav-link-pill:hover { background: var(--sage); transform: translateY(-1px); }
     .nav-toggle {
       display: none;
       flex-direction: column;
       gap: 5px;
       background: none;
       border: none;
-      cursor: pointer;
       padding: 0.5rem;
     }
-    .nav-toggle span {
-      display: block; width: 24px; height: 2px; background: var(--sage-deep);
-      transition: transform 0.2s, opacity 0.2s;
-    }
-    .nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
-    .nav-toggle.open span:nth-child(2){ opacity: 0; }
-    .nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
-    .wordmark {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      font-style: italic;
-      color: var(--sage);
-      text-decoration: none;
-      font-variation-settings: "opsz" 144;
-    }
-    .nav-links {
-      display: flex;
-      gap: 1.75rem;
-      align-items: center;
-    }
-
-    /* Visually hidden but accessible to screen readers */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-    .nav-link {
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 500;
-      text-decoration: none;
-      transition: color 0.2s var(--ease);
-    }
-    .nav-link:hover { color: var(--sage); }
-    .nav-link-current { color: var(--sage-deep); }
-    .nav-link-current::after {
-      content: ""; display: block; width: 100%; height: 1px;
-      background: var(--sage); margin-top: 4px;
-    }
-    .nav-link-primary {
-      color: var(--bg);
-      background: var(--sage);
-      padding: 0.55rem 1.1rem;
-      border-radius: 999px;
-      letter-spacing: 0.12em;
-      transition: background 0.2s var(--ease);
-    }
-    .nav-link-primary:hover { background: var(--sage-deep); color: var(--bg); }
-    .btn-nav-purchase {
-      background: var(--sage-deep, #4E5A41) !important;
-      color: #FFFFFF !important;
-      padding: 0.45rem 1rem !important;
-      border-radius: 20px !important;
-      font-weight: 600 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.08em !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 0.35rem !important;
-      border: none !important;
-      cursor: pointer !important;
-      transition: background 0.2s var(--ease), transform 0.2s var(--ease) !important;
-    }
-    .btn-nav-purchase:hover {
-      background: var(--sage, #7A8A6B) !important;
-      color: #FFFFFF !important;
-      transform: translateY(-1px);
-    }
-
-    /* Nav dropdown (Log in) */
-    .nav-item-dropdown {
-      position: relative;
-    }
-    .nav-dropdown-trigger {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      border: 0;
-      background: transparent;
-      padding: 0;
-      font-family: inherit;
-      font-size: inherit;
-      color: inherit;
-      cursor: pointer;
-      font-weight: 500;
-      text-transform: uppercase;
-    }
-    .nav-dropdown-arrow {
-      font-size: 0.85em;
-      transition: transform 0.2s var(--ease);
-      display: inline-block;
-    }
-    .nav-item-dropdown:hover .nav-dropdown-arrow,
-    .nav-item-dropdown:focus-within .nav-dropdown-arrow {
-      transform: rotate(180deg);
-    }
-    .nav-dropdown {
-      position: absolute;
-      top: calc(100% + 0.5rem);
-      right: 0;
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: 8px;
-      padding: 0.5rem 0;
-      min-width: 200px;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-6px);
-      transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), visibility 0.2s var(--ease);
-      box-shadow: 0 10px 32px rgba(78, 90, 65, 0.12);
-      z-index: 20;
-    }
-    .nav-item-dropdown:hover .nav-dropdown,
-    .nav-item-dropdown:focus-within .nav-dropdown {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-    .nav-dropdown-link {
-      display: block;
-      padding: 0.7rem 1.2rem;
-      font-size: 0.74rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 500;
-      text-decoration: none;
-      transition: color 0.2s var(--ease), background 0.2s var(--ease);
-    }
-    .nav-dropdown-link:hover {
-      color: var(--sage);
-      background: var(--bg);
-    }
-    @media (max-width: 760px) {
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--sage-deep); transition: 0.2s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (max-width: 860px) {
       .nav-toggle { display: flex; }
       .nav-links {
         display: none;
         position: absolute;
-        top: 100%; left: 0; right: 0;
+        top: 100%;
+        left: 0; right: 0;
         flex-direction: column;
         align-items: stretch;
-        gap: 0;
         background: var(--surface);
-        border: 1px solid var(--hairline);
-        border-radius: 10px;
-        padding: 0.5rem;
-        margin-top: 0.75rem;
-        box-shadow: 0 18px 44px rgba(78, 90, 65, 0.16);
+        border-bottom: 1px solid var(--hairline);
+        padding: 0.75rem var(--gutter) 1rem;
+        gap: 0.25rem;
+        box-shadow: 0 10px 30px rgba(78,90,65,0.12);
       }
       .nav-links.open { display: flex; }
-      .nav-link {
-        font-size: 0.9rem; letter-spacing: 0.12em;
-        padding: 0.85rem 0.9rem; text-align: left;
-      }
-      .nav-link-current::after { display: none; }
-      .nav-link-primary { text-align: center; margin-top: 0.4rem; }
-      .nav-dropdown { right: auto; left: 0; min-width: 180px; }
+      .nav-link { font-size: 0.82rem; padding: 0.7rem 0.75rem; }
+      .nav-link-pill { text-align: center; margin-top: 0.25rem; justify-content: center; }
     }
 
     /* ============================================================
        HERO
        ============================================================ */
     .hero {
-      position: relative;
-      padding: 3rem 0 4.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: clamp(2rem, 4vw, 3rem);
-      overflow: hidden;
-      min-height: 100vh;
-      min-height: 100dvh;
-      scroll-snap-align: start;
-    }
-    .hero-top {
+      min-height: calc(100vh - 90px);
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: clamp(2rem, 5vw, 4rem);
-      align-items: start;
-      width: 100%;
+      align-items: center;
+      gap: clamp(2rem, 5vw, 5rem);
+      padding: clamp(3rem, 6vw, 5rem) 0;
     }
-    .hero-seal-wrap {
-      position: relative;
-      max-width: 540px;
-      width: 100%;
-      margin: 0 0 0 auto;
-    }
-    .hero-seal {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .hero-quote {
-      font-family: var(--font-display);
-      font-size: clamp(2.3rem, 5.5vw, 4.5rem);
-      font-weight: 350;
-      line-height: 1.05;
-      letter-spacing: -0.025em;
-      color: var(--sage-deep);
-      margin: 0 0 2rem;
-      text-align: left;
-      font-variation-settings: "opsz" 144;
-    }
-    .hero-quote em {
-      font-style: italic;
-      font-weight: 400;
+    .hero-left { display: flex; flex-direction: column; }
+    .hero-eyebrow {
+      font-family: var(--font-b);
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
       color: var(--sage);
-    }
-    .hero-left {
+      font-weight: 700;
+      margin-bottom: 1.5rem;
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
     }
-    .hero-paragraph {
-      max-width: 30rem;
+    .hero-eyebrow::before {
+      content: "";
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--sage);
     }
-    .hero-paragraph p {
-      font-family: var(--font-display);
-      font-size: clamp(1.2rem, 1.55vw, 1.45rem);
-      line-height: 1.6;
-      color: var(--sage-deep);
+    .hero-headline {
+      font-size: clamp(2.8rem, 6vw, 5rem);
       font-weight: 350;
-      letter-spacing: -0.005em;
-      margin: 0;
-    }
-    .hero-paragraph p + p {
-      margin-top: 1.5rem;
-    }
-    .hero-paragraph p:first-of-type::first-letter {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 5rem;
-      float: left;
-      line-height: 0.82;
-      padding: 0.3rem 0.75rem 0 0.15rem;
-      color: var(--sage);
-      font-weight: 400;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      color: var(--sage-deep);
+      margin-bottom: 1.75rem;
       font-variation-settings: "opsz" 144;
     }
-    .btn {
-      padding: 0.95rem 1.7rem;
-      background: var(--sage);
-      color: var(--bg);
-      border: 1px solid var(--sage);
-      border-radius: 999px;
-      font-family: inherit;
-      font-size: 0.95rem;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+    .hero-headline em { font-style: italic; color: var(--sage); }
+    .hero-body {
+      font-family: var(--font-d);
+      font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+      line-height: 1.65;
+      color: var(--ink-soft);
+      font-weight: 350;
+      max-width: 34rem;
+      margin-bottom: 2.5rem;
     }
-    .btn:hover { background: var(--sage-deep); border-color: var(--sage-deep); }
-    .btn:active { transform: translateY(1px); }
-    .form-note {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-top: 1rem;
-    }
-
-    /* Hero CTA — dual button */
+    .hero-body p + p { margin-top: 1rem; }
     .hero-cta {
-      margin-top: 2.5rem;
       display: flex;
       gap: 0.75rem;
       flex-wrap: wrap;
       align-items: center;
     }
-    .btn-hero {
+    .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      padding: 1.05rem 1.9rem;
+      padding: 0.9rem 1.75rem;
+      background: var(--sage-deep);
+      color: #fff;
+      border: 1.5px solid var(--sage-deep);
       border-radius: 999px;
-      font-family: inherit;
-      font-size: 0.98rem;
-      font-weight: 500;
-      letter-spacing: 0.01em;
+      font-family: var(--font-b);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       text-decoration: none;
-      transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease);
+      transition: background 0.2s var(--ease), transform 0.15s var(--ease);
+      cursor: pointer;
       white-space: nowrap;
     }
-    .btn-hero-primary {
-      background: var(--sage);
-      color: var(--bg);
-      border: 1px solid var(--sage);
-    }
-    .btn-hero-primary:hover {
-      background: var(--sage-deep);
-      border-color: var(--sage-deep);
-    }
-    .btn-hero-primary:active { transform: translateY(1px); }
-    .btn-hero-secondary {
+    .btn-primary:hover { background: var(--sage); border-color: var(--sage); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.9rem 1.75rem;
       background: transparent;
       color: var(--sage-deep);
-      border: 1px solid var(--sage);
+      border: 1.5px solid var(--sage);
+      border-radius: 999px;
+      font-family: var(--font-b);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s var(--ease), color 0.2s var(--ease);
+      cursor: pointer;
+      white-space: nowrap;
     }
-    .btn-hero-secondary:hover {
-      background: var(--sage);
-      color: var(--bg);
-    }
+    .btn-outline:hover { background: var(--sage); color: #fff; }
 
-    /* Hero seal */
-    .hero-seal-wrap {
-      position: relative;
-      max-width: 540px;
-      width: 100%;
-      margin: -2.5rem 0 0 auto;
+    /* Hero right: seal + location tag */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
     }
-    .hero-seal {
-      width: 100%;
-      height: auto;
+    .hero-seal { width: min(440px, 100%); height: auto; }
+    .hero-location {
+      font-family: var(--font-b);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .hero-location::before, .hero-location::after {
+      content: "";
       display: block;
+      height: 1px;
+      width: 24px;
+      background: var(--hairline);
     }
-
-    .interest-grid-2col {
-      display: grid !important;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) !important;
-      gap: 2.5rem !important;
-      align-items: start !important;
-    }
-    .interest-col-left, .interest-col-right {
-      min-width: 0 !important;
-    }
-    @media (max-width: 860px) {
-      .interest-grid-2col {
-        grid-template-columns: 1fr !important;
-      }
+    @media (max-width: 840px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; padding: 3rem 0; }
+      .hero-right { order: -1; }
+      .hero-seal { width: min(280px, 70vw); }
+      .hero-headline { font-size: clamp(2.4rem, 8vw, 3.5rem); }
     }
 
     /* ============================================================
        SECTION HELPERS
        ============================================================ */
-    section {
-      padding: var(--section-y) 0;
-      position: relative;
-    }
+    .section { padding: clamp(4rem, 8vw, 7rem) 0; }
+    .section-alt { background: var(--bg-warm); }
+    .section-surface { background: var(--surface); }
+    .section-dark { background: var(--sage-deep); }
+    .divider { border: none; border-top: 1px solid var(--hairline); margin: 0; }
+
     .eyebrow {
-      font-size: 0.72rem;
+      font-family: var(--font-b);
+      font-size: 0.68rem;
       letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--sage);
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      display: inline-block;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: block;
     }
-    .h-section {
-      font-size: clamp(2rem, 4.5vw, 3.75rem);
-      max-width: 18ch;
-      letter-spacing: -0.02em;
-      color: var(--sage-deep);
-    }
-    .h-section em { font-style: italic; color: var(--sage); }
-    .lede {
-      font-family: var(--font-display);
-      font-size: clamp(1.15rem, 1.9vw, 1.5rem);
-      line-height: 1.45;
-      color: var(--ink-soft);
-      max-width: 56ch;
-      margin-top: 1.5rem;
+    .section-heading {
+      font-size: clamp(2rem, 4vw, 3.25rem);
       font-weight: 350;
-    }
-
-    .hero-cta-bottom {
-      margin-top: 1.5rem;
-    }
-
-    /* ============================================================
-       ABOUT — now combined into the hero section above
-       Kept here because the hero's bottom row uses these styles
-       ============================================================ */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(2rem, 6vw, 5rem);
-      align-items: start;
-    }
-    .about-body p {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: var(--ink-soft);
-      margin-bottom: 1.4rem;
-    }
-    .about-body p:first-of-type {
-      font-family: var(--font-display);
-      font-size: clamp(1.35rem, 1.8vw, 1.6rem);
+      letter-spacing: -0.025em;
       color: var(--sage-deep);
-      font-weight: 350;
-      line-height: 1.45;
-      letter-spacing: -0.01em;
-    }
-    .about-body p:first-of-type::first-letter {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 5.5rem;
-      float: left;
-      line-height: 0.82;
-      padding: 0.35rem 0.65rem 0 0;
-      color: var(--sage);
-      font-weight: 400;
+      line-height: 1.08;
       font-variation-settings: "opsz" 144;
     }
-
-    /* Method examples nested inside about column */
-    .about-method {
-      margin-top: 1.75rem;
-    }
-    .about-method-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--sage);
-      font-weight: 600;
-      margin-bottom: 1.25rem;
-    }
-    .about-method-item {
-      display: flex;
-      gap: 1rem;
-      padding: 0.9rem 0;
-      border-bottom: 1px dashed var(--hairline);
-      font-size: 0.98rem;
-      color: var(--ink-soft);
-      line-height: 1.5;
-    }
-    .about-method-item:last-child { border-bottom: none; }
-    .about-method-skill {
-      font-family: var(--font-display);
-      font-style: italic;
-      color: var(--sage);
-      flex-shrink: 0;
-      min-width: 12ch;
-    }
-
-    /* ============================================================
-       WHAT WE TEACH — now clickable cards
-       ============================================================ */
-    .teach {
-      background: var(--bg);
-    }
-    .teach-grid {
-      margin-top: 3.5rem;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0;
-      border-top: 1px solid var(--hairline);
-      border-left: 1px solid var(--hairline);
-    }
-    .teach-grid-three {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .teach-card {
-      padding: 2.5rem;
-      border-right: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      background: var(--bg);
-      transition: background 0.3s var(--ease), transform 0.3s var(--ease);
-      position: relative;
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      cursor: pointer;
-    }
-    .teach-card:hover {
-      background: var(--bg-warm);
-    }
-    .teach-card:hover .teach-cta {
-      color: var(--sage-deep);
-      gap: 0.6rem;
-    }
-    .teach-card:hover .teach-cta-arrow {
-      transform: translateX(4px);
-    }
-    .teach-num {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--sage);
-      margin-bottom: 1rem;
-      letter-spacing: 0.05em;
-    }
-    .teach-card h3 {
-      font-size: 1.85rem;
-      letter-spacing: -0.01em;
-      margin-bottom: 0.5rem;
-      color: var(--sage-deep);
-    }
-    .teach-card h3 em {
-      font-style: italic;
-      color: var(--sage);
-    }
-    .teach-card-sub {
-      font-family: var(--font-display);
-      font-style: italic;
-      color: var(--muted);
-      font-size: 1rem;
-      margin-bottom: 1.2rem;
-    }
-    .teach-card p {
-      color: var(--ink-soft);
-      font-size: 0.98rem;
+    .section-heading em { font-style: italic; color: var(--sage); }
+    .section-lede {
+      font-family: var(--font-d);
+      font-size: clamp(1.05rem, 1.6vw, 1.25rem);
       line-height: 1.6;
-      margin-bottom: 1.5rem;
-    }
-    .teach-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--sage);
-      font-weight: 600;
-      transition: color 0.2s var(--ease), gap 0.2s var(--ease);
-    }
-    .teach-cta-arrow {
-      display: inline-block;
-      transition: transform 0.2s var(--ease);
+      color: var(--ink-soft);
+      font-weight: 350;
+      max-width: 52ch;
+      margin-top: 1rem;
     }
 
     /* ============================================================
-       BUNDLES & OFFSITES — beyond the regular curriculum
+       CORNERSTONES
        ============================================================ */
-    .bundles {
-      background: var(--bg-warm);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
+    .cornerstones-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      gap: 1rem 2rem;
     }
-    .bundles-grid {
-      margin-top: 3.5rem;
+    .cornerstones-link {
+      font-family: var(--font-d);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--sage-deep);
+      text-decoration: none;
+      border-bottom: 1px solid var(--sage-pale);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .cornerstones-link:hover { color: var(--sage); border-color: var(--sage); }
+
+    .cornerstones-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .cornerstone-card {
+      background: var(--surface);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      border-right: 1px solid var(--hairline);
+      transition: background 0.25s var(--ease);
+      cursor: default;
+    }
+    .cornerstone-card:last-child { border-right: none; }
+    .cornerstone-card:hover { background: var(--bg); }
+    .cornerstone-num {
+      font-family: var(--font-d);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--sage);
+    }
+    .cornerstone-title {
+      font-family: var(--font-d);
+      font-size: 1.45rem;
+      font-weight: 400;
+      color: var(--sage-deep);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    .cornerstone-title em { font-style: italic; color: var(--sage); }
+    .cornerstone-sub {
+      font-family: var(--font-d);
+      font-style: italic;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.4;
+      margin: 0;
+    }
+    .cornerstone-desc {
+      font-family: var(--font-b);
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      line-height: 1.55;
+      margin-top: auto;
+      padding-top: 0.5rem;
+    }
+    @media (max-width: 900px) {
+      .cornerstones-grid { grid-template-columns: 1fr 1fr; }
+      .cornerstone-card:nth-child(2n) { border-right: none; }
+      .cornerstone-card { border-bottom: 1px solid var(--hairline); }
+    }
+    @media (max-width: 540px) {
+      .cornerstones-grid { grid-template-columns: 1fr; }
+      .cornerstone-card { border-right: none; }
+    }
+
+    /* ============================================================
+       HOW IT WORKS — Two paths
+       ============================================================ */
+    .paths-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 3.5rem;
+    }
+    .paths-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
     }
-    .bundle-card {
+    .path-card {
       background: var(--surface);
       border: 1px solid var(--hairline);
-      padding: 2.75rem;
-      border-radius: 4px;
-      text-decoration: none;
-      color: inherit;
+      border-radius: 10px;
+      padding: 2.25rem;
       display: flex;
       flex-direction: column;
-      gap: 1.1rem;
-      transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
-      cursor: pointer;
-      position: relative;
-    }
-    .bundle-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--sage-pale);
-    }
-    .bundle-card:hover .bundle-card-cta {
-      gap: 0.65rem;
-    }
-    .bundle-card:hover .bundle-card-cta-arrow {
-      transform: translateX(4px);
-    }
-    .bundle-card-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--sage);
-      font-weight: 600;
-    }
-    .bundle-card-title {
-      font-family: var(--font-display);
-      font-size: 2.1rem;
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      color: var(--sage-deep);
-      line-height: 1.1;
-      margin: 0.1rem 0 0.2rem;
-    }
-    .bundle-card-title em {
-      font-style: italic;
-      color: var(--sage);
-    }
-    .bundle-card-body {
-      color: var(--ink-soft);
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-    .bundle-card-list {
-      list-style: none;
-      padding: 0;
-      margin: 0.3rem 0 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.3rem 0.7rem;
-    }
-    .bundle-card-list li {
-      font-family: var(--font-display);
-      font-style: italic;
-      color: var(--sage);
-      font-size: 0.98rem;
-    }
-    .bundle-card-list li + li::before {
-      content: "·";
-      margin-right: 0.6rem;
-      color: var(--muted);
-      font-style: normal;
-    }
-    .bundle-card-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--sage);
-      font-weight: 600;
-      margin-top: auto;
-      padding-top: 0.6rem;
-      transition: gap 0.2s var(--ease);
-    }
-    .bundle-card-cta-arrow {
-      display: inline-block;
-      transition: transform 0.2s var(--ease);
-    }
-
-    /* ============================================================
-       CURRICULUM VITAE — four pillars + three class formats
-       ============================================================ */
-    .curriculum {
-      background: var(--bg-warm);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      padding-top: clamp(2.5rem, 5vw, 4rem);
-      min-height: 100vh;
-      min-height: 100dvh;
-      scroll-snap-align: start;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .curriculum-intro {
-      margin-bottom: 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      flex-wrap: wrap;
-      gap: 1.5rem 2.5rem;
-    }
-    .curriculum-intro-text {
-      max-width: 100%;
-    }
-
-    /* Four pillars (2x2 grid) */
-    .pillars-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0;
-      border-top: 1px solid var(--hairline);
-      border-left: 1px solid var(--hairline);
-    }
-    .pillar {
-      padding: 1.75rem;
-      border-right: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      background: var(--surface);
-      transition: background 0.3s var(--ease);
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      cursor: pointer;
-      position: relative;
-    }
-    .pillar:hover {
-      background: var(--bg);
-    }
-    .pillar:hover .pillar-cta {
-      gap: 0.6rem;
-    }
-    .pillar:hover .pillar-cta-arrow {
-      transform: translateX(4px);
-    }
-    .pillar-num {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--sage);
-      margin-bottom: 1rem;
-      letter-spacing: 0.05em;
-    }
-    .pillar h3 {
-      font-family: var(--font-display);
-      font-size: 1.85rem;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      color: var(--sage-deep);
-      line-height: 1.1;
-      margin: 0 0 0.5rem;
-    }
-    .pillar h3 em {
-      font-style: italic;
-      color: var(--sage);
-    }
-    .pillar-sub {
-      font-family: var(--font-display);
-      font-style: italic;
-      color: var(--muted);
-      font-size: 1rem;
-      margin: 0 0 1.2rem;
-    }
-    .pillar p:not(.pillar-sub) {
-      color: var(--ink-soft);
-      font-size: 0.98rem;
-      line-height: 1.6;
-      margin: 0 0 1.5rem;
-    }
-    .pillar-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--sage);
-      font-weight: 600;
-      transition: gap 0.2s var(--ease);
-    }
-    .pillar-cta-arrow {
-      display: inline-block;
-      transition: transform 0.2s var(--ease);
-    }
-
-    /* Eyebrow variant: italic Latin (mixed case, no all-caps) */
-    .eyebrow-latin {
-      text-transform: none;
-      font-style: italic;
-      font-family: var(--font-display);
-      letter-spacing: 0.02em;
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--sage);
-    }
-
-    /* Course Catalog link — sits next to the section heading */
-    .catalog-cta-link {
-      font-family: var(--font-display);
-      font-size: clamp(1.15rem, 1.6vw, 1.45rem);
-      font-style: italic;
-      color: var(--sage-deep);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      letter-spacing: -0.005em;
-      transition: color 0.2s var(--ease), gap 0.2s var(--ease);
-      font-weight: 400;
-      font-variation-settings: "opsz" 144;
-      white-space: nowrap;
-      padding-bottom: 0.4rem;
-    }
-    .catalog-cta-link:hover {
-      color: var(--sage);
-      gap: 0.7rem;
-    }
-    .catalog-cta-link:hover .catalog-cta-arrow {
-      transform: translateX(2px);
-    }
-    .catalog-cta-arrow {
-      display: inline-block;
-      font-style: normal;
-      transition: transform 0.2s var(--ease);
-    }
-
-    /* ============================================================
-       HOW CLASSES WORK — separate section, lighter bg for contrast
-       ============================================================ */
-    .formats-section {
-      background: var(--bg);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      min-height: 100vh;
-      min-height: 100dvh;
-      scroll-snap-align: start;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .formats {
-      margin-top: 0;
-    }
-    .formats-header {
-      margin-bottom: 2rem;
-    }
-
-    /* ============================================================
-       IN THE SPACE — house rules; lightest cream for a quiet moment
-       ============================================================ */
-    .house {
-      background: var(--surface);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      min-height: 100vh;
-      min-height: 100dvh;
-      scroll-snap-align: start;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .house-content {
-      max-width: 1040px;
-    }
-    .house-rules {
-      margin-top: 2.25rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(2.5rem, 6vw, 5rem);
-      align-items: start;
-    }
-    @media (max-width: 720px) {
-      .house-rules {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-    }
-    .house-rules-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 2.8vw, 2.05rem);
-      font-style: italic;
-      color: var(--sage-deep);
-      font-weight: 350;
-      line-height: 1.4;
-      letter-spacing: -0.01em;
-      font-variation-settings: "opsz" 144;
-    }
-    .house-rules-list li {
-      padding: 0.2rem 0;
-    }
-    .house-rules p {
-      font-size: 1.05rem;
-      color: var(--ink-soft);
-      line-height: 1.7;
-      margin: 0;
-    }
-    .house-prose p + p {
-      margin-top: 1.25rem;
-    }
-
-    /* (continued: .formats-title etc. below) */
-    .formats-title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 4.5vw, 3.75rem);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      color: var(--sage-deep);
-      line-height: 1.1;
-      margin: 0;
-    }
-    .formats-title em {
-      font-style: italic;
-      color: var(--sage);
-    }
-    .formats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
-    .format-coming {
-      opacity: 0.75;
-      cursor: default;
-    }
-    .format-coming .format-price {
-      color: var(--taupe);
-    }
-    .format {
-      padding: 1.75rem;
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    a.format:hover {
-      transform: translateY(-2px);
-      border-color: var(--sage-pale);
-    }
-    a.format:hover .format-cta { gap: 0.6rem; }
-    a.format:hover .format-cta-arrow { transform: translateX(4px); }
-    .format-num {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.9rem;
-      color: var(--sage);
-    }
-    .format h4 {
-      font-family: var(--font-display);
-      font-size: 1.3rem;
-      font-weight: 400;
-      letter-spacing: -0.005em;
-      color: var(--sage-deep);
-      margin: 0;
-      line-height: 1.15;
-    }
-    .format-price {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--sage);
-      margin: 0 !important;
-      line-height: 1.4;
-    }
-    .format-price-detail {
-      color: var(--muted);
-      font-size: 0.85rem;
-      font-style: normal;
-      margin-left: 0.15rem;
-    }
-    .format p:not(.format-price) {
-      color: var(--ink-soft);
-      font-size: 0.95rem;
-      line-height: 1.55;
-      margin: 0;
-    }
-    .format-cta {
-      margin-top: auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--sage);
-      font-weight: 600;
-      transition: gap 0.2s var(--ease);
-      padding-top: 0.5rem;
-    }
-    .format-cta-arrow {
-      display: inline-block;
-      transition: transform 0.2s var(--ease);
-    }
-
-    /* ============================================================
-       SPACE / GALLERY — photos now clickable lightbox triggers
-       ============================================================ */
-    .space-grid {
-      margin-top: 3.5rem;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 1rem;
-    }
-    .space-photo {
-      background: var(--bg-warm);
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      overflow: hidden;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted);
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.9rem;
-      text-align: center;
-      padding: 1rem;
-      cursor: pointer;
-      transition: transform 0.4s var(--ease);
-    }
-    .space-photo:hover {
-      transform: scale(1.01);
-    }
-    .space-photo:has(img) {
-      padding: 0;
-    }
-    .space-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s var(--ease);
-    }
-    .space-photo:hover img {
-      transform: scale(1.04);
-    }
-    .space-photo-1 { grid-column: 1 / 8; aspect-ratio: 16/10; }
-    .space-photo-2 { grid-column: 8 / 13; aspect-ratio: 4/5; grid-row: 1 / 3; }
-    .space-photo-3 { grid-column: 1 / 5; aspect-ratio: 1/1; }
-    .space-photo-4 { grid-column: 5 / 8; aspect-ratio: 1/1; }
-
-    /* ============================================================
-       MEMBERSHIP
-       ============================================================ */
-    .membership {
-      background: var(--bg-warm);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .membership-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: clamp(2rem, 6vw, 5rem);
-      align-items: start;
-    }
-    .pricing-card {
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      padding: 2.75rem;
-      border-radius: 4px;
-      position: relative;
-    }
-    .pricing-card-tag {
-      position: absolute;
-      top: -12px;
-      left: 2.5rem;
-      background: var(--sage);
-      color: var(--bg);
-      padding: 0.4rem 1rem;
-      font-size: 0.68rem;
+      gap: 1.5rem;
+      transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+    }
+    .path-card:hover { border-color: var(--sage-pale); box-shadow: 0 8px 32px rgba(78,90,65,0.08); }
+    .path-badge {
+      font-family: var(--font-b);
+      font-size: 0.65rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      font-weight: 600;
-      border-radius: 999px;
+      color: var(--sage);
+      font-weight: 700;
     }
-    .price {
-      display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
-      margin-bottom: 0.4rem;
-    }
-    .price-number {
-      font-family: var(--font-display);
-      font-size: 4rem;
+    .path-title {
+      font-size: 1.9rem;
       font-weight: 400;
-      letter-spacing: -0.03em;
       color: var(--sage-deep);
-      line-height: 1;
-    }
-    .price-currency {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      color: var(--ink-soft);
-    }
-    .price-per {
-      color: var(--muted);
-      font-size: 1rem;
-    }
-    .price-label {
-      font-family: var(--font-display);
-      font-style: italic;
-      color: var(--sage);
-      margin-bottom: 1.75rem;
-    }
-    .benefits {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .benefits li {
-      padding: 0.9rem 0;
-      border-bottom: 1px solid var(--hairline);
-      font-size: 0.98rem;
-      color: var(--ink-soft);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.8rem;
-    }
-    .benefits li:last-child { border-bottom: none; }
-    .benefits li::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      background: var(--sage);
-      border-radius: 50%;
-      margin-top: 0.55rem;
-      flex-shrink: 0;
-    }
-    .membership-aside {
-      padding-top: 1rem;
-    }
-    .extras {
-      margin-top: 1.5rem;
-      font-size: 0.95rem;
-      color: var(--ink-soft);
-      line-height: 1.65;
-    }
-    .extras strong {
-      color: var(--sage-deep);
-      font-weight: 500;
-    }
-
-    /* ============================================================
-       CTA / SECOND EMAIL CAPTURE
-       ============================================================ */
-    .cta {
-      background: var(--bg);
-      text-align: center;
-      padding: var(--section-y) 0;
-    }
-    .cta .container { max-width: 680px; }
-    .cta h2 {
-      font-size: clamp(2rem, 4.5vw, 3.5rem);
-      letter-spacing: -0.02em;
-      color: var(--sage-deep);
-    }
-    .cta h2 em { font-style: italic; color: var(--sage); }
-    .cta-list {
-      list-style: none;
-      padding: 0;
-      margin: 2.5rem 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      text-align: left;
-      max-width: 460px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .cta-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.85rem;
-      color: var(--ink-soft);
-      font-size: 1rem;
-    }
-    .cta-list li::before {
-      content: "→";
-      color: var(--sage);
-      font-family: var(--font-display);
-      font-style: italic;
-      flex-shrink: 0;
-    }
-    .cta-button-wrap {
-      display: flex;
-      justify-content: center;
-      margin-top: 0.5rem;
-    }
-
-    /* ============================================================
-       THE LAUNCH — combined space + dates + CTA
-       ============================================================ */
-    .launch {
-      background: var(--bg-warm);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      min-height: 100vh;
-      min-height: 100dvh;
-      scroll-snap-align: start;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .launch-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 1fr;
-      gap: clamp(2rem, 5vw, 4.5rem);
-      align-items: center;
-    }
-    .launch-photo {
-      border-radius: 4px;
-      overflow: hidden;
-      border: 1px solid var(--hairline);
-      aspect-ratio: 4/3;
-      background: var(--bg);
-    }
-    .launch-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .launch-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .launch-info .h-section { margin-bottom: 0.25rem; }
-    .launch-lede {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      line-height: 1.5;
-      color: var(--ink-soft);
-      font-weight: 350;
-      font-style: italic;
-    }
-    .launch-phases {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      margin-top: 0.5rem;
-    }
-    .launch-phase {
-      padding-top: 1.1rem;
-      border-top: 1px solid var(--hairline);
-    }
-    .launch-phase-date {
-      font-size: 0.72rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--sage);
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-    }
-    .launch-phase p {
-      color: var(--ink-soft);
-      font-size: 1rem;
-      line-height: 1.55;
-    }
-    .launch-cta {
-      align-self: flex-start;
-      margin-top: 0.5rem;
-    }
-
-    /* ============================================================
-       FOOTER
-       ============================================================ */
-    footer {
-      background: var(--sage-deep);
-      color: var(--bg);
-      padding: 4.5rem 0 2rem;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 3rem;
-      margin-bottom: 3rem;
-    }
-    footer h4 {
-      font-family: var(--font-body);
-      font-size: 0.68rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--sage-pale);
-      font-weight: 500;
-      margin-bottom: 1.2rem;
-    }
-    footer .wordmark-lg {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1.85rem;
-      color: var(--bg);
-      letter-spacing: -0.01em;
-      margin-bottom: 1rem;
+      line-height: 1.1;
+      letter-spacing: -0.015em;
       font-variation-settings: "opsz" 144;
     }
-    footer a { color: rgba(241, 236, 223, 0.78); text-decoration: none; transition: color 0.2s; }
-    footer a:hover { color: var(--sage-pale); }
-    footer p { color: rgba(241, 236, 223, 0.7); font-size: 0.95rem; line-height: 1.7; }
-    footer .stack a { display: block; margin-bottom: 0.5rem; font-size: 0.95rem; }
-    .footer-bottom {
-      border-top: 1px solid rgba(241, 236, 223, 0.15);
-      padding-top: 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.78rem;
-      color: rgba(241, 236, 223, 0.45);
-      letter-spacing: 0.04em;
-    }
-    .footer-legal {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .footer-divider {
-      opacity: 0.5;
+    .path-title em { font-style: italic; color: var(--sage); }
+    .path-desc {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      line-height: 1.6;
     }
 
-    /* ============================================================
-       LIGHTBOX (for clickable photos)
-       ============================================================ */
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(45, 52, 38, 0.92);
-      z-index: 200;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      cursor: zoom-out;
-      opacity: 0;
-      transition: opacity 0.3s var(--ease);
-    }
-    .lightbox.is-open {
-      display: flex;
-      opacity: 1;
-    }
-    .lightbox-img {
-      max-width: 90vw;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: 4px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    }
-    .lightbox-close {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      background: transparent;
-      border: 1px solid rgba(241, 236, 223, 0.4);
-      color: var(--bg);
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      font-size: 1.4rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s var(--ease);
-    }
-    .lightbox-close:hover {
-      background: rgba(241, 236, 223, 0.15);
-    }
-
-    /* ============================================================
-       REVEAL ANIMATION
-       ============================================================ */
-    [data-reveal] {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
-    }
-    [data-reveal].is-visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ============================================================
-       RESPONSIVE
-       ============================================================ */
-    @media (max-width: 1100px) {
-      .pillars-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-    @media (max-width: 880px) {
-      .hero { padding: 3rem 0 4rem; gap: 2.5rem; }
-      .hero-top { grid-template-columns: 1fr; }
-      .hero-seal-wrap { order: -1; max-width: 280px; margin: 0 auto; }
-      .hero-quote { text-align: left; }
-      .pillars-grid { grid-template-columns: 1fr; }
-      .formats-grid { grid-template-columns: 1fr; }
-      .launch-grid { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .footer-bottom { flex-direction: column; gap: 0.5rem; }
-    }
-
-    /* ============================================================
-       PURCHASE WIDGET (hero)
-       ============================================================ */
-    .purchase-widget {
-      margin-top: 2.5rem;
-      background: var(--surface);
+    /* Price box */
+    .price-box {
+      background: var(--bg-warm);
       border: 1px solid var(--hairline);
       border-radius: 6px;
-      padding: 1.5rem 1.75rem 1.75rem;
-      max-width: 460px;
+      padding: 1.25rem 1.5rem;
+      text-align: center;
     }
-    .purchase-widget-label {
-      font-family: var(--font-body);
+    .price-label-sm {
+      font-family: var(--font-b);
       font-size: 0.7rem;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--sage);
+      color: var(--muted);
       font-weight: 600;
-      margin-bottom: 1.1rem;
+      margin-bottom: 0.4rem;
+    }
+    .price-big {
+      font-family: var(--font-d);
+      font-size: 2.4rem;
+      font-weight: 400;
+      color: var(--sage-deep);
+      line-height: 1;
+      letter-spacing: -0.025em;
+    }
+    .price-period {
+      font-family: var(--font-b);
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      margin-left: 0.2rem;
+    }
+    .price-note {
+      font-family: var(--font-d);
+      font-style: italic;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.35rem;
+    }
+
+    /* Steps list */
+    .steps-list { display: flex; flex-direction: column; gap: 0; }
+    .step-item {
+      display: flex;
+      align-items: stretch;
+      gap: 1rem;
+    }
+    .step-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      width: 28px;
+    }
+    .step-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--sage);
+      color: #fff;
+      font-family: var(--font-b);
+      font-size: 0.65rem;
+      font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      justify-content: center;
+      flex-shrink: 0;
     }
-    .purchase-widget-label::before {
-      content: "";
-      display: inline-block;
-      width: 20px;
-      height: 1px;
-      background: var(--sage);
+    .step-line {
+      width: 1px;
+      flex: 1;
+      background: var(--hairline);
+      margin: 4px 0;
+      min-height: 1.5rem;
     }
-    .pw-select-wrap { position: relative; margin-bottom: 0.75rem; }
-    .pw-select {
-      width: 100%;
-      padding: 0.85rem 2.5rem 0.85rem 1rem;
-      font-family: var(--font-display);
-      font-size: 1rem;
-      color: var(--ink);
-      background: var(--bg);
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      appearance: none;
-      -webkit-appearance: none;
-      cursor: pointer;
-      outline: none;
-      transition: border-color 0.2s var(--ease);
-      font-style: italic;
+    .step-item:last-child .step-line { display: none; }
+    .step-content {
+      padding: 0 0 1.5rem 0;
     }
-    .pw-select:focus { border-color: var(--sage); }
-    .pw-select:disabled { opacity: 0.45; cursor: default; }
-    .pw-select option { font-style: normal; }
-    .pw-select-arrow {
-      position: absolute;
-      right: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      color: var(--muted);
-      font-size: 0.75rem;
+    .step-content-label {
+      font-family: var(--font-b);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 700;
+      margin-bottom: 0.35rem;
     }
-    .pw-footer {
+    .step-content a, .step-content-card {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 1rem;
-      gap: 1rem;
+      gap: 0.75rem;
+      padding: 0.9rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
     }
-    .pw-price-display {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      color: var(--sage-deep);
-      letter-spacing: -0.02em;
-      transition: opacity 0.2s;
+    .step-content a:hover { border-color: var(--sage-pale); background: var(--surface); }
+    .step-content-main { font-family: var(--font-b); font-weight: 600; font-size: 0.88rem; color: var(--sage-deep); }
+    .step-content-sub { font-family: var(--font-b); font-size: 0.78rem; color: var(--ink-soft); margin-top: 0.15rem; }
+    .step-arrow { color: var(--sage); font-size: 1.1rem; font-weight: 700; flex-shrink: 0; }
+
+    /* Included list */
+    .included-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+    .included-list li {
+      display: flex;
+      gap: 0.65rem;
+      align-items: start;
+      font-family: var(--font-b);
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      line-height: 1.5;
     }
-    .pw-price-display.dim { opacity: 0.3; }
-    .btn-pay-now {
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.8rem 1.75rem;
-      border-radius: 999px;
-      background: var(--sage);
-      color: var(--bg);
-      border: 1px solid var(--sage);
-      cursor: pointer;
-      transition: background 0.2s var(--ease), transform 0.15s var(--ease);
-      white-space: nowrap;
+    .included-check { color: var(--sage); font-weight: 700; font-size: 0.95rem; line-height: 1.3; flex-shrink: 0; }
+
+    .path-cta-wrap { margin-top: auto; }
+
+    @media (max-width: 760px) {
+      .paths-grid { grid-template-columns: 1fr; }
     }
-    .btn-pay-now:hover:not(:disabled) { background: var(--sage-deep); border-color: var(--sage-deep); }
-    .btn-pay-now:active:not(:disabled) { transform: translateY(1px); }
-    .btn-pay-now:disabled { opacity: 0.4; cursor: default; }
 
     /* ============================================================
-       CHECKOUT MODAL
+       MODAL
        ============================================================ */
     .modal-backdrop {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(78, 90, 65, 0.45);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
-      z-index: 200;
+      background: rgba(78,90,65,0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 600;
       align-items: center;
       justify-content: center;
       padding: 1rem;
@@ -1843,12 +671,12 @@
     .modal {
       background: var(--surface);
       border: 1px solid var(--hairline);
-      border-radius: 8px;
+      border-radius: 12px;
       width: 100%;
-      max-width: 540px;
+      max-width: 520px;
       max-height: 90dvh;
       overflow-y: auto;
-      box-shadow: 0 24px 64px rgba(78, 90, 65, 0.25);
+      box-shadow: 0 24px 64px rgba(78,90,65,0.2);
       display: flex;
       flex-direction: column;
     }
@@ -1856,42 +684,45 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      padding: 1.6rem 1.75rem 1.2rem;
+      padding: 1.5rem 1.75rem 1.25rem;
       border-bottom: 1px solid var(--hairline);
       gap: 1rem;
     }
-    .modal-title {
-      font-family: var(--font-display);
-      font-size: 1.35rem;
-      color: var(--sage-deep);
-      line-height: 1.2;
+    .modal-title-text {
+      font-family: var(--font-d);
+      font-size: 1.3rem;
       font-weight: 400;
+      color: var(--sage-deep);
     }
-    .modal-subtitle {
-      font-family: var(--font-display);
+    .modal-subtitle-text {
+      font-family: var(--font-d);
       font-style: italic;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--muted);
       margin-top: 0.2rem;
     }
     .modal-close {
       background: none;
-      border: none;
-      font-size: 1.5rem;
+      border: 1px solid var(--hairline);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1.2rem;
       color: var(--muted);
       cursor: pointer;
-      padding: 0;
-      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
-      transition: color 0.2s;
+      transition: border-color 0.2s, color 0.2s;
     }
-    .modal-close:hover { color: var(--sage-deep); }
+    .modal-close:hover { border-color: var(--sage); color: var(--sage-deep); }
     .modal-body { padding: 1.5rem 1.75rem 2rem; flex: 1; }
     .modal-summary {
       background: var(--bg-warm);
       border: 1px solid var(--hairline);
-      border-radius: 4px;
-      padding: 1rem 1.15rem;
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
       margin-bottom: 1.25rem;
       display: flex;
       justify-content: space-between;
@@ -1899,616 +730,238 @@
       gap: 1rem;
       flex-wrap: wrap;
     }
-    .modal-summary-name {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      color: var(--sage-deep);
-    }
-    .modal-summary-meta {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-top: 0.15rem;
-    }
-    .modal-summary-price {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      color: var(--sage-deep);
-      white-space: nowrap;
-    }
+    .modal-summary-name { font-family: var(--font-d); font-size: 1rem; color: var(--sage-deep); }
+    .modal-summary-meta { font-family: var(--font-d); font-style: italic; font-size: 0.82rem; color: var(--muted); margin-top: 0.1rem; }
+    .modal-summary-price { font-family: var(--font-d); font-size: 1.2rem; color: var(--sage-deep); white-space: nowrap; }
     #checkout-embed { min-height: 200px; }
-    .modal-success {
-      display: none;
-      text-align: center;
-      padding: 2rem 0;
-    }
+    .modal-success { display: none; text-align: center; padding: 2rem 0; }
     .modal-success.show { display: block; }
-    .modal-success-mark { font-size: 2.5rem; margin-bottom: 1rem; }
-    .modal-success h3 {
-      font-family: var(--font-display);
-      font-size: 1.6rem;
-      color: var(--sage-deep);
-      margin-bottom: 0.6rem;
-    }
+    .modal-success-mark { font-size: 2rem; margin-bottom: 1rem; }
+    .modal-success h3 { font-family: var(--font-d); font-size: 1.5rem; color: var(--sage-deep); margin-bottom: 0.6rem; }
     .modal-success h3 em { font-style: italic; color: var(--sage); }
-    .modal-success p {
-      font-size: 0.95rem;
-      color: var(--ink-soft);
-      line-height: 1.6;
-      max-width: 34ch;
-      margin: 0 auto;
+    .modal-success p { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.6; max-width: 32ch; margin: 0 auto; }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    footer {
+      background: var(--sage-deep);
+      color: var(--bg);
+      padding: 4rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-wordmark {
+      font-family: var(--font-d);
+      font-style: italic;
+      font-size: 1.75rem;
+      color: var(--bg);
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      font-variation-settings: "opsz" 144;
+    }
+    footer p { color: rgba(241,236,223,0.65); font-size: 0.92rem; line-height: 1.7; }
+    footer h4 {
+      font-family: var(--font-b);
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage-pale);
+      font-weight: 600;
+      margin: 0 0 1.1rem;
+    }
+    footer a { color: rgba(241,236,223,0.7); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--sage-pale); }
+    .footer-stack a { display: block; margin-bottom: 0.45rem; font-size: 0.92rem; }
+    .footer-bottom {
+      border-top: 1px solid rgba(241,236,223,0.12);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-family: var(--font-b);
+      font-size: 0.72rem;
+      color: rgba(241,236,223,0.4);
+      letter-spacing: 0.04em;
+    }
+    .footer-legal { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .footer-legal a { color: rgba(241,236,223,0.45); }
+    .footer-legal a:hover { color: var(--sage-pale); }
+    .footer-sep { opacity: 0.4; }
+    @media (max-width: 760px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
 
     /* ============================================================
-       HOW IT WORKS & INTEREST REGISTRATION SECTION
+       LIGHTBOX
        ============================================================ */
-    .how-it-works-section {
-      background: var(--bg-warm);
-      padding: 6rem 0;
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(40,48,32,0.93);
+      z-index: 700;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      cursor: zoom-out;
     }
-    .how-it-works-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: clamp(2rem, 5vw, 4rem);
-      align-items: start;
-    }
-    .how-it-works-left {
-      display: flex;
-      flex-direction: column;
-    }
-    .section-lead {
-      font-size: 1.15rem;
-      line-height: 1.5;
-      color: var(--ink-soft);
-      margin-bottom: 2.5rem;
-    }
-    .steps-list {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-    .step-item {
-      display: flex;
-      gap: 1.5rem;
-      align-items: start;
-    }
-    .step-number {
-      font-family: var(--font-display);
-      font-size: 1.75rem;
-      font-weight: 300;
-      color: var(--sage);
-      line-height: 1;
-      border-bottom: 1px solid var(--sage-pale);
-      padding-bottom: 4px;
-    }
-    .step-content h4 {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin: 0 0 0.5rem 0;
-    }
-    .step-content p {
-      font-size: 0.9rem;
-      line-height: 1.45;
-      color: var(--ink-soft);
-      margin: 0;
-    }
-    
-    /* Interest Card Form */
-    .interest-card {
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: 8px;
-      padding: 2.5rem;
-      box-shadow: 0 10px 30px rgba(78, 90, 65, 0.05);
-    }
-    .interest-card h3 {
-      font-family: var(--font-display);
-      font-size: 1.6rem;
-      font-weight: 400;
-      color: var(--sage-deep);
-      margin: 0 0 0.5rem 0;
-    }
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    .form-group {
-      margin-bottom: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-    .form-group label {
-      font-size: 0.72rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--muted);
-    }
-    .form-group input[type="text"],
-    .form-group input[type="email"],
-    .form-group input[type="tel"] {
-      padding: 0.75rem 1rem;
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      background: var(--bg);
-      font-family: var(--font-body);
-      font-size: 0.9rem;
-      color: var(--ink);
-      transition: border-color 0.2s, background-color 0.2s;
-    }
-    .form-group input:focus {
-      outline: none;
-      border-color: var(--sage);
-      background: var(--surface);
-    }
-    .checkbox-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem;
-      margin-top: 0.2rem;
-    }
-    .checkbox-label {
+    .lightbox.is-open { display: flex; }
+    .lightbox-img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 4px; }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      background: transparent;
+      border: 1px solid rgba(241,236,223,0.3);
+      color: var(--bg);
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      font-size: 1.3rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 0.82rem;
-      color: var(--ink-soft);
+      justify-content: center;
       cursor: pointer;
+      transition: background 0.2s;
     }
-    .checkbox-label input {
-      accent-color: var(--sage);
-      width: 14px;
-      height: 14px;
-    }
-    .btn-submit-interest {
-      width: 100%;
-      background: var(--sage-deep);
-      color: #fff;
-      border: none;
-      padding: 0.9rem 1.5rem;
-      border-radius: 4px;
-      font-family: var(--font-body);
-      font-size: 0.92rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s, transform 0.1s;
-      margin-top: 1rem;
-    }
-    .btn-submit-interest:hover {
-      background: var(--sage);
-    }
-    .btn-submit-interest:active {
-      transform: scale(0.98);
-    }
-    .btn-submit-interest:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-    .form-msg {
-      margin-top: 1rem;
-      font-size: 0.85rem;
-      line-height: 1.4;
-      text-align: center;
-      padding: 0.75rem;
-      border-radius: 4px;
-      display: none;
-    }
-    .form-msg.ok {
-      display: block;
-      background: rgba(122, 138, 107, 0.1);
-      color: var(--sage-deep);
-      border: 1px solid var(--sage-pale);
-    }
-    .form-msg.err {
-      display: block;
-      background: rgba(217, 83, 79, 0.1);
-      color: #c9302c;
-      border: 1px solid rgba(217, 83, 79, 0.2);
-    }
+    .lightbox-close:hover { background: rgba(241,236,223,0.12); }
 
-    @media (max-width: 880px) {
-      .how-it-works-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-      .interest-card {
-        padding: 1.75rem;
-      }
-      .checkbox-grid {
-        grid-template-columns: 1fr;
-      }
+    /* ============================================================
+       REVEAL
+       ============================================================ */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
     }
-    .scroll-cta:hover {
-      color: var(--sage) !important;
-      border-color: var(--sage) !important;
+    [data-reveal].is-visible { opacity: 1; transform: none; }
+
+    /* ============================================================
+       ACCESSIBILITY
+       ============================================================ */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
     }
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-6px); }
-      60% { transform: translateY(-3px); }
-    }
+    :focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; }
   </style>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
-  <!-- =========================================================
-       NAV
-       ========================================================= -->
-  <!-- =========================================================
-       HOMEPAGE LANDING FRAME (100vh Initial Viewport Frame)
-       ========================================================= -->
-  <header class="homepage-landing-frame">
-    <!-- Row 1: Top Contact Bar -->
-    <div class="contact-bar">
-      <div class="container contact-bar-inner">
-        <div class="contact-bar-items">
-          <div class="contact-bar-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            135 N. Main Street, Pittston, PA
+  <!-- CONTACT BAR -->
+  <div class="contact-bar">
+    <div class="container contact-bar-inner">
+      <div class="contact-bar-items">
+        <div class="contact-bar-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          135 N. Main Street, Pittston, PA
+        </div>
+        <div class="contact-bar-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+15703546189">(570) 354-6189</a>
+        </div>
+        <div class="contact-bar-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+        </div>
+      </div>
+      <a href="login.html" style="font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(241,236,223,0.55); text-decoration: none; font-weight: 600; transition: color 0.2s;">Member Login →</a>
+    </div>
+  </div>
+
+  <!-- STICKY NAV -->
+  <nav class="sticky-nav" role="navigation" aria-label="Primary">
+    <div class="container sticky-nav-inner" style="position: relative;">
+      <a href="index.html" class="wordmark">The Hobbiest</a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-links" id="navLinks">
+        <a href="how-it-works.html" class="nav-link">How it works</a>
+        <a href="schedule.html" class="nav-link">Classes</a>
+        <a href="studio.html" class="nav-link">The Studio</a>
+        <a href="interest.html" class="nav-link">Interest form</a>
+        <a href="schedule.html" class="nav-link-pill">Book a class</a>
+        <a href="studio.html#membership-offer" class="nav-link-pill" style="background: var(--sage);">Membership</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header style="background: var(--bg); border-bottom: 1px solid var(--hairline);">
+    <div class="container">
+      <div class="hero">
+        <div class="hero-left" data-reveal>
+          <div class="hero-eyebrow">Pittston, Pennsylvania · Opening July 2026</div>
+          <h1 class="hero-headline">Lessons,<br><em>for Life</em>.</h1>
+          <div class="hero-body">
+            <p>The Hobbiest is a private skills club built around the belief that confidence comes from capability. Through expert-led, immersive experiences, members build dynamic skillsets, cultivate taste, and curate a life of their own design.</p>
           </div>
-          <div class="contact-bar-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            <a href="tel:+15703546189">(570) 354-6189</a>
+          <div class="hero-cta">
+            <a href="how-it-works.html" class="btn-primary">How It Works →</a>
+            <a href="schedule.html" class="btn-outline">View Curriculum</a>
           </div>
-          <div class="contact-bar-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
-          </div>
+        </div>
+        <div class="hero-right" data-reveal>
+          <svg class="hero-seal" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The Hobbiest Skills Club — Pittston, Pennsylvania seal">
+            <defs>
+              <path id="arc-bottom" d="M 70,280 A 210,210 0 0,0 490,280"/>
+              <path id="arc-top" d="M 90,280 A 190,190 0 0,1 470,280"/>
+            </defs>
+            <circle cx="280" cy="280" r="255" fill="none" stroke="#7A8A6B" stroke-width="2.5"/>
+            <circle cx="280" cy="280" r="238" fill="none" stroke="#7A8A6B" stroke-width="1"/>
+            <circle cx="280" cy="280" r="222" fill="none" stroke="#D9D2BE" stroke-width="0.75"/>
+            <text x="280" y="272"
+              font-family="Fraunces,'Times New Roman',serif"
+              font-style="italic"
+              font-weight="400"
+              font-size="84"
+              fill="#7A8A6B"
+              text-anchor="middle"
+              letter-spacing="-1"
+              style="font-variation-settings:'opsz' 144">The Hobbiest</text>
+            <g fill="#7A8A6B">
+              <line x1="78" y1="307" x2="126" y2="307" stroke="#7A8A6B" stroke-width="1.2"/>
+              <path d="M 73,307 L 79,303 L 85,307 L 79,311 Z"/>
+              <text x="280" y="316"
+                font-family="Fraunces,'Times New Roman',serif"
+                font-weight="500"
+                font-size="24"
+                fill="#7A8A6B"
+                text-anchor="middle"
+                letter-spacing="9">SKILLS CLUB</text>
+              <line x1="434" y1="307" x2="482" y2="307" stroke="#7A8A6B" stroke-width="1.2"/>
+              <path d="M 487,307 L 481,303 L 475,307 L 481,311 Z"/>
+            </g>
+            <text font-family="Fraunces,'Times New Roman',serif"
+              font-weight="500" font-size="19" fill="#7A8A6B" letter-spacing="6">
+              <textPath href="#arc-bottom" startOffset="50%" text-anchor="middle">PITTSTON, PENNSYLVANIA</textPath>
+            </text>
+          </svg>
+          <div class="hero-location">135 N. Main Street</div>
         </div>
       </div>
     </div>
-
-    <!-- Row 2: Top Nav Bar (HOME / HOBBIEST LOG IN) -->
-    <div class="top-header-bar">
-      <div class="container top-header-inner">
-        <a href="index.html" class="top-header-link active">HOME</a>
-        <a href="login.html" class="top-header-link">HOBBIEST LOG IN</a>
-      </div>
-    </div>
-
-    <!-- Row 3: Hero Content Block -->
-    <div class="hero-body">
-      <div class="container">
-        <div class="hero-top">
-          <div class="hero-left">
-            <h1 class="hero-quote" data-reveal>
-              Lessons, <em>for Life</em>.
-            </h1>
-            <div class="hero-paragraph" data-reveal>
-              <p>The Hobbiest is a private skills club built around the belief that confidence comes from capability. Through expert-led, immersive experiences across a range of topics, members build dynamic skillsets, cultivate taste, and curate a life of their own design.</p>
-            </div>
-          </div>
-
-          <div class="hero-seal-wrap" data-reveal>
-            <svg class="hero-seal" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-label="The Hobbiest seal — Pittston, Pennsylvania">
-              <defs>
-                <path id="seal-bottom-arc" d="M 75,300 A 225,225 0 0,0 525,300"/>
-              </defs>
-              <!-- outer ring -->
-              <circle cx="300" cy="300" r="275" fill="none" stroke="#7A8A6B" stroke-width="3"/>
-              <!-- inner ring -->
-              <circle cx="300" cy="300" r="258" fill="none" stroke="#7A8A6B" stroke-width="1.1"/>
-              <!-- wordmark -->
-              <text x="300" y="290"
-                    font-family="Fraunces, 'Times New Roman', serif"
-                    font-style="italic"
-                    font-weight="400"
-                    font-size="90"
-                    fill="#7A8A6B"
-                    text-anchor="middle"
-                    letter-spacing="-1.5"
-                    style="font-variation-settings: 'opsz' 144;">The Hobbiest</text>
-              <!-- divider flourishes + SKILLS CLUB -->
-              <g fill="#7A8A6B">
-                <line x1="85" y1="330" x2="140" y2="330" stroke="#7A8A6B" stroke-width="1.2"/>
-                <path d="M 79,330 L 85,326 L 91,330 L 85,334 Z"/>
-                <text x="300" y="340"
-                      font-family="Fraunces, 'Times New Roman', serif"
-                      font-weight="500"
-                      font-size="28"
-                      fill="#7A8A6B"
-                      text-anchor="middle"
-                      letter-spacing="10">SKILLS CLUB</text>
-                <line x1="460" y1="330" x2="515" y2="330" stroke="#7A8A6B" stroke-width="1.2"/>
-                <path d="M 521,330 L 515,326 L 509,330 L 515,334 Z"/>
-              </g>
-              <!-- bottom arc text -->
-              <text font-family="Fraunces, 'Times New Roman', serif"
-                    font-weight="500"
-                    font-size="22"
-                    fill="#7A8A6B"
-                    letter-spacing="7">
-                <textPath href="#seal-bottom-arc" startOffset="50%" text-anchor="middle">PITTSTON, PENNSYLVANIA</textPath>
-              </text>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Row 4: Sticky Subnav Strip -->
-    <nav class="subnav-strip">
-      <div class="container subnav-inner">
-        
-        <!-- SECTION 1: LEARN MORE -->
-        <div class="subnav-section">
-          <div class="subnav-header">LEARN MORE</div>
-          <div class="subnav-group">
-            <a href="#how-it-works" class="subnav-link">HOW IT WORKS</a>
-            <a href="schedule.html" class="subnav-link">CURRENT CURRICULUM</a>
-            <div class="nav-item-dropdown">
-              <a href="studio.html" class="subnav-link nav-dropdown-trigger">
-                THE STUDIO <span class="nav-dropdown-arrow">▾</span>
-              </a>
-              <div class="nav-dropdown" role="menu">
-                <div style="padding: 0.85rem 1.15rem; border-bottom: 1px solid var(--hairline);">
-                  <div style="font-family: var(--font-body); font-weight: 700; font-size: 0.78rem; color: var(--sage-deep); margin-bottom: 0.2rem;">135 N. Main St, Pittston, PA</div>
-                  <div style="font-size: 0.75rem; color: var(--muted); line-height: 1.3;">Free Parking Across N. Main &amp; Kennedy</div>
-                </div>
-                <a href="studio.html" class="nav-dropdown-link" role="menuitem">Studio &amp; Parking Details</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- VERTICAL DIVIDER LINE 1 -->
-        <div class="subnav-divider"></div>
-
-        <!-- SECTION 2: SUBMIT A FORM -->
-        <div class="subnav-section">
-          <div class="subnav-header">SUBMIT A FORM</div>
-          <div class="subnav-group">
-            <a href="interest.html" class="subnav-link">SUBMIT INTEREST FORM</a>
-            <a href="apply.html" class="subnav-link">SUBMIT TEACHING APP</a>
-          </div>
-        </div>
-
-        <!-- VERTICAL DIVIDER LINE 2 -->
-        <div class="subnav-divider"></div>
-
-        <!-- SECTION 3: PURCHASE -->
-        <div class="subnav-section">
-          <div class="subnav-header">PURCHASE</div>
-          <div class="subnav-group">
-            <a href="schedule.html" class="subnav-link-pill">SINGLE CLASS</a>
-            <a href="studio.html#membership-offer" class="subnav-link-pill">MEMBERSHIP</a>
-            <a href="gift.html" class="subnav-link-pill">GIFT CARD</a>
-          </div>
-        </div>
-
-      </div>
-    </nav>
   </header>
 
-  <!-- =========================================================
-       CURRICULUM CORNERSTONES
-       ========================================================= -->
-  <section class="cornerstones-section" style="padding: 4.5rem 0 5rem; background: var(--bg); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);">
-    <div class="container">
-      <div data-reveal style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.25rem; flex-wrap: wrap; gap: 1rem;">
-        <div>
-          <h2 style="font-family: var(--font-display); font-size: clamp(2.2rem, 4.5vw, 3.5rem); font-weight: 350; color: var(--sage-deep); margin: 0; letter-spacing: -0.02em;">
-            Curriculum <em>Cornerstones</em>.
-          </h2>
-        </div>
-        <a href="schedule.html" style="font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: var(--sage-deep); text-decoration: none; border-bottom: 1px solid var(--sage-pale); padding-bottom: 2px; transition: all 0.2s;">
-          View Current Course Offerings →
-        </a>
-      </div>
-
-      <div class="cornerstones-grid" data-reveal style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: 4px; overflow: hidden;">
-        
-        <!-- 01: Creative Pursuits -->
-        <div class="cornerstone-card" style="background: #FAF8F5; padding: 2.25rem 1.6rem; display: flex; flex-direction: column; gap: 0.8rem;">
-          <div style="font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: var(--sage); font-weight: 400;">01</div>
-          <h3 style="font-family: var(--font-display); font-size: 1.65rem; font-weight: 400; color: var(--sage-deep); margin: 0; line-height: 1.15; letter-spacing: -0.01em;">
-            Creative <em>Pursuits</em>
-          </h3>
-          <p style="font-family: var(--font-display); font-style: italic; font-size: 0.95rem; color: var(--ink-soft); margin: 0; line-height: 1.4;">
-            Things made beautifully by hand.
-          </p>
-          <p style="font-family: var(--font-body); font-size: 0.85rem; color: var(--ink-soft); margin-top: auto; line-height: 1.55;">
-            Watercolor, calligraphy, knitting, drawing, and other craft traditions.
-          </p>
-        </div>
-
-        <!-- 02: Presence & Entertaining -->
-        <div class="cornerstone-card" style="background: #FAF8F5; padding: 2.25rem 1.6rem; display: flex; flex-direction: column; gap: 0.8rem;">
-          <div style="font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: var(--sage); font-weight: 400;">02</div>
-          <h3 style="font-family: var(--font-display); font-size: 1.65rem; font-weight: 400; color: var(--sage-deep); margin: 0; line-height: 1.15; letter-spacing: -0.01em;">
-            Presence &amp; <em>Entertaining</em>
-          </h3>
-          <p style="font-family: var(--font-display); font-style: italic; font-size: 0.95rem; color: var(--ink-soft); margin: 0; line-height: 1.4;">
-            The art of making people feel welcome.
-          </p>
-          <p style="font-family: var(--font-body); font-size: 0.85rem; color: var(--ink-soft); margin-top: auto; line-height: 1.55;">
-            Hosting, modern etiquette, personal styling, and the small social skills that hold.
-          </p>
-        </div>
-
-        <!-- 03: Essential Life Skills -->
-        <div class="cornerstone-card" style="background: #FAF8F5; padding: 2.25rem 1.6rem; display: flex; flex-direction: column; gap: 0.8rem;">
-          <div style="font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: var(--sage); font-weight: 400;">03</div>
-          <h3 style="font-family: var(--font-display); font-size: 1.65rem; font-weight: 400; color: var(--sage-deep); margin: 0; line-height: 1.15; letter-spacing: -0.01em;">
-            Essential <em>Life Skills</em>
-          </h3>
-          <p style="font-family: var(--font-display); font-style: italic; font-size: 0.95rem; color: var(--ink-soft); margin: 0; line-height: 1.4;">
-            The things everyone should know.
-          </p>
-          <p style="font-family: var(--font-body); font-size: 0.85rem; color: var(--ink-soft); margin-top: auto; line-height: 1.55;">
-            Home repair, finances, first aid, and the habits that compound over years.
-          </p>
-        </div>
-
-        <!-- 04: Hearth & Garden -->
-        <div class="cornerstone-card" style="background: #FAF8F5; padding: 2.25rem 1.6rem; display: flex; flex-direction: column; gap: 0.8rem;">
-          <div style="font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: var(--sage); font-weight: 400;">04</div>
-          <h3 style="font-family: var(--font-display); font-size: 1.65rem; font-weight: 400; color: var(--sage-deep); margin: 0; line-height: 1.15; letter-spacing: -0.01em;">
-            Hearth &amp; <em>Garden</em>
-          </h3>
-          <p style="font-family: var(--font-display); font-style: italic; font-size: 0.95rem; color: var(--ink-soft); margin: 0; line-height: 1.4;">
-            Slow, seasonal work with living things.
-          </p>
-          <p style="font-family: var(--font-body); font-size: 0.85rem; color: var(--ink-soft); margin-top: auto; line-height: 1.55;">
-            Sourdough, floral arranging, herb gardens, and the rituals of the year.
-          </p>
-        </div>
-
-        <!-- 05: Living Well -->
-        <div class="cornerstone-card" style="background: #FAF8F5; padding: 2.25rem 1.6rem; display: flex; flex-direction: column; gap: 0.8rem;">
-          <div style="font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: var(--sage); font-weight: 400;">05</div>
-          <h3 style="font-family: var(--font-display); font-size: 1.65rem; font-weight: 400; color: var(--sage-deep); margin: 0; line-height: 1.15; letter-spacing: -0.01em;">
-            Living <em>Well</em>
-          </h3>
-          <p style="font-family: var(--font-display); font-style: italic; font-size: 0.95rem; color: var(--ink-soft); margin: 0; line-height: 1.4;">
-            The inward side of an intentional life.
-          </p>
-          <p style="font-family: var(--font-body); font-size: 0.85rem; color: var(--ink-soft); margin-top: auto; line-height: 1.55;">
-            Meditation, journaling, intention-setting, and daily practices that hold.
-          </p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       HOW IT WORKS & STUDIO MEMBERSHIP
-       ========================================================= -->
-  <section class="how-it-works-section" id="how-it-works" style="min-height: calc(100vh - 70px); display: flex; flex-direction: column; justify-content: center; padding: 4rem 0; background: var(--bg-alt); box-sizing: border-box;">
-    <div class="container">
-      <div data-reveal style="text-align: center; max-width: 680px; margin: 0 auto 3rem auto;">
-        <span class="eyebrow" style="letter-spacing: 0.2em;">HOW IT WORKS</span>
-        <h2 class="h-section" style="margin: 0.5rem 0 0.75rem 0;">Two Ways to <em>Join</em>.</h2>
-        <p style="font-size: 1.02rem; color: var(--ink-soft); line-height: 1.6; margin: 0;">Whether you want to learn single skills as your schedule allows, or enjoy daily open studio access with monthly class credits — we have a path for you.</p>
-      </div>
-
-      <div class="how-it-works-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; align-items: stretch;">
-        
-        <!-- Left: Option 1 Card — Single Sessions -->
-        <div class="how-it-works-left" data-reveal style="display: flex; flex-direction: column;">
-          <div style="background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; padding: 2.25rem; box-shadow: 0 10px 30px rgba(78, 90, 65, 0.05); height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <div style="font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--sage); font-weight: 600; margin-bottom: 0.5rem;">OPTION 01 · PAY AS YOU GO</div>
-              <h3 style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 400; color: var(--sage-deep); margin: 0 0 0.5rem 0;">Single <em>Sessions</em>.</h3>
-              <p style="font-size: 0.92rem; color: var(--ink-soft); line-height: 1.55; margin-bottom: 1.75rem;">
-                No long-term commitment. Pick the topics that interest you and join hands-on 2-hour classes shaped directly by member availability.
-              </p>
-
-              <div class="steps-list" style="display: flex; flex-direction: column; gap: 1.15rem;">
-                <!-- Step 01 = Button 1 -->
-                <div>
-                  <div style="font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; color: var(--sage); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem;">Step 01 — Interest Form</div>
-                  <a href="interest.html" style="display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.25rem; background: #FAF8F5; border: 1.5px solid var(--sage); border-radius: 8px; text-decoration: none; color: var(--sage-deep); transition: all 0.2s; box-shadow: 0 2px 8px rgba(78,90,65,0.03);">
-                    <div>
-                      <div style="font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; color: var(--sage-deep);">Submit an interest form (Free)</div>
-                      <div style="font-size: 0.82rem; color: var(--ink-soft); font-family: var(--font-body); margin-top: 0.2rem;">Select topics &amp; mark preferred times with zero commitment</div>
-                    </div>
-                    <span style="font-size: 1.25rem; font-weight: bold; color: var(--sage); flex-shrink: 0; margin-left: 0.75rem;">→</span>
-                  </a>
-                </div>
-
-                <!-- Step 02 = Button 2 -->
-                <div>
-                  <div style="font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; color: var(--sage); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem;">Step 02 — Instant Enrollment</div>
-                  <a href="schedule.html" style="display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.25rem; background: #FAF8F5; border: 1.5px solid var(--sage); border-radius: 8px; text-decoration: none; color: var(--sage-deep); transition: all 0.2s; box-shadow: 0 2px 8px rgba(78,90,65,0.03);">
-                    <div>
-                      <div style="font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; color: var(--sage-deep);">Buy a Single Class ($45–$65)</div>
-                      <div style="font-size: 0.82rem; color: var(--ink-soft); font-family: var(--font-body); margin-top: 0.2rem;">Browse Current Curriculum &amp; reserve your spot</div>
-                    </div>
-                    <span style="font-size: 1.25rem; font-weight: bold; color: var(--sage); flex-shrink: 0; margin-left: 0.75rem;">→</span>
-                  </a>
-                </div>
-
-                <!-- Step 03 = Matched Card Step -->
-                <div>
-                  <div style="font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; color: var(--sage); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem;">Step 03 — We Handle the Rest</div>
-                  <div style="padding: 1.1rem 1.25rem; background: #FAF8F5; border: 1px solid var(--hairline); border-radius: 8px;">
-                    <div style="font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; color: var(--sage-deep);">Class Scheduling &amp; Lock-In</div>
-                    <div style="font-size: 0.82rem; color: var(--ink-soft); font-family: var(--font-body); margin-top: 0.25rem; line-height: 1.45;">
-                      Once a class reaches 10–12 members, we lock in the date, confirm your spot, and send full preparation details.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: Option 2 Card — Studio Membership -->
-        <div class="how-it-works-right" data-reveal id="membership" style="display: flex; flex-direction: column;">
-          <div style="background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; padding: 2.25rem; box-shadow: 0 10px 30px rgba(78, 90, 65, 0.05); height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <div style="font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--sage); font-weight: 600; margin-bottom: 0.5rem;">OPTION 02 · UNLIMITED ACCESS</div>
-              <h3 style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 400; color: var(--sage-deep); margin: 0 0 0.5rem 0;">Studio <em>Membership</em>.</h3>
-              <p style="font-size: 0.92rem; color: var(--ink-soft); line-height: 1.55; margin-bottom: 1.5rem;">
-                Get direct access to our physical space for independent projects, open studio time, and creative pursuits like painting, knitting, or meditating in the garden.
-              </p>
-
-              <!-- Price Box -->
-              <div style="background: #FAF8F5; border: 1px solid var(--hairline); border-radius: 8px; padding: 1.25rem; text-align: center; margin-bottom: 1.5rem;">
-                <div style="font-family: var(--font-display); font-size: 1.05rem; color: var(--sage-deep);">Club Member Dues</div>
-                <div style="font-family: var(--font-display); font-size: 2.2rem; font-weight: 400; color: var(--sage-deep); margin: 0.2rem 0;">$45 <span style="font-size: 1rem; color: var(--ink-soft); font-family: var(--font-body);">/ month</span></div>
-                <div style="font-size: 0.8rem; font-style: italic; color: var(--muted);">Studio opens 8/1 — memberships begin 8/1</div>
-              </div>
-
-              <div style="font-family: var(--font-body); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.75rem;">What's Included:</div>
-              
-              <ul style="list-style: none; padding: 0; margin: 0 0 1.5rem 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.88rem; color: var(--ink-soft);">
-                <li style="display: flex; gap: 0.65rem; align-items: start;">
-                  <span style="color: var(--sage); font-weight: bold; font-size: 1rem; line-height: 1.2;">✓</span>
-                  <span><strong>Open Studio Access:</strong> Weekdays M-F 6:00–9:30 PM &amp; Weekends 7:00 AM–9:00 PM.</span>
-                </li>
-                <li style="display: flex; gap: 0.65rem; align-items: start;">
-                  <span style="color: var(--sage); font-weight: bold; font-size: 1rem; line-height: 1.2;">✓</span>
-                  <span><strong>Complimentary Amenities:</strong> Free hot black coffee and filtered water always available.</span>
-                </li>
-                <li style="display: flex; gap: 0.65rem; align-items: start;">
-                  <span style="color: var(--sage); font-weight: bold; font-size: 1rem; line-height: 1.2;">✓</span>
-                  <span><strong>100% Class Credits:</strong> Your entire $45 monthly dues apply as credit toward any class. <span style="font-size: 0.82rem; font-style: italic; color: var(--muted); display: block; margin-top: 0.2rem;">(Note: Beginning in 2027, monthly class credits will become "use it or lose it" for that month).</span></span>
-                </li>
-              </ul>
-            </div>
-
-            <div style="margin-top: 1rem;">
-              <button onclick="purchaseMembership()" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.25rem; background: #FAF8F5; border: 1.5px solid var(--sage); border-radius: 8px; color: var(--sage-deep); font-weight: 600; font-family: var(--font-body); font-size: 0.95rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(78,90,65,0.03);">
-                <div>
-                  <div style="font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; color: var(--sage-deep);">Purchase Studio Membership</div>
-                  <div style="font-size: 0.82rem; color: var(--ink-soft); font-family: var(--font-body); margin-top: 0.15rem; font-weight: normal;">Studio opens 8/1 — memberships begin 8/1</div>
-                </div>
-                <span style="font-size: 1.25rem; font-weight: bold; color: var(--sage); flex-shrink: 0; margin-left: 0.75rem;">→</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- REMOVED INTEREST FORM FROM INDEX.HTML — NOW LOCATED ON DEDICATED PAGE interest.html -->
-
-
-
-
-
-  <!-- =========================================================
-       GUEST CHECKOUT MODAL
-       ========================================================= -->
+  <!-- CHECKOUT MODAL -->
   <div class="modal-backdrop" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal">
       <div class="modal-header">
         <div>
-          <div class="modal-title" id="modalTitle">Book your session</div>
-          <div class="modal-subtitle" id="modalSubtitle"></div>
+          <div class="modal-title-text" id="modalTitle">Book your session</div>
+          <div class="modal-subtitle-text" id="modalSubtitle"></div>
         </div>
         <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
       </div>
@@ -2530,23 +983,21 @@
     </div>
   </div>
 
-  <!-- =========================================================
-       FOOTER
-       ========================================================= -->
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="wordmark-lg">The Hobbiest</div>
+          <div class="footer-wordmark">The Hobbiest</div>
           <p>A private members skills club for adults. Opening July 2026 in downtown Pittston, PA.</p>
         </div>
         <div>
           <h4>Visit</h4>
-          <p>135 N. Main Street<br />Pittston, PA 18640<br /><br /><a href="tel:+15703546189">(570) 354-6189</a><br />Wyoming Valley · NEPA</p>
+          <p>135 N. Main Street<br>Pittston, PA 18640<br><br><a href="tel:+15703546189">(570) 354-6189</a><br>Wyoming Valley · NEPA</p>
         </div>
         <div>
           <h4>Contact</h4>
-          <div class="stack">
+          <div class="footer-stack">
             <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
             <a href="#" rel="noopener">Instagram</a>
             <a href="#" rel="noopener">Facebook</a>
@@ -2557,30 +1008,53 @@
         <span>© 2026 The Hobbiest Skills Club</span>
         <div class="footer-legal">
           <a href="gift.html">Give a Gift</a>
-          <span class="footer-divider">·</span>
+          <span class="footer-sep">·</span>
           <a href="waiver.html">Waiver &amp; Policies</a>
-          <span class="footer-divider">·</span>
+          <span class="footer-sep">·</span>
           <a href="privacy.html">Privacy Policy</a>
-          <span class="footer-divider">·</span>
+          <span class="footer-sep">·</span>
           <a href="terms.html">Terms of Service</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- =========================================================
-       LIGHTBOX (for the photos)
-       ========================================================= -->
+  <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo">×</button>
-    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close photo">×</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="" />
   </div>
 
   <script>
-    // ============================================================
-    // REVEAL ON SCROLL
-    // ============================================================
-    const reveals = document.querySelectorAll('[data-reveal]');
+    /* ============================================================
+       NAV TOGGLE
+       ============================================================ */
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      navToggle.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', open);
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.sticky-nav')) {
+        navLinks.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+    // Close on link click (mobile)
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    /* ============================================================
+       REVEAL ON SCROLL
+       ============================================================ */
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) {
@@ -2588,204 +1062,81 @@
           io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-    reveals.forEach((r) => io.observe(r));
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(r => io.observe(r));
 
-    // ============================================================
-    // LIGHTBOX for space photos
-    // Each .space-photo has a data-src; clicking opens it.
-    // ============================================================
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxClose = document.getElementById('lightbox-close');
-
+    /* ============================================================
+       LIGHTBOX
+       ============================================================ */
+    const lightbox    = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
     document.querySelectorAll('.space-photo').forEach((el) => {
       el.addEventListener('click', () => {
         const src = el.getAttribute('data-src');
-        const caption = el.getAttribute('data-caption') || '';
         if (!src) return;
-        // Only open if the photo actually exists (will fall back gracefully)
         const test = new Image();
         test.onload = () => {
           lightboxImg.src = src;
-          lightboxImg.alt = caption;
+          lightboxImg.alt = el.getAttribute('data-caption') || '';
           lightbox.classList.add('is-open');
           document.body.style.overflow = 'hidden';
-        };
-        test.onerror = () => {
-          // No image yet — do nothing (placeholders remain visible)
         };
         test.src = src;
       });
     });
-
-    const closeLightbox = () => {
-      lightbox.classList.remove('is-open');
-      document.body.style.overflow = '';
-    };
+    const closeLightbox = () => { lightbox.classList.remove('is-open'); document.body.style.overflow = ''; };
     lightboxClose.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) closeLightbox();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeLightbox();
-    });
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 
-    // ============================================================
-    // EMAIL CAPTURE
-    // ============================================================
-    // Subscribe forms are handled by Beehiiv's embed scripts above.
-    // Signups flow directly to your Beehiiv publication and trigger
-    // the welcome automation. No additional JS needed here.
-
-    // ============================================================
-    // PURCHASE WIDGET
-    // ============================================================
+    /* ============================================================
+       STRIPE / SUPABASE
+       ============================================================ */
     const SUPABASE_URL      = 'https://uprdczhhgwzfypkudqjg.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ';
     const STRIPE_PK         = 'pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS';
 
-    const _esc = s => { const d = document.createElement('div'); d.textContent = (s == null ? '' : s); return d.innerHTML; };
-    const _money    = cents => '$' + Math.round(cents / 100);
+    const _money = cents => '$' + Math.round(cents / 100);
     const _sessionPrice = c => c.session_price_cents || Math.round((c.price_cents || 0) / (c.weeks || 1));
-    const _fmtDate  = d => d.toLocaleDateString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric' });
     const _fmtDateLong = d => d.toLocaleDateString('en-US', { timeZone: 'America/New_York', weekday: 'long', month: 'long', day: 'numeric' });
-
     function _sessionDates(c) {
       const dates = [], base = new Date(c.starts_at);
       for (let i = 0; i < (c.weeks || 1); i++)
         dates.push(new Date(base.getTime() + i * 7 * 24 * 60 * 60 * 1000));
       return dates;
     }
-
     let _pwClasses = [];
     let _stripe = null, _embeddedCheckout = null;
 
     async function _loadClasses() {
       try {
-        const url = SUPABASE_URL + '/rest/v1/classes' +
-          '?select=id,name,starts_at,price_cents,session_price_cents,weeks,instructor&is_published=eq.true&order=starts_at.asc';
-        const res = await fetch(url, {
-          headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
-        });
+        const res = await fetch(
+          SUPABASE_URL + '/rest/v1/classes?select=id,name,starts_at,price_cents,session_price_cents,weeks,instructor&is_published=eq.true&order=starts_at.asc',
+          { headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY } }
+        );
         if (!res.ok) throw new Error('HTTP ' + res.status);
         _pwClasses = await res.json();
-
-        // Populate interestClass select dropdown
         const sel = document.getElementById('interestClass');
         if (sel) {
-          if (!_pwClasses.length) {
-            sel.innerHTML = '<option value="">No classes available yet</option>';
-            return;
-          }
-          sel.innerHTML = '<option value="">— choose a class —</option>' +
-            _pwClasses.map((c) => `<option value="${_esc(c.name)}">${_esc(c.name)}</option>`).join('') +
-            '<option value="Other">Other / Suggestion (tell us below)</option>';
+          sel.innerHTML = _pwClasses.length
+            ? '<option value="">— choose a class —</option>' + _pwClasses.map(c => `<option value="${c.name}">${c.name}</option>`).join('') + '<option value="Other">Other / Suggestion</option>'
+            : '<option value="">No classes available yet</option>';
         }
-      } catch (e) {
-        console.error('Widget class load failed:', e);
-        const sel = document.getElementById('interestClass');
-        if (sel) sel.innerHTML = '<option value="">Couldn\'t load classes</option>';
+      } catch(e) {
+        console.error('Class load failed:', e);
       }
-    }
-
-    function pwOnClassChange() {
-      const idx    = document.getElementById('pwClass').value;
-      const optSel = document.getElementById('pwOption');
-      const priceEl = document.getElementById('pwPrice');
-      const btn    = document.getElementById('pwBtn');
-
-      if (idx === '') {
-        optSel.innerHTML = '<option value="">— then pick an option —</option>';
-        optSel.disabled = true;
-        priceEl.textContent = '—'; priceEl.classList.add('dim');
-        btn.disabled = true;
-        return;
-      }
-
-      const c     = _pwClasses[parseInt(idx)];
-      const weeks = c.weeks || 1;
-      const perSession = _sessionPrice(c);
-      const dates = _sessionDates(c);
-
-      let opts = '<option value="">— pick a session or course —</option>';
-      dates.forEach((d, i) => {
-        opts += `<option value="session:${i}">${_fmtDate(d)} · Starter session — ${_money(perSession)}</option>`;
-      });
-      opts += `<option value="full">Full course (all ${weeks} sessions) — ${_money(c.price_cents)}</option>`;
-
-      optSel.innerHTML = opts;
-      optSel.disabled = false;
-      priceEl.textContent = '—'; priceEl.classList.add('dim');
-      btn.disabled = true;
-    }
-
-    function pwOnOptionChange() {
-      const classIdx = document.getElementById('pwClass').value;
-      const optVal   = document.getElementById('pwOption').value;
-      const priceEl  = document.getElementById('pwPrice');
-      const btn      = document.getElementById('pwBtn');
-
-      if (!classIdx || !optVal) {
-        priceEl.textContent = '—'; priceEl.classList.add('dim');
-        btn.disabled = true;
-        return;
-      }
-
-      const c     = _pwClasses[parseInt(classIdx)];
-      const weeks = c.weeks || 1;
-      priceEl.textContent = optVal === 'full'
-        ? _money(c.price_cents)
-        : _money(_sessionPrice(c));
-      priceEl.classList.remove('dim');
-      btn.disabled = false;
-    }
-
-    async function pwCheckout() {
-      const classIdx = document.getElementById('pwClass').value;
-      const optVal   = document.getElementById('pwOption').value;
-      if (!classIdx || !optVal) return;
-
-      const c   = _pwClasses[parseInt(classIdx)];
-      const btn = document.getElementById('pwBtn');
-      btn.disabled = true;
-      btn.textContent = 'Opening…';
-
-      if (optVal === 'full') {
-        sessionStorage.setItem('pwIntent', JSON.stringify({ class_id: c.id, type: 'full' }));
-        window.location.href = 'login.html?next=schedule.html';
-        return;
-      }
-
-      const sessionIndex = parseInt(optVal.split(':')[1]);
-      const weeks        = c.weeks || 1;
-      const perSession   = _sessionPrice(c);
-      const dates        = _sessionDates(c);
-
-      document.getElementById('modalTitle').textContent      = 'Book your session';
-      document.getElementById('modalSubtitle').textContent   = c.name;
-      document.getElementById('modalClassName').textContent  = c.name;
-      document.getElementById('modalSessionMeta').textContent =
-        'Starter session · ' + _fmtDateLong(dates[sessionIndex]);
-      document.getElementById('modalPrice').textContent      = _money(perSession);
-
-      await _openCheckout(c.id, sessionIndex);
-
-      btn.disabled = false;
-      btn.textContent = 'Pay now →';
     }
 
     async function _openCheckout(classId, sessionIndex) {
       const modal     = document.getElementById('checkoutModal');
       const embedEl   = document.getElementById('checkout-embed');
       const successEl = document.getElementById('modalSuccess');
-
-      embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:var(--muted);padding:1rem 0">Preparing checkout…</p>';
+      embedEl.innerHTML = '<p style="font-family:var(--font-d);font-style:italic;color:var(--muted);padding:1rem 0">Preparing checkout…</p>';
       successEl.classList.remove('show');
       document.getElementById('modalSummary').style.display = 'flex';
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
-
       try {
         const res = await fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
           method: 'POST',
@@ -2794,15 +1145,13 @@
         });
         const data = await res.json();
         if (!res.ok || !data.clientSecret) throw new Error(data.error || 'Checkout failed');
-
         if (!_stripe) _stripe = Stripe(STRIPE_PK);
         if (_embeddedCheckout) { _embeddedCheckout.destroy(); _embeddedCheckout = null; }
-
         _embeddedCheckout = await _stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
         embedEl.innerHTML = '';
         _embeddedCheckout.mount('#checkout-embed');
-      } catch (err) {
-        embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:#c04;">Couldn\'t start checkout — please try again or <a href="login.html">log in</a>.</p>';
+      } catch(err) {
+        embedEl.innerHTML = '<p style="font-family:var(--font-d);font-style:italic;color:#c04;">Couldn\'t start checkout — please try again or <a href="login.html">log in</a>.</p>';
         console.error('Checkout error:', err);
       }
     }
@@ -2813,117 +1162,25 @@
       if (_embeddedCheckout) { _embeddedCheckout.destroy(); _embeddedCheckout = null; }
       document.getElementById('checkout-embed').innerHTML = '';
     }
-
     document.getElementById('checkoutModal').addEventListener('click', function(e) {
       if (e.target === this) closeModal();
     });
-
-    // Handle Stripe return redirect
-    (function() {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('status') === 'complete') {
-        const modal     = document.getElementById('checkoutModal');
-        const successEl = document.getElementById('modalSuccess');
-        document.getElementById('checkout-embed').innerHTML = '';
-        document.getElementById('modalSummary').style.display = 'none';
-        successEl.classList.add('show');
-        modal.classList.add('open');
-        history.replaceState({}, '', window.location.pathname);
-      }
-    })();
-
-    async function submitInterest(e) {
-      e.preventDefault();
-      const btn = document.getElementById('interestSubmitBtn');
-      const msg = document.getElementById('interestMsg');
-      const originalText = btn.textContent;
-      
-      btn.disabled = true;
-      btn.textContent = 'Submitting...';
-      msg.className = 'form-msg';
-      msg.style.display = 'none';
-
-      const firstName = document.getElementById('interestFirstName').value.trim();
-      const lastName = document.getElementById('interestLastName').value.trim();
-      const email = document.getElementById('interestEmail').value.trim();
-      const phone = document.getElementById('interestPhone').value.trim();
-      
-      const interestClass = Array.from(document.querySelectorAll('input[name="interestClasses"]:checked')).map(cb => cb.value).join(', ');
-      const suggestions = document.getElementById('interestSuggestion').value.trim();
-      const availability = Array.from(document.querySelectorAll('input[name="interestAvail"]:checked')).map(cb => cb.value).join(', ');
-
-      const SUPABASE_URL = "https://uprdczhhgwzfypkudqjg.supabase.co";
-      const SUPABASE_ANON_KEY = "sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ";
-      
-      try {
-        if (!window.supabase) {
-          throw new Error("Supabase is not loaded. Please try again.");
-        }
-        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // 1. Call submit-signup Edge Function
-        const { data, error } = await sb.functions.invoke("submit-signup", {
-          body: {
-            first_name: firstName,
-            last_name: lastName,
-            email: email,
-            phone: phone,
-            classes_of_interest: interestClass || "General Interest",
-            availability: availability,
-            notes: suggestions || "Self-registered via homepage Interest Form",
-            newsletter: true
-          }
-        });
-
-        if (error || data?.error) {
-          throw new Error(error?.message || data?.error);
-        }
-
-        // 2. Trigger Magic Link sign-in link creation so it registers them as a user in Supabase auth and emails them a login link!
-        const { error: otpError } = await sb.auth.signInWithOtp({
-          email,
-          options: { emailRedirectTo: window.location.origin + '/signup.html' }
-        });
-
-        if (otpError) {
-          throw otpError;
-        }
-
-        msg.className = 'form-msg ok';
-        msg.innerHTML = `<strong>Success!</strong> Account created for <strong>${email}</strong>.<br />We've emailed you a member login link! Click the link in your inbox to access the skills catalog.`;
-        document.getElementById('interestForm').reset();
-      } catch (err) {
-        console.error("Interest form error:", err);
-        msg.className = 'form-msg err';
-        msg.textContent = err.message || "An unexpected error occurred. Please try again.";
-      } finally {
-        btn.disabled = false;
-        btn.textContent = originalText;
-      }
-    }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
     async function purchaseMembership() {
       const modal     = document.getElementById('checkoutModal');
       const embedEl   = document.getElementById('checkout-embed');
       const successEl = document.getElementById('modalSuccess');
-
-      if (!modal || !embedEl) {
-        window.location.href = 'login.html?intent=membership';
-        return;
-      }
-
       document.getElementById('modalTitle').textContent      = 'Studio Membership';
       document.getElementById('modalSubtitle').textContent   = 'The Hobbiest Skills Club';
       document.getElementById('modalClassName').textContent  = 'Studio Membership ($45/month)';
       document.getElementById('modalSessionMeta').textContent = 'Studio opens 8/1 — memberships begin 8/1';
       document.getElementById('modalPrice').textContent      = '$45/mo';
-
-      embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:var(--muted);padding:1rem 0;text-align:center;">Preparing checkout…</p>';
+      embedEl.innerHTML = '<p style="font-family:var(--font-d);font-style:italic;color:var(--muted);padding:1rem 0;text-align:center">Preparing checkout…</p>';
       successEl.classList.remove('show');
       document.getElementById('modalSummary').style.display = 'flex';
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
-
       try {
         const res = await fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
           method: 'POST',
@@ -2932,21 +1189,30 @@
         });
         const data = await res.json();
         if (!res.ok || !data.clientSecret) throw new Error(data.error || 'Checkout failed');
-
         if (!_stripe) _stripe = Stripe(STRIPE_PK);
         if (_embeddedCheckout) { _embeddedCheckout.destroy(); _embeddedCheckout = null; }
-
         _embeddedCheckout = await _stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
         embedEl.innerHTML = '';
         _embeddedCheckout.mount('#checkout-embed');
-      } catch (err) {
+      } catch(err) {
         sessionStorage.setItem('pwIntent', JSON.stringify({ type: 'membership', price_cents: 4500, title: 'Studio Membership' }));
-        embedEl.innerHTML = '<div style="font-family:var(--font-display);font-style:italic;color:var(--sage-deep);padding:1.5rem 0;text-align:center;"><p style="font-size:1.1rem;margin-bottom:0.75rem;">Opening member sign in to complete your Studio Membership…</p><p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem;">Studio opens 8/1 — memberships begin 8/1.</p><a href="login.html?intent=membership" style="display:inline-block;padding:0.75rem 1.5rem;background:var(--sage);color:#FAF7F0;text-decoration:none;border-radius:4px;font-family:var(--font-body);font-style:normal;font-weight:600;">Continue to Sign In &amp; Checkout →</a></div>';
-        setTimeout(() => {
-          window.location.href = 'login.html?intent=membership';
-        }, 1800);
+        embedEl.innerHTML = '<div style="font-family:var(--font-d);font-style:italic;color:var(--sage-deep);padding:1.5rem 0;text-align:center"><p style="font-size:1.05rem;margin-bottom:0.75rem">Redirecting to member sign-in to complete checkout…</p><a href="login.html?intent=membership" style="display:inline-block;padding:0.75rem 1.5rem;background:var(--sage);color:#FAF7F0;text-decoration:none;border-radius:4px;font-family:var(--font-b);font-style:normal;font-weight:600">Continue to sign in →</a></div>';
+        setTimeout(() => { window.location.href = 'login.html?intent=membership'; }, 1800);
       }
     }
+
+    // Handle Stripe return redirect
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('status') === 'complete') {
+        const modal = document.getElementById('checkoutModal');
+        document.getElementById('checkout-embed').innerHTML = '';
+        document.getElementById('modalSummary').style.display = 'none';
+        document.getElementById('modalSuccess').classList.add('show');
+        modal.classList.add('open');
+        history.replaceState({}, '', window.location.pathname);
+      }
+    })();
 
     _loadClasses();
   </script>

@@ -4,28 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#7A8A6B" />
-
   <title>Current Curriculum — The Hobbiest</title>
   <meta name="description" content="Current curriculum options for The Hobbiest. Single 2-hour sessions in Pittston, PA." />
-
-  <!-- Open Graph -->
   <meta property="og:title" content="Current Curriculum — The Hobbiest" />
   <meta property="og:description" content="Summer 2026 curriculum options for The Hobbiest in Pittston, PA." />
   <meta property="og:type" content="website" />
-
-  <!-- Favicon -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-
-  <!-- Fonts: Fraunces (display) + DM Sans (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght9..40,300..600&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
   <script src="https://js.stripe.com/v3/"></script>
   <style>
-    /* ============================================================
-       DESIGN TOKENS — SAGE + CREAM (matches index.html exactly)
-       ============================================================ */
     :root {
       --bg:        #F1ECDF;
       --bg-warm:   #EAE3D2;
@@ -34,1860 +23,346 @@
       --ink-soft:  #6B7459;
       --muted:     #8A8170;
       --hairline:  #D9D2BE;
-
       --sage:      #7A8A6B;
       --sage-deep: #4E5A41;
       --sage-pale: #B5BFA8;
-      --taupe:     #A89878;
-
-      --font-display: "Fraunces", "Times New Roman", serif;
-      --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-
-      --max-w:    1280px;
-      --gutter:   clamp(1.25rem, 4vw, 3rem);
-      --section-y: clamp(4rem, 9vw, 8rem);
-
+      --font-d: "Fraunces", "Times New Roman", serif;
+      --font-b: "DM Sans", -apple-system, sans-serif;
+      --max-w: 1200px;
+      --gutter: clamp(1.25rem, 4vw, 3rem);
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
-
-    /* ============================================================
-       RESET + BASE
-       ============================================================ */
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: var(--font-display);
+      font-family: var(--font-d);
       font-size: 16px;
       line-height: 1.6;
       color: var(--ink);
       background: var(--bg);
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
     img { max-width: 100%; height: auto; display: block; }
-    button, input, textarea, select { font-family: var(--font-body); }
+    button, input, select, textarea { font-family: var(--font-b); }
     a { color: inherit; }
-    /* Keep small UI text (nav, eyebrows, rail links) in sans for crisp uppercase tracking */
-    .nav-link, .eyebrow, .rail-link, .rail-eyebrow { font-family: var(--font-body); }
-
-    h1, h2, h3, h4 {
-      font-family: var(--font-display);
-      font-weight: 400;
-      line-height: 1.05;
-      letter-spacing: -0.015em;
-      margin: 0;
-      font-variation-settings: "opsz" 100;
-    }
-
+    h1, h2, h3, h4 { font-family: var(--font-d); font-weight: 400; line-height: 1.05; letter-spacing: -0.015em; margin: 0; font-variation-settings: "opsz" 100; }
     p { margin: 0; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
 
-    .container {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding-left: var(--gutter);
-      padding-right: var(--gutter);
-    }
-
-    /* ============================================================
-       TOP HEADER BAR (Row 1) & SUBNAV STRIP (Row 2)
-       ============================================================ */
-    .top-header-bar {
-      background: var(--bg);
-      padding: 1.1rem 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .top-header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .top-header-link {
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 600;
-      text-decoration: none;
-      position: relative;
-      transition: color 0.2s;
-    }
-    .top-header-link:hover {
-      color: var(--sage-deep);
-    }
-    .top-header-link.active {
-      color: var(--sage-deep);
-      font-weight: 700;
-    }
-    .top-header-link.active::after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--sage-deep);
-    }
-
-    /* SUBNAV STRIP (EXACT MATCH TO ANNOTATED USER SCREENSHOT) */
-    .subnav-strip {
-      background: var(--surface, #FAF8F5);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      padding: 0.9rem 0;
-      position: relative;
-      z-index: 50;
-    }
-    .subnav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .subnav-group {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-    .subnav-divider {
-      width: 1px;
-      height: 34px;
-      background: var(--hairline);
-      flex-shrink: 0;
-    }
-
-    .subnav-link {
-      font-family: var(--font-body);
-      font-size: 0.76rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #666C5E;
-      font-weight: 600;
-      text-decoration: none;
-      line-height: 1.25;
-      transition: color 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .subnav-link:hover {
-      color: var(--sage-deep);
-    }
-    .subnav-link.active {
-      color: var(--sage-deep);
-      font-weight: 700;
-    }
-
-    .subnav-link-studio {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--sage-deep);
-      font-weight: 500;
-      font-variation-settings: 'opsz' 144;
-    }
-
-    /* IDENTICAL GREEN PURCHASE PILL BUTTON */
-    .btn-purchase-pill {
-      background: var(--sage-deep, #4E5A41) !important;
-      color: #FFFFFF !important;
-      padding: 0.6rem 1.4rem !important;
-      border-radius: 20px !important;
-      font-family: var(--font-body) !important;
-      font-size: 0.78rem !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.14em !important;
-      text-transform: uppercase !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 0.45rem !important;
-      border: none !important;
-      cursor: pointer !important;
-      box-shadow: 0 3px 10px rgba(78, 90, 65, 0.18);
-      transition: all 0.2s ease !important;
-      text-decoration: none !important;
-    }
-    .btn-purchase-pill:hover {
-      background: var(--sage, #7A8A6B) !important;
-      color: #FFFFFF !important;
-      transform: translateY(-1px);
-      box-shadow: 0 5px 14px rgba(78, 90, 65, 0.28);
-    }
-
-    @media (max-width: 900px) {
-      .subnav-inner {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .subnav-divider {
-        display: none;
-      }
-      .subnav-group {
-        gap: 1.25rem;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-    }
-
-    /* ============================================================
-       PAPER GRAIN (matches main site)
-       ============================================================ */
+    /* GRAIN */
     body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 100;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-      opacity: 0.55;
-      mix-blend-mode: multiply;
+      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      opacity: 0.5; mix-blend-mode: multiply;
     }
 
-    /* ============================================================
-       NAV (matches main site)
-       ============================================================ */
-    .header-wrap {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: var(--bg);
-      border-bottom: 1px solid var(--hairline);
+    /* CONTACT BAR */
+    .contact-bar { background: var(--sage-deep); color: rgba(241,236,223,0.7); font-family: var(--font-b); font-size: 0.7rem; letter-spacing: 0.06em; padding: 0.5rem 0; }
+    .contact-bar-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .contact-bar-items { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .contact-bar-item { display: flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
+    .contact-bar-item svg { width: 10px; height: 10px; opacity: 0.55; flex-shrink: 0; }
+    .contact-bar a { color: inherit; text-decoration: none; transition: color 0.2s; }
+    .contact-bar a:hover { color: var(--bg); }
+    @media (max-width: 640px) { .contact-bar-inner { justify-content: center; } .contact-bar-item:first-child { display: none; } }
+
+    /* STICKY NAV */
+    .sticky-nav { position: sticky; top: 0; z-index: 500; background: var(--surface); border-bottom: 1px solid var(--hairline); box-shadow: 0 2px 20px rgba(78,90,65,0.07); }
+    .sticky-nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1.5rem; position: relative; }
+    .wordmark { font-family: var(--font-d); font-size: 1.25rem; font-weight: 400; font-style: italic; color: var(--sage); text-decoration: none; letter-spacing: -0.01em; font-variation-settings: "opsz" 144; flex-shrink: 0; }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+    .nav-link { font-family: var(--font-b); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 600; text-decoration: none; padding: 0.45rem 0.75rem; border-radius: 4px; transition: color 0.2s var(--ease), background 0.2s var(--ease); white-space: nowrap; }
+    .nav-link:hover { color: var(--sage-deep); background: var(--bg-warm); }
+    .nav-link-active { color: var(--sage-deep); }
+    .nav-link-pill { background: var(--sage-deep); color: #fff !important; padding: 0.45rem 1rem; border-radius: 20px; font-family: var(--font-b); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none; transition: background 0.2s var(--ease), transform 0.15s var(--ease); white-space: nowrap; }
+    .nav-link-pill:hover { background: var(--sage); transform: translateY(-1px); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 0.5rem; cursor: pointer; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--sage-deep); transition: 0.2s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (max-width: 860px) {
+      .nav-toggle { display: flex; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; background: var(--surface); border-bottom: 1px solid var(--hairline); padding: 0.75rem var(--gutter) 1rem; gap: 0.25rem; box-shadow: 0 10px 30px rgba(78,90,65,0.12); }
+      .nav-links.open { display: flex; }
+      .nav-link { font-size: 0.82rem; padding: 0.7rem 0.75rem; }
+      .nav-link-pill { text-align: center; margin-top: 0.25rem; justify-content: center; }
     }
-    .contact-bar {
-      background: var(--sage-deep);
-      color: #FAF7F0;
-      padding: 0.4rem 0;
-      font-size: 0.78rem;
-      letter-spacing: 0.05em;
-    }
-    .contact-bar-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .contact-bar-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .contact-bar-item svg {
-      width: 14px;
-      height: 14px;
-      stroke: var(--sage-pale);
-    }
-    .contact-bar a {
-      color: #FAF7F0;
-      text-decoration: none;
-    }
-    .contact-bar a:hover {
-      text-decoration: underline;
-    }
-    .nav {
-      padding: 1.25rem 0;
-    }
-    .nav-inner {
+
+    /* PAGE HERO */
+    .page-hero { padding: clamp(3rem, 6vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem); border-bottom: 1px solid var(--hairline); background: var(--bg); }
+    .page-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 1.25rem; }
+    .page-eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--sage); }
+    .page-hero h1 { font-size: clamp(2.5rem, 5.5vw, 4.5rem); letter-spacing: -0.025em; font-weight: 350; font-variation-settings: "opsz" 144; color: var(--sage-deep); margin-bottom: 1rem; }
+    .page-hero h1 em { font-style: italic; color: var(--sage); }
+    .page-hero-lede { font-family: var(--font-d); font-size: clamp(1rem, 1.4vw, 1.2rem); line-height: 1.6; color: var(--ink-soft); font-weight: 350; max-width: 52ch; margin-bottom: 2rem; }
+
+    /* Purchase CTA bar in hero */
+    .hero-purchase-bar {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-    }
-    .wordmark {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      font-style: italic;
-      color: var(--sage);
-      text-decoration: none;
-      font-variation-settings: "opsz" 144;
-    }
-    .nav-links {
-      display: flex;
-      gap: 1.75rem;
-      align-items: center;
-    }
-    .nav-link {
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 500;
-      text-decoration: none;
-      transition: color 0.2s var(--ease);
-    }
-    .nav-link:hover, .nav-link-current {
-      color: var(--sage);
-    }
-    /* Nav dropdown (Purchase) */
-    .nav-item-dropdown {
-      position: relative;
-    }
-    .nav-dropdown-trigger {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      border: 0;
-      background: transparent;
-      padding: 0;
-      font-family: inherit;
-      font-size: inherit;
-      color: inherit;
-      cursor: pointer;
-      font-weight: 500;
-      text-transform: uppercase;
-    }
-    .nav-dropdown-arrow {
-      font-size: 0.85em;
-      transition: transform 0.2s var(--ease);
-      display: inline-block;
-    }
-    .nav-item-dropdown:hover .nav-dropdown-arrow,
-    .nav-item-dropdown:focus-within .nav-dropdown-arrow {
-      transform: rotate(180deg);
-    }
-    .nav-dropdown {
-      position: absolute;
-      top: calc(100% + 0.5rem);
-      right: 0;
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: 8px;
-      padding: 0.5rem 0;
-      min-width: 180px;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-6px);
-      transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), visibility 0.2s var(--ease);
-      box-shadow: 0 10px 32px rgba(78, 90, 65, 0.12);
-      z-index: 20;
-    }
-    .nav-item-dropdown:hover .nav-dropdown,
-    .nav-item-dropdown:focus-within .nav-dropdown {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-    .nav-dropdown-link {
-      display: block;
-      padding: 0.7rem 1.2rem;
-      font-size: 0.74rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 500;
-      text-decoration: none;
-      transition: color 0.2s var(--ease), background 0.2s var(--ease);
-    }
-    .nav-dropdown-link:hover {
-      color: var(--sage);
-      background: var(--bg);
-    }
-    .btn-nav-purchase {
-      background: var(--sage-deep, #4E5A41) !important;
-      color: #FFFFFF !important;
-      padding: 0.45rem 1rem !important;
-      border-radius: 20px !important;
-      font-weight: 600 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.08em !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 0.35rem !important;
-      border: none !important;
-      cursor: pointer !important;
-      transition: background 0.2s var(--ease), transform 0.2s var(--ease) !important;
-    }
-    .btn-nav-purchase:hover {
-      background: var(--sage, #7A8A6B) !important;
-      color: #FFFFFF !important;
-      transform: translateY(-1px);
-    }
-
-    @media (max-width: 640px) {
-      .nav-links { gap: 0.85rem; }
-      .nav-link { font-size: 0.65rem; letter-spacing: 0.12em; }
-    }
-
-    /* ============================================================
-       PAGE HERO
-       ============================================================ */
-    .page-hero {
-      padding: clamp(4rem, 8vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .page-hero-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(2rem, 6vw, 6rem);
-      align-items: end;
-    }
-    .page-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.72rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--sage);
-      font-weight: 600;
-      margin-bottom: 2rem;
-    }
-    .page-eyebrow::before {
-      content: "";
-      width: 32px;
-      height: 1px;
-      background: var(--sage);
-    }
-    .page-hero h1 {
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      letter-spacing: -0.025em;
-      font-weight: 350;
-      font-variation-settings: "opsz" 144;
-      color: var(--sage-deep);
-    }
-    .page-hero h1 em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--sage);
-    }
-    .page-hero-lede {
-      font-family: var(--font-display);
-      font-size: clamp(1.05rem, 1.5vw, 1.3rem);
-      line-height: 1.5;
-      color: var(--ink-soft);
-      font-weight: 350;
-      max-width: 44ch;
-    }
-    .page-hero-lede em {
-      font-style: italic;
-      color: var(--sage);
-    }
-    .course-pill-btn {
-      display: inline-block;
-      padding: 0.4rem 0.8rem;
-      background: var(--bg-warm);
-      border: 1px solid var(--hairline);
-      border-radius: 20px;
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--sage-deep);
-      text-decoration: none;
-      transition: all 0.2s var(--ease);
-    }
-    .course-pill-btn:hover {
-      background: var(--sage-deep);
-      color: #ffffff;
-      border-color: var(--sage-deep);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(78,90,65,0.15);
-    }
-
-    /* ============================================================
-       SECTION HELPERS
-       ============================================================ */
-    section { position: relative; }
-    .eyebrow {
-      font-size: 0.72rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--sage);
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      display: inline-block;
-    }
-    .h-section {
-      font-size: clamp(2rem, 4.5vw, 3.5rem);
-      max-width: 20ch;
-      letter-spacing: -0.02em;
-      color: var(--sage-deep);
-    }
-    .h-section em { font-style: italic; color: var(--sage); }
-
-    /* ============================================================
-       SCHEDULE LAYOUT — left rail nav + main content (2-column)
-       ============================================================ */
-    .schedule-layout {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: clamp(2rem, 5vw, 4.5rem);
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 clamp(1rem, 4vw, 2rem);
-    }
-
-    .schedule-rail {
-      position: relative;
-    }
-
-    .rail-nav {
-      position: sticky;
-      top: 6rem;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .rail-eyebrow {
-      font-size: 0.68rem;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      padding-left: 1.1rem;
-    }
-
-    .rail-link {
-      display: block;
-      padding: 0.85rem 0 0.85rem 1.1rem;
-      margin-left: -1px;
-      border-left: 1px solid var(--hairline);
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      font-weight: 500;
-      line-height: 1.4;
-      transition: color 0.25s var(--ease), border-color 0.25s var(--ease), padding-left 0.25s var(--ease);
-    }
-
-    .rail-link:hover {
-      color: var(--ink);
-      border-left-color: var(--sage-pale);
-    }
-
-    .rail-link.is-active {
-      color: var(--sage-deep);
-      border-left: 2px solid var(--sage-deep);
-      padding-left: calc(1.1rem - 1px);
-      font-weight: 600;
-    }
-
-    .rail-link-program {
-      margin-top: 1.25rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--hairline);
-      border-left-color: transparent;
-    }
-
-    .schedule-main {
-      min-width: 0; /* prevents grid overflow */
-    }
-
-    /* on the new layout, kill the inner container's horizontal padding
-       since the schedule-layout already provides container padding */
-    .schedule-main .container {
-      padding-left: 0;
-      padding-right: 0;
-      max-width: none;
-    }
-    /* Bundles section needs container padding restored so the
-       eyebrow/heading/lede aren't flush against the left edge */
-    .schedule-main .bundles .container {
-      padding-left: var(--gutter);
-      padding-right: var(--gutter);
-    }
-
-    /* Mobile: stack rail above content, horizontal scrolling chips */
-    @media (max-width: 880px) {
-      .schedule-layout {
-        grid-template-columns: 1fr;
-        gap: 0;
-      }
-      .schedule-rail {
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        background: rgba(241, 236, 223, 0.94);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border-bottom: 1px solid var(--hairline);
-        margin: 0 -1rem;
-        padding: 0 1rem;
-      }
-      .rail-eyebrow { display: none; }
-      .rail-nav {
-        position: static;
-        flex-direction: row;
-        gap: 0;
-        overflow-x: auto;
-        scrollbar-width: none;
-        padding: 0.5rem 0;
-      }
-      .rail-nav::-webkit-scrollbar { display: none; }
-      .rail-link {
-        flex-shrink: 0;
-        border-left: none;
-        border-bottom: 2px solid transparent;
-        padding: 0.6rem 0.9rem;
-        white-space: nowrap;
-        font-size: 0.75rem;
-      }
-      .rail-link.is-active {
-        border-left: none;
-        border-bottom: 2px solid var(--sage-deep);
-        padding-left: 0.9rem;
-      }
-      .rail-link-program {
-        margin-top: 0;
-        padding-top: 0.6rem;
-        border-top: none;
-        border-left: 1px solid var(--hairline);
-        margin-left: 0.5rem;
-        padding-left: 1.4rem;
-      }
-    }
-
-
-    /* ============================================================
-       RECOMMENDATIONS CALLOUT (above the form, also in hero area)
-       ============================================================ */
-    .recommend-callout {
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-left: 3px solid var(--sage);
-      padding: 1.5rem 1.75rem;
-      border-radius: 4px;
-      margin-top: 2rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 1.1rem;
-      max-width: 560px;
-    }
-    .recommend-mark {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 2rem;
-      color: var(--sage);
-      line-height: 1;
-      flex-shrink: 0;
-      margin-top: -0.15rem;
-    }
-    .recommend-body p {
-      font-size: 0.96rem;
-      color: var(--ink-soft);
-      line-height: 1.55;
-    }
-    .recommend-body strong {
-      color: var(--sage-deep);
-      font-weight: 500;
-    }
-    .recommend-body a {
-      color: var(--sage);
-      text-decoration: none;
-      border-bottom: 1px solid var(--sage-pale);
-      font-weight: 500;
-      transition: border-color 0.2s var(--ease);
-    }
-    .recommend-body a:hover {
-      border-bottom-color: var(--sage);
-    }
-
-    /* ============================================================
-       HOW IT WORKS STRIP
-       ============================================================ */
-    .how-strip {
-      padding: clamp(3rem, 6vw, 5rem) 0;
-      background: var(--bg-warm);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .how-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: clamp(1.5rem, 4vw, 3rem);
-    }
-    .how-item {
-      position: relative;
-    }
-    .how-num {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--sage);
-      margin-bottom: 0.75rem;
-      letter-spacing: 0.05em;
-    }
-    .how-item h3 {
-      font-size: 1.5rem;
-      color: var(--sage-deep);
-      margin-bottom: 0.6rem;
-    }
-    .how-item h3 em { font-style: italic; color: var(--sage); }
-    .how-item p {
-      color: var(--ink-soft);
-      font-size: 0.98rem;
-      line-height: 1.65;
-    }
-
-    /* ============================================================
-       CATEGORY SECTIONS
-       ============================================================ */
-    .category-section {
-      padding: clamp(3rem, 6vw, 5rem) 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .category-header {
-      display: grid;
-      grid-template-columns: 1fr 1.5fr;
-      gap: clamp(2rem, 5vw, 4rem);
-      margin-bottom: 3rem;
-      align-items: end;
-    }
-    .category-title {
-      font-size: clamp(1.85rem, 3.5vw, 2.75rem);
-      color: var(--sage-deep);
-      letter-spacing: -0.02em;
-    }
-    .category-title em { font-style: italic; color: var(--sage); }
-    .category-desc {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1.05rem;
-      color: var(--muted);
-      line-height: 1.5;
-      max-width: 50ch;
-    }
-
-    /* ============================================================
-       CLASS CARDS — vertical accordion list
-       ============================================================ */
-    .class-grid {
-      display: flex;
-      flex-direction: column;
-      border-top: 1px solid var(--hairline);
-    }
-    .class-card {
-      border-bottom: 1px solid var(--hairline);
-      background: transparent;
-      transition: background 0.25s var(--ease);
-      position: relative;
-    }
-    .class-card:hover {
-      background: var(--surface);
-    }
-
-    /* Hide native disclosure marker */
-    .class-summary { list-style: none; cursor: pointer; outline: none; }
-    .class-summary::-webkit-details-marker { display: none; }
-    .class-summary::marker { display: none; content: ""; }
-
-    .class-summary {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: clamp(1rem, 3vw, 2.5rem);
-      align-items: center;
-      padding: 1.4rem 1.5rem 1.4rem 0.5rem;
-    }
-    .class-summary-main {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      min-width: 0;
-    }
-    .class-format {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.82rem;
-      color: var(--sage);
-      letter-spacing: 0.02em;
-      margin: 0;
-    }
-    .class-card h4 {
-      font-family: var(--font-display);
-      font-size: clamp(1.2rem, 2.3vw, 1.5rem);
-      color: var(--sage-deep);
-      font-weight: 400;
-      margin: 0;
-      line-height: 1.15;
-      letter-spacing: -0.01em;
-    }
-    .class-price {
-      font-family: var(--font-display);
-      font-size: clamp(1.2rem, 2.2vw, 1.5rem);
-      color: var(--sage-deep);
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      white-space: nowrap;
-    }
-    .class-chevron {
-      font-family: var(--font-body);
-      font-size: 1.5rem;
-      font-weight: 300;
-      color: var(--muted);
-      width: 1.5rem;
-      height: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.3s var(--ease), color 0.25s var(--ease);
-      flex-shrink: 0;
-    }
-    .class-summary:hover .class-chevron {
-      color: var(--sage-deep);
-    }
-    .class-details-wrap[open] > .class-summary .class-chevron {
-      transform: rotate(45deg);
-      color: var(--sage-deep);
-    }
-    .class-details-body {
-      padding: 0 1.5rem 1.75rem 0.5rem;
-      max-width: 60ch;
-      animation: classDetailsFade 0.3s var(--ease) both;
-    }
-    @keyframes classDetailsFade {
-      from { opacity: 0; transform: translateY(-4px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .class-desc {
-      font-size: 0.98rem;
-      color: var(--ink-soft);
-      line-height: 1.7;
-      margin: 0 0 0.85rem;
-    }
-    .class-price-note {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-    .class-instructor {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.9rem;
-      color: var(--sage);
-      margin: 0 0 0.5rem;
-    }
-
-    @media (max-width: 700px) {
-      .class-summary {
-        grid-template-columns: 1fr auto;
-        gap: 0.75rem;
-        padding: 1.2rem 1rem 1.2rem 0.25rem;
-      }
-      .class-price {
-        grid-column: 1 / 2;
-        font-size: 1.1rem;
-      }
-      .class-chevron {
-        grid-column: 2;
-        grid-row: 1 / 3;
-      }
-      .class-details-body {
-        padding: 0 1rem 1.5rem 0.25rem;
-      }
-    }
-
-
-    /* ============================================================
-       BUNDLES SECTION
-       ============================================================ */
-    .bundles {
-      background: var(--sage);
-      color: var(--bg);
-      padding: clamp(4rem, 8vw, 6.5rem) 0;
-      position: relative;
-      overflow: hidden;
-    }
-    .bundles::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 50%;
-      width: 1px;
-      height: 80px;
-      background: var(--sage-pale);
-      opacity: 0.6;
-    }
-    .bundles .eyebrow { color: var(--sage-pale); }
-    .bundles .h-section { color: var(--bg); }
-    .bundles .h-section em { color: var(--sage-pale); font-style: italic; }
-    .bundles-lede {
-      font-family: var(--font-display);
-      font-size: clamp(1.15rem, 1.7vw, 1.4rem);
-      line-height: 1.5;
-      color: rgba(241, 236, 223, 0.88);
-      max-width: 58ch;
-      margin-top: 1.75rem;
-      font-weight: 350;
-    }
-
-    .bundle-grid {
-      margin-top: 4rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1.5rem;
-    }
-    .bundle-card {
-      background: rgba(241, 236, 223, 0.06);
-      border: 1px solid rgba(241, 236, 223, 0.25);
-      padding: 2.25rem;
-      border-radius: 4px;
-      position: relative;
-      transition: background 0.3s var(--ease), transform 0.3s var(--ease);
-      display: flex;
-      flex-direction: column;
-    }
-    .bundle-card:hover {
-      background: rgba(241, 236, 223, 0.1);
-      transform: translateY(-2px);
-    }
-    .bundle-tag {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.85rem;
-      color: var(--sage-pale);
-      margin-bottom: 0.8rem;
-    }
-    .bundle-card h4 {
-      font-size: 1.65rem;
-      color: var(--bg);
-      letter-spacing: -0.01em;
-      margin-bottom: 0.85rem;
-    }
-    .bundle-card h4 em { font-style: italic; color: var(--sage-pale); }
-    .bundle-format {
-      font-size: 0.78rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(241, 236, 223, 0.65);
-      margin-bottom: 1.4rem;
-      font-weight: 500;
-    }
-    .bundle-includes-label {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.9rem;
-      color: var(--sage-pale);
-      margin-bottom: 0.7rem;
-    }
-    .bundle-list {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 1.5rem 0;
-      flex: 1;
-    }
-    .bundle-list li {
-      padding: 0.5rem 0;
-      font-size: 0.95rem;
-      color: rgba(241, 236, 223, 0.88);
-      line-height: 1.5;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.7rem;
-      border-bottom: 1px solid rgba(241, 236, 223, 0.12);
-    }
-    .bundle-list li:last-child { border-bottom: none; }
-    .bundle-list li::before {
-      content: "—";
-      color: var(--sage-pale);
-      flex-shrink: 0;
-    }
-    .bundle-who {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.92rem;
-      color: rgba(241, 236, 223, 0.75);
-      margin-bottom: 1.5rem;
-      line-height: 1.5;
-    }
-    .bundle-footer {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      padding-top: 1.25rem;
-      border-top: 1px solid rgba(241, 236, 223, 0.25);
-    }
-    .bundle-price {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      color: var(--bg);
-      letter-spacing: -0.02em;
-    }
-    .bundle-savings {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.85rem;
-      color: var(--sage-pale);
-    }
-
-    /* ============================================================
-       FORM SECTION
-       ============================================================ */
-    .form-section {
-      padding: clamp(4rem, 8vw, 7rem) 0;
-      background: var(--bg);
-    }
-    .form-header {
-      max-width: 720px;
-      margin-bottom: 4rem;
-    }
-    .form-header .h-section {
-      max-width: 18ch;
-    }
-    .form-lede {
-      font-family: var(--font-display);
-      font-size: clamp(1.15rem, 1.9vw, 1.45rem);
-      line-height: 1.5;
-      color: var(--ink-soft);
-      max-width: 56ch;
-      margin-top: 1.5rem;
-      font-weight: 350;
-    }
-
-    .form {
-      max-width: 720px;
-    }
-    .form-block {
-      padding: 2rem 0 2.5rem;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .form-block:first-child { padding-top: 0; }
-    .form-block:last-of-type { border-bottom: none; }
-
-    .form-block-num {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--sage);
-      letter-spacing: 0.05em;
-      margin-bottom: 0.4rem;
-    }
-    .form-block-title {
-      font-family: var(--font-display);
-      font-size: 1.6rem;
-      color: var(--sage-deep);
-      margin-bottom: 0.4rem;
-      letter-spacing: -0.01em;
-    }
-    .form-block-title em { font-style: italic; color: var(--sage); }
-    .form-block-note {
-      font-family: var(--font-display);
-      font-style: italic;
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.5;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .form-field label {
-      display: block;
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.6rem;
-      font-weight: 500;
-    }
-    .form-field input,
-    .form-field select,
-    .form-field textarea {
-      width: 100%;
-      padding: 0.85rem 1rem;
-      font-size: 0.98rem;
-      border: 1px solid var(--hairline);
-      background: var(--surface);
-      color: var(--ink);
-      border-radius: 4px;
-      outline: none;
-      transition: border-color 0.2s var(--ease);
-      font-family: inherit;
-    }
-    .form-field input:focus,
-    .form-field select:focus,
-    .form-field textarea:focus {
-      border-color: var(--sage);
-    }
-    .form-field textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    /* Checkbox / Radio grids */
-    .check-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 0.5rem 1.25rem;
-    }
-    .check-grid-narrow {
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    }
-
-    .check-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.7rem;
-      padding: 0.7rem 0;
-      cursor: pointer;
-      line-height: 1.45;
-    }
-    .check-item input[type="checkbox"],
-    .check-item input[type="radio"] {
-      margin: 0.2rem 0 0 0;
-      flex-shrink: 0;
-      width: 16px;
-      height: 16px;
-      accent-color: var(--sage);
-      cursor: pointer;
-    }
-    .check-item-text {
-      font-size: 0.95rem;
-      color: var(--ink);
-    }
-    .check-item-text .meta {
-      display: block;
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-top: 0.15rem;
-    }
-    .check-item:hover .check-item-text {
-      color: var(--sage-deep);
-    }
-
-    .stacked-radio .check-item {
-      padding: 0.55rem 0;
-    }
-
-    /* ============================================================
-       AVAILABILITY MATRIX — days × times grid
-       ============================================================ */
-    .matrix-wrap {
-      margin-top: 0.5rem;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      background: var(--surface);
-    }
-    .matrix {
-      width: 100%;
-      min-width: 640px;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-    }
-    .matrix th,
-    .matrix td {
-      padding: 0;
-      text-align: center;
-      vertical-align: middle;
-      border-right: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .matrix th:last-child,
-    .matrix td:last-child { border-right: none; }
-    .matrix tr:last-child td { border-bottom: none; }
-
-    .matrix thead th {
-      background: var(--bg-warm);
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-style: italic;
-      color: var(--sage-deep);
-      font-size: 0.95rem;
-      padding: 0.8rem 0.3rem;
-      letter-spacing: -0.005em;
-    }
-    .matrix thead th.matrix-corner {
-      background: var(--surface);
-      width: 130px;
-      font-style: normal;
-      font-family: var(--font-body);
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 500;
-    }
-    .matrix tbody th {
-      background: var(--bg-warm);
-      padding: 0.6rem 0.85rem;
-      text-align: left;
-      font-family: var(--font-body);
-      font-weight: 500;
-      color: var(--sage-deep);
-      font-size: 0.88rem;
-      line-height: 1.3;
-      width: 130px;
-    }
-    .matrix tbody th .matrix-time-range {
-      display: block;
-      font-family: var(--font-display);
-      font-style: italic;
-      font-weight: 400;
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-top: 0.15rem;
-    }
-    .matrix td {
-      position: relative;
-      transition: background 0.15s var(--ease);
-    }
-    .matrix td:hover {
-      background: var(--bg);
-    }
-    .matrix-cell-label {
-      display: block;
-      width: 100%;
-      height: 100%;
-      padding: 0.95rem 0.5rem;
-      cursor: pointer;
-      position: relative;
-    }
-    .matrix-cell-label input[type="checkbox"] {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-    .matrix-cell-box {
-      display: inline-block;
-      width: 18px;
-      height: 18px;
-      border: 1.5px solid var(--hairline);
-      border-radius: 3px;
-      background: var(--bg);
-      transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
-      position: relative;
-    }
-    .matrix-cell-label:hover .matrix-cell-box {
-      border-color: var(--sage);
-    }
-    .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box {
-      background: var(--sage);
-      border-color: var(--sage);
-    }
-    .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box::after {
-      content: "";
-      position: absolute;
-      left: 4px;
-      top: 0px;
-      width: 6px;
-      height: 11px;
-      border: solid var(--bg);
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg);
-    }
-    .matrix-cell-label:has(input:checked) {
-      background: rgba(122, 138, 107, 0.08);
-    }
-    .matrix-hint {
-      font-size: 0.78rem;
-      color: var(--muted);
-      font-style: italic;
-      margin-top: 0.75rem;
-      display: block;
-      font-family: var(--font-display);
-    }
-
-    /* Submit */
-    .form-submit-row {
-      padding-top: 2.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
     }
     .btn-primary {
-      padding: 1.05rem 2.25rem;
-      background: var(--sage);
-      color: var(--bg);
-      border: 1px solid var(--sage);
-      border-radius: 999px;
-      font-family: inherit;
-      font-size: 0.98rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      cursor: pointer;
-      transition: background 0.2s var(--ease), transform 0.2s var(--ease);
-    }
-    .btn-primary:hover { background: var(--sage-deep); border-color: var(--sage-deep); }
-    .btn-primary:active { transform: translateY(1px); }
-    .form-submit-note {
-      font-family: var(--font-display);
-      font-style: italic;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    /* Form thanks state */
-    .form-thanks {
-      display: none;
-      padding: 3rem;
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      text-align: center;
-    }
-    .form-thanks.active {
-      display: block;
-    }
-    .form-thanks h3 {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      color: var(--sage-deep);
-      margin-bottom: 1rem;
-    }
-    .form-thanks h3 em { font-style: italic; color: var(--sage); }
-    .form-thanks p {
-      color: var(--ink-soft);
-      line-height: 1.65;
-      max-width: 36ch;
-      margin: 0 auto;
-    }
-
-    /* ============================================================
-       SIGN-UP CTA SECTION
-       ============================================================ */
-    .signup-cta {
-      padding: clamp(4rem, 8vw, 6rem) 0;
-      background: var(--bg-warm);
-      text-align: center;
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .signup-cta .h-section {
-      max-width: 18ch;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .signup-cta-lede {
-      font-family: var(--font-display);
-      font-size: clamp(1.1rem, 1.6vw, 1.3rem);
-      line-height: 1.5;
-      color: var(--ink-soft);
-      max-width: 52ch;
-      margin: 1.5rem auto 2.5rem;
-      font-weight: 350;
-    }
-    .signup-cta-btn {
-      display: inline-block;
-      text-decoration: none;
-      font-size: 1rem;
-    }
-
-    /* ============================================================
-       FOOTER (matches main site)
-       ============================================================ */
-    footer {
-      background: var(--sage-deep);
-      color: rgba(241, 236, 223, 0.85);
-      padding: clamp(3rem, 6vw, 5rem) 0 2rem;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr;
-      gap: clamp(2rem, 5vw, 4rem);
-      margin-bottom: 3rem;
-    }
-    .footer-grid h4 {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      color: var(--bg);
-      margin-bottom: 1rem;
-      font-style: italic;
-      font-weight: 400;
-    }
-    .footer-grid p {
-      font-size: 0.92rem;
-      line-height: 1.65;
-      color: rgba(241, 236, 223, 0.7);
-    }
-    .footer-grid a {
-      display: block;
-      font-size: 0.92rem;
-      color: rgba(241, 236, 223, 0.75);
-      text-decoration: none;
-      margin-bottom: 0.5rem;
-      transition: color 0.2s var(--ease);
-    }
-    .footer-grid a:hover { color: var(--bg); }
-    .stack { display: flex; flex-direction: column; }
-    .wordmark-lg {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1.85rem;
-      color: var(--bg);
-      margin-bottom: 1rem;
-      font-variation-settings: "opsz" 144;
-    }
-    .footer-bottom {
-      padding-top: 2rem;
-      border-top: 1px solid rgba(241, 236, 223, 0.15);
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      font-size: 0.78rem;
-      letter-spacing: 0.05em;
-      color: rgba(241, 236, 223, 0.55);
-    }
-
-    /* ============================================================
-       RESPONSIVE
-       ============================================================ */
-    @media (max-width: 900px) {
-      .page-hero-inner,
-      .category-header { grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
-      .how-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    }
-
-    @media (max-width: 560px) {
-      .bundle-grid { grid-template-columns: 1fr; }
-    }
-  
-    /* === standardized nav (hamburger + active state) === */
-    .nav-inner { position: relative; }
-    .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 0.5rem; }
-    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--sage-deep); transition: transform 0.2s, opacity 0.2s; }
-    .nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
-    .nav-toggle.open span:nth-child(2){ opacity: 0; }
-    .nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
-    .nav-link-current { color: var(--sage-deep); }
-    .nav-link-current::after { content: ""; display: block; width: 100%; height: 1px; background: var(--sage); margin-top: 4px; }
-    @media (max-width: 760px) {
-      .nav-toggle { display: flex; }
-      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px; padding: 0.5rem; margin-top: 0.75rem; box-shadow: 0 18px 44px rgba(78,90,65,0.16); z-index: 50; }
-      .nav-links.open { display: flex; }
-      .nav-link { font-size: 0.9rem; letter-spacing: 0.12em; padding: 0.85rem 0.9rem; text-align: left; }
-      .nav-link-current::after { display: none; }
-      .nav-link-primary { text-align: center; margin-top: 0.4rem; }
-    }
-    /* === end standardized nav === */
-
-    .schedule-status {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1.15rem;
-      color: var(--muted);
-      padding: 2.5rem 0;
-    }
-    .schedule-status a { color: var(--sage); text-decoration: underline; }
-
-    /* ============================================================
-       PURCHASE WIDGET (hero)
-       ============================================================ */
-    .purchase-widget {
-      margin-top: 2.5rem;
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: 6px;
-      padding: 1.5rem 1.75rem 1.75rem;
-      max-width: 520px;
-    }
-    .purchase-widget-label {
-      font-family: var(--font-body);
-      font-size: 0.7rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--sage);
-      font-weight: 600;
-      margin-bottom: 1.1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .purchase-widget-label::before {
-      content: "";
-      display: inline-block;
-      width: 20px;
-      height: 1px;
-      background: var(--sage);
-    }
-    .purchase-widget-fields {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .pw-select-wrap {
-      position: relative;
-    }
-    .pw-select {
-      width: 100%;
-      padding: 0.85rem 2.5rem 0.85rem 1rem;
-      font-family: var(--font-display);
-      font-size: 1rem;
-      color: var(--ink);
-      background: var(--bg);
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      appearance: none;
-      -webkit-appearance: none;
-      cursor: pointer;
-      outline: none;
-      transition: border-color 0.2s var(--ease);
-      font-style: italic;
-    }
-    .pw-select:focus { border-color: var(--sage); }
-    .pw-select:disabled { opacity: 0.45; cursor: default; }
-    .pw-select option { font-style: normal; }
-    .pw-select-arrow {
-      position: absolute;
-      right: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      color: var(--muted);
-      font-size: 0.75rem;
-    }
-    .pw-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 1rem;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .pw-price-display {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      color: var(--sage-deep);
-      letter-spacing: -0.02em;
-      min-width: 4rem;
-      transition: opacity 0.2s;
-    }
-    .pw-price-display.dim { opacity: 0.3; }
-    .btn-pay-now {
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.8rem 1.75rem;
-      border-radius: 999px;
-      background: var(--sage);
-      color: var(--bg);
-      border: 1px solid var(--sage);
-      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.9rem 1.75rem; background: var(--sage-deep); color: #fff;
+      border: 1.5px solid var(--sage-deep); border-radius: 999px;
+      font-family: var(--font-b); font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
       transition: background 0.2s var(--ease), transform 0.15s var(--ease);
-      white-space: nowrap;
+      cursor: pointer; white-space: nowrap;
     }
-    .btn-pay-now:hover:not(:disabled) { background: var(--sage-deep); border-color: var(--sage-deep); }
-    .btn-pay-now:active:not(:disabled) { transform: translateY(1px); }
-    .btn-pay-now:disabled { opacity: 0.4; cursor: default; }
+    .btn-primary:hover { background: var(--sage); border-color: var(--sage); transform: translateY(-1px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.9rem 1.75rem; background: transparent; color: var(--sage-deep);
+      border: 1.5px solid var(--sage); border-radius: 999px;
+      font-family: var(--font-b); font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+      transition: background 0.2s var(--ease), color 0.2s var(--ease); cursor: pointer; white-space: nowrap;
+    }
+    .btn-outline:hover { background: var(--sage); color: #fff; }
 
-    /* ============================================================
-       SESSION LIST (inside accordion)
-       ============================================================ */
-    .session-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-      margin: 1rem 0 0.5rem;
-    }
-    .session-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.7rem 1rem;
-      background: var(--bg-warm);
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      flex-wrap: wrap;
-    }
-    .session-row-info {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-    }
-    .session-date {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      color: var(--sage-deep);
-      font-weight: 400;
-    }
-    .session-label {
-      font-family: var(--font-body);
-      font-size: 0.74rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 500;
-    }
-    .session-price {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      color: var(--ink);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .btn-book {
-      font-family: var(--font-body);
-      font-size: 0.76rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.5rem 1.1rem;
-      border-radius: 999px;
-      background: var(--sage);
-      color: var(--bg);
-      border: 1px solid var(--sage);
-      cursor: pointer;
-      transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .btn-book:hover { background: var(--sage-deep); border-color: var(--sage-deep); }
-    .session-note {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-top: 0.35rem;
-      display: block;
+    /* CORNERSTONES */
+    .cornerstones-section { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--surface); border-bottom: 1px solid var(--hairline); }
+    .cornerstones-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem 2rem; }
+    .section-heading { font-size: clamp(1.75rem, 3.5vw, 2.75rem); font-weight: 350; letter-spacing: -0.025em; color: var(--sage-deep); line-height: 1.08; font-variation-settings: "opsz" 144; }
+    .section-heading em { font-style: italic; color: var(--sage); }
+    .eyebrow { font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 0.75rem; display: block; }
+    .cornerstones-link { font-family: var(--font-d); font-style: italic; font-size: 1rem; color: var(--sage-deep); text-decoration: none; border-bottom: 1px solid var(--sage-pale); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; white-space: nowrap; align-self: flex-end; }
+    .cornerstones-link:hover { color: var(--sage); border-color: var(--sage); }
+    .cornerstones-grid { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--hairline); border-radius: 6px; overflow: hidden; }
+    .cornerstone-card { background: var(--surface); padding: 1.75rem 1.4rem; display: flex; flex-direction: column; gap: 0.6rem; border-right: 1px solid var(--hairline); transition: background 0.25s var(--ease); }
+    .cornerstone-card:last-child { border-right: none; }
+    .cornerstone-card:hover { background: var(--bg); }
+    .cornerstone-num { font-family: var(--font-d); font-style: italic; font-size: 1rem; color: var(--sage); }
+    .cornerstone-title { font-family: var(--font-d); font-size: 1.35rem; font-weight: 400; color: var(--sage-deep); line-height: 1.15; letter-spacing: -0.01em; }
+    .cornerstone-title em { font-style: italic; color: var(--sage); }
+    .cornerstone-sub { font-family: var(--font-d); font-style: italic; font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
+    .cornerstone-desc { font-family: var(--font-b); font-size: 0.8rem; color: var(--ink-soft); line-height: 1.55; margin-top: auto; padding-top: 0.4rem; }
+    @media (max-width: 900px) { .cornerstones-grid { grid-template-columns: 1fr 1fr; } .cornerstone-card:nth-child(2n) { border-right: none; } .cornerstone-card { border-bottom: 1px solid var(--hairline); } }
+    @media (max-width: 500px) { .cornerstones-grid { grid-template-columns: 1fr; } .cornerstone-card { border-right: none; } }
+
+    /* SCHEDULE LAYOUT */
+    .schedule-layout { display: grid; grid-template-columns: 210px 1fr; gap: clamp(2rem, 4vw, 4rem); max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); }
+    .schedule-rail { position: relative; }
+    .rail-nav { position: sticky; top: 5.5rem; display: flex; flex-direction: column; gap: 0; padding-top: clamp(2rem, 4vw, 3rem); }
+    .rail-eyebrow { font-family: var(--font-b); font-size: 0.65rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 1.25rem; padding-left: 1rem; }
+    .rail-link { display: block; padding: 0.8rem 0 0.8rem 1rem; margin-left: -1px; border-left: 1px solid var(--hairline); font-family: var(--font-b); font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-decoration: none; font-weight: 500; line-height: 1.4; transition: color 0.2s var(--ease), border-color 0.2s var(--ease); }
+    .rail-link:hover { color: var(--ink); border-left-color: var(--sage-pale); }
+    .rail-link.is-active { color: var(--sage-deep); border-left: 2px solid var(--sage-deep); padding-left: calc(1rem - 1px); font-weight: 600; }
+    .schedule-main { min-width: 0; padding-top: clamp(2rem, 4vw, 3rem); padding-bottom: 4rem; }
+    @media (max-width: 860px) {
+      .schedule-layout { grid-template-columns: 1fr; gap: 0; }
+      .schedule-rail { position: sticky; top: 57px; z-index: 50; background: rgba(241,236,223,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--hairline); margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter); }
+      .rail-eyebrow { display: none; }
+      .rail-nav { position: static; flex-direction: row; overflow-x: auto; scrollbar-width: none; padding: 0.5rem 0; }
+      .rail-nav::-webkit-scrollbar { display: none; }
+      .rail-link { flex-shrink: 0; border-left: none; border-bottom: 2px solid transparent; padding: 0.55rem 0.85rem; white-space: nowrap; font-size: 0.72rem; }
+      .rail-link.is-active { border-left: none; border-bottom: 2px solid var(--sage-deep); padding-left: 0.85rem; }
+      .schedule-main { padding-top: 1.5rem; }
     }
 
-    /* ============================================================
-       CHECKOUT MODAL
-       ============================================================ */
-    .modal-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(78, 90, 65, 0.45);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
+    /* CATEGORY SECTIONS */
+    .category-section { padding: clamp(2rem, 4vw, 3.5rem) 0; border-bottom: 1px solid var(--hairline); }
+    .category-section:last-child { border-bottom: none; }
+    .category-header { margin-bottom: 1.75rem; }
+    .category-title { font-size: clamp(1.5rem, 2.5vw, 2rem); color: var(--sage-deep); letter-spacing: -0.02em; }
+    .category-title em { font-style: italic; color: var(--sage); }
+    .category-desc { font-family: var(--font-d); font-style: italic; font-size: 0.95rem; color: var(--muted); line-height: 1.5; margin-top: 0.4rem; }
+
+    /* CLASS CARDS */
+    .class-grid { display: flex; flex-direction: column; border-top: 1px solid var(--hairline); }
+    .class-card { border-bottom: 1px solid var(--hairline); background: transparent; transition: background 0.2s var(--ease); }
+    .class-card:hover { background: var(--surface); }
+    .class-summary { list-style: none; cursor: pointer; outline: none; }
+    .class-summary::-webkit-details-marker { display: none; }
+    .class-summary::marker { display: none; content: ""; }
+    .class-summary { display: grid; grid-template-columns: 1fr auto auto; gap: clamp(1rem, 2.5vw, 2rem); align-items: center; padding: 1.4rem 1rem 1.4rem 0; }
+    .class-summary-main { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+    .class-format-tags { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
+    .class-tag { background: var(--bg-warm); border: 1px solid var(--hairline); padding: 0.12rem 0.55rem; border-radius: 4px; font-family: var(--font-b); font-size: 0.68rem; font-weight: 600; color: var(--sage-deep); text-transform: uppercase; letter-spacing: 0.06em; }
+    .class-tag-meta { font-family: var(--font-b); font-size: 0.75rem; color: var(--muted); }
+    .class-card h4 { font-family: var(--font-d); font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--sage-deep); font-weight: 400; margin: 0; line-height: 1.15; letter-spacing: -0.01em; }
+    .class-price-col { display: flex; align-items: center; gap: 0.9rem; }
+    .class-price { font-family: var(--font-d); font-size: clamp(1.1rem, 1.8vw, 1.35rem); color: var(--sage-deep); font-weight: 400; white-space: nowrap; }
+    .btn-book { font-family: var(--font-b); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.6rem 1.2rem; border-radius: 999px; background: var(--sage-deep); color: #fff; border: none; cursor: pointer; transition: background 0.2s var(--ease), transform 0.15s var(--ease); white-space: nowrap; flex-shrink: 0; }
+    .btn-book:hover { background: var(--sage); transform: translateY(-1px); }
+    .class-chevron { font-size: 1.2rem; color: var(--muted); width: 1.4rem; display: flex; align-items: center; justify-content: center; transition: transform 0.3s var(--ease), color 0.2s; flex-shrink: 0; }
+    .class-details-wrap[open] > .class-summary .class-chevron { transform: rotate(180deg); color: var(--sage-deep); }
+    .class-details-body { padding: 0.25rem 1rem 1.5rem 0; max-width: 58ch; animation: fadeUp 0.25s var(--ease) both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+    .class-desc { font-family: var(--font-d); font-size: 0.98rem; color: var(--ink-soft); line-height: 1.65; margin-bottom: 0.75rem; }
+    .class-instructor { font-family: var(--font-d); font-style: italic; font-size: 0.88rem; color: var(--sage); margin-bottom: 0.4rem; }
+    .class-materials-note { font-family: var(--font-b); font-size: 0.8rem; color: var(--sage); font-weight: 600; }
+    @media (max-width: 640px) {
+      .class-summary { grid-template-columns: 1fr auto; }
+      .class-price-col { flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+      .class-details-body { padding-right: 0; }
     }
-    .modal-backdrop.open {
-      display: flex;
-    }
-    .modal {
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: 8px;
-      width: 100%;
-      max-width: 540px;
-      max-height: 90dvh;
-      overflow-y: auto;
-      box-shadow: 0 24px 64px rgba(78, 90, 65, 0.25);
-      display: flex;
-      flex-direction: column;
-    }
-    .modal-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      padding: 1.6rem 1.75rem 1.2rem;
-      border-bottom: 1px solid var(--hairline);
-      gap: 1rem;
-    }
-    .modal-title {
-      font-family: var(--font-display);
-      font-size: 1.35rem;
-      color: var(--sage-deep);
-      line-height: 1.2;
-      font-weight: 400;
-    }
-    .modal-subtitle {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-top: 0.2rem;
-    }
-    .modal-close {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: var(--muted);
-      cursor: pointer;
-      padding: 0;
-      line-height: 1;
-      flex-shrink: 0;
-      transition: color 0.2s;
-    }
-    .modal-close:hover { color: var(--sage-deep); }
-    .modal-body {
-      padding: 1.5rem 1.75rem 2rem;
-      flex: 1;
-    }
-    .modal-summary {
-      background: var(--bg-warm);
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      padding: 1rem 1.15rem;
-      margin-bottom: 1.25rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .modal-summary-name {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      color: var(--sage-deep);
-    }
-    .modal-summary-meta {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-top: 0.15rem;
-    }
-    .modal-summary-price {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      color: var(--sage-deep);
-      white-space: nowrap;
-    }
+
+    /* MODAL */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(78,90,65,0.45); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 600; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-backdrop.open { display: flex; }
+    .modal { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; width: 100%; max-width: 520px; max-height: 90dvh; overflow-y: auto; box-shadow: 0 24px 64px rgba(78,90,65,0.2); display: flex; flex-direction: column; }
+    .modal-header { display: flex; align-items: flex-start; justify-content: space-between; padding: 1.5rem 1.75rem 1.25rem; border-bottom: 1px solid var(--hairline); gap: 1rem; }
+    .modal-title { font-family: var(--font-d); font-size: 1.3rem; font-weight: 400; color: var(--sage-deep); }
+    .modal-subtitle { font-family: var(--font-d); font-style: italic; font-size: 0.88rem; color: var(--muted); margin-top: 0.2rem; }
+    .modal-close { background: none; border: 1px solid var(--hairline); width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s, color 0.2s; }
+    .modal-close:hover { border-color: var(--sage); color: var(--sage-deep); }
+    .modal-body { padding: 1.5rem 1.75rem 2rem; flex: 1; }
+    .modal-summary { background: var(--bg-warm); border: 1px solid var(--hairline); border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .modal-summary-name { font-family: var(--font-d); font-size: 1rem; color: var(--sage-deep); }
+    .modal-summary-meta { font-family: var(--font-d); font-style: italic; font-size: 0.82rem; color: var(--muted); margin-top: 0.1rem; }
+    .modal-summary-price { font-family: var(--font-d); font-size: 1.2rem; color: var(--sage-deep); white-space: nowrap; }
     #checkout-embed { min-height: 200px; }
-
-    /* success state */
-    .modal-success {
-      display: none;
-      text-align: center;
-      padding: 2rem 0;
-    }
+    .modal-success { display: none; text-align: center; padding: 2rem 0; }
     .modal-success.show { display: block; }
-    .modal-success-mark {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-    .modal-success h3 {
-      font-family: var(--font-display);
-      font-size: 1.6rem;
-      color: var(--sage-deep);
-      margin-bottom: 0.6rem;
-    }
+    .modal-success-mark { font-size: 2rem; margin-bottom: 1rem; }
+    .modal-success h3 { font-family: var(--font-d); font-size: 1.5rem; color: var(--sage-deep); margin-bottom: 0.6rem; }
     .modal-success h3 em { font-style: italic; color: var(--sage); }
-    .modal-success p {
-      font-size: 0.95rem;
-      color: var(--ink-soft);
-      line-height: 1.6;
-      max-width: 34ch;
-      margin: 0 auto;
-    }
+    .modal-success p { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.6; max-width: 32ch; margin: 0 auto; }
+
+    /* FOOTER */
+    footer { background: var(--sage-deep); color: var(--bg); padding: 4rem 0 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-wordmark { font-family: var(--font-d); font-style: italic; font-size: 1.75rem; color: var(--bg); letter-spacing: -0.01em; margin-bottom: 1rem; font-variation-settings: "opsz" 144; }
+    footer p { color: rgba(241,236,223,0.65); font-size: 0.92rem; line-height: 1.7; }
+    footer h4 { font-family: var(--font-b); font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage-pale); font-weight: 600; margin: 0 0 1.1rem; }
+    footer a { color: rgba(241,236,223,0.7); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--sage-pale); }
+    .footer-stack a { display: block; margin-bottom: 0.45rem; font-size: 0.92rem; }
+    .footer-bottom { border-top: 1px solid rgba(241,236,223,0.12); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; font-family: var(--font-b); font-size: 0.72rem; color: rgba(241,236,223,0.4); letter-spacing: 0.04em; }
+    .footer-legal { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .footer-legal a { color: rgba(241,236,223,0.45); }
+    .footer-sep { opacity: 0.4; }
+    @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr; gap: 2rem; } .footer-bottom { flex-direction: column; align-items: flex-start; } }
+
+    /* REVEAL */
+    [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+    [data-reveal].is-visible { opacity: 1; transform: none; }
+    :focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; }
   </style>
 </head>
 <body>
 
-  <!-- =========================================================
-       NAV
-       ========================================================= -->
-  <!-- TOP HEADER BAR (Row 1) -->
-  <div class="top-header-bar">
-    <div class="container top-header-inner">
-      <a href="index.html" class="top-header-link">HOME</a>
-      <a href="login.html" class="top-header-link">HOBBIEST LOG IN</a>
+  <!-- CONTACT BAR -->
+  <div class="contact-bar">
+    <div class="container contact-bar-inner">
+      <div class="contact-bar-items">
+        <div class="contact-bar-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          135 N. Main Street, Pittston, PA
+        </div>
+        <div class="contact-bar-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+15703546189">(570) 354-6189</a>
+        </div>
+        <div class="contact-bar-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+        </div>
+      </div>
+      <a href="login.html" style="font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(241,236,223,0.55); text-decoration: none; font-weight: 600; transition: color 0.2s;">Member Login →</a>
     </div>
   </div>
 
-  <!-- SUBNAV STRIP (Row 2 — Exact match to annotated screenshot) -->
-  <nav class="subnav-strip">
-    <div class="container subnav-inner">
-      
-      <!-- GROUP 1: Core Navigation -->
-      <div class="subnav-group">
-        <a href="index.html#how-it-works" class="subnav-link">HOW IT WORKS</a>
-        <a href="schedule.html" class="subnav-link active">CURRENT CURRICULUM</a>
-        <div class="nav-item-dropdown">
-          <a href="studio.html" class="subnav-link subnav-link-studio nav-dropdown-trigger">
-            THE STUDIO <span class="nav-dropdown-arrow">▾</span>
-          </a>
-          <div class="nav-dropdown" role="menu">
-            <div style="padding: 0.85rem 1.15rem; border-bottom: 1px solid var(--hairline);">
-              <div style="font-family: var(--font-body); font-weight: 700; font-size: 0.78rem; color: var(--sage-deep); margin-bottom: 0.2rem;">135 N. Main St, Pittston, PA</div>
-              <div style="font-size: 0.75rem; color: var(--muted); line-height: 1.3;">Free Parking Across N. Main &amp; Kennedy</div>
-            </div>
-            <a href="studio.html" class="nav-dropdown-link" role="menuitem">Studio &amp; Parking Details</a>
-          </div>
-        </div>
+  <!-- STICKY NAV -->
+  <nav class="sticky-nav" role="navigation" aria-label="Primary">
+    <div class="container sticky-nav-inner">
+      <a href="index.html" class="wordmark">The Hobbiest</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="how-it-works.html" class="nav-link">How it works</a>
+        <a href="schedule.html" class="nav-link nav-link-active">Classes</a>
+        <a href="studio.html" class="nav-link">The Studio</a>
+        <a href="interest.html" class="nav-link">Interest form</a>
+        <a href="schedule.html" class="nav-link-pill">Book a class</a>
+        <a href="studio.html#membership-offer" class="nav-link-pill" style="background: var(--sage);">Membership</a>
       </div>
-
-      <!-- VERTICAL DIVIDER LINE 1 -->
-      <div class="subnav-divider"></div>
-
-      <!-- GROUP 2: Forms -->
-      <div class="subnav-group">
-        <a href="interest.html" class="subnav-link">SUBMIT INTEREST FORM</a>
-        <a href="apply.html" class="subnav-link">SUBMIT TEACHING APP</a>
-      </div>
-
-      <!-- VERTICAL DIVIDER LINE 2 -->
-      <div class="subnav-divider"></div>
-
-      <!-- GROUP 3: Purchase Pill Button Dropdown -->
-      <div class="subnav-group">
-        <div class="nav-item-dropdown">
-          <button class="btn-purchase-pill nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            PURCHASE <span class="nav-dropdown-arrow" style="color:#fff;">▾</span>
-          </button>
-          <div class="nav-dropdown" role="menu">
-            <a href="schedule.html" class="nav-dropdown-link" role="menuitem">Single Class</a>
-            <a href="studio.html#membership-offer" class="nav-dropdown-link" role="menuitem">Studio Membership</a>
-            <a href="gift.html" class="nav-dropdown-link" role="menuitem">Gift Card</a>
-          </div>
-        </div>
-      </div>
-
     </div>
   </nav>
 
-  <!-- =========================================================
-       PAGE HERO
-       ========================================================= -->
+  <!-- PAGE HERO -->
   <header class="page-hero">
     <div class="container">
-      <div class="page-hero-inner">
-        <div data-reveal>
-          <span class="page-eyebrow">The Hobbiest Skills Club</span>
-          <h1>Current <em>Curriculum</em>.</h1>
-          <p class="page-hero-lede">
-            Explore our featured lineup of 5 hands-on courses across creative arts, personal styling, and essential life skills. Available as single 2-hour sessions ($45–$55, all materials included).
-          </p>
-        </div>
-
-        <div class="hero-right-card" style="background:#FAF8F5;border:1.5px solid #DFD9CE;border-radius:12px;padding:1.5rem;box-shadow:0 6px 24px rgba(78,90,65,0.06);" data-reveal>
-          <div style="font-family:var(--font-body);font-size:0.75rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage-deep);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.4rem;">
-            <span style="color:var(--sage);">✦</span> Direct Course Jump (5 Featured Classes)
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:0.45rem;" id="heroCoursePills">
-            <a href="#watercolor-painting-101" class="course-pill-btn">01. Watercolor 101 ($55)</a>
-            <a href="#modern-calligraphy-pointed-pen" class="course-pill-btn">02. Calligraphy ($55)</a>
-            <a href="#makeup-tutorial-daily-application" class="course-pill-btn">03. Daily Makeup ($45)</a>
-            <a href="#meditation-intention-setting" class="course-pill-btn">04. Meditation ($45)</a>
-            <a href="#personal-finance-wealth-habits" class="course-pill-btn">05. Personal Finance ($45)</a>
-          </div>
+      <div data-reveal>
+        <span class="page-eyebrow">The Hobbiest Skills Club</span>
+        <h1>Current <em>Curriculum</em>.</h1>
+        <p class="page-hero-lede">Hands-on 2-hour sessions across creative arts, essential life skills, and intentional living. All materials included. Classes run when 10–12 members confirm.</p>
+        <div class="hero-purchase-bar">
+          <button class="btn-primary" onclick="scrollToClasses()">Browse &amp; Book a Class →</button>
+          <a href="studio.html#membership-offer" class="btn-outline">Studio Membership ($45/mo)</a>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- =========================================================
-       SCHEDULE LAYOUT — left-rail nav + main content
-       ========================================================= -->
-  <div class="schedule-layout">
+  <!-- CURRICULUM CORNERSTONES -->
+  <section class="cornerstones-section">
+    <div class="container">
+      <div class="cornerstones-header" data-reveal>
+        <div>
+          <span class="eyebrow">What We Teach</span>
+          <h2 class="section-heading">Curriculum <em>Cornerstones</em>.</h2>
+        </div>
+        <a href="#classes" class="cornerstones-link">Jump to current classes ↓</a>
+      </div>
+      <div class="cornerstones-grid" data-reveal>
+        <div class="cornerstone-card">
+          <div class="cornerstone-num">01</div>
+          <h3 class="cornerstone-title">Creative <em>Pursuits</em></h3>
+          <p class="cornerstone-sub">Things made beautifully by hand.</p>
+          <p class="cornerstone-desc">Watercolor, calligraphy, knitting, drawing, and craft traditions worth preserving.</p>
+        </div>
+        <div class="cornerstone-card">
+          <div class="cornerstone-num">02</div>
+          <h3 class="cornerstone-title">Presence &amp; <em>Entertaining</em></h3>
+          <p class="cornerstone-sub">The art of making people feel welcome.</p>
+          <p class="cornerstone-desc">Hosting, modern etiquette, personal styling, and small social skills that hold.</p>
+        </div>
+        <div class="cornerstone-card">
+          <div class="cornerstone-num">03</div>
+          <h3 class="cornerstone-title">Essential <em>Life Skills</em></h3>
+          <p class="cornerstone-sub">The things everyone should know.</p>
+          <p class="cornerstone-desc">Home repair, finances, first aid, and habits that compound over years.</p>
+        </div>
+        <div class="cornerstone-card">
+          <div class="cornerstone-num">04</div>
+          <h3 class="cornerstone-title">Hearth &amp; <em>Garden</em></h3>
+          <p class="cornerstone-sub">Slow, seasonal work with living things.</p>
+          <p class="cornerstone-desc">Sourdough, floral arranging, herb gardens, and the rituals of the year.</p>
+        </div>
+        <div class="cornerstone-card">
+          <div class="cornerstone-num">05</div>
+          <h3 class="cornerstone-title">Living <em>Well</em></h3>
+          <p class="cornerstone-sub">The inward side of an intentional life.</p>
+          <p class="cornerstone-desc">Meditation, journaling, intention-setting, and daily practices that hold.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <aside class="schedule-rail">
-      <nav class="rail-nav" id="railNav" aria-label="Curriculum navigation">
-        <div class="rail-eyebrow">Categories</div>
-      </nav>
-    </aside>
-
-    <main class="schedule-main" id="scheduleMain">
-      <p class="schedule-status" id="scheduleStatus">Loading the current schedule…</p>
-    </main>
+  <!-- SCHEDULE -->
+  <div id="classes" style="scroll-margin-top: 80px;">
+    <div class="schedule-layout">
+      <aside class="schedule-rail">
+        <nav class="rail-nav" id="railNav" aria-label="Curriculum navigation">
+          <div class="rail-eyebrow">Categories</div>
+        </nav>
+      </aside>
+      <main class="schedule-main" id="scheduleMain">
+        <p style="font-family: var(--font-d); font-style: italic; color: var(--muted); padding: 2rem 0;">Loading the current schedule…</p>
+      </main>
+    </div>
   </div>
 
-  <!-- =========================================================
-       GUEST CHECKOUT MODAL
-       ========================================================= -->
+  <!-- CHECKOUT MODAL -->
   <div class="modal-backdrop" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal">
       <div class="modal-header">
@@ -1915,111 +390,114 @@
     </div>
   </div>
 
-  <!-- =========================================================
-       FOOTER (matches main site)
-       ========================================================= -->
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="wordmark-lg">The Hobbiest</div>
-          <p>A skills club where all the things you wish you knew are taught. Opening July 2026 in downtown Pittston, PA.</p>
+          <div class="footer-wordmark">The Hobbiest</div>
+          <p>A private members skills club for adults. Opening July 2026 in downtown Pittston, PA.</p>
         </div>
         <div>
           <h4>Visit</h4>
-          <p>135 N Main Street<br />Pittston, PA 18640<br /><br />Wyoming Valley · NEPA</p>
+          <p>135 N. Main Street<br>Pittston, PA 18640<br><br><a href="tel:+15703546189">(570) 354-6189</a><br>Wyoming Valley · NEPA</p>
         </div>
         <div>
-          <h4>Follow</h4>
-          <div class="stack">
+          <h4>Contact</h4>
+          <div class="footer-stack">
+            <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
             <a href="#" rel="noopener">Instagram</a>
             <a href="#" rel="noopener">Facebook</a>
-            <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© 2026 The Hobbiest Skills Club</span>
-        <span><a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy Policy</a> · <a href="terms.html" style="color: inherit; text-decoration: none;">Terms of Service</a></span>
+        <div class="footer-legal">
+          <a href="gift.html">Give a Gift</a>
+          <span class="footer-sep">·</span>
+          <a href="waiver.html">Waiver &amp; Policies</a>
+          <span class="footer-sep">·</span>
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="footer-sep">·</span>
+          <a href="terms.html">Terms of Service</a>
+        </div>
       </div>
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // ============================================================
-    // CONFIG
-    // ============================================================
     const SUPABASE_URL      = 'https://uprdczhhgwzfypkudqjg.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ';
     const STRIPE_PK         = 'pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS';
 
-    const CATEGORY_ORDER = ['Creative Pursuits','Essential Life Skills','Living Well','Hearth & Garden'];
+    const CATEGORY_ORDER = ['Creative Pursuits','Presence & Entertaining','Essential Life Skills','Hearth & Garden','Living Well'];
     const CATEGORY_DESC = {
-      'Creative Pursuits':     'Things made beautifully by hand. Explorations in craftsmanship, creative expression, and traditional arts.',
-      'Essential Life Skills': 'The things everyone should know. Practical knowledge for everyday competence and self-reliance.',
-      'Living Well':           'The inward side of an intentional life. Daily practices that hold over time.',
-      'Hearth & Garden':       'Hands in the soil. Growing things with intention, in good company.'
+      'Creative Pursuits':       'Things made beautifully by hand — explorations in craftsmanship, creative expression, and traditional arts.',
+      'Presence & Entertaining': 'The art of making people feel welcome — hosting, etiquette, and the small social skills that hold.',
+      'Essential Life Skills':   'The things everyone should know — practical knowledge for everyday competence and self-reliance.',
+      'Hearth & Garden':         'Slow, seasonal work with living things — growing and making with intention, in good company.',
+      'Living Well':             'The inward side of an intentional life — daily practices, mindfulness, and habits that hold.'
     };
-    const TZ = 'America/New_York';
-
-    const esc = s => { const d = document.createElement('div'); d.textContent = (s == null ? '' : s); return d.innerHTML; };
-    const fmtTime  = d => d.toLocaleTimeString('en-US', { timeZone: TZ, hour: 'numeric', minute: '2-digit' });
-    const fmtDate  = d => d.toLocaleDateString('en-US', { timeZone: TZ, month: 'short', day: 'numeric' });
-    const fmtDateLong = d => d.toLocaleDateString('en-US', { timeZone: TZ, weekday: 'long', month: 'long', day: 'numeric' });
-    const weekday  = d => d.toLocaleDateString('en-US', { timeZone: TZ, weekday: 'long' });
-    const slug     = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-    const money    = cents => '$' + Math.round(cents / 100);
-    const sessionPrice = c => c.session_price_cents || Math.round((c.price_cents || 0) / (c.weeks || 1));
 
     const DEFAULT_CLASSES = [
-      { id: 'watercolor-painting', name: 'Watercolor Painting 101', category: 'Creative Pursuits', description: 'Learn color blending, wet-on-wet washes, and botanical watercolor painting techniques.', instructor: 'Fine Artist', price_cents: 5500, materials_included: true },
-      { id: 'modern-calligraphy', name: 'Modern Calligraphy & Pointed Pen', category: 'Creative Pursuits', description: 'Explore pointed pen lettering, stroke contrast, letterforms, and custom stationery design.', instructor: 'Calligrapher', price_cents: 5500, materials_included: true },
-      { id: 'makeup-daily', name: 'Makeup Tutorial — Daily Application', category: 'Living Well', description: 'Learn a flawless 10-minute everyday makeup routine tailored to your skin tone and features.', instructor: 'Beauty Specialist', price_cents: 4500, materials_included: true },
-      { id: 'meditation-mindfulness', name: 'Meditation & Intention Setting', category: 'Living Well', description: 'Guided breathwork, mindfulness practices, and daily intention-setting rituals for a calm, intentional mind.', instructor: 'Mindfulness Coach', price_cents: 4500, materials_included: true },
-      { id: 'personal-finance', name: 'Personal Finance & Wealth Habits', category: 'Essential Life Skills', description: 'Master budgeting fundamentals, savings strategies, debt elimination, and building financial clarity.', instructor: 'Financial Advisor', price_cents: 4500, materials_included: true }
+      { id: 'watercolor-painting', name: 'Watercolor Painting 101', category: 'Creative Pursuits', description: 'Learn color blending, wet-on-wet washes, and botanical watercolor painting techniques. Leave with a finished piece and the vocabulary to keep practicing at home.', instructor: 'Fine Artist', price_cents: 5500 },
+      { id: 'modern-calligraphy', name: 'Modern Calligraphy & Pointed Pen', category: 'Creative Pursuits', description: 'Explore pointed pen lettering, stroke contrast, and letterforms. Covers basic alphabets and custom stationery design. All tools and paper provided.', instructor: 'Calligrapher', price_cents: 5500 },
+      { id: 'makeup-daily', name: 'Makeup Tutorial — Daily Application', category: 'Living Well', description: 'Learn a flawless 10-minute everyday makeup routine tailored to your skin tone and features. Covers foundation, eyes, and finishing.', instructor: 'Beauty Specialist', price_cents: 4500 },
+      { id: 'meditation-mindfulness', name: 'Meditation & Intention Setting', category: 'Living Well', description: 'Guided breathwork, mindfulness practices, and daily intention-setting rituals. Practical techniques you can use the next morning.', instructor: 'Lara Alexiou', price_cents: 4500 },
+      { id: 'personal-finance', name: 'Personal Finance & Wealth Habits', category: 'Essential Life Skills', description: 'Budgeting fundamentals, savings strategies, debt elimination, and building financial clarity. Taught with real examples — no jargon.', instructor: 'Joe Enten', price_cents: 4500 }
     ];
 
-    function classPriceCents(c) {
-      return c.price_cents || 4500;
-    }
+    const esc = s => { const d = document.createElement('div'); d.textContent = (s == null ? '' : s); return d.innerHTML; };
+    const money = cents => '$' + Math.round(cents / 100);
+    const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
     function cardHtml(c) {
-      const priceCents = classPriceCents(c);
-      const priceFormatted = money(priceCents);
-      const materialsNote = 'All materials included (' + priceFormatted + ')';
-      const instructor = c.instructor ? '<p class="class-instructor" style="margin-top:0.4rem;font-size:0.88rem;color:var(--sage-deep);">Taught by <strong>' + esc(c.instructor) + '</strong></p>' : '';
-      const courseSlug = slug(c.name);
+      const price = money(c.price_cents || 4500);
+      const instructor = c.instructor ? `<p class="class-instructor">Taught by <strong style="color:var(--sage-deep)">${esc(c.instructor)}</strong></p>` : '';
+      return `
+        <article class="class-card" id="${slug(c.name)}" style="scroll-margin-top:80px">
+          <details class="class-details-wrap" open>
+            <summary class="class-summary">
+              <div class="class-summary-main">
+                <div class="class-format-tags">
+                  <span class="class-tag">${esc(c.category)}</span>
+                  <span class="class-tag-meta">2 hrs &nbsp;·&nbsp; Max 12</span>
+                </div>
+                <h4>${esc(c.name)}</h4>
+              </div>
+              <div class="class-price-col">
+                <div class="class-price">${price}</div>
+                <button class="btn-book" onclick="openCheckout('${esc(c.id)}', event)">Book →</button>
+              </div>
+              <span class="class-chevron" aria-hidden="true">▾</span>
+            </summary>
+            <div class="class-details-body">
+              <p class="class-desc">${esc(c.description)}</p>
+              ${instructor}
+              <p class="class-materials-note" style="margin-top:0.5rem">✓ All materials included</p>
+            </div>
+          </details>
+        </article>`;
+    }
 
-      return '' +
-        '<article class="class-card" id="' + courseSlug + '" style="scroll-margin-top: 5rem;">' +
-          '<details class="class-details-wrap" open>' +
-            '<summary class="class-summary">' +
-              '<div class="class-summary-main">' +
-                '<div class="class-format" style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.25rem;">' +
-                  '<span style="background:var(--bg-warm);border:1px solid var(--hairline);padding:0.15rem 0.6rem;border-radius:4px;font-size:0.75rem;font-family:var(--font-body);font-weight:600;color:var(--sage-deep);text-transform:uppercase;letter-spacing:0.05em;">' + esc(c.category || 'Curriculum') + '</span>' +
-                  '<span style="font-size:0.8rem;color:var(--ink-soft);font-family:var(--font-body);">⏱ 2-Hour Session &nbsp;·&nbsp; 👥 Max 12 Members</span>' +
-                '</div>' +
-                '<h4 style="font-size:1.4rem;font-weight:500;color:var(--sage-deep);margin-top:0.2rem;">' + esc(c.name) + '</h4>' +
-              '</div>' +
-              '<div style="display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;">' +
-                '<div class="class-price" style="font-size:1.5rem;font-weight:600;color:var(--sage-deep);">' + priceFormatted + '</div>' +
-                '<button class="btn-book" onclick="openCheckout(' + JSON.stringify(c.id) + ', 0, event)" style="background:var(--sage-deep);color:#fff;font-weight:600;padding:0.65rem 1.25rem;border-radius:6px;border:none;cursor:pointer;transition:all 0.2s;">Buy Class →</button>' +
-              '</div>' +
-              '<span class="class-chevron" aria-hidden="true">▾</span>' +
-            '</summary>' +
-            '<div class="class-details-body" style="padding:0.5rem 1rem 1.25rem 0.5rem;">' +
-              '<p class="class-desc" style="font-size:0.95rem;color:var(--ink-soft);line-height:1.5;">' + esc(c.description) + '</p>' +
-              instructor +
-              '<div class="class-price-note" style="margin-top:0.6rem;font-weight:600;color:var(--sage);font-size:0.85rem;">✂ ' + materialsNote + '</div>' +
-            '</div>' +
-          '</details>' +
-        '</article>';
+    function scrollToClasses() {
+      document.getElementById('classes').scrollIntoView({ behavior: 'smooth' });
     }
 
     async function loadSchedule() {
       const main = document.getElementById('scheduleMain');
       const rail = document.getElementById('railNav');
-      const classes = DEFAULT_CLASSES;
+      let classes = DEFAULT_CLASSES;
+
+      try {
+        const res = await fetch(
+          SUPABASE_URL + '/rest/v1/classes?select=id,name,category,description,instructor,price_cents,session_price_cents,weeks&is_published=eq.true&order=starts_at.asc',
+          { headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY } }
+        );
+        if (res.ok) { const data = await res.json(); if (data.length) classes = data; }
+      } catch(e) { /* use defaults */ }
 
       const groups = {};
       classes.forEach(c => { const cat = c.category || 'Other'; (groups[cat] = groups[cat] || []).push(c); });
@@ -2030,27 +508,24 @@
 
       main.innerHTML = '';
       rail.innerHTML = '<div class="rail-eyebrow">Categories</div>';
+
       cats.forEach((cat, i) => {
-        const num  = String(i + 1).padStart(2, '0');
-        const id   = slug(cat);
-        const cards = groups[cat].map(cardHtml).join('');
-        main.insertAdjacentHTML('beforeend',
-          '<section class="category-section" id="' + id + '">' +
-            '<div class="container">' +
-              '<div class="category-header">' +
-                '<h2 class="category-title">' + num + ' \u2014 ' + esc(cat) + '</h2>' +
-                '<p class="category-desc">' + esc(CATEGORY_DESC[cat] || '') + '</p>' +
-              '</div>' +
-              '<div class="class-grid">' + cards + '</div>' +
-            '</div>' +
-          '</section>');
+        const id = slug(cat);
+        const num = String(i + 1).padStart(2, '0');
+        main.insertAdjacentHTML('beforeend', `
+          <section class="category-section" id="${id}">
+            <div class="category-header">
+              <h2 class="category-title">${num} — <em>${esc(cat)}</em></h2>
+              <p class="category-desc">${esc(CATEGORY_DESC[cat] || '')}</p>
+            </div>
+            <div class="class-grid">${groups[cat].map(cardHtml).join('')}</div>
+          </section>`);
         rail.insertAdjacentHTML('beforeend',
-          '<a href="#' + id + '" class="rail-link" data-cat="' + id + '">' + num + ' &nbsp; ' + esc(cat) + '</a>');
+          `<a href="#${id}" class="rail-link" data-cat="${id}">${num} &nbsp; ${esc(cat)}</a>`);
       });
 
       initScrollSpy();
-      handleReturnFromStripe();
-      pwPopulate(classes);
+      handleStripeReturn();
     }
 
     function initScrollSpy() {
@@ -2058,247 +533,119 @@
       const sections = [...buttons].map(b => document.getElementById(b.dataset.cat)).filter(Boolean);
       const obs = new IntersectionObserver(entries => {
         entries.forEach(e => { if (e.isIntersecting) buttons.forEach(b => b.classList.toggle('is-active', b.dataset.cat === e.target.id)); });
-      }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+      }, { rootMargin: '-25% 0px -65% 0px' });
       sections.forEach(s => obs.observe(s));
-
       buttons.forEach(btn => {
         btn.addEventListener('click', e => {
+          e.preventDefault();
           const target = document.getElementById(btn.getAttribute('href').slice(1));
           if (!target) return;
-          e.preventDefault();
-          const isMobile = window.matchMedia('(max-width: 880px)').matches;
-          const railEl   = document.querySelector('.schedule-rail');
-          const offset   = (isMobile && railEl) ? railEl.offsetHeight + 8 : 16;
+          const railEl = document.querySelector('.schedule-rail');
+          const isMobile = window.matchMedia('(max-width: 860px)').matches;
+          const offset = (isMobile && railEl) ? railEl.offsetHeight + 60 : 80;
           window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - offset, behavior: 'smooth' });
         });
       });
     }
 
-    // ============================================================
-    // GUEST CHECKOUT
-    // ============================================================
-    let stripe = null;
-    let embeddedCheckout = null;
+    let stripe = null, embeddedCheckout = null;
 
-    async function openCheckout(classId, sessionIndex, event) {
-      if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+    async function openCheckout(classId, event) {
+      if (event) { event.preventDefault(); event.stopPropagation(); }
+      const c = DEFAULT_CLASSES.find(x => x.id === classId) || { id: classId, name: 'Single Class', price_cents: 4500 };
+      const price = money(c.price_cents || 4500);
 
-      const c = DEFAULT_CLASSES.find(x => x.id === classId) ||
-                (typeof _pwClasses !== 'undefined' && Array.isArray(_pwClasses) ? _pwClasses.find(x => x.id === classId) : null) ||
-                { id: classId, name: 'Single Class', price_cents: 4500 };
-      const priceCents = classPriceCents(c);
-
-      document.getElementById('modalTitle').textContent = 'Purchase Single Class';
-      document.getElementById('modalSubtitle').textContent = c.name + ' — ' + money(priceCents);
+      document.getElementById('modalTitle').textContent    = 'Purchase Single Class';
+      document.getElementById('modalSubtitle').textContent = c.name;
       document.getElementById('modalClassName').textContent = c.name;
-      document.getElementById('modalSessionMeta').textContent = '2-Hour Hands-on Session · All Materials Included · In Studio';
-      document.getElementById('modalPrice').textContent = money(priceCents);
+      document.getElementById('modalSessionMeta').textContent = '2-Hour Session · All Materials Included · In Studio';
+      document.getElementById('modalPrice').textContent    = price;
 
-      const modal = document.getElementById('checkoutModal');
-      const embedEl = document.getElementById('checkout-embed');
+      const modal     = document.getElementById('checkoutModal');
+      const embedEl   = document.getElementById('checkout-embed');
       const successEl = document.getElementById('modalSuccess');
-
-      embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:var(--muted);padding:1rem 0">Initializing checkout…</p>';
+      embedEl.innerHTML = '<p style="font-family:var(--font-d);font-style:italic;color:var(--muted);padding:1rem 0">Initializing checkout…</p>';
       successEl.classList.remove('show');
       document.getElementById('modalSummary').style.display = 'flex';
-
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
 
       try {
         const res = await fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': SUPABASE_ANON_KEY,
-          },
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
           body: JSON.stringify({ guest: true, class_id: classId, session_index: 0 }),
         });
         const data = await res.json();
         if (!res.ok || !data.clientSecret) throw new Error(data.error || 'Checkout failed');
-
         if (!stripe) stripe = Stripe(STRIPE_PK);
         if (embeddedCheckout) { embeddedCheckout.destroy(); embeddedCheckout = null; }
-
         embeddedCheckout = await stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
         embedEl.innerHTML = '';
         embeddedCheckout.mount('#checkout-embed');
-      } catch (err) {
-        console.warn('Stripe checkout embed not active, loading guest purchase form:', err);
-        renderPurchaseCheckoutForm(c, priceCents, embedEl, successEl);
+      } catch(err) {
+        embedEl.innerHTML = `
+          <form onsubmit="handleFallbackPurchase(event,'${esc(classId)}','${esc(c.name)}',${c.price_cents||4500})" style="display:flex;flex-direction:column;gap:0.85rem;padding-top:0.5rem">
+            <p style="font-family:var(--font-b);font-size:0.85rem;color:var(--ink-soft);line-height:1.5">Reserve your seat for <strong>${esc(c.name)}</strong> (${price}). All materials included.</p>
+            <div><label style="display:block;font-family:var(--font-b);font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage-deep);margin-bottom:0.3rem">Full Name</label><input type="text" id="fName" required placeholder="Jane Doe" style="width:100%;padding:0.75rem 0.9rem;border:1px solid var(--hairline);border-radius:6px;background:var(--surface);font-size:0.9rem;font-family:var(--font-b)"></div>
+            <div><label style="display:block;font-family:var(--font-b);font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage-deep);margin-bottom:0.3rem">Email</label><input type="email" id="fEmail" required placeholder="jane@example.com" style="width:100%;padding:0.75rem 0.9rem;border:1px solid var(--hairline);border-radius:6px;background:var(--surface);font-size:0.9rem;font-family:var(--font-b)"></div>
+            <div><label style="display:block;font-family:var(--font-b);font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage-deep);margin-bottom:0.3rem">Phone</label><input type="tel" id="fPhone" required placeholder="(570) 555-0199" style="width:100%;padding:0.75rem 0.9rem;border:1px solid var(--hairline);border-radius:6px;background:var(--surface);font-size:0.9rem;font-family:var(--font-b)"></div>
+            <button type="submit" id="fSubmit" style="background:var(--sage-deep);color:#fff;font-family:var(--font-b);font-weight:700;font-size:0.88rem;padding:0.9rem;border-radius:6px;border:none;cursor:pointer;letter-spacing:0.06em">Pay ${price} &amp; Reserve Seat →</button>
+          </form>`;
       }
     }
 
-    function renderPurchaseCheckoutForm(c, priceCents, embedEl, successEl) {
-      embedEl.innerHTML = `
-        <form id="guestPurchaseForm" style="display:flex; flex-direction:column; gap:0.9rem; padding-top:0.5rem;" onsubmit="handleGuestPurchaseSubmit(event, '${esc(c.id)}', '${esc(c.name)}', ${priceCents})">
-          <div style="font-size:0.85rem; color:var(--ink-soft); line-height:1.4; margin-bottom:0.2rem;">
-            Purchase your seat for <strong>${esc(c.name)}</strong> (${money(priceCents)}). Includes 2-hour session and all materials.
-          </div>
-          <div>
-            <label style="display:block; font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--sage-deep); margin-bottom:0.3rem;">FULL NAME</label>
-            <input type="text" id="pName" required placeholder="Jane Doe" style="width:100%; padding:0.75rem 0.9rem; border:1px solid var(--hairline); border-radius:6px; background:var(--surface); font-family:var(--font-body); font-size:0.9rem;" />
-          </div>
-          <div>
-            <label style="display:block; font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--sage-deep); margin-bottom:0.3rem;">EMAIL ADDRESS (FOR RECEIPT)</label>
-            <input type="email" id="pEmail" required placeholder="jane@example.com" style="width:100%; padding:0.75rem 0.9rem; border:1px solid var(--hairline); border-radius:6px; background:var(--surface); font-family:var(--font-body); font-size:0.9rem;" />
-          </div>
-          <div>
-            <label style="display:block; font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--sage-deep); margin-bottom:0.3rem;">PHONE NUMBER</label>
-            <input type="tel" id="pPhone" required placeholder="(570) 555-0199" style="width:100%; padding:0.75rem 0.9rem; border:1px solid var(--hairline); border-radius:6px; background:var(--surface); font-family:var(--font-body); font-size:0.9rem;" />
-          </div>
-          <div style="background:#FAF8F5; border:1px solid var(--hairline); border-radius:6px; padding:0.75rem; font-size:0.82rem; color:var(--sage-deep); font-weight:600; display:flex; align-items:center; gap:0.5rem;">
-            <span>💳</span> <span>Payment Method: Credit / Debit Card (${money(priceCents)})</span>
-          </div>
-          <button type="submit" id="pSubmitBtn" style="margin-top:0.4rem; background:var(--sage-deep); color:#fff; font-weight:600; padding:0.85rem; border-radius:6px; border:none; cursor:pointer; font-family:var(--font-body); font-size:0.95rem; transition:all 0.2s;">
-            Pay ${money(priceCents)} &amp; Book Seat →
-          </button>
-        </form>
-      `;
-    }
-
-    async function handleGuestPurchaseSubmit(e, classId, className, priceCents) {
+    async function handleFallbackPurchase(e, classId, className, priceCents) {
       e.preventDefault();
-      const btn = document.getElementById('pSubmitBtn');
-      btn.disabled = true;
-      btn.textContent = 'Processing payment…';
-
-      const name = document.getElementById('pName').value.trim();
-      const email = document.getElementById('pEmail').value.trim();
-      const phone = document.getElementById('pPhone').value.trim();
-
+      const btn = document.getElementById('fSubmit');
+      btn.disabled = true; btn.textContent = 'Processing…';
+      const name = document.getElementById('fName').value.trim();
+      const email = document.getElementById('fEmail').value.trim();
+      const phone = document.getElementById('fPhone').value.trim();
       try {
         if (window.supabase) {
           const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-          await sb.functions.invoke('submit-signup', {
-            body: {
-              first_name: name.split(' ')[0] || name,
-              last_name: name.split(' ').slice(1).join(' ') || 'Member',
-              email: email,
-              phone: phone,
-              classes_of_interest: className,
-              notes: 'Purchased Class Seat ($' + Math.round(priceCents/100) + ') via Curriculum Page',
-              newsletter: true
-            }
-          });
+          await sb.functions.invoke('submit-signup', { body: { first_name: name.split(' ')[0]||name, last_name: name.split(' ').slice(1).join(' ')||'Member', email, phone, classes_of_interest: className, notes: 'Class purchase via curriculum page', newsletter: true } });
         }
-      } catch (err) {
-        console.warn('Purchase log error:', err);
-      }
-
+      } catch(err) { console.warn(err); }
       document.getElementById('modalSummary').style.display = 'none';
       document.getElementById('checkout-embed').innerHTML = '';
-      const successEl = document.getElementById('modalSuccess');
-      successEl.innerHTML = `
-        <div class="modal-success-mark">✦</div>
-        <h3>Purchase <em>Complete</em>!</h3>
-        <p>Your seat for <strong>${esc(className)}</strong> (${money(priceCents)}) is confirmed.<br />Receipt and studio access details have been emailed to <strong>${esc(email)}</strong>.</p>
-      `;
-      successEl.classList.add('show');
+      const s = document.getElementById('modalSuccess');
+      s.innerHTML = `<div class="modal-success-mark">✦</div><h3>You're <em>booked</em>.</h3><p>Confirmation for <strong>${esc(className)}</strong> has been sent to <strong>${esc(email)}</strong>.</p>`;
+      s.classList.add('show');
     }
 
     function closeModal() {
-      const modal = document.getElementById('checkoutModal');
-      modal.classList.remove('open');
+      document.getElementById('checkoutModal').classList.remove('open');
       document.body.style.overflow = '';
       if (embeddedCheckout) { embeddedCheckout.destroy(); embeddedCheckout = null; }
       document.getElementById('checkout-embed').innerHTML = '';
     }
-
-    document.getElementById('checkoutModal').addEventListener('click', function(e) {
-      if (e.target === this) closeModal();
-    });
-
+    document.getElementById('checkoutModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    function handleReturnFromStripe() {
+    function handleStripeReturn() {
       const params = new URLSearchParams(window.location.search);
       if (params.get('status') === 'complete') {
-        const modal     = document.getElementById('checkoutModal');
-        const embedEl   = document.getElementById('checkout-embed');
-        const successEl = document.getElementById('modalSuccess');
-        const summaryEl = document.getElementById('modalSummary');
-        embedEl.innerHTML = '';
-        summaryEl.style.display = 'none';
-        successEl.classList.add('show');
-        modal.classList.add('open');
+        document.getElementById('checkout-embed').innerHTML = '';
+        document.getElementById('modalSummary').style.display = 'none';
+        document.getElementById('modalSuccess').classList.add('show');
+        document.getElementById('checkoutModal').classList.add('open');
         history.replaceState({}, '', window.location.pathname);
       }
     }
 
-    // ============================================================
-    // PURCHASE WIDGET
-    // ============================================================
-    let _pwClasses = [];
+    // NAV TOGGLE
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => { const open = navLinks.classList.toggle('open'); navToggle.classList.toggle('open', open); navToggle.setAttribute('aria-expanded', open); });
+    document.addEventListener('click', e => { if (!e.target.closest('.sticky-nav')) { navLinks.classList.remove('open'); navToggle.classList.remove('open'); navToggle.setAttribute('aria-expanded','false'); } });
 
-    function pwPopulate(classes) {
-      _pwClasses = classes;
-      const sel = document.getElementById('pwClass');
-      sel.innerHTML = '<option value="">— choose a class —</option>' +
-        classes.map((c, i) => {
-          const price = money(classPriceCents(c));
-          return `<option value="${i}">${esc(c.name)} (${price})</option>`;
-        }).join('');
-    }
-
-    function pwOnClassChange() {
-      const idx    = document.getElementById('pwClass').value;
-      const optSel = document.getElementById('pwOption');
-      const priceEl = document.getElementById('pwPrice');
-      const btn    = document.getElementById('pwBtn');
-
-      if (idx === '') {
-        optSel.innerHTML = '<option value="">— then pick an option —</option>';
-        optSel.disabled = true;
-        priceEl.textContent = '—'; priceEl.classList.add('dim');
-        btn.disabled = true;
-        return;
-      }
-
-      const c = _pwClasses[parseInt(idx)];
-      const price = classPriceCents(c);
-
-      optSel.innerHTML = `<option value="single" selected>Single 2-Hour Session — ${money(price)}</option>`;
-      optSel.disabled = false;
-
-      priceEl.textContent = money(price);
-      priceEl.classList.remove('dim');
-      btn.disabled = false;
-    }
-
-    function pwOnOptionChange() {
-      pwOnClassChange();
-    }
-
-    async function pwCheckout() {
-      const classIdx = document.getElementById('pwClass').value;
-      if (!classIdx) return;
-
-      const c   = _pwClasses[parseInt(classIdx)];
-      const btn = document.getElementById('pwBtn');
-      btn.disabled = true;
-      btn.textContent = 'Opening…';
-
-      const fakeEvent = { stopPropagation: () => {} };
-      await openCheckout(c.id, 0, fakeEvent);
-
-      btn.disabled = false;
-      btn.textContent = 'Pay now →';
-    }
-
-    // ============================================================
-    // SCROLL REVEAL
-    // ============================================================
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-    document.querySelectorAll('[data-reveal]').forEach((r) => io.observe(r));
+    // REVEAL
+    const io = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } }); }, { threshold: 0.08 });
+    document.querySelectorAll('[data-reveal]').forEach(r => io.observe(r));
 
     loadSchedule();
   </script>
-
 </body>
 </html>
