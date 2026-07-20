@@ -179,16 +179,69 @@
     .nav-link:hover, .nav-link-current {
       color: var(--sage);
     }
-    .nav-link-purchase {
-      color: var(--bg);
-      background: var(--sage);
-      padding: 0.55rem 1.1rem;
-      border-radius: 999px;
-      letter-spacing: 0.12em;
-      transition: background 0.2s var(--ease);
+    /* Nav dropdown (Purchase) */
+    .nav-item-dropdown {
+      position: relative;
     }
-    .nav-link-primary:hover { background: var(--sage-deep); color: var(--bg); }
-    .nav-link-primary::after { display: none !important; }
+    .nav-dropdown-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 0;
+      background: none;
+      padding: 0;
+      font-family: inherit;
+      cursor: pointer;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    .nav-dropdown-arrow {
+      font-size: 0.85em;
+      transition: transform 0.2s var(--ease);
+      display: inline-block;
+    }
+    .nav-item-dropdown:hover .nav-dropdown-arrow,
+    .nav-item-dropdown:focus-within .nav-dropdown-arrow {
+      transform: rotate(180deg);
+    }
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 0;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      padding: 0.5rem 0;
+      min-width: 180px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), visibility 0.2s var(--ease);
+      box-shadow: 0 10px 32px rgba(78, 90, 65, 0.12);
+      z-index: 20;
+    }
+    .nav-item-dropdown:hover .nav-dropdown,
+    .nav-item-dropdown:focus-within .nav-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .nav-dropdown-link {
+      display: block;
+      padding: 0.7rem 1.2rem;
+      font-size: 0.74rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s var(--ease), background 0.2s var(--ease);
+    }
+    .nav-dropdown-link:hover {
+      color: var(--sage);
+      background: var(--bg);
+    }
+
     @media (max-width: 640px) {
       .nav-links { gap: 0.85rem; }
       .nav-link { font-size: 0.65rem; letter-spacing: 0.12em; }
@@ -1555,6 +1608,17 @@
         <a href="index.html#how-it-works" class="nav-link">How it Works</a>
         <a href="index.html#interest-form-section" class="nav-link">Submit Interest Form</a>
         <a href="schedule.html" class="nav-link nav-link-current">Current Curriculum</a>
+        <a href="apply.html" class="nav-link">Apply to Teach</a>
+        <div class="nav-item-dropdown">
+          <button class="nav-link nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+            Purchase <span class="nav-dropdown-arrow">▾</span>
+          </button>
+          <div class="nav-dropdown" role="menu">
+            <a href="schedule.html" class="nav-dropdown-link" role="menuitem">Single Class</a>
+            <a href="index.html#membership" class="nav-dropdown-link" role="menuitem">Membership</a>
+            <a href="gift.html" class="nav-dropdown-link" role="menuitem">Gift Card</a>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
