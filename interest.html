@@ -54,8 +54,8 @@
     .sticky-nav { position: sticky; top: 0; z-index: 500; background: var(--surface); border-bottom: 1px solid var(--hairline); box-shadow: 0 2px 20px rgba(78,90,65,0.07); }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1.5rem; position: relative; }
     .wordmark { font-family: var(--font-d); font-size: 1.25rem; font-weight: 400; font-style: italic; color: var(--sage); text-decoration: none; letter-spacing: -0.01em; font-variation-settings: "opsz" 144; flex-shrink: 0; }
-    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
-    .nav-link { font-family: var(--font-b); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 600; text-decoration: none; padding: 0.45rem 0.75rem; border-radius: 4px; transition: color 0.2s var(--ease), background 0.2s var(--ease); white-space: nowrap; }
+    .nav-links { display: flex; align-items: center; gap: 0.1rem; }
+    .nav-link { font-family: var(--font-b); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; text-decoration: none; padding: 0.45rem 0.55rem; border-radius: 4px; transition: color 0.2s var(--ease), background 0.2s var(--ease); white-space: nowrap; }
     .nav-link:hover { color: var(--sage-deep); background: var(--bg-warm); }
     .nav-link-active { color: var(--sage-deep); }
     /* Purchase pill + dropdown */
@@ -90,7 +90,7 @@
     .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .nav-toggle.open span:nth-child(2) { opacity: 0; }
     .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    @media (max-width: 960px) {
+    @media (max-width: 1100px) {
       .nav-toggle { display: flex; }
       .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; background: var(--surface); border-bottom: 1px solid var(--hairline); padding: 0.75rem var(--gutter) 1rem; gap: 0.25rem; box-shadow: 0 10px 30px rgba(78,90,65,0.12); }
       .nav-links.open { display: flex; }
@@ -208,7 +208,7 @@
 
   <!-- STICKY NAV -->
   <nav class="sticky-nav" role="navigation" aria-label="Primary">
-    <div class="container sticky-nav-inner" style="position:relative;">
+    <div class="container nav-inner">
       <a href="index.html" class="wordmark">The Hobbiest</a>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -276,14 +276,62 @@
               </div>
 
               <div>
-                <span class="class-label">Classes of interest (check all that apply)</span>
-                <div class="class-scroll">
-                  <label class="class-check"><input type="checkbox" name="classes" value="Watercolor Painting 101"><span>01. Watercolor Painting 101 — $65</span></label>
-                  <label class="class-check"><input type="checkbox" name="classes" value="Modern Calligraphy & Pointed Pen"><span>02. Modern Calligraphy &amp; Pointed Pen — $65</span></label>
-                  <label class="class-check"><input type="checkbox" name="classes" value="Seasonal Wreath Making"><span>03. Seasonal Wreath Making — $65</span></label>
-                  <label class="class-check"><input type="checkbox" name="classes" value="Makeup Tutorial — Daily Application"><span>04. Makeup Tutorial — Daily Application — $45</span></label>
-                  <label class="class-check"><input type="checkbox" name="classes" value="Meditation & Intention Setting"><span>05. Meditation &amp; Intention Setting — $45</span></label>
-                  <label class="class-check"><input type="checkbox" name="classes" value="Personal Finance 101"><span>06. Personal Finance 101 — $45</span></label>
+                <span class="class-label">Topics of interest — check everything that appeals to you</span>
+                <p style="font-family:var(--font-b);font-size:0.75rem;color:var(--muted);margin-bottom:0.75rem;line-height:1.4;">This isn't a purchase — just tell us what you'd love to learn. We use your selections to schedule classes.</p>
+
+                <div style="display:flex;flex-direction:column;gap:1rem;">
+
+                  <div>
+                    <div style="font-family:var(--font-b);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--sage);font-weight:700;margin-bottom:0.4rem;">Creative Pursuits</div>
+                    <div style="display:flex;flex-direction:column;gap:0.35rem;">
+                      <label class="class-check"><input type="checkbox" name="classes" value="Watercolor Painting 101"><span>Watercolor Painting 101</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Modern Calligraphy & Pointed Pen"><span>Modern Calligraphy &amp; Pointed Pen</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Knitting for Beginners"><span>Knitting for Beginners</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Drawing & Sketching Basics"><span>Drawing &amp; Sketching Basics</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Hand Embroidery"><span>Hand Embroidery</span></label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div style="font-family:var(--font-b);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--sage);font-weight:700;margin-bottom:0.4rem;">Hearth &amp; Garden</div>
+                    <div style="display:flex;flex-direction:column;gap:0.35rem;">
+                      <label class="class-check"><input type="checkbox" name="classes" value="Seasonal Wreath Making"><span>Seasonal Wreath Making</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Sourdough Bread Baking"><span>Sourdough Bread Baking</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Floral Arranging"><span>Floral Arranging</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Herb Garden & Growing Basics"><span>Herb Garden &amp; Growing Basics</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Candle Making"><span>Candle Making</span></label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div style="font-family:var(--font-b);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--sage);font-weight:700;margin-bottom:0.4rem;">Living Well</div>
+                    <div style="display:flex;flex-direction:column;gap:0.35rem;">
+                      <label class="class-check"><input type="checkbox" name="classes" value="Meditation & Breathwork"><span>Meditation &amp; Breathwork</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Intention Setting & Journaling"><span>Intention Setting &amp; Journaling</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Manifesting & Vision Boarding"><span>Manifesting &amp; Vision Boarding</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Daily Makeup Application"><span>Daily Makeup Application</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Personal Style & Wardrobe Editing"><span>Personal Style &amp; Wardrobe Editing</span></label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div style="font-family:var(--font-b);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--sage);font-weight:700;margin-bottom:0.4rem;">Essential Life Skills</div>
+                    <div style="display:flex;flex-direction:column;gap:0.35rem;">
+                      <label class="class-check"><input type="checkbox" name="classes" value="Personal Finance 101"><span>Personal Finance 101</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Home Repair Basics"><span>Home Repair Basics</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="First Aid & Emergency Prep"><span>First Aid &amp; Emergency Prep</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Cooking Fundamentals"><span>Cooking Fundamentals</span></label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div style="font-family:var(--font-b);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--sage);font-weight:700;margin-bottom:0.4rem;">Presence &amp; Entertaining</div>
+                    <div style="display:flex;flex-direction:column;gap:0.35rem;">
+                      <label class="class-check"><input type="checkbox" name="classes" value="Hosting & Table Setting"><span>Hosting &amp; Table Setting</span></label>
+                      <label class="class-check"><input type="checkbox" name="classes" value="Modern Etiquette"><span>Modern Etiquette</span></label>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
