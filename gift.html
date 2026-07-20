@@ -67,7 +67,26 @@
     .success h2{font-family:var(--font-display);font-weight:400;font-size:2rem;color:var(--sage-deep)}
     .success p{color:var(--ink-soft)}
     .fine{font-size:0.78rem;color:var(--muted);margin-top:1rem;line-height:1.5}
-    @media(max-width:480px){.row{flex-direction:column;gap:0}}
+    .btn-nav-purchase {
+      background: var(--sage-deep, #4E5A41) !important;
+      color: #FFFFFF !important;
+      padding: 0.45rem 1rem !important;
+      border-radius: 20px !important;
+      font-weight: 600 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.08em !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.35rem !important;
+      border: none !important;
+      cursor: pointer !important;
+      transition: background 0.2s, transform 0.2s !important;
+    }
+    .btn-nav-purchase:hover {
+      background: var(--sage, #7A8A6B) !important;
+      color: #FFFFFF !important;
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 <body>
@@ -77,12 +96,21 @@
       <div class="nav-links">
         <a href="index.html" class="nav-link">Home</a>
         <a href="index.html#how-it-works" class="nav-link">How it Works</a>
-        <a href="index.html#interest-form-section" class="nav-link">Submit Interest Form</a>
         <a href="schedule.html" class="nav-link">Current Curriculum</a>
-        <a href="apply.html" class="nav-link">Apply to Teach</a>
         <div class="nav-item-dropdown">
           <button class="nav-link nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            Purchase <span class="nav-dropdown-arrow">▾</span>
+            The Studio <span class="nav-dropdown-arrow">▾</span>
+          </button>
+          <div class="nav-dropdown" role="menu" style="min-width: 220px; padding: 1rem 1.15rem;">
+            <div style="font-family: var(--font-body); font-weight: 700; font-size: 0.8rem; color: var(--sage-deep); margin-bottom: 0.25rem;">135 N. Main St, Pittston, PA</div>
+            <div style="font-family: var(--font-display); font-style: italic; font-size: 0.82rem; color: var(--muted);">Photos coming soon.</div>
+          </div>
+        </div>
+        <a href="index.html#interest-form-section" class="nav-link">Submit Interest Form</a>
+        <a href="apply.html" class="nav-link">Submit Teaching App</a>
+        <div class="nav-item-dropdown">
+          <button class="nav-link nav-dropdown-trigger btn-nav-purchase" aria-haspopup="true" aria-expanded="false">
+            Purchase <span class="nav-dropdown-arrow" style="color:#fff;">▾</span>
           </button>
           <div class="nav-dropdown" role="menu">
             <a href="schedule.html" class="nav-dropdown-link" role="menuitem">Single Class</a>
