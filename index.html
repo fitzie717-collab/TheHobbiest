@@ -2217,12 +2217,49 @@
               </div>
 
               <div class="form-group" style="margin-bottom: 1.15rem;">
-                <label for="interestClass" style="display:block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--sage-deep); margin-bottom: 0.45rem;">CLASS OF INTEREST</label>
-                <div style="position: relative;">
-                  <select id="interestClass" required style="width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--hairline); border-radius: 4px; background: var(--bg); font-family: var(--font-body); font-size: 0.92rem; color: var(--ink); appearance: none;">
-                    <option value="">Loading classes…</option>
-                  </select>
-                  <span style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--muted); font-size: 0.8rem;">▾</span>
+                <label style="display:block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--sage-deep); margin-bottom: 0.45rem;">CLASSES OF INTEREST (SELECT ALL THAT APPLY)</label>
+                
+                <div style="background: var(--bg); border: 1px solid var(--hairline); border-radius: 4px; padding: 0.85rem 1rem; max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem;">
+                  <label style="display: flex; align-items: center; gap: 0.65rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--sage-deep); cursor: pointer;">
+                    <input type="checkbox" name="interestClasses" value="Wreath Making" style="cursor: pointer; accent-color: var(--sage-deep);" />
+                    <span><strong>01. Wreath Making</strong> ($65)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 0.65rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--sage-deep); cursor: pointer;">
+                    <input type="checkbox" name="interestClasses" value="Flower Arranging & Floral Design" style="cursor: pointer; accent-color: var(--sage-deep);" />
+                    <span><strong>02. Flower Arranging &amp; Floral Design</strong> ($65)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 0.65rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--sage-deep); cursor: pointer;">
+                    <input type="checkbox" name="interestClasses" value="Watercolor Painting 101" style="cursor: pointer; accent-color: var(--sage-deep);" />
+                    <span><strong>03. Watercolor Painting 101</strong> ($55)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 0.65rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--sage-deep); cursor: pointer;">
+                    <input type="checkbox" name="interestClasses" value="Modern Calligraphy & Pointed Pen" style="cursor: pointer; accent-color: var(--sage-deep);" />
+                    <span><strong>04. Modern Calligraphy &amp; Pointed Pen</strong> ($55)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 0.65rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--sage-deep); cursor: pointer;">
+                    <input type="checkbox" name="interestClasses" value="Sourdough Bread Making" style="cursor: pointer; accent-color: var(--sage-deep);" />
+                    <span><strong>05. Sourdough Bread Making</strong> ($55)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 0.65rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--sage-deep); cursor: pointer;">
+                    <input type="checkbox" name="interestClasses" value="Hair Tutorial — Professional Blowouts" style="cursor: pointer; accent-color: var(--sage-deep);" />
+                    <span><strong>06. Hair Tutorial — Professional Blowouts</strong> ($45)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 0.65rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--sage-deep); cursor: pointer;">
+                    <input type="checkbox" name="interestClasses" value="Makeup Tutorial — Daily Application" style="cursor: pointer; accent-color: var(--sage-deep);" />
+                    <span><strong>07. Makeup Tutorial — Daily Application</strong> ($45)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 0.65rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--sage-deep); cursor: pointer;">
+                    <input type="checkbox" name="interestClasses" value="Makeup Tutorial — Night Out Glam" style="cursor: pointer; accent-color: var(--sage-deep);" />
+                    <span><strong>08. Makeup Tutorial — Night Out Glam</strong> ($45)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 0.65rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--sage-deep); cursor: pointer;">
+                    <input type="checkbox" name="interestClasses" value="Beginner Knitting — Chunky Scarf" style="cursor: pointer; accent-color: var(--sage-deep);" />
+                    <span><strong>09. Beginner Knitting — Chunky Scarf</strong> ($45)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 0.65rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--sage-deep); cursor: pointer;">
+                    <input type="checkbox" name="interestClasses" value="Sketch Art & Drawing Basics" style="cursor: pointer; accent-color: var(--sage-deep);" />
+                    <span><strong>10. Sketch Art &amp; Drawing Basics</strong> ($45)</span>
+                  </label>
                 </div>
               </div>
 
@@ -2817,7 +2854,7 @@
       const email = document.getElementById('interestEmail').value.trim();
       const phone = document.getElementById('interestPhone').value.trim();
       
-      const interestClass = document.getElementById('interestClass').value;
+      const interestClass = Array.from(document.querySelectorAll('input[name="interestClasses"]:checked')).map(cb => cb.value).join(', ');
       const suggestions = document.getElementById('interestSuggestion').value.trim();
       const availability = Array.from(document.querySelectorAll('input[name="interestAvail"]:checked')).map(cb => cb.value).join(', ');
 
