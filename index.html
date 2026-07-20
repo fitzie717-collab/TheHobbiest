@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#7A8A6B" />
   <title>The Hobbiest — Skills Club, Pittston, PA</title>
-  <meta name="description" content="A private members skills club for adults. Opening August 2026 in downtown Pittston, Pennsylvania." />
+  <meta name="description" content="A private members skills club for adults. Opening July 2026 in downtown Pittston, Pennsylvania." />
   <meta property="og:title" content="The Hobbiest — Skills Club" />
-  <meta property="og:description" content="A private members skills club for adults. Opening August 2026 in downtown Pittston, PA." />
+  <meta property="og:description" content="A private members skills club for adults. Opening July 2026 in downtown Pittston, PA." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://thehobbiestskillsclub.com" />
   <meta property="og:image" content="https://thehobbiestskillsclub.com/og-image.jpg" />
@@ -324,6 +324,54 @@
       white-space: nowrap;
     }
     .btn-outline:hover { background: var(--sage); color: #fff; }
+
+    /* Hero 6-button nav grid */
+    .hero-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      max-width: 460px;
+      margin-top: 2.5rem;
+    }
+    .hero-nav-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0.75rem 1rem;
+      background: transparent;
+      color: var(--sage-deep);
+      border: 1.5px solid var(--sage-pale);
+      border-radius: 6px;
+      font-family: var(--font-b);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.2s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease);
+      white-space: nowrap;
+      line-height: 1.3;
+    }
+    .hero-nav-btn:hover {
+      border-color: var(--sage);
+      background: var(--surface);
+      color: var(--sage-deep);
+    }
+    .hero-nav-btn--dark {
+      background: var(--sage-deep);
+      color: #fff;
+      border-color: var(--sage-deep);
+      grid-column: span 3;
+    }
+    .hero-nav-btn--dark:hover {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: #fff;
+    }
+    @media (max-width: 840px) {
+      .hero-nav-grid { max-width: 100%; }
+    }
 
     /* Hero right: seal + location tag */
     .hero-right {
@@ -883,18 +931,9 @@
     <div class="container sticky-nav-inner" style="position: relative;">
       <a href="index.html" class="wordmark">The Hobbiest</a>
 
-      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
 
-      <div class="nav-links" id="navLinks">
-        <a href="how-it-works.html" class="nav-link">How it works</a>
-        <a href="schedule.html" class="nav-link">Classes</a>
-        <a href="studio.html" class="nav-link">The Studio</a>
-        <a href="interest.html" class="nav-link">Interest form</a>
-        <a href="schedule.html" class="nav-link-pill">Book a class</a>
-        <a href="studio.html#membership-offer" class="nav-link-pill" style="background: var(--sage);">Membership</a>
-      </div>
+
+
     </div>
   </nav>
 
@@ -903,14 +942,18 @@
     <div class="container">
       <div class="hero">
         <div class="hero-left" data-reveal>
-          <div class="hero-eyebrow">Pittston, Pennsylvania · Opening August 2026</div>
+          <div class="hero-eyebrow">Pittston, Pennsylvania · Opening July 2026</div>
           <h1 class="hero-headline">Lessons,<br><em>for Life</em>.</h1>
           <div class="hero-body">
             <p>The Hobbiest is a private skills club built around the belief that confidence comes from capability. Through expert-led, immersive experiences, members build dynamic skillsets, cultivate taste, and curate a life of their own design.</p>
           </div>
-          <div class="hero-cta">
-            <a href="how-it-works.html" class="btn-primary">How It Works →</a>
-            <a href="schedule.html" class="btn-outline">View Curriculum</a>
+          <div class="hero-nav-grid">
+            <a href="studio.html" class="hero-nav-btn">The Studio</a>
+            <a href="interest.html" class="hero-nav-btn">Interest Form</a>
+            <a href="schedule.html" class="hero-nav-btn hero-nav-btn--dark">Purchase a Class →</a>
+            <a href="apply.html" class="hero-nav-btn">Apply to Teach</a>
+            <a href="schedule.html" class="hero-nav-btn">Curriculum</a>
+            <a href="how-it-works.html" class="hero-nav-btn">How It Works</a>
           </div>
         </div>
         <div class="hero-right" data-reveal>
@@ -989,7 +1032,7 @@
       <div class="footer-grid">
         <div>
           <div class="footer-wordmark">The Hobbiest</div>
-          <p>A private members skills club for adults. Opening August 2026 in downtown Pittston, PA.</p>
+          <p>A private members skills club for adults. Opening July 2026 in downtown Pittston, PA.</p>
         </div>
         <div>
           <h4>Visit</h4>
@@ -1026,31 +1069,7 @@
   </div>
 
   <script>
-    /* ============================================================
-       NAV TOGGLE
-       ============================================================ */
-    const navToggle = document.getElementById('navToggle');
-    const navLinks  = document.getElementById('navLinks');
-    navToggle.addEventListener('click', () => {
-      const open = navLinks.classList.toggle('open');
-      navToggle.classList.toggle('open', open);
-      navToggle.setAttribute('aria-expanded', open);
-    });
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.sticky-nav')) {
-        navLinks.classList.remove('open');
-        navToggle.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-    // Close on link click (mobile)
-    navLinks.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        navToggle.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
+
 
     /* ============================================================
        REVEAL ON SCROLL
