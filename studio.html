@@ -1,554 +1,321 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Studio & Parking Info — The Hobbiest Skills Club</title>
-
-  <!-- Google Fonts: Fraunces (serif) & Inter (sans) -->
+  <title>Club &amp; Parking — The Hobbiest Skills Club</title>
+  <meta name="description" content="Studio details, parking info, house rules, and studio membership at The Hobbiest in Pittston, PA." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
+  <script src="https://js.stripe.com/v3/"></script>
   <style>
     :root {
-      --bg: #F5F2EC;
-      --bg-alt: #EFECE4;
-      --bg-warm: #EBE7DF;
-      --surface: #FAF8F5;
-      --sage: #7A8A6B;
+      --bg:        #F1ECDF;
+      --bg-warm:   #EAE3D2;
+      --surface:   #FAF7F0;
+      --ink:       #4E5A41;
+      --ink-soft:  #6B7459;
+      --muted:     #8A8170;
+      --hairline:  #D9D2BE;
+      --sage:      #7A8A6B;
       --sage-deep: #4E5A41;
-      --sage-pale: #D2DACB;
-      --taupe: #A89878;
-      --ink: #1C2018;
-      --ink-soft: #424A3B;
-      --muted: #788070;
-      --hairline: #DFD9CE;
+      --sage-pale: #B5BFA8;
+      --font-d: "Fraunces", "Times New Roman", serif;
+      --font-b: "DM Sans", -apple-system, sans-serif;
       --max-w: 1200px;
-      --gutter: 2rem;
-      --font-display: 'Fraunces', Georgia, serif;
-      --font-body: 'Inter', system-ui, sans-serif;
-      --ease: cubic-bezier(0.25, 1, 0.5, 1);
+      --gutter: clamp(1.25rem, 4vw, 3rem);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
-
     *, *::before, *::after { box-sizing: border-box; }
-    html { background-color: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
-    body { margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
-    h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; color: var(--sage-deep); margin: 0; }
-    p { margin: 0; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: var(--font-d); font-size: 16px; line-height: 1.6; color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+    img { max-width: 100%; height: auto; display: block; }
+    button { font-family: var(--font-b); cursor: pointer; }
     a { color: inherit; }
+    h1, h2, h3, h4 { font-family: var(--font-d); font-weight: 400; line-height: 1.05; letter-spacing: -0.015em; margin: 0; font-variation-settings: "opsz" 100; }
+    p { margin: 0; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
 
-    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); width: 100%; }
+    /* GRAIN */
+    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); opacity: 0.5; mix-blend-mode: multiply; }
 
-    /* Paper grain texture overlay */
-    body::before {
-      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-      opacity: 0.55; mix-blend-mode: multiply;
-    }
+    /* CONTACT BAR */
+    .contact-bar { background: var(--sage-deep); color: rgba(241,236,223,0.7); font-family: var(--font-b); font-size: 0.7rem; letter-spacing: 0.06em; padding: 0.5rem 0; }
+    .cb-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .cb-items { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .cb-item { display: flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
+    .cb-item svg { width: 10px; height: 10px; opacity: 0.55; flex-shrink: 0; }
+    .contact-bar a { color: inherit; text-decoration: none; transition: color 0.2s; }
+    .contact-bar a:hover { color: var(--bg); }
+    @media (max-width: 640px) { .cb-inner { justify-content: center; } .cb-item:first-child { display: none; } }
 
-    /* TOP HEADER BAR (Row 1) & SUBNAV STRIP (Row 2) */
-    .top-header-bar {
-      background: var(--bg);
-      padding: 1.1rem 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .top-header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .top-header-link {
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 600;
-      text-decoration: none;
-      position: relative;
-      transition: color 0.2s;
-    }
-    .top-header-link:hover {
-      color: var(--sage-deep);
-    }
-    .top-header-link.active {
-      color: var(--sage-deep);
-      font-weight: 700;
-    }
-    .top-header-link.active::after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--sage-deep);
-    }
-
-    /* SUBNAV STRIP (EXACT MATCH TO ANNOTATED USER SCREENSHOT) */
-    .subnav-strip {
-      background: var(--surface, #FAF8F5);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      padding: 0.9rem 0;
-      position: relative;
-      z-index: 50;
-    }
-    .subnav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .subnav-group {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-    .subnav-divider {
-      width: 1px;
-      height: 34px;
-      background: var(--hairline);
-      flex-shrink: 0;
+    /* STICKY NAV */
+    .sticky-nav { position: sticky; top: 0; z-index: 500; background: var(--surface); border-bottom: 1px solid var(--hairline); box-shadow: 0 2px 20px rgba(78,90,65,0.07); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1.5rem; position: relative; }
+    .wordmark { font-family: var(--font-d); font-size: 1.25rem; font-weight: 400; font-style: italic; color: var(--sage); text-decoration: none; letter-spacing: -0.01em; font-variation-settings: "opsz" 144; flex-shrink: 0; }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+    .nav-link { font-family: var(--font-b); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 600; text-decoration: none; padding: 0.45rem 0.75rem; border-radius: 4px; transition: color 0.2s var(--ease), background 0.2s var(--ease); white-space: nowrap; }
+    .nav-link:hover { color: var(--sage-deep); background: var(--bg-warm); }
+    .nav-link-active { color: var(--sage-deep); }
+    .nav-item-dropdown { position: relative; }
+    .nav-link-pill { background: var(--sage-deep); color: #fff !important; padding: 0.45rem 1rem; border-radius: 20px; font-family: var(--font-b); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 0.35rem; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s var(--ease), transform 0.15s var(--ease); white-space: nowrap; }
+    .nav-link-pill:hover { background: var(--sage); transform: translateY(-1px); }
+    .nav-dropdown { position: absolute; top: calc(100% + 0.5rem); right: 0; background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px; padding: 0.4rem 0; min-width: 180px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 0.18s var(--ease), transform 0.18s var(--ease), visibility 0.18s; box-shadow: 0 10px 32px rgba(78,90,65,0.13); z-index: 20; }
+    .nav-item-dropdown:hover .nav-dropdown, .nav-item-dropdown:focus-within .nav-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dropdown-link { display: block; padding: 0.65rem 1.15rem; font-family: var(--font-b); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 600; text-decoration: none; transition: color 0.15s, background 0.15s; }
+    .nav-dropdown-link:hover { color: var(--sage-deep); background: var(--bg); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 0.5rem; cursor: pointer; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--sage-deep); transition: 0.2s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (max-width: 960px) {
+      .nav-toggle { display: flex; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; background: var(--surface); border-bottom: 1px solid var(--hairline); padding: 0.75rem var(--gutter) 1rem; gap: 0.25rem; box-shadow: 0 10px 30px rgba(78,90,65,0.12); }
+      .nav-links.open { display: flex; }
+      .nav-link { font-size: 0.82rem; padding: 0.7rem 0.75rem; }
+      .nav-link-pill { justify-content: center; margin-top: 0.25rem; }
+      .nav-item-dropdown { position: static; }
+      .nav-dropdown { position: static; opacity: 1; visibility: visible; transform: none; box-shadow: none; border: none; border-left: 2px solid var(--sage-pale); background: transparent; padding: 0.2rem 0; margin: 0.25rem 0 0.5rem 0.75rem; }
+      .nav-dropdown-link { padding: 0.45rem 0.75rem; font-size: 0.78rem; }
     }
 
-    .subnav-link {
-      font-family: var(--font-body);
-      font-size: 0.76rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #666C5E;
-      font-weight: 600;
-      text-decoration: none;
-      line-height: 1.25;
-      transition: color 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .subnav-link:hover {
-      color: var(--sage-deep);
-    }
-    .subnav-link.active {
-      color: var(--sage-deep);
-      font-weight: 700;
-    }
+    /* PAGE HERO */
+    .page-hero { padding: clamp(3rem, 6vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem); border-bottom: 1px solid var(--hairline); background: var(--bg); }
+    .page-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 1.1rem; }
+    .page-eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--sage); }
+    .page-hero h1 { font-size: clamp(2.2rem, 5vw, 4rem); letter-spacing: -0.025em; font-weight: 350; font-variation-settings: "opsz" 144; color: var(--sage-deep); margin-bottom: 1rem; }
+    .page-hero h1 em { font-style: italic; color: var(--sage); }
+    .hero-lede { font-family: var(--font-d); font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.65; color: var(--ink-soft); font-weight: 350; max-width: 58ch; }
 
-    .subnav-link-studio {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--sage-deep);
-      font-weight: 500;
-      font-variation-settings: 'opsz' 144;
-    }
+    /* SECTION HELPERS */
+    .section { padding: clamp(3.5rem, 6vw, 5rem) 0; }
+    .section-alt { background: var(--bg-warm); }
+    .section-surface { background: var(--surface); }
+    .section-border { border-bottom: 1px solid var(--hairline); }
+    .eyebrow { font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 0.75rem; display: block; }
+    .section-heading { font-size: clamp(1.75rem, 3.5vw, 2.75rem); font-weight: 350; letter-spacing: -0.025em; color: var(--sage-deep); line-height: 1.08; font-variation-settings: "opsz" 144; }
+    .section-heading em { font-style: italic; color: var(--sage); }
+    .section-lede { font-family: var(--font-d); font-size: clamp(1rem, 1.4vw, 1.15rem); line-height: 1.65; color: var(--ink-soft); font-weight: 350; max-width: 54ch; margin-top: 0.75rem; }
 
-    /* IDENTICAL GREEN PURCHASE PILL BUTTON */
-    .btn-purchase-pill {
-      background: var(--sage-deep, #4E5A41) !important;
-      color: #FFFFFF !important;
-      padding: 0.6rem 1.4rem !important;
-      border-radius: 20px !important;
-      font-family: var(--font-body) !important;
-      font-size: 0.78rem !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.14em !important;
-      text-transform: uppercase !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 0.45rem !important;
-      border: none !important;
-      cursor: pointer !important;
-      box-shadow: 0 3px 10px rgba(78, 90, 65, 0.18);
-      transition: all 0.2s ease !important;
-      text-decoration: none !important;
-    }
-    .btn-purchase-pill:hover {
-      background: var(--sage, #7A8A6B) !important;
-      color: #FFFFFF !important;
-      transform: translateY(-1px);
-      box-shadow: 0 5px 14px rgba(78, 90, 65, 0.28);
-    }
+    /* CURATION / HOUSE RULES */
+    .curation-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: start; }
+    .rules-list { list-style: none; padding: 0; margin: 1.75rem 0 0; display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--hairline); }
+    .rules-list li { font-family: var(--font-d); font-style: italic; font-size: clamp(1.15rem, 1.8vw, 1.45rem); color: var(--sage-deep); line-height: 1.35; letter-spacing: -0.01em; font-variation-settings: "opsz" 144; padding: 0.9rem 0; border-bottom: 1px solid var(--hairline); }
+    .photo-frame { background: var(--bg-warm); padding: clamp(0.75rem, 1.5vw, 1.1rem); border-radius: 10px; border: 1px solid var(--hairline); box-shadow: 0 12px 36px rgba(78,90,65,0.07); }
+    .photo-frame img { width: 100%; border-radius: 6px; display: block; object-fit: cover; }
+    .photo-caption { display: flex; justify-content: space-between; align-items: center; margin-top: 0.65rem; padding: 0 0.1rem; }
+    .photo-caption-text { font-family: var(--font-d); font-style: italic; font-size: 0.85rem; color: var(--ink-soft); }
+    .photo-caption-badge { font-family: var(--font-b); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+    @media (max-width: 800px) { .curation-grid { grid-template-columns: 1fr; } }
 
-    @media (max-width: 900px) {
-      .subnav-inner {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .subnav-divider {
-        display: none;
-      }
-      .subnav-group {
-        gap: 1.25rem;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-    }
+    /* PARKING SECTION */
+    .parking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+    .info-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px; padding: clamp(1.75rem, 3vw, 2.5rem); display: flex; flex-direction: column; gap: 1.5rem; }
+    .address-heading { font-family: var(--font-d); font-size: clamp(1.5rem, 2.5vw, 2rem); color: var(--sage-deep); letter-spacing: -0.015em; margin: 0.25rem 0 0.4rem; }
+    .address-sub { font-family: var(--font-b); font-size: 0.9rem; color: var(--ink-soft); line-height: 1.55; }
+    .parking-highlight { background: rgba(122,138,107,0.1); border: 1.5px solid var(--sage); border-radius: 8px; padding: 1.1rem 1.25rem; }
+    .parking-highlight-label { font-family: var(--font-b); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--sage-deep); margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem; }
+    .parking-highlight p { font-family: var(--font-b); font-size: 0.88rem; color: var(--ink-soft); line-height: 1.55; margin-top: 0.3rem; }
+    .parking-highlight strong { color: var(--sage-deep); }
+    .card-links { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; padding-top: 1rem; border-top: 1px solid var(--hairline); }
+    .card-link { font-family: var(--font-b); font-size: 0.82rem; font-weight: 600; color: var(--sage-deep); text-decoration: none; border-bottom: 1px solid var(--sage-pale); padding-bottom: 1px; transition: border-color 0.2s; }
+    .card-link:hover { border-color: var(--sage); }
+    .card-link-sep { color: var(--hairline); }
+    .map-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden; }
+    .map-card-header { padding: 1rem 1.5rem; background: var(--bg-warm); border-bottom: 1px solid var(--hairline); display: flex; align-items: center; justify-content: space-between; }
+    .map-card-title { font-family: var(--font-b); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--sage-deep); }
+    .map-card-sub { font-family: var(--font-d); font-style: italic; font-size: 0.82rem; color: var(--muted); }
+    .map-card-body { padding: 1rem; background: #E6E2D8; }
+    .map-card-body img { width: 100%; border-radius: 6px; border: 1px solid var(--hairline); display: block; }
+    .map-legend { display: flex; justify-content: space-around; margin-top: 0.75rem; font-family: var(--font-b); font-size: 0.78rem; font-weight: 600; color: var(--sage-deep); }
+    @media (max-width: 720px) { .parking-grid { grid-template-columns: 1fr; } }
 
-    /* Page Hero */
-    .hero-wrap {
-      padding: clamp(3rem, 5vw, 4rem) 0 clamp(2rem, 3vw, 2.5rem);
-      border-bottom: 1px solid var(--hairline);
-      background: var(--bg);
-    }
-    .eyebrow {
-      display: inline-block; font-size: 0.72rem; letter-spacing: 0.28em;
-      text-transform: uppercase; color: var(--sage); font-weight: 600; margin-bottom: 0.85rem;
-    }
-    .hero-wrap h1 {
-      font-size: clamp(2.5rem, 5vw, 3.8rem); color: var(--sage-deep); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 0.85rem;
-    }
-    .hero-wrap h1 em { font-style: italic; color: var(--sage); }
-    .hero-lede {
-      font-family: var(--font-display); font-size: clamp(1.1rem, 1.8vw, 1.35rem); color: var(--ink-soft); max-width: 68ch; line-height: 1.55; font-weight: 350;
-    }
+    /* MEMBERSHIP SECTION */
+    .membership-card { background: var(--surface); border: 1.5px solid var(--sage); border-radius: 12px; padding: clamp(2rem, 4vw, 3rem); box-shadow: 0 12px 32px rgba(78,90,65,0.08); max-width: 960px; margin: 0 auto; }
+    .membership-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem; padding-bottom: 1.75rem; margin-bottom: 1.75rem; border-bottom: 1px solid var(--hairline); }
+    .price-display { font-family: var(--font-d); font-size: 3rem; color: var(--sage-deep); letter-spacing: -0.03em; line-height: 1; }
+    .price-period { font-family: var(--font-b); font-size: 0.95rem; color: var(--muted); font-weight: 400; margin-left: 0.2rem; }
+    .price-note { font-family: var(--font-b); font-size: 0.78rem; color: var(--muted); margin-top: 0.35rem; }
+    .benefit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem 2.5rem; margin-bottom: 2rem; }
+    .benefit-item { display: flex; gap: 0.75rem; align-items: start; }
+    .benefit-check { color: var(--sage); font-weight: 700; font-size: 1rem; line-height: 1.3; flex-shrink: 0; }
+    .benefit-title { font-family: var(--font-b); font-size: 0.92rem; font-weight: 700; color: var(--sage-deep); margin-bottom: 0.2rem; }
+    .benefit-desc { font-family: var(--font-b); font-size: 0.82rem; color: var(--ink-soft); line-height: 1.55; }
+    .membership-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.85rem 1.6rem; background: var(--sage-deep); color: #fff; border: 1.5px solid var(--sage-deep); border-radius: 999px; font-family: var(--font-b); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background 0.2s var(--ease), transform 0.15s var(--ease); cursor: pointer; white-space: nowrap; }
+    .btn-primary:hover { background: var(--sage); border-color: var(--sage); transform: translateY(-1px); }
+    .btn-outline { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.85rem 1.6rem; background: transparent; color: var(--sage-deep); border: 1.5px solid var(--sage); border-radius: 999px; font-family: var(--font-b); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background 0.2s var(--ease), color 0.2s var(--ease); cursor: pointer; white-space: nowrap; }
+    .btn-outline:hover { background: var(--sage); color: #fff; }
+    @media (max-width: 640px) { .benefit-grid { grid-template-columns: 1fr; } }
 
-    /* ENVIRONMENT CURATION SECTION (MATCHING USER SKETCH) */
-    .curation-section {
-      padding: clamp(3.5rem, 6vw, 5rem) 0;
-      background: #FAF8F5;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .curation-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.15fr;
-      gap: clamp(2.5rem, 5vw, 4rem);
-      align-items: center;
-    }
-    .curation-left {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .curation-heading {
-      font-size: clamp(2.2rem, 4vw, 3.2rem);
-      color: var(--sage-deep);
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-    }
-    .curation-heading em {
-      font-style: italic;
-      color: var(--sage);
-    }
-    .curation-prose p {
-      font-size: 0.96rem;
-      color: var(--ink-soft);
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-    .curation-rules-list {
-      list-style: none;
-      padding: 0;
-      margin: 1.5rem 0 0 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-    .curation-rules-list li {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: clamp(1.35rem, 2.2vw, 1.65rem);
-      color: var(--sage-deep);
-      line-height: 1.25;
-      letter-spacing: -0.01em;
-    }
-
-    .photo-frame-wrap {
-      background: var(--bg-warm);
-      padding: clamp(0.75rem, 2vw, 1.25rem);
-      border-radius: 12px;
-      border: 1px solid var(--hairline);
-      box-shadow: 0 12px 36px rgba(78, 90, 65, 0.08);
-      position: relative;
-    }
-    .photo-frame-img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      display: block;
-      object-fit: cover;
-    }
-
-    /* LOCATION & PARKING SECTION */
-    .parking-section {
-      padding: clamp(3.5rem, 6vw, 5rem) 0;
-      background: var(--bg-alt);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .parking-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.05fr;
-      gap: clamp(2rem, 4vw, 3.5rem);
-      align-items: stretch;
-    }
-    .info-card {
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: 12px;
-      padding: clamp(1.75rem, 3vw, 2.5rem);
-      box-shadow: 0 8px 24px rgba(78, 90, 65, 0.04);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .parking-highlight-box {
-      background: rgba(122, 138, 107, 0.12);
-      border: 1.5px solid var(--sage);
-      border-radius: 8px;
-      padding: 1.35rem 1.5rem;
-      margin-top: 1.5rem;
-    }
-    .parking-highlight-title {
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--sage-deep);
-      margin-bottom: 0.4rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* MAP DIAGRAM CARD */
-    .map-card {
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: 12px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 8px 24px rgba(78, 90, 65, 0.04);
-    }
-    .map-header {
-      padding: 1.25rem 1.75rem;
-      background: var(--bg-warm);
-      border-bottom: 1px solid var(--hairline);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    /* MEMBERSHIP CREDIT LINK OFFER SECTION */
-    .membership-section {
-      padding: clamp(3.5rem, 6vw, 5rem) 0;
-      background: var(--bg);
-    }
-    .membership-card-wrap {
-      background: var(--surface);
-      border: 1.5px solid var(--sage);
-      border-radius: 14px;
-      padding: clamp(2rem, 4vw, 3rem);
-      box-shadow: 0 12px 32px rgba(78, 90, 65, 0.08);
-      max-width: 960px;
-      margin: 0 auto;
-    }
-    .membership-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      border-bottom: 1px solid var(--hairline);
-      padding-bottom: 1.75rem;
-      margin-bottom: 1.75rem;
-    }
-    .price-tag {
-      font-family: var(--font-display);
-      font-size: 2.8rem;
-      color: var(--sage-deep);
-      line-height: 1;
-    }
-    .price-tag span {
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      color: var(--muted);
-      font-weight: normal;
-    }
-
-    .benefit-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.25rem;
-      margin-bottom: 2rem;
-    }
-    @media (max-width: 768px) {
-      .benefit-list { grid-template-columns: 1fr; }
-      .curation-grid, .parking-grid { grid-template-columns: 1fr; }
-    }
-
-    .benefit-item {
-      display: flex;
-      gap: 0.75rem;
-      align-items: flex-start;
-    }
-    .benefit-icon {
-      color: var(--sage);
-      font-weight: bold;
-      font-size: 1.1rem;
-      line-height: 1.2;
-      flex-shrink: 0;
-    }
-
-    .actions-group {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-    }
-    .btn-action-primary {
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 0.95rem 1.6rem; background: var(--sage-deep); color: #FFF;
-      border-radius: 8px; font-weight: 600; text-decoration: none;
-      font-family: var(--font-body); font-size: 0.92rem; transition: background 0.2s;
-    }
-    .btn-action-primary:hover { background: var(--sage); }
-    .btn-action-secondary {
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 0.95rem 1.6rem; background: #FAF8F5; color: var(--sage-deep);
-      border: 1.5px solid var(--sage); border-radius: 8px; font-weight: 600;
-      text-decoration: none; font-family: var(--font-body); font-size: 0.92rem; transition: all 0.2s;
-    }
-    .btn-action-secondary:hover { background: var(--sage-pale); }
+    /* MODAL */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(78,90,65,0.45); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 600; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-backdrop.open { display: flex; }
+    .modal { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; width: 100%; max-width: 520px; max-height: 90dvh; overflow-y: auto; box-shadow: 0 24px 64px rgba(78,90,65,0.2); display: flex; flex-direction: column; }
+    .modal-header { display: flex; align-items: flex-start; justify-content: space-between; padding: 1.5rem 1.75rem 1.25rem; border-bottom: 1px solid var(--hairline); gap: 1rem; }
+    .modal-title { font-family: var(--font-d); font-size: 1.3rem; font-weight: 400; color: var(--sage-deep); }
+    .modal-subtitle { font-family: var(--font-d); font-style: italic; font-size: 0.88rem; color: var(--muted); margin-top: 0.2rem; }
+    .modal-close { background: none; border: 1px solid var(--hairline); width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s, color 0.2s; }
+    .modal-close:hover { border-color: var(--sage); color: var(--sage-deep); }
+    .modal-body { padding: 1.5rem 1.75rem 2rem; flex: 1; }
+    .modal-summary { background: var(--bg-warm); border: 1px solid var(--hairline); border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .modal-summary-name { font-family: var(--font-d); font-size: 1rem; color: var(--sage-deep); }
+    .modal-summary-meta { font-family: var(--font-d); font-style: italic; font-size: 0.82rem; color: var(--muted); margin-top: 0.1rem; }
+    .modal-summary-price { font-family: var(--font-d); font-size: 1.2rem; color: var(--sage-deep); white-space: nowrap; }
+    #checkout-embed { min-height: 200px; }
+    .modal-success { display: none; text-align: center; padding: 2rem 0; }
+    .modal-success.show { display: block; }
+    .modal-success-mark { font-size: 2rem; margin-bottom: 1rem; }
+    .modal-success h3 { font-family: var(--font-d); font-size: 1.5rem; color: var(--sage-deep); margin-bottom: 0.6rem; }
+    .modal-success h3 em { font-style: italic; color: var(--sage); }
+    .modal-success p { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.6; max-width: 32ch; margin: 0 auto; }
 
     /* FOOTER */
-    footer { background: var(--bg-alt); padding: 4rem 0 2rem 0; border-top: 1px solid var(--hairline); }
+    footer { background: var(--sage-deep); color: var(--bg); padding: 4rem 0 2rem; margin-top: auto; }
     .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-    .wordmark-lg { font-family: var(--font-display); font-size: 1.8rem; font-style: italic; color: var(--sage); margin-bottom: 0.75rem; }
-    .footer-grid p { color: var(--ink-soft); font-size: 0.88rem; line-height: 1.6; }
-    .footer-grid h4 { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 1rem; }
-    .footer-grid .stack { display: flex; flex-direction: column; gap: 0.5rem; }
-    .footer-grid a { color: var(--ink-soft); font-size: 0.88rem; text-decoration: none; transition: color 0.2s; }
-    .footer-grid a:hover { color: var(--sage); }
-    .footer-bottom { border-top: 1px solid var(--hairline); padding-top: 2rem; display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); flex-wrap: wrap; gap: 1rem; }
-    .footer-legal { display: flex; gap: 1rem; }
-    .footer-legal a { text-decoration: none; color: var(--muted); }
-    .footer-legal a:hover { color: var(--sage-deep); }
+    .footer-wordmark { font-family: var(--font-d); font-style: italic; font-size: 1.75rem; color: var(--bg); letter-spacing: -0.01em; margin-bottom: 1rem; font-variation-settings: "opsz" 144; }
+    footer p { color: rgba(241,236,223,0.65); font-size: 0.92rem; line-height: 1.7; }
+    footer h4 { font-family: var(--font-b); font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage-pale); font-weight: 600; margin: 0 0 1.1rem; }
+    footer a { color: rgba(241,236,223,0.7); text-decoration: none; transition: color 0.2s; display: block; margin-bottom: 0.45rem; font-size: 0.92rem; }
+    footer a:hover { color: var(--sage-pale); }
+    .footer-bottom { border-top: 1px solid rgba(241,236,223,0.12); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; font-family: var(--font-b); font-size: 0.72rem; color: rgba(241,236,223,0.4); }
+    .footer-legal { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .footer-legal a { color: rgba(241,236,223,0.45); display: inline; margin: 0; }
+    .footer-sep { opacity: 0.4; }
+    @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr; gap: 2rem; } .footer-bottom { flex-direction: column; align-items: flex-start; } }
+
+    [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity 0.75s var(--ease), transform 0.75s var(--ease); }
+    [data-reveal].is-visible { opacity: 1; transform: none; }
+    :focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; }
   </style>
 </head>
 <body>
 
-  <!-- =========================================================
-       NAV
-       ========================================================= -->
-  <!-- TOP HEADER BAR (Row 1) -->
-  <div class="top-header-bar">
-    <div class="container top-header-inner">
-      <a href="index.html" class="top-header-link">HOME</a>
-      <a href="login.html" class="top-header-link">HOBBIEST LOG IN</a>
+  <!-- CONTACT BAR -->
+  <div class="contact-bar">
+    <div class="container cb-inner">
+      <div class="cb-items">
+        <div class="cb-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          135 N. Main Street, Pittston, PA
+        </div>
+        <div class="cb-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+15703546189">(570) 354-6189</a>
+        </div>
+        <div class="cb-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+        </div>
+      </div>
+      <a href="login.html" style="font-family:var(--font-b);font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(241,236,223,0.55);text-decoration:none;font-weight:600;">Member Login →</a>
     </div>
   </div>
 
-  <!-- =========================================================
-       ENVIRONMENT CURATION SECTION (WITH REAL STUDIO SPACE PHOTO)
-       ========================================================= -->
-  <section class="curation-section" style="padding-top: 2.5rem;">
-    <div class="container">
-      <div class="curation-grid">
-        
-        <!-- LEFT COLUMN: Heading, Prose & House Rules -->
-        <div class="curation-left">
-          <span class="eyebrow" style="margin-bottom: 0.25rem;">IN THE CLUB</span>
-          <h2 class="curation-heading">Environment <em>Curation</em>.</h2>
-
-          <div class="curation-prose">
-            <p>
-              The Hobbiest is designed to be a space where members are fully present with the experience in front of them. To preserve this atmosphere, we keep the environment intentionally simple:
-            </p>
-            <p>
-              Photos may be invited by the instructor during the final moments of class. We ask that members remain mindful of the privacy and experience of others.
-            </p>
+  <!-- STICKY NAV -->
+  <nav class="sticky-nav" role="navigation" aria-label="Primary">
+    <div class="container nav-inner">
+      <a href="index.html" class="wordmark">The Hobbiest</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="how-it-works.html" class="nav-link">How It Works</a>
+        <a href="schedule.html" class="nav-link">Curriculum</a>
+        <a href="studio.html" class="nav-link nav-link-active">Club &amp; Parking</a>
+        <a href="interest.html" class="nav-link">Interest Form</a>
+        <a href="apply.html" class="nav-link">Apply to Teach</a>
+        <div class="nav-item-dropdown">
+          <button class="nav-link-pill" aria-haspopup="true">Purchase ▾</button>
+          <div class="nav-dropdown">
+            <a href="schedule.html" class="nav-dropdown-link">Single Class</a>
+            <a href="studio.html#membership-offer" class="nav-dropdown-link">Studio Membership</a>
+            <a href="gift.html" class="nav-dropdown-link">Gift Card</a>
           </div>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-          <!-- ITALICIZED HOUSE RULES LIST -->
-          <ul class="curation-rules-list">
+  <!-- PAGE HERO -->
+  <header class="page-hero">
+    <div class="container" data-reveal>
+      <span class="page-eyebrow">The Hobbiest Skills Club</span>
+      <h1>Club &amp; <em>Parking</em>.</h1>
+      <p class="hero-lede">135 N. Main Street, Pittston, PA — with free member and guest parking directly down the street at 167 N. Main. Here's everything you need to know before your first visit.</p>
+    </div>
+  </header>
+
+  <!-- ENVIRONMENT CURATION & HOUSE RULES -->
+  <section class="section section-surface section-border">
+    <div class="container">
+      <div class="curation-grid" data-reveal>
+        <div>
+          <span class="eyebrow">In the Club</span>
+          <h2 class="section-heading">Environment <em>Curation</em>.</h2>
+          <p class="section-lede">The Hobbiest is designed to be a space where members are fully present with the experience in front of them. To preserve this atmosphere, we keep the environment intentionally simple.</p>
+          <p style="font-family:var(--font-b);font-size:0.88rem;color:var(--ink-soft);line-height:1.6;margin-top:1rem;">Photos may be invited by the instructor during the final moments of class. We ask that members remain mindful of the privacy and experience of others.</p>
+          <ul class="rules-list">
             <li>No electronics or WiFi.</li>
-            <li>Adults-only environment; guests must be 18+ to enroll in sessions.</li>
+            <li>Adults only — guests must be 18+ to enroll.</li>
             <li>No smoking or alcohol.</li>
             <li>No outside food.</li>
           </ul>
         </div>
-
-        <!-- RIGHT COLUMN: Real Studio Space Photo from Homepage -->
-        <div class="photo-frame-wrap">
-          <img src="space-main.jpg" alt="The Hobbiest Studio Interior Space" class="photo-frame-img" />
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; padding: 0 0.25rem;">
-            <span style="font-family: var(--font-display); font-style: italic; font-size: 0.88rem; color: var(--sage-deep);">The Hobbiest Studio — 135 N. Main St, Pittston</span>
-            <span style="font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 600;">Opening August 2026</span>
+        <div class="photo-frame">
+          <img src="space-main.jpg" alt="The Hobbiest Studio Interior" />
+          <div class="photo-caption">
+            <span class="photo-caption-text">135 N. Main St, Pittston</span>
+            <span class="photo-caption-badge">Opening August 2026</span>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- =========================================================
-       LOCATION & PARKING MAP SECTION (135 = HOBBIEST, 167 = FREE PARKING)
-       ========================================================= -->
-  <section class="parking-section">
+  <!-- LOCATION & PARKING -->
+  <section class="section section-alt section-border">
     <div class="container">
-      <div style="margin-bottom: 2rem;">
-        <span class="eyebrow">LOCATION &amp; PARKING MAP</span>
-        <h2>Studio &amp; <em>Parking Map</em>.</h2>
-        <p style="font-size: 1rem; color: var(--ink-soft); max-width: 65ch; margin-top: 0.4rem;">
-          The Hobbiest is located at <strong>135 N. Main Street</strong>. Free member &amp; guest parking is located right down the street at <strong>167 N. Main Street</strong>.
-        </p>
+      <div style="margin-bottom:2.25rem;" data-reveal>
+        <span class="eyebrow">Location &amp; Parking</span>
+        <h2 class="section-heading">Studio &amp; <em>Parking Map</em>.</h2>
+        <p class="section-lede">The Hobbiest is at <strong>135 N. Main Street</strong>. Free parking is right down the street at <strong>167 N. Main Street</strong> — a 60-second walk to our front door.</p>
       </div>
+      <div class="parking-grid" data-reveal>
 
-      <div class="parking-grid">
-        
-        <!-- LEFT COLUMN: Address & Detailed Free Parking Details -->
         <div class="info-card">
           <div>
-            <div style="font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 0.5rem;">STUDIO ADDRESS</div>
-            <h3 style="font-family: var(--font-display); font-size: 1.8rem; color: var(--sage-deep); margin-bottom: 0.5rem;">135 N. Main Street</h3>
-            <p style="font-size: 1rem; color: var(--ink-soft); line-height: 1.5;">
-              Pittston, PA 18640<br />
-              <span style="font-size: 0.88rem; color: var(--muted); font-style: italic;">Wyoming Valley · NEPA</span>
-            </p>
-
-            <!-- HIGHLIGHTED PARKING BOX REQUIRED BY USER -->
-            <div class="parking-highlight-box">
-              <div class="parking-highlight-title">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
-                <span>Free Member &amp; Guest Parking</span>
+            <span class="eyebrow" style="margin-bottom:0.4rem;">Studio Address</span>
+            <h3 class="address-heading">135 N. Main Street</h3>
+            <p class="address-sub">Pittston, PA 18640<br><em style="color:var(--muted);">Wyoming Valley · NEPA</em></p>
+            <div class="parking-highlight" style="margin-top:1.25rem;">
+              <div class="parking-highlight-label">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                Free Member &amp; Guest Parking
               </div>
-              <p style="font-size: 0.96rem; color: var(--sage-deep); font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">
-                📍 Free Parking: 167 N. Main Street
-              </p>
-              <p style="font-size: 0.86rem; color: var(--ink-soft); line-height: 1.5;">
-                Park free in the designated lot at 167 N. Main Street (marked on the map). A short 60-second sidewalk stroll brings you directly to our front doors at 135 N. Main St.
-              </p>
+              <p><strong>167 N. Main Street</strong> — park free in the designated lot, then take the sidewalk 60 seconds north to our front doors at 135 N. Main.</p>
             </div>
           </div>
-
-          <div style="margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid var(--hairline); display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-            <a href="https://maps.google.com/?q=135+N+Main+St,+Pittston,+PA+18640" target="_blank" rel="noopener" style="font-family: var(--font-body); font-weight: 600; font-size: 0.85rem; color: var(--sage-deep); text-decoration: none; border-bottom: 1px solid var(--sage-pale); padding-bottom: 2px;">
-              Open 135 N. Main in Google Maps →
-            </a>
-            <span style="color: var(--muted); font-size: 0.82rem;">·</span>
-            <a href="tel:+15703546189" style="font-family: var(--font-body); font-size: 0.85rem; color: var(--ink-soft); text-decoration: none;">
-              Call Studio: (570) 354-6189
-            </a>
+          <div class="card-links">
+            <a href="https://maps.google.com/?q=135+N+Main+St,+Pittston,+PA+18640" target="_blank" rel="noopener" class="card-link">Open in Google Maps →</a>
+            <span class="card-link-sep">·</span>
+            <a href="tel:+15703546189" class="card-link">(570) 354-6189</a>
           </div>
         </div>
 
-        <!-- RIGHT COLUMN: Parking Map Image Display -->
         <div class="map-card">
-          <div class="map-header">
-            <span style="font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--sage-deep);">Pittston Studio &amp; Parking Map</span>
-            <span style="font-size: 0.8rem; color: var(--muted); font-style: italic;">135 &amp; 167 N. Main St</span>
+          <div class="map-card-header">
+            <span class="map-card-title">Pittston Studio &amp; Parking Map</span>
+            <span class="map-card-sub">135 &amp; 167 N. Main St</span>
           </div>
-
-          <div style="padding: 1rem; background: #E6E2D8; text-align: center;">
-            <img src="parking-map.png" alt="Map showing 135 North Main Street (The Hobbiest) and 167 North Main Street (Free Parking)" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--hairline); display: block;" />
-            <div style="display: flex; justify-content: space-around; margin-top: 0.85rem; font-size: 0.82rem; font-weight: 600; color: var(--sage-deep);">
-              <span>🏢 135 N. Main = The Hobbiest</span>
-              <span>🚗 167 N. Main = Free Parking</span>
+          <div class="map-card-body">
+            <img src="parking-map.png" alt="Map showing 135 N. Main (The Hobbiest) and 167 N. Main (Free Parking)" />
+            <div class="map-legend">
+              <span>🏢 135 N. Main — The Hobbiest</span>
+              <span>🚗 167 N. Main — Free Parking</span>
             </div>
           </div>
         </div>
@@ -557,125 +324,201 @@
     </div>
   </section>
 
-  <!-- =========================================================
-       MONTHLY MEMBERSHIP OFFER & CLASS CREDIT LINK SECTION
-       ========================================================= -->
-  <section class="membership-section" id="membership-offer">
+  <!-- STUDIO MEMBERSHIP -->
+  <section class="section section-border" id="membership-offer">
     <div class="container">
-      
-      <div class="membership-card-wrap">
+      <div class="membership-card" data-reveal>
         <div class="membership-header">
           <div>
-            <span class="eyebrow">STUDIO MEMBERSHIP OFFER</span>
-            <h2 style="font-size: clamp(2rem, 3.5vw, 2.8rem); margin-top: 0.2rem;">
-              Become a <em>Monthly Member</em>.
-            </h2>
-            <p style="font-size: 1.05rem; color: var(--ink-soft); margin-top: 0.5rem; max-width: 54ch;">
-              Enjoy daily open studio access with 100% of your monthly dues applied as credit toward any class.
-            </p>
+            <span class="eyebrow">Studio Membership</span>
+            <h2 class="section-heading" style="margin-top:0.2rem;">Become a <em>Monthly Member</em>.</h2>
+            <p class="section-lede">Daily open studio access with 100% of your monthly dues applied as credit toward any class.</p>
           </div>
-
-          <div style="text-align: right;">
-            <div class="price-tag">$45 <span>/ mo</span></div>
-            <div style="font-size: 0.82rem; color: var(--muted); margin-top: 0.35rem;">Billed monthly · Cancel anytime</div>
+          <div style="text-align:right;flex-shrink:0;">
+            <div class="price-display">$45<span class="price-period">/ mo</span></div>
+            <div class="price-note">Billed monthly · Cancel anytime</div>
+            <div class="price-note" style="margin-top:0.2rem;">Studio opens 8/1 — memberships begin 8/1</div>
           </div>
         </div>
 
-        <div class="benefit-list">
+        <div class="benefit-grid">
           <div class="benefit-item">
-            <span class="benefit-icon">✓</span>
+            <span class="benefit-check">✓</span>
             <div>
-              <strong style="color: var(--sage-deep); font-size: 0.95rem;">100% Class Credits</strong>
-              <p style="font-size: 0.86rem; color: var(--ink-soft); margin-top: 0.15rem;">
-                Your entire $45 monthly dues apply directly as credit toward any 2-hour class session of your choice.
-              </p>
+              <div class="benefit-title">100% Class Credits</div>
+              <p class="benefit-desc">Your entire $45 monthly dues apply directly as credit toward any 2-hour class session of your choice. Beginning 2027, credits are use-it-or-lose-it monthly.</p>
             </div>
           </div>
-
           <div class="benefit-item">
-            <span class="benefit-icon">✓</span>
+            <span class="benefit-check">✓</span>
             <div>
-              <strong style="color: var(--sage-deep); font-size: 0.95rem;">Daily Open Studio Access</strong>
-              <p style="font-size: 0.86rem; color: var(--ink-soft); margin-top: 0.15rem;">
-                Drop in during open studio hours to use workbenches, craft tools, and our specialized reference library.
-              </p>
+              <div class="benefit-title">Daily Open Studio Access</div>
+              <p class="benefit-desc">Weekdays M–F 6–9:30 PM and weekends 7 AM–9 PM. Drop in to use workbenches, craft tools, and the studio reference library.</p>
             </div>
           </div>
-
           <div class="benefit-item">
-            <span class="benefit-icon">✓</span>
+            <span class="benefit-check">✓</span>
             <div>
-              <strong style="color: var(--sage-deep); font-size: 0.95rem;">Complimentary Amenities</strong>
-              <p style="font-size: 0.86rem; color: var(--ink-soft); margin-top: 0.15rem;">
-                Enjoy complimentary hot black coffee and filtered water whenever you visit the studio.
-              </p>
+              <div class="benefit-title">Complimentary Amenities</div>
+              <p class="benefit-desc">Free hot black coffee and filtered water available every time you visit the studio.</p>
             </div>
           </div>
-
           <div class="benefit-item">
-            <span class="benefit-icon">✓</span>
+            <span class="benefit-check">✓</span>
             <div>
-              <strong style="color: var(--sage-deep); font-size: 0.95rem;">Member-First Priority Enrollment</strong>
-              <p style="font-size: 0.86rem; color: var(--ink-soft); margin-top: 0.15rem;">
-                Get priority early booking for upcoming workshops before single-class seats open to the public.
-              </p>
+              <div class="benefit-title">Priority Enrollment</div>
+              <p class="benefit-desc">Get early booking access for upcoming workshops before single-class seats open to the public.</p>
             </div>
           </div>
         </div>
 
-        <div class="actions-group">
-          <a href="index.html#membership" class="btn-action-primary">
-            Purchase Studio Membership →
-          </a>
-          <a href="interest.html" class="btn-action-secondary">
-            Submit Free Interest Form →
-          </a>
-          <a href="schedule.html" class="btn-action-secondary">
-            View Current Curriculum →
-          </a>
+        <div class="membership-actions">
+          <button onclick="purchaseMembership()" class="btn-primary">Purchase Studio Membership →</button>
+          <a href="interest.html" class="btn-outline">Submit Interest Form</a>
+          <a href="schedule.html" class="btn-outline">View Curriculum</a>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- =========================================================
-       FOOTER
-       ========================================================= -->
+  <!-- CHECKOUT MODAL -->
+  <div class="modal-backdrop" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="modalTitle">Studio Membership</div>
+          <div class="modal-subtitle">The Hobbiest Skills Club — $45/month</div>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-summary" id="modalSummary">
+          <div>
+            <div class="modal-summary-name">Studio Membership ($45/month)</div>
+            <div class="modal-summary-meta">Studio opens 8/1 — memberships begin 8/1</div>
+          </div>
+          <div class="modal-summary-price">$45/mo</div>
+        </div>
+        <div id="checkout-embed"></div>
+        <div class="modal-success" id="modalSuccess">
+          <div class="modal-success-mark">✦</div>
+          <h3>You're <em>in</em>.</h3>
+          <p>Check your email for confirmation. Studio access begins August 1st.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="wordmark-lg">The Hobbiest</div>
+          <div class="footer-wordmark">The Hobbiest</div>
           <p>A private members skills club for adults. Opening August 2026 in downtown Pittston, PA.</p>
         </div>
         <div>
           <h4>Visit &amp; Park</h4>
-          <p>135 N. Main Street<br />Pittston, PA 18640<br /><br /><strong>Free Parking:</strong> Across N. Main St &amp; Kennedy Blvd<br /><br /><a href="tel:+15703546189">(570) 354-6189</a></p>
+          <p>135 N. Main Street<br>Pittston, PA 18640<br><br><strong style="color:var(--sage-pale);">Free Parking:</strong> 167 N. Main Street<br><br><a href="tel:+15703546189">(570) 354-6189</a></p>
         </div>
         <div>
           <h4>Contact</h4>
-          <div class="stack">
-            <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
-            <a href="studio.html">Studio &amp; Parking Info</a>
-            <a href="interest.html">Submit Interest Form</a>
-          </div>
+          <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+          <a href="#" rel="noopener">Instagram</a>
+          <a href="#" rel="noopener">Facebook</a>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© 2026 The Hobbiest Skills Club</span>
         <div class="footer-legal">
           <a href="gift.html">Give a Gift</a>
-          <span class="footer-divider">·</span>
+          <span class="footer-sep">·</span>
           <a href="waiver.html">Waiver &amp; Policies</a>
-          <span class="footer-divider">·</span>
+          <span class="footer-sep">·</span>
           <a href="privacy.html">Privacy Policy</a>
-          <span class="footer-divider">·</span>
+          <span class="footer-sep">·</span>
           <a href="terms.html">Terms of Service</a>
         </div>
       </div>
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL      = 'https://uprdczhhgwzfypkudqjg.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ';
+    const STRIPE_PK         = 'pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS';
+
+    let _stripe = null, _embeddedCheckout = null;
+
+    async function purchaseMembership() {
+      const modal   = document.getElementById('checkoutModal');
+      const embedEl = document.getElementById('checkout-embed');
+      const successEl = document.getElementById('modalSuccess');
+      embedEl.innerHTML = '<p style="font-family:var(--font-d);font-style:italic;color:var(--muted);padding:1.25rem 0;text-align:center">Preparing checkout…</p>';
+      successEl.classList.remove('show');
+      document.getElementById('modalSummary').style.display = 'flex';
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      try {
+        const res = await fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY },
+          body: JSON.stringify({ guest: true, type: 'membership', price_cents: 4500, title: 'Studio Membership' }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.clientSecret) throw new Error(data.error || 'Checkout failed');
+        if (!_stripe) _stripe = Stripe(STRIPE_PK);
+        if (_embeddedCheckout) { _embeddedCheckout.destroy(); _embeddedCheckout = null; }
+        _embeddedCheckout = await _stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
+        embedEl.innerHTML = '';
+        _embeddedCheckout.mount('#checkout-embed');
+      } catch(err) {
+        sessionStorage.setItem('pwIntent', JSON.stringify({ type: 'membership', price_cents: 4500 }));
+        embedEl.innerHTML = '<div style="text-align:center;padding:1.5rem 0"><p style="font-family:var(--font-d);font-style:italic;color:var(--sage-deep);margin-bottom:1rem;">Redirecting to sign in to complete your membership…</p><a href="login.html?intent=membership" style="display:inline-block;padding:0.75rem 1.5rem;background:var(--sage);color:#FAF7F0;text-decoration:none;border-radius:4px;font-family:var(--font-b);font-weight:600">Continue to sign in →</a></div>';
+        setTimeout(() => { window.location.href = 'login.html?intent=membership'; }, 1800);
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('checkoutModal').classList.remove('open');
+      document.body.style.overflow = '';
+      if (_embeddedCheckout) { _embeddedCheckout.destroy(); _embeddedCheckout = null; }
+      document.getElementById('checkout-embed').innerHTML = '';
+    }
+    document.getElementById('checkoutModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    /* NAV TOGGLE */
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+    if (navToggle && navLinks) {
+      navToggle.addEventListener('click', () => {
+        const open = navLinks.classList.toggle('open');
+        navToggle.classList.toggle('open', open);
+        navToggle.setAttribute('aria-expanded', open);
+      });
+      document.addEventListener('click', e => {
+        if (!e.target.closest('.sticky-nav')) {
+          navLinks.classList.remove('open');
+          navToggle.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          navLinks.classList.remove('open');
+          navToggle.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    /* REVEAL */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('[data-reveal]').forEach(r => io.observe(r));
+  </script>
 </body>
 </html>
