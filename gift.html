@@ -5,352 +5,367 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#7A8A6B" />
   <title>Give a Gift — The Hobbiest Skills Club</title>
+  <meta name="description" content="Give the gift of learning. A Hobbiest gift card can be used toward any class." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    :root{
-      --bg:#F1ECDF; --surface:#FAF7F0; --ink:#4E5A41; --ink-soft:#6B7459;
-      --muted:#8A8170; --hairline:#D9D2BE; --sage:#7A8A6B; --sage-deep:#4E5A41; --sage-pale:#B5BFA8;
-      --font-display:"Fraunces","Times New Roman",serif;
-      --font-body:"DM Sans",-apple-system,BlinkMacSystemFont,sans-serif;
-      --gutter:clamp(1.25rem,4vw,3rem);
+    :root {
+      --bg:        #F1ECDF;
+      --bg-warm:   #EAE3D2;
+      --surface:   #FAF7F0;
+      --ink:       #4E5A41;
+      --ink-soft:  #6B7459;
+      --muted:     #8A8170;
+      --hairline:  #D9D2BE;
+      --sage:      #7A8A6B;
+      --sage-deep: #4E5A41;
+      --sage-pale: #B5BFA8;
+      --font-d: "Fraunces", "Times New Roman", serif;
+      --font-b: "DM Sans", -apple-system, sans-serif;
+      --max-w: 1200px;
+      --gutter: clamp(1.25rem, 4vw, 3rem);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
-    *,*::before,*::after{box-sizing:border-box}
-    body{margin:0;font-family:var(--font-body);color:var(--ink);background:var(--bg);
-      -webkit-font-smoothing:antialiased;line-height:1.6;min-height:100vh}
-    body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.55;mix-blend-mode:multiply;
-      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
-    .container{max-width:1180px;margin:0 auto;padding:0 var(--gutter)}
-    .nav{position:relative;padding:1.75rem 0;border-bottom:1px solid var(--hairline)}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between}
-    .wordmark{font-family:var(--font-display);font-size:1.2rem;font-style:italic;color:var(--sage);text-decoration:none}
-    .nav-links{display:flex;gap:1.5rem;align-items:center}
-    .nav-link{font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);font-weight:500;text-decoration:none;transition:color 0.2s}
-    .nav-link:hover{color:var(--sage)}
-    .nav-item-dropdown{position:relative}
-    .nav-dropdown-trigger{display:inline-flex;align-items:center;gap:0.35rem;border:0;background:transparent;padding:0;font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;font-weight:500;text-transform:uppercase}
-    .nav-dropdown-trigger:hover,.nav-item-dropdown:hover .nav-dropdown-trigger{color:var(--sage)}
-    .nav-dropdown-arrow{font-size:0.85em;transition:transform 0.2s;display:inline-block}
-    .nav-item-dropdown:hover .nav-dropdown-arrow,.nav-item-dropdown:focus-within .nav-dropdown-arrow{transform:rotate(180deg)}
-    .nav-dropdown{position:absolute;top:calc(100% + 0.5rem);right:0;background:var(--surface);border:1px solid var(--hairline);border-radius:8px;padding:0.5rem 0;min-width:200px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:all 0.2s;box-shadow:0 10px 30px rgba(78,90,65,0.1);z-index:100}
-    .nav-item-dropdown:hover .nav-dropdown,.nav-item-dropdown:focus-within .nav-dropdown{opacity:1;visibility:visible;transform:translateY(0)}
-    .nav-dropdown-link{display:block;padding:0.6rem 1.25rem;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;transition:background 0.15s,color 0.15s}
-    .nav-dropdown-link:hover{background:rgba(122,138,107,0.08);color:var(--sage-deep)}
-    main{padding:2rem 0 4rem;max-width:680px;margin:0 auto}
-    h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2rem,5vw,2.8rem);color:var(--sage-deep);letter-spacing:-0.02em;margin:0 0 0.4rem}
-    h1 em{font-style:italic;color:var(--sage)}
-    .lede{color:var(--ink-soft);margin-bottom:2rem}
-    .card{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:clamp(1.4rem,4vw,2rem)}
-    .field{margin-bottom:1.1rem}
-    .field label{display:block;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:0.45rem}
-    .field input,.field textarea{width:100%;padding:0.85rem 1rem;border:1px solid var(--hairline);border-radius:4px;background:var(--bg);font-family:var(--font-body);font-size:1rem;color:var(--ink)}
-    .field textarea{min-height:90px;resize:vertical}
-    .field input:focus,.field textarea:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(122,138,107,0.15)}
-    .amount-wrap{position:relative}
-    .amount-wrap span{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:1.1rem}
-    .amount-wrap input{padding-left:1.9rem;font-size:1.2rem}
-    .presets{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem}
-    .preset{font-size:0.85rem;font-weight:600;padding:0.4rem 0.9rem;border-radius:999px;border:1px solid var(--hairline);background:var(--bg);color:var(--ink-soft);cursor:pointer}
-    .preset:hover{border-color:var(--sage)}
-    .row{display:flex;gap:0.8rem}
-    .row .field{flex:1}
-    .btn{width:100%;margin-top:0.6rem;padding:0.95rem;border-radius:999px;background:var(--sage);color:var(--bg);border:1px solid var(--sage);font-family:var(--font-body);font-size:1rem;font-weight:500;cursor:pointer;transition:background .2s}
-    .btn:hover{background:var(--sage-deep);border-color:var(--sage-deep)}
-    .btn:disabled{opacity:.5;cursor:default}
-    .msg{margin-top:1rem;padding:0.85rem 1rem;border-radius:4px;font-size:0.9rem;display:none}
-    .msg.show{display:block}
-    .msg.err{background:rgba(176,80,60,0.10);color:#8a3a28;border:1px solid #d6a99a}
-    .success{text-align:center;padding:2rem 0}
-    .success h2{font-family:var(--font-display);font-weight:400;font-size:2rem;color:var(--sage-deep)}
-    .success p{color:var(--ink-soft)}
-    .fine{font-size:0.78rem;color:var(--muted);margin-top:1rem;line-height:1.5}
-    /* TOP HEADER BAR (Row 1) & SUBNAV STRIP (Row 2) */
-    .top-header-bar {
-      background: var(--bg);
-      padding: 1.1rem 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .top-header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .top-header-link {
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 600;
-      text-decoration: none;
-      position: relative;
-      transition: color 0.2s;
-    }
-    .top-header-link:hover {
-      color: var(--sage-deep);
-    }
-    .top-header-link.active {
-      color: var(--sage-deep);
-      font-weight: 700;
-    }
-    .top-header-link.active::after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--sage-deep);
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: var(--font-d); font-size: 16px; line-height: 1.6; color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: var(--font-d); font-weight: 400; line-height: 1.05; letter-spacing: -0.015em; margin: 0; font-variation-settings: "opsz" 100; }
+    p { margin: 0; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+
+    /* GRAIN */
+    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); opacity: 0.5; mix-blend-mode: multiply; }
+
+    /* CONTACT BAR */
+    .contact-bar { background: var(--sage-deep); color: rgba(241,236,223,0.7); font-family: var(--font-b); font-size: 0.7rem; letter-spacing: 0.06em; padding: 0.5rem 0; }
+    .cb-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .cb-items { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .cb-item { display: flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
+    .cb-item svg { width: 10px; height: 10px; opacity: 0.55; flex-shrink: 0; }
+    .contact-bar a { color: inherit; text-decoration: none; transition: color 0.2s; }
+    .contact-bar a:hover { color: var(--bg); }
+    @media (max-width: 640px) { .cb-inner { justify-content: center; } .cb-item:first-child { display: none; } }
+
+    /* STICKY NAV */
+    .sticky-nav { position: sticky; top: 0; z-index: 500; background: var(--surface); border-bottom: 1px solid var(--hairline); box-shadow: 0 2px 20px rgba(78,90,65,0.07); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1.5rem; position: relative; }
+    .wordmark { font-family: var(--font-d); font-size: 1.25rem; font-weight: 400; font-style: italic; color: var(--sage); text-decoration: none; letter-spacing: -0.01em; font-variation-settings: "opsz" 144; flex-shrink: 0; }
+    .nav-links { display: flex; align-items: center; gap: 0.1rem; }
+    .nav-link { font-family: var(--font-b); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; text-decoration: none; padding: 0.45rem 0.55rem; border-radius: 4px; transition: color 0.2s var(--ease), background 0.2s var(--ease); white-space: nowrap; }
+    .nav-link:hover { color: var(--sage-deep); background: var(--bg-warm); }
+    .nav-item-dropdown { position: relative; }
+    .nav-link-pill { background: var(--sage-deep); color: #fff !important; padding: 0.45rem 1rem; border-radius: 20px; font-family: var(--font-b); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 0.35rem; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s var(--ease), transform 0.15s var(--ease); white-space: nowrap; }
+    .nav-link-pill:hover { background: var(--sage); transform: translateY(-1px); }
+    .nav-dropdown { position: absolute; top: calc(100% + 0.5rem); right: 0; background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px; padding: 0.4rem 0; min-width: 180px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 0.18s var(--ease), transform 0.18s var(--ease), visibility 0.18s; box-shadow: 0 10px 32px rgba(78,90,65,0.13); z-index: 20; }
+    .nav-item-dropdown:hover .nav-dropdown, .nav-item-dropdown:focus-within .nav-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dropdown-link { display: block; padding: 0.65rem 1.15rem; font-family: var(--font-b); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 600; text-decoration: none; transition: color 0.15s, background 0.15s; }
+    .nav-dropdown-link:hover { color: var(--sage-deep); background: var(--bg); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 0.5rem; cursor: pointer; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--sage-deep); transition: 0.2s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (max-width: 1100px) {
+      .nav-toggle { display: flex; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; background: var(--surface); border-bottom: 1px solid var(--hairline); padding: 0.75rem var(--gutter) 1rem; gap: 0.25rem; box-shadow: 0 10px 30px rgba(78,90,65,0.12); }
+      .nav-links.open { display: flex; }
+      .nav-link { font-size: 0.82rem; padding: 0.7rem 0.75rem; }
+      .nav-link-pill { justify-content: center; margin-top: 0.25rem; }
+      .nav-item-dropdown { position: static; }
+      .nav-dropdown { position: static; opacity: 1; visibility: visible; transform: none; box-shadow: none; border: none; border-left: 2px solid var(--sage-pale); background: transparent; padding: 0.2rem 0; margin: 0.25rem 0 0.5rem 0.75rem; }
+      .nav-dropdown-link { padding: 0.45rem 0.75rem; font-size: 0.78rem; }
     }
 
-    /* SUBNAV STRIP (EXACT MATCH TO ANNOTATED USER SCREENSHOT) */
-    .subnav-strip {
-      background: var(--surface, #FAF8F5);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      padding: 0.9rem 0;
-      position: relative;
-      z-index: 50;
-    }
-    .subnav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .subnav-group {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-    .subnav-divider {
-      width: 1px;
-      height: 34px;
-      background: var(--hairline);
-      flex-shrink: 0;
-    }
+    /* PAGE HERO */
+    .page-hero { padding: clamp(3rem, 6vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem); border-bottom: 1px solid var(--hairline); background: var(--bg); }
+    .page-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 1.1rem; }
+    .page-eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--sage); }
+    .page-hero h1 { font-size: clamp(2.2rem, 5vw, 4rem); letter-spacing: -0.025em; font-weight: 350; font-variation-settings: "opsz" 144; color: var(--sage-deep); margin-bottom: 1rem; }
+    .page-hero h1 em { font-style: italic; color: var(--sage); }
+    .hero-lede { font-family: var(--font-d); font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.65; color: var(--ink-soft); font-weight: 350; max-width: 52ch; }
 
-    .subnav-link {
-      font-family: var(--font-body);
-      font-size: 0.76rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #666C5E;
-      font-weight: 600;
-      text-decoration: none;
-      line-height: 1.25;
-      transition: color 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .subnav-link:hover {
-      color: var(--sage-deep);
-    }
-    .subnav-link.active {
-      color: var(--sage-deep);
-      font-weight: 700;
-    }
+    /* GIFT FORM */
+    .gift-section { padding: clamp(2.5rem, 5vw, 4rem) 0; flex: 1; }
+    .gift-wrap { max-width: 580px; }
+    .gift-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px; padding: clamp(1.75rem, 4vw, 2.75rem); box-shadow: 0 12px 40px rgba(78,90,65,0.06); }
 
-    .subnav-link-studio {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--sage-deep);
-      font-weight: 500;
-      font-variation-settings: 'opsz' 144;
-    }
+    .field { margin-bottom: 1.1rem; }
+    .field label { display: block; font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--sage-deep); margin-bottom: 0.45rem; }
+    .field input, .field textarea { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--hairline); border-radius: 6px; background: var(--bg-warm); font-family: var(--font-b); font-size: 0.95rem; color: var(--ink); outline: none; transition: border-color 0.2s var(--ease), background 0.2s; }
+    .field input:focus, .field textarea:focus { border-color: var(--sage); background: var(--surface); }
+    .field textarea { min-height: 90px; resize: vertical; }
 
-    /* IDENTICAL GREEN PURCHASE PILL BUTTON */
-    .btn-purchase-pill {
-      background: var(--sage-deep, #4E5A41) !important;
-      color: #FFFFFF !important;
-      padding: 0.6rem 1.4rem !important;
-      border-radius: 20px !important;
-      font-family: var(--font-body) !important;
-      font-size: 0.78rem !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.14em !important;
-      text-transform: uppercase !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 0.45rem !important;
-      border: none !important;
-      cursor: pointer !important;
-      box-shadow: 0 3px 10px rgba(78, 90, 65, 0.18);
-      transition: all 0.2s ease !important;
-      text-decoration: none !important;
-    }
-    .btn-purchase-pill:hover {
-      background: var(--sage, #7A8A6B) !important;
-      color: #FFFFFF !important;
-      transform: translateY(-1px);
-      box-shadow: 0 5px 14px rgba(78, 90, 65, 0.28);
-    }
+    .amount-wrap { position: relative; }
+    .amount-wrap .currency { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 1rem; font-family: var(--font-b); pointer-events: none; }
+    .amount-wrap input { padding-left: 1.75rem; font-size: 1.15rem; font-weight: 600; }
 
-    @media (max-width: 900px) {
-      .subnav-inner {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .subnav-divider {
-        display: none;
-      }
-      .subnav-group {
-        gap: 1.25rem;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-    }
+    .presets { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.6rem; }
+    .preset { font-family: var(--font-b); font-size: 0.8rem; font-weight: 600; padding: 0.35rem 0.85rem; border-radius: 999px; border: 1px solid var(--hairline); background: var(--bg); color: var(--ink-soft); cursor: pointer; transition: border-color 0.2s, background 0.2s, color 0.2s; }
+    .preset:hover { border-color: var(--sage); color: var(--sage-deep); background: var(--surface); }
+
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    @media (max-width: 500px) { .field-row { grid-template-columns: 1fr; } }
+
+    .btn-submit { width: 100%; margin-top: 0.75rem; padding: 1rem 1.5rem; border-radius: 999px; background: var(--sage-deep); color: #fff; border: 1.5px solid var(--sage-deep); font-family: var(--font-b); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: background 0.2s var(--ease), transform 0.15s; }
+    .btn-submit:hover { background: var(--sage); border-color: var(--sage); }
+    .btn-submit:active { transform: scale(0.99); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .err-msg { margin-top: 0.85rem; padding: 0.85rem 1rem; border-radius: 6px; font-family: var(--font-b); font-size: 0.88rem; line-height: 1.5; background: rgba(176,80,60,0.1); border: 1px solid #d6a99a; color: #8a3a28; display: none; }
+    .err-msg.show { display: block; }
+
+    .fine { font-family: var(--font-b); font-size: 0.75rem; color: var(--muted); margin-top: 1rem; line-height: 1.55; }
+
+    /* Success state */
+    .success-view { display: none; text-align: center; padding: clamp(3rem, 6vw, 5rem) 0; }
+    .success-view.show { display: block; }
+    .success-mark { font-size: 2.5rem; margin-bottom: 1.25rem; }
+    .success-view h2 { font-family: var(--font-d); font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 350; color: var(--sage-deep); margin-bottom: 0.75rem; font-variation-settings: "opsz" 144; }
+    .success-view h2 em { font-style: italic; color: var(--sage); }
+    .success-view p { font-family: var(--font-b); font-size: 0.95rem; color: var(--ink-soft); line-height: 1.65; max-width: 38ch; margin: 0 auto; }
+    .success-view a { font-family: var(--font-b); font-size: 0.8rem; font-weight: 600; color: var(--sage-deep); text-decoration: none; border-bottom: 1px solid var(--sage-pale); padding-bottom: 1px; margin-top: 1.5rem; display: inline-block; }
+
+    /* FOOTER */
+    footer { background: var(--sage-deep); color: var(--bg); padding: 4rem 0 2rem; margin-top: auto; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-wordmark { font-family: var(--font-d); font-style: italic; font-size: 1.75rem; color: var(--bg); letter-spacing: -0.01em; margin-bottom: 1rem; font-variation-settings: "opsz" 144; }
+    footer p { color: rgba(241,236,223,0.65); font-size: 0.92rem; line-height: 1.7; }
+    footer h4 { font-family: var(--font-b); font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage-pale); font-weight: 600; margin: 0 0 1.1rem; }
+    footer a { color: rgba(241,236,223,0.7); text-decoration: none; transition: color 0.2s; display: block; margin-bottom: 0.45rem; font-size: 0.92rem; }
+    footer a:hover { color: var(--sage-pale); }
+    .footer-bottom { border-top: 1px solid rgba(241,236,223,0.12); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; font-family: var(--font-b); font-size: 0.72rem; color: rgba(241,236,223,0.4); }
+    .footer-legal { display: flex; align-items: center; gap: 0.5rem; }
+    .footer-legal a { color: rgba(241,236,223,0.45); display: inline; margin: 0; }
+    .footer-sep { opacity: 0.4; }
+    @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr; gap: 2rem; } .footer-bottom { flex-direction: column; align-items: flex-start; } }
+
+    :focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; }
   </style>
 </head>
 <body>
-  <!-- TOP HEADER BAR (Row 1) -->
-  <div class="top-header-bar">
-    <div class="container top-header-inner">
-      <a href="index.html" class="top-header-link">HOME</a>
-      <a href="login.html" class="top-header-link">HOBBIEST LOG IN</a>
+
+  <!-- CONTACT BAR -->
+  <div class="contact-bar">
+    <div class="container cb-inner">
+      <div class="cb-items">
+        <div class="cb-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          135 N. Main Street, Pittston, PA
+        </div>
+        <div class="cb-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+15703546189">(570) 354-6189</a>
+        </div>
+        <div class="cb-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+        </div>
+      </div>
+      <a href="login.html" style="font-family:var(--font-b);font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(241,236,223,0.55);text-decoration:none;font-weight:600;">Member Login →</a>
     </div>
   </div>
 
-  <!-- SUBNAV STRIP (Row 2 — Exact match to annotated screenshot) -->
-  <nav class="subnav-strip">
-    <div class="container subnav-inner">
-      
-      <!-- GROUP 1: Core Navigation -->
-      <div class="subnav-group">
-        <a href="index.html#how-it-works" class="subnav-link">HOW IT WORKS</a>
-        <a href="schedule.html" class="subnav-link">CURRENT CURRICULUM</a>
+  <!-- STICKY NAV -->
+  <nav class="sticky-nav" role="navigation" aria-label="Primary">
+    <div class="container nav-inner">
+      <a href="index.html" class="wordmark">The Hobbiest</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="how-it-works.html" class="nav-link">How It Works</a>
+        <a href="schedule.html" class="nav-link">Curriculum</a>
+        <a href="studio.html" class="nav-link">Club &amp; Parking</a>
+        <a href="interest.html" class="nav-link">Interest Form</a>
+        <a href="apply.html" class="nav-link">Apply to Teach</a>
         <div class="nav-item-dropdown">
-          <a href="studio.html" class="subnav-link subnav-link-studio nav-dropdown-trigger">
-            THE STUDIO <span class="nav-dropdown-arrow">▾</span>
-          </a>
-          <div class="nav-dropdown" role="menu">
-            <div style="padding: 0.85rem 1.15rem; border-bottom: 1px solid var(--hairline);">
-              <div style="font-family: var(--font-body); font-weight: 700; font-size: 0.78rem; color: var(--sage-deep); margin-bottom: 0.2rem;">135 N. Main St, Pittston, PA</div>
-              <div style="font-size: 0.75rem; color: var(--muted); line-height: 1.3;">Free Parking Across N. Main &amp; Kennedy</div>
-            </div>
-            <a href="studio.html" class="nav-dropdown-link" role="menuitem">Studio &amp; Parking Details</a>
+          <button class="nav-link-pill" aria-haspopup="true">Purchase ▾</button>
+          <div class="nav-dropdown">
+            <a href="schedule.html" class="nav-dropdown-link">Single Class</a>
+            <a href="studio.html#membership-offer" class="nav-dropdown-link">Studio Membership</a>
+            <a href="gift.html" class="nav-dropdown-link">Gift Card</a>
           </div>
         </div>
       </div>
-
-      <!-- VERTICAL DIVIDER LINE 1 -->
-      <div class="subnav-divider"></div>
-
-      <!-- GROUP 2: Forms -->
-      <div class="subnav-group">
-        <a href="interest.html" class="subnav-link">SUBMIT INTEREST FORM</a>
-        <a href="apply.html" class="subnav-link">SUBMIT TEACHING APP</a>
-      </div>
-
-      <!-- VERTICAL DIVIDER LINE 2 -->
-      <div class="subnav-divider"></div>
-
-      <!-- GROUP 3: Purchase Pill Button Dropdown -->
-      <div class="subnav-group">
-        <div class="nav-item-dropdown">
-          <button class="btn-purchase-pill nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            PURCHASE <span class="nav-dropdown-arrow" style="color:#fff;">▾</span>
-          </button>
-          <div class="nav-dropdown" role="menu">
-            <a href="schedule.html" class="nav-dropdown-link" role="menuitem">Single Class</a>
-            <a href="studio.html#membership-offer" class="nav-dropdown-link" role="menuitem">Studio Membership</a>
-            <a href="gift.html" class="nav-dropdown-link" role="menuitem">Gift Card</a>
-          </div>
-        </div>
-      </div>
-
     </div>
   </nav>
 
-  <main class="container">
-    <div id="formView">
+  <!-- PAGE HERO -->
+  <header class="page-hero">
+    <div class="container">
+      <span class="page-eyebrow">The Hobbiest Skills Club</span>
       <h1>Give the gift of <em>learning</em>.</h1>
-      <p class="lede">A Hobbiest gift card can be used toward any class. Choose an amount, and we'll email the code straight to your recipient.</p>
-
-      <div class="card">
-        <div class="field">
-          <label for="amount">Gift amount (USD)</label>
-          <div class="amount-wrap">
-            <span>$</span>
-            <input type="number" id="amount" min="25" max="500" step="1" placeholder="150" inputmode="decimal" />
-          </div>
-          <div class="presets">
-            <button class="preset" type="button" onclick="setAmt(99)">$99</button>
-            <button class="preset" type="button" onclick="setAmt(150)">$150</button>
-            <button class="preset" type="button" onclick="setAmt(300)">$300</button>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="field"><label for="rname">Recipient's name</label><input type="text" id="rname" placeholder="Jamie Rivers" /></div>
-          <div class="field"><label for="remail">Recipient's email</label><input type="email" id="remail" placeholder="jamie@example.com" /></div>
-        </div>
-
-        <div class="row">
-          <div class="field"><label for="fname">Your name</label><input type="text" id="fname" placeholder="From…" /></div>
-          <div class="field"><label for="femail">Your email (for the receipt)</label><input type="email" id="femail" placeholder="you@example.com" /></div>
-        </div>
-
-        <div class="field"><label for="msg">A short message (optional)</label><textarea id="msg" placeholder="Happy birthday — go make something wonderful!"></textarea></div>
-
-        <button class="btn" id="buyBtn" onclick="buyGift()">Continue to payment →</button>
-        <div class="msg err" id="msg-err"></div>
-        <p class="fine">Gift cards are valid toward any class and can be used over multiple bookings until the balance runs out. Amounts from $25 to $500.</p>
-      </div>
+      <p class="hero-lede">A Hobbiest gift card can be applied toward any class. Choose an amount and we'll email the code straight to your recipient.</p>
     </div>
+  </header>
 
-    <div id="successView" class="success" style="display:none">
-      <h2>Your gift is on its way. 🎁</h2>
-      <p>We've emailed the gift code to your recipient. Thank you for giving the gift of a new skill!</p>
-      <p style="margin-top:1.5rem"><a href="index.html" class="back">← Back home</a></p>
+  <!-- GIFT FORM -->
+  <main class="gift-section">
+    <div class="container">
+
+      <div id="formView" class="gift-wrap">
+        <div class="gift-card">
+
+          <div class="field">
+            <label for="amount">Gift amount (USD)</label>
+            <div class="amount-wrap">
+              <span class="currency">$</span>
+              <input type="number" id="amount" min="25" max="500" step="1" placeholder="150" inputmode="decimal" />
+            </div>
+            <div class="presets">
+              <button class="preset" type="button" onclick="setAmt(45)">$45</button>
+              <button class="preset" type="button" onclick="setAmt(99)">$99</button>
+              <button class="preset" type="button" onclick="setAmt(150)">$150</button>
+              <button class="preset" type="button" onclick="setAmt(300)">$300</button>
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid var(--hairline); padding-top: 1.25rem; margin-top: 0.25rem;">
+            <div style="font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 0.85rem;">Recipient</div>
+            <div class="field-row">
+              <div class="field"><label for="rname">Recipient's name</label><input type="text" id="rname" placeholder="Jamie Rivers" autocomplete="off" /></div>
+              <div class="field"><label for="remail">Recipient's email</label><input type="email" id="remail" placeholder="jamie@example.com" autocomplete="off" /></div>
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid var(--hairline); padding-top: 1.25rem; margin-top: 0.1rem;">
+            <div style="font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 0.85rem;">From you</div>
+            <div class="field-row">
+              <div class="field"><label for="fname">Your name</label><input type="text" id="fname" placeholder="From…" autocomplete="name" /></div>
+              <div class="field"><label for="femail">Your email (for receipt)</label><input type="email" id="femail" placeholder="you@example.com" autocomplete="email" /></div>
+            </div>
+          </div>
+
+          <div class="field" style="border-top: 1px solid var(--hairline); padding-top: 1.25rem; margin-top: 0.1rem;">
+            <label for="giftmsg">A short message (optional)</label>
+            <textarea id="giftmsg" placeholder="Happy birthday — go make something wonderful!"></textarea>
+          </div>
+
+          <button class="btn-submit" id="buyBtn" onclick="buyGift()">Continue to payment →</button>
+          <div class="err-msg" id="errMsg"></div>
+          <p class="fine">Gift cards are valid toward any class and can be applied over multiple bookings until the balance runs out. Amounts from $25 to $500.</p>
+
+        </div>
+      </div>
+
+      <div id="successView" class="success-view">
+        <div class="success-mark">✦</div>
+        <h2>Your gift is <em>on its way</em>.</h2>
+        <p>We've emailed the gift code to your recipient. Thank you for giving the gift of a new skill!</p>
+        <a href="index.html">← Back home</a>
+      </div>
+
     </div>
   </main>
 
-  <script>
-    const SUPABASE_URL = "https://uprdczhhgwzfypkudqjg.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ";
-    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-wordmark">The Hobbiest</div>
+          <p>A private members skills club for adults. Opening July 2026 in downtown Pittston, PA.</p>
+        </div>
+        <div>
+          <h4>Visit</h4>
+          <p>135 N. Main Street<br>Pittston, PA 18640<br><br><a href="tel:+15703546189">(570) 354-6189</a><br>Wyoming Valley · NEPA</p>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+          <a href="#" rel="noopener">Instagram</a>
+          <a href="#" rel="noopener">Facebook</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 The Hobbiest Skills Club</span>
+        <div class="footer-legal">
+          <a href="waiver.html">Waiver &amp; Policies</a>
+          <span class="footer-sep">·</span>
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="footer-sep">·</span>
+          <a href="terms.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-    // Returning from Stripe?
-    const params = new URLSearchParams(location.search);
-    if (params.get("gift") === "success") {
-      document.getElementById("formView").style.display = "none";
-      document.getElementById("successView").style.display = "block";
+  <script>
+    /* NAV TOGGLE */
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+    if (navToggle && navLinks) {
+      navToggle.addEventListener('click', () => {
+        const open = navLinks.classList.toggle('open');
+        navToggle.classList.toggle('open', open);
+        navToggle.setAttribute('aria-expanded', open);
+      });
+      document.addEventListener('click', e => {
+        if (!e.target.closest('.sticky-nav')) {
+          navLinks.classList.remove('open');
+          navToggle.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          navLinks.classList.remove('open');
+          navToggle.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
     }
 
-    function setAmt(v){ document.getElementById("amount").value = v; }
-    function showErr(t){ const e=document.getElementById("msg-err"); e.textContent=t; e.classList.add("show"); }
+    /* STRIPE RETURN */
+    const params = new URLSearchParams(location.search);
+    if (params.get('gift') === 'success') {
+      document.getElementById('formView').style.display = 'none';
+      document.getElementById('successView').classList.add('show');
+    }
 
-    async function buyGift(){
-      const amount = parseFloat(document.getElementById("amount").value);
-      const recipient_email = document.getElementById("remail").value.trim();
-      const recipient_name = document.getElementById("rname").value.trim();
-      const from_name = document.getElementById("fname").value.trim();
-      const purchaser_email = document.getElementById("femail").value.trim();
-      const message = document.getElementById("msg").value.trim();
+    /* GIFT CARD LOGIC */
+    const SUPABASE_URL      = 'https://uprdczhhgwzfypkudqjg.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ';
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      document.getElementById("msg-err").classList.remove("show");
-      if (!(amount >= 25 && amount <= 500)) { showErr("Please enter an amount between $25 and $500."); return; }
-      if (!recipient_email.includes("@")) { showErr("Please enter your recipient's email."); return; }
+    function setAmt(v) { document.getElementById('amount').value = v; }
 
-      const btn = document.getElementById("buyBtn");
-      btn.disabled = true; btn.textContent = "Taking you to payment…";
+    function showErr(t) {
+      const el = document.getElementById('errMsg');
+      el.textContent = t;
+      el.classList.add('show');
+    }
 
-      const { data, error } = await sb.functions.invoke("create-gift-checkout", {
-        body: {
-          amount_cents: Math.round(amount * 100),
-          recipient_email, recipient_name, from_name, purchaser_email, message,
-        },
+    async function buyGift() {
+      const amount          = parseFloat(document.getElementById('amount').value);
+      const recipient_email = document.getElementById('remail').value.trim();
+      const recipient_name  = document.getElementById('rname').value.trim();
+      const from_name       = document.getElementById('fname').value.trim();
+      const purchaser_email = document.getElementById('femail').value.trim();
+      const message         = document.getElementById('giftmsg').value.trim();
+
+      document.getElementById('errMsg').classList.remove('show');
+
+      if (!(amount >= 25 && amount <= 500)) { showErr('Please enter an amount between $25 and $500.'); return; }
+      if (!recipient_email.includes('@'))   { showErr("Please enter your recipient's email address."); return; }
+      if (!purchaser_email.includes('@'))   { showErr('Please enter your email so we can send your receipt.'); return; }
+
+      const btn = document.getElementById('buyBtn');
+      btn.disabled = true;
+      btn.textContent = 'Taking you to payment…';
+
+      const { data, error } = await sb.functions.invoke('create-gift-checkout', {
+        body: { amount_cents: Math.round(amount * 100), recipient_email, recipient_name, from_name, purchaser_email, message },
       });
+
       if (error || !data?.url) {
-        btn.disabled = false; btn.textContent = "Continue to payment →";
-        showErr("Sorry — couldn't start checkout: " + (error?.message || data?.error || "unknown error"));
+        btn.disabled = false;
+        btn.textContent = 'Continue to payment →';
+        showErr('Sorry — couldn\'t start checkout: ' + (error?.message || data?.error || 'unknown error'));
         return;
       }
       window.location.href = data.url;
