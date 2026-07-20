@@ -193,7 +193,24 @@
 
     /* BUTTONS */
     .btn-primary { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.8rem 1.6rem; background: var(--sage-deep); color: #fff; border: 1.5px solid var(--sage-deep); border-radius: 999px; font-family: var(--font-b); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background 0.2s var(--ease), transform 0.15s var(--ease); cursor: pointer; white-space: nowrap; }
-    .btn-primary:hover { background: var(--sage); border-color: var(--sage); transform: translateY(-1px); }
+    .btn-scroll-down {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.85rem 1.6rem;
+      background: var(--sage-deep);
+      color: #fff;
+      border: 1.5px solid var(--sage-deep);
+      border-radius: 999px;
+      font-family: var(--font-b);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s var(--ease), transform 0.15s var(--ease);
+      white-space: nowrap;
+    }
+    .btn-scroll-down:hover { background: var(--sage); border-color: var(--sage); transform: translateY(2px); }
     .btn-outline { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.8rem 1.6rem; background: transparent; color: var(--sage-deep); border: 1.5px solid var(--sage); border-radius: 999px; font-family: var(--font-b); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background 0.2s var(--ease), color 0.2s var(--ease); cursor: pointer; white-space: nowrap; }
     .btn-outline:hover { background: var(--sage); color: #fff; }
 
@@ -360,7 +377,7 @@
 
   <!-- STICKY NAV -->
   <nav class="sticky-nav" role="navigation" aria-label="Primary">
-    <div class="container sticky-nav-inner" style="position:relative;">
+    <div class="container nav-inner">
       <a href="index.html" class="wordmark">The Hobbiest</a>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -383,17 +400,19 @@
     </div>
   </nav>
 
-  <!-- COMBINED PAGE HEADER -->
+  <!-- PAGE HEADER -->
   <header class="page-header">
     <div class="container">
       <div class="page-header-top" data-reveal>
         <div>
-          <span class="page-eyebrow">The Hobbiest Skills Club</span>
-          <h1>Current <em>Curriculum</em>.</h1>
+          <span class="page-eyebrow">What We Teach</span>
+          <h1>Curriculum <em>Cornerstones</em>.</h1>
           <p class="page-header-lede">Hands-on 2-hour sessions across creative arts, essential life skills, and intentional living. Classes run once 10–12 members confirm — all materials included.</p>
           <div class="header-cta-row">
-            <button class="btn-primary" onclick="document.getElementById('classes').scrollIntoView({behavior:'smooth'})">Browse &amp; Book →</button>
-            <a href="how-it-works.html" class="btn-outline">How it works</a>
+            <button class="btn-scroll-down" onclick="document.getElementById('classes').scrollIntoView({behavior:'smooth'})" aria-label="Scroll to classes">
+              Browse &amp; Book
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:0.35rem;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
           </div>
         </div>
         <div class="page-header-right">
@@ -402,18 +421,11 @@
         </div>
       </div>
     </div>
-
   </header>
 
-  <!-- CURRICULUM CORNERSTONES + CLASSES -->
+  <!-- CLASSES -->
   <div id="classes" style="scroll-margin-top:80px;">
-    <div class="container" style="padding-top: clamp(2.5rem, 5vw, 4rem); padding-bottom: 5rem;">
-
-      <div style="margin-bottom: 2.5rem;">
-        <span style="font-family:var(--font-b);font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--sage);font-weight:700;display:block;margin-bottom:0.75rem;">What We Teach</span>
-        <h2 style="font-family:var(--font-d);font-size:clamp(1.75rem,3.5vw,2.75rem);font-weight:350;color:var(--sage-deep);letter-spacing:-0.02em;font-variation-settings:'opsz' 144;margin:0;">Curriculum <em style="font-style:italic;color:var(--sage);">Cornerstones</em>.</h2>
-      </div>
-
+    <div class="container" style="padding-top: clamp(2rem, 4vw, 3rem); padding-bottom: 5rem;">
       <main id="scheduleMain">
         <p style="font-family:var(--font-d);font-style:italic;color:var(--muted);padding:2rem 0;">Loading classes…</p>
       </main>
