@@ -1817,23 +1817,7 @@
     async function loadSchedule() {
       const main = document.getElementById('scheduleMain');
       const rail = document.getElementById('railNav');
-      let classes = [];
-      try {
-        const url = SUPABASE_URL + '/rest/v1/classes' +
-          '?select=id,name,description,instructor,starts_at,duration_minutes,price_cents,session_price_cents,materials_included,weeks,category' +
-          '&is_published=eq.true&order=starts_at.asc';
-        const res = await fetch(url, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY } });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.length) classes = data;
-        }
-      } catch (err) {
-        console.error('Schedule load error, using default lineup:', err);
-      }
-
-      if (!classes || !classes.length) {
-        classes = DEFAULT_CLASSES;
-      }
+      const classes = DEFAULT_CLASSES;
 
       const groups = {};
       classes.forEach(c => { const cat = c.category || 'Other'; (groups[cat] = groups[cat] || []).push(c); });
