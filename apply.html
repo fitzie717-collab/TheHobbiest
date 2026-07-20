@@ -4,23 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#7A8A6B" />
-
   <title>Apply to Teach — The Hobbiest</title>
   <meta name="description" content="Teach at The Hobbiest. A genuine partnership with instructors — we provide the space, students, and operations. You bring the craft." />
-
-  <!-- Open Graph -->
   <meta property="og:title" content="Apply to Teach — The Hobbiest" />
-  <meta property="og:description" content="A genuine partnership with instructors at a new skills club in Pittston, PA." />
   <meta property="og:type" content="website" />
-
-  <!-- Favicon -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
-
   <style>
     :root {
       --bg:        #F1ECDF;
@@ -30,866 +21,228 @@
       --ink-soft:  #6B7459;
       --muted:     #8A8170;
       --hairline:  #D9D2BE;
-
       --sage:      #7A8A6B;
       --sage-deep: #4E5A41;
       --sage-pale: #B5BFA8;
-      --taupe:     #A89878;
-
-      --font-display: "Fraunces", "Times New Roman", serif;
-      --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-
-      --max-w:    1280px;
-      --gutter:   clamp(1.25rem, 4vw, 3rem);
-      --section-y: clamp(4rem, 9vw, 8rem);
-
+      --font-d: "Fraunces", "Times New Roman", serif;
+      --font-b: "DM Sans", -apple-system, sans-serif;
+      --max-w: 1200px;
+      --gutter: clamp(1.25rem, 4vw, 3rem);
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
-
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--ink);
-      background: var(--bg);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
-    }
+    body { margin: 0; font-family: var(--font-d); font-size: 16px; line-height: 1.6; color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     img { max-width: 100%; height: auto; display: block; }
-    /* Form fields stay in sans-serif for typing readability */
-    button, input, textarea, select { font-family: var(--font-body); }
-    /* Small UI text (nav, eyebrows) keeps the sans for crisp uppercase tracking */
-    .nav-link, .eyebrow { font-family: var(--font-body); }
+    button, input, textarea, select { font-family: var(--font-b); }
     a { color: inherit; }
-    h1, h2, h3, h4 {
-      font-family: var(--font-display);
-      font-weight: 400;
-      line-height: 1.05;
-      letter-spacing: -0.015em;
-      margin: 0;
-      font-variation-settings: "opsz" 100;
-    }
+    h1, h2, h3, h4 { font-family: var(--font-d); font-weight: 400; line-height: 1.05; letter-spacing: -0.015em; margin: 0; font-variation-settings: "opsz" 100; }
     p { margin: 0; }
-    .container {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding-left: var(--gutter);
-      padding-right: var(--gutter);
+    .container { max-width: var(--max-w); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+
+    /* GRAIN */
+    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); opacity: 0.5; mix-blend-mode: multiply; }
+
+    /* CONTACT BAR */
+    .contact-bar { background: var(--sage-deep); color: rgba(241,236,223,0.7); font-family: var(--font-b); font-size: 0.7rem; letter-spacing: 0.06em; padding: 0.5rem 0; }
+    .cb-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .cb-items { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .cb-item { display: flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
+    .cb-item svg { width: 10px; height: 10px; opacity: 0.55; flex-shrink: 0; }
+    .contact-bar a { color: inherit; text-decoration: none; transition: color 0.2s; }
+    .contact-bar a:hover { color: var(--bg); }
+    @media (max-width: 640px) { .cb-inner { justify-content: center; } .cb-item:first-child { display: none; } }
+
+    /* STICKY NAV */
+    .sticky-nav { position: sticky; top: 0; z-index: 500; background: var(--surface); border-bottom: 1px solid var(--hairline); box-shadow: 0 2px 20px rgba(78,90,65,0.07); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1.5rem; position: relative; }
+    .wordmark { font-family: var(--font-d); font-size: 1.25rem; font-weight: 400; font-style: italic; color: var(--sage); text-decoration: none; letter-spacing: -0.01em; font-variation-settings: "opsz" 144; flex-shrink: 0; }
+    .nav-links { display: flex; align-items: center; gap: 0.1rem; }
+    .nav-link { font-family: var(--font-b); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; text-decoration: none; padding: 0.45rem 0.55rem; border-radius: 4px; transition: color 0.2s var(--ease), background 0.2s var(--ease); white-space: nowrap; }
+    .nav-link:hover { color: var(--sage-deep); background: var(--bg-warm); }
+    .nav-link-active { color: var(--sage-deep); }
+    .nav-item-dropdown { position: relative; }
+    .nav-link-pill { background: var(--sage-deep); color: #fff !important; padding: 0.45rem 1rem; border-radius: 20px; font-family: var(--font-b); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 0.35rem; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s var(--ease), transform 0.15s var(--ease); white-space: nowrap; }
+    .nav-link-pill:hover { background: var(--sage); transform: translateY(-1px); }
+    .nav-dropdown { position: absolute; top: calc(100% + 0.5rem); right: 0; background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px; padding: 0.4rem 0; min-width: 180px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 0.18s var(--ease), transform 0.18s var(--ease), visibility 0.18s; box-shadow: 0 10px 32px rgba(78,90,65,0.13); z-index: 20; }
+    .nav-item-dropdown:hover .nav-dropdown, .nav-item-dropdown:focus-within .nav-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dropdown-link { display: block; padding: 0.65rem 1.15rem; font-family: var(--font-b); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 600; text-decoration: none; transition: color 0.15s, background 0.15s; }
+    .nav-dropdown-link:hover { color: var(--sage-deep); background: var(--bg); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 0.5rem; cursor: pointer; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--sage-deep); transition: 0.2s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (max-width: 1100px) {
+      .nav-toggle { display: flex; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; background: var(--surface); border-bottom: 1px solid var(--hairline); padding: 0.75rem var(--gutter) 1rem; gap: 0.25rem; box-shadow: 0 10px 30px rgba(78,90,65,0.12); }
+      .nav-links.open { display: flex; }
+      .nav-link { font-size: 0.82rem; padding: 0.7rem 0.75rem; }
+      .nav-link-pill { justify-content: center; margin-top: 0.25rem; }
+      .nav-item-dropdown { position: static; }
+      .nav-dropdown { position: static; opacity: 1; visibility: visible; transform: none; box-shadow: none; border: none; border-left: 2px solid var(--sage-pale); background: transparent; padding: 0.2rem 0; margin: 0.25rem 0 0.5rem 0.75rem; }
+      .nav-dropdown-link { padding: 0.45rem 0.75rem; font-size: 0.78rem; }
     }
 
-    /* TOP HEADER BAR (Row 1) & SUBNAV STRIP (Row 2) */
-    .top-header-bar {
-      background: var(--bg);
-      padding: 1.1rem 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .top-header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .top-header-link {
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 600;
-      text-decoration: none;
-      position: relative;
-      transition: color 0.2s;
-    }
-    .top-header-link:hover {
-      color: var(--sage-deep);
-    }
-    .top-header-link.active {
-      color: var(--sage-deep);
-      font-weight: 700;
-    }
-    .top-header-link.active::after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--sage-deep);
-    }
-
-    /* SUBNAV STRIP (EXACT MATCH TO ANNOTATED USER SCREENSHOT) */
-    .subnav-strip {
-      background: var(--surface, #FAF8F5);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      padding: 0.9rem 0;
-      position: relative;
-      z-index: 50;
-    }
-    .subnav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .subnav-group {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-    .subnav-divider {
-      width: 1px;
-      height: 34px;
-      background: var(--hairline);
-      flex-shrink: 0;
-    }
-
-    .subnav-link {
-      font-family: var(--font-body);
-      font-size: 0.76rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #666C5E;
-      font-weight: 600;
-      text-decoration: none;
-      line-height: 1.25;
-      transition: color 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .subnav-link:hover {
-      color: var(--sage-deep);
-    }
-    .subnav-link.active {
-      color: var(--sage-deep);
-      font-weight: 700;
-    }
-
-    .subnav-link-studio {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--sage-deep);
-      font-weight: 500;
-      font-variation-settings: 'opsz' 144;
-    }
-
-    /* IDENTICAL GREEN PURCHASE PILL BUTTON */
-    .btn-purchase-pill {
-      background: var(--sage-deep, #4E5A41) !important;
-      color: #FFFFFF !important;
-      padding: 0.6rem 1.4rem !important;
-      border-radius: 20px !important;
-      font-family: var(--font-body) !important;
-      font-size: 0.78rem !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.14em !important;
-      text-transform: uppercase !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 0.45rem !important;
-      border: none !important;
-      cursor: pointer !important;
-      box-shadow: 0 3px 10px rgba(78, 90, 65, 0.18);
-      transition: all 0.2s ease !important;
-      text-decoration: none !important;
-    }
-    .btn-purchase-pill:hover {
-      background: var(--sage, #7A8A6B) !important;
-      color: #FFFFFF !important;
-      transform: translateY(-1px);
-      box-shadow: 0 5px 14px rgba(78, 90, 65, 0.28);
-    }
-
-    @media (max-width: 900px) {
-      .subnav-inner {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .subnav-divider {
-        display: none;
-      }
-      .subnav-group {
-        gap: 1.25rem;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-    }
-
-    /* Paper grain */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 100;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-      opacity: 0.55;
-      mix-blend-mode: multiply;
-    }
-
-    /* Reveal */
-    [data-reveal] {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
-    }
+    /* REVEAL */
+    [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
     [data-reveal].is-visible { opacity: 1; transform: none; }
 
-    /* Nav */
-    .nav { position: relative; padding: 1.75rem 0; border-bottom: 1px solid var(--hairline); }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
-    .wordmark {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      font-style: italic;
-      color: var(--sage);
-      text-decoration: none;
-      font-variation-settings: "opsz" 144;
-    }
-    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
-    .nav-link {
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 500;
-      text-decoration: none;
-      transition: color 0.2s var(--ease);
-    }
-    .nav-link:hover { color: var(--sage); }
-    .nav-link-current { color: var(--sage-deep); }
-    .nav-link-current::after {
-      content: ""; display: block; width: 100%; height: 1px;
-      background: var(--sage); margin-top: 4px;
-    }
-    .nav-link-primary {
-      color: var(--bg); background: var(--sage);
-      padding: 0.55rem 1.1rem; border-radius: 999px;
-      letter-spacing: 0.12em; transition: background 0.2s var(--ease);
-    }
-    .nav-link-primary:hover { background: var(--sage-deep); color: var(--bg); }
-    /* Nav dropdown (Purchase) */
-    .nav-item-dropdown { position: relative; }
-    .nav-dropdown-trigger {
-      display: inline-flex; align-items: center; gap: 0.35rem; border: 0; background: transparent; padding: 0; font-family: inherit; font-size: inherit; color: inherit; cursor: pointer; font-weight: 500; text-transform: uppercase; transition: color 0.2s var(--ease);
-    }
-    .nav-dropdown-trigger:hover, .nav-item-dropdown:hover .nav-dropdown-trigger { color: var(--sage); }
-    .nav-dropdown-arrow { font-size: 0.85em; transition: transform 0.2s var(--ease); display: inline-block; }
-    .nav-item-dropdown:hover .nav-dropdown-arrow, .nav-item-dropdown:focus-within .nav-dropdown-arrow { transform: rotate(180deg); }
-    .nav-dropdown {
-      position: absolute; top: calc(100% + 0.5rem); right: 0; background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px; padding: 0.5rem 0; min-width: 200px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: all 0.2s var(--ease); box-shadow: 0 10px 30px rgba(78, 90, 65, 0.1); z-index: 100;
-    }
-    .nav-item-dropdown:hover .nav-dropdown, .nav-item-dropdown:focus-within .nav-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
-    .nav-dropdown-link { display: block; padding: 0.6rem 1.25rem; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); text-decoration: none; transition: background 0.15s, color 0.15s; }
-    .nav-dropdown-link:hover { background: rgba(122, 138, 107, 0.08); color: var(--sage-deep); }
-
-    @media (max-width: 640px) {
-      .nav-links { gap: 0.85rem; }
-      .nav-link { font-size: 0.65rem; letter-spacing: 0.12em; }
-    }
-
-    /* Hero */
-    .page-hero {
-      padding: clamp(5rem, 10vw, 9rem) 0 clamp(4rem, 7vw, 6rem);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .page-hero-inner {
-      display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: clamp(2rem, 6vw, 6rem);
-      align-items: end;
-    }
-    .page-eyebrow {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
-      color: var(--sage); font-weight: 600; margin-bottom: 2rem;
-    }
-    .page-eyebrow::before { content: ""; width: 32px; height: 1px; background: var(--sage); }
-    .page-hero h1 {
-      font-size: clamp(2.75rem, 7vw, 6rem);
-      letter-spacing: -0.025em;
-      font-weight: 350;
-      font-variation-settings: "opsz" 144;
-      color: var(--sage-deep);
-    }
-    .page-hero h1 em { font-style: italic; font-weight: 400; color: var(--sage); }
-    .page-hero-lede {
-      font-family: var(--font-display);
-      font-size: clamp(1.1rem, 1.6vw, 1.4rem);
-      line-height: 1.5;
-      color: var(--ink-soft);
-      max-width: 44ch;
-      font-weight: 350;
-    }
+    /* PAGE HERO */
+    .page-hero { padding: clamp(4rem, 8vw, 7rem) 0 clamp(3rem, 6vw, 5rem); border-bottom: 1px solid var(--hairline); }
+    .page-hero-inner { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(2rem, 6vw, 6rem); align-items: end; }
+    .page-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 1.5rem; }
+    .page-eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--sage); }
+    .page-hero h1 { font-size: clamp(2.75rem, 7vw, 5.5rem); letter-spacing: -0.025em; font-weight: 350; font-variation-settings: "opsz" 144; color: var(--sage-deep); }
+    .page-hero h1 em { font-style: italic; color: var(--sage); }
+    .page-hero-lede { font-family: var(--font-d); font-size: clamp(1.05rem, 1.6vw, 1.3rem); line-height: 1.6; color: var(--ink-soft); font-weight: 350; }
     .page-hero-lede em { font-style: italic; color: var(--sage); }
+    @media (max-width: 760px) { .page-hero-inner { grid-template-columns: 1fr; gap: 1.5rem; } }
 
-    /* Section helpers */
-    section { position: relative; padding: var(--section-y) 0; }
-    .eyebrow {
-      font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
-      color: var(--sage); font-weight: 600;
-      margin-bottom: 1.5rem; display: inline-block;
-    }
-    .h-section {
-      font-size: clamp(2rem, 4.5vw, 3.5rem);
-      max-width: 20ch;
-      letter-spacing: -0.02em;
-      color: var(--sage-deep);
-    }
+    /* SECTION HELPERS */
+    .section { padding: clamp(4rem, 8vw, 7rem) 0; }
+    .eyebrow { font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 1.25rem; display: block; }
+    .h-section { font-size: clamp(2rem, 4vw, 3.25rem); letter-spacing: -0.02em; color: var(--sage-deep); font-weight: 350; font-variation-settings: "opsz" 144; max-width: 20ch; }
     .h-section em { font-style: italic; color: var(--sage); }
-    .lede {
-      font-family: var(--font-display);
-      font-size: clamp(1.15rem, 1.7vw, 1.4rem);
-      line-height: 1.5;
-      color: var(--ink-soft);
-      max-width: 58ch;
-      margin-top: 1.5rem;
-      font-weight: 350;
-    }
+    .lede { font-family: var(--font-d); font-size: clamp(1.05rem, 1.6vw, 1.3rem); line-height: 1.55; color: var(--ink-soft); max-width: 56ch; margin-top: 1.25rem; font-weight: 350; }
     .lede em { font-style: italic; color: var(--sage); }
 
-    /* The deal section — list of partnership terms */
-    .deal {
-      padding: clamp(4rem, 8vw, 7rem) 0;
-    }
-    .deal-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      gap: clamp(2rem, 6vw, 5rem);
-      align-items: start;
-      margin-top: 3rem;
-    }
-    .deal-side {
-      position: sticky;
-      top: 2rem;
-    }
-    .deal-side h3 {
-      font-size: 1.6rem;
-      color: var(--sage-deep);
-      margin-bottom: 1rem;
-      letter-spacing: -0.01em;
-    }
+    /* PARTNERSHIP SECTION */
+    .deal-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(2rem, 6vw, 5rem); align-items: start; margin-top: 3rem; }
+    .deal-side { position: sticky; top: 5rem; }
+    .deal-side h3 { font-family: var(--font-d); font-size: 1.5rem; color: var(--sage-deep); margin-bottom: 1rem; letter-spacing: -0.01em; }
     .deal-side h3 em { font-style: italic; color: var(--sage); }
-    .deal-side p {
-      font-size: 1rem;
-      color: var(--ink-soft);
-      line-height: 1.65;
-    }
-    .deal-list {
-      display: grid;
-      gap: 0;
-    }
-    .deal-item {
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--hairline);
-      display: grid;
-      grid-template-columns: 60px 1fr;
-      gap: 1.5rem;
-      align-items: start;
-    }
-    .deal-item:first-child { padding-top: 0; }
-    .deal-item:last-child { border-bottom: none; }
-    .deal-num {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1.4rem;
-      color: var(--sage);
-      line-height: 1;
-    }
-    .deal-item h4 {
-      font-size: 1.3rem;
-      color: var(--sage-deep);
-      margin-bottom: 0.6rem;
-      letter-spacing: -0.01em;
-    }
+    .deal-side p { font-size: 0.98rem; color: var(--ink-soft); line-height: 1.65; }
+    .deal-side p + p { margin-top: 1rem; }
+    .deal-item { padding: 1.5rem 0; border-bottom: 1px solid var(--hairline); display: grid; grid-template-columns: 55px 1fr; gap: 1.5rem; align-items: start; }
+    .deal-item:first-child { padding-top: 0; border-top: 1px solid var(--hairline); }
+    .deal-num { font-family: var(--font-d); font-style: italic; font-size: 1.35rem; color: var(--sage); line-height: 1; }
+    .deal-item h4 { font-family: var(--font-d); font-size: 1.2rem; color: var(--sage-deep); margin-bottom: 0.5rem; letter-spacing: -0.01em; }
     .deal-item h4 em { font-style: italic; color: var(--sage); }
-    .deal-item p {
-      font-size: 0.98rem;
-      color: var(--ink-soft);
-      line-height: 1.65;
-    }
+    .deal-item p { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.65; }
+    @media (max-width: 800px) { .deal-grid { grid-template-columns: 1fr; } .deal-side { position: static; } }
 
-    /* Two-column comparison: We provide / You provide */
-    .compare {
-      background: var(--bg-warm);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .compare-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      margin-top: 3.5rem;
-      border-top: 1px solid var(--hairline);
-      border-left: 1px solid var(--hairline);
-      background: var(--bg);
-    }
-    .compare-col {
-      padding: 2.5rem;
-      border-right: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .compare-col h3 {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1.6rem;
-      color: var(--sage);
-      margin-bottom: 1.5rem;
-    }
-    .compare-col h3 strong {
-      font-style: normal;
-      color: var(--sage-deep);
-      font-weight: 400;
-    }
-    .compare-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .compare-list li {
-      padding: 0.8rem 0;
-      border-bottom: 1px solid var(--hairline);
-      font-size: 0.98rem;
-      color: var(--ink-soft);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.8rem;
-      line-height: 1.55;
-    }
-    .compare-list li:last-child { border-bottom: none; }
-    .compare-list li::before {
-      content: "—";
-      color: var(--sage);
-      flex-shrink: 0;
-      margin-top: 0;
-    }
-
-    /* Form */
-    .form-section {
-      padding: clamp(4rem, 8vw, 7rem) 0;
-      background: var(--bg);
-    }
+    /* FORM */
+    .form-section { padding: clamp(4rem, 8vw, 7rem) 0; background: var(--bg); }
     .form-header { max-width: 720px; margin-bottom: 3.5rem; }
-    .form-header .h-section { max-width: 18ch; }
-    .form-lede {
-      font-family: var(--font-display);
-      font-size: clamp(1.1rem, 1.7vw, 1.35rem);
-      line-height: 1.5;
-      color: var(--ink-soft);
-      max-width: 56ch;
-      margin-top: 1.5rem;
-      font-weight: 350;
-    }
     .form { max-width: 720px; }
-    .form-block {
-      padding: 2rem 0 2.5rem;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .form-block:first-child { padding-top: 0; }
+    .form-block { padding: 2rem 0 2.5rem; border-bottom: 1px solid var(--hairline); }
     .form-block:last-of-type { border-bottom: none; }
-    .form-block-num {
-      font-family: var(--font-display); font-style: italic;
-      font-size: 0.95rem; color: var(--sage);
-      letter-spacing: 0.05em; margin-bottom: 0.4rem;
-    }
-    .form-block-title {
-      font-family: var(--font-display);
-      font-size: 1.55rem; color: var(--sage-deep);
-      margin-bottom: 0.4rem; letter-spacing: -0.01em;
-    }
+    .form-block-num { font-family: var(--font-d); font-style: italic; font-size: 0.92rem; color: var(--sage); margin-bottom: 0.3rem; }
+    .form-block-title { font-family: var(--font-d); font-size: 1.5rem; color: var(--sage-deep); margin-bottom: 0.35rem; letter-spacing: -0.01em; }
     .form-block-title em { font-style: italic; color: var(--sage); }
-    .form-block-note {
-      font-family: var(--font-display); font-style: italic;
-      color: var(--muted); font-size: 0.95rem;
-      margin-bottom: 1.5rem; line-height: 1.5;
-    }
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem; margin-bottom: 1rem;
-    }
-    .form-field label {
-      display: block;
-      font-size: 0.78rem; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--muted);
-      margin-bottom: 0.6rem; font-weight: 500;
-    }
-    .form-field input,
-    .form-field select,
-    .form-field textarea {
-      width: 100%; padding: 0.85rem 1rem;
-      font-size: 0.98rem;
-      border: 1px solid var(--hairline);
-      background: var(--surface); color: var(--ink);
-      border-radius: 4px; outline: none;
-      transition: border-color 0.2s var(--ease);
-      font-family: inherit;
-    }
-    .form-field input:focus,
-    .form-field select:focus,
-    .form-field textarea:focus { border-color: var(--sage); }
+    .form-block-note { font-family: var(--font-d); font-style: italic; color: var(--muted); font-size: 0.92rem; margin-bottom: 1.5rem; line-height: 1.55; }
+    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+    .form-field label { display: block; font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; font-weight: 600; }
+    .form-field input, .form-field select, .form-field textarea { width: 100%; padding: 0.8rem 1rem; font-size: 0.92rem; border: 1px solid var(--hairline); background: var(--surface); color: var(--ink); border-radius: 6px; outline: none; transition: border-color 0.2s var(--ease); font-family: var(--font-b); }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--sage); }
     .form-field textarea { min-height: 110px; resize: vertical; }
-    .form-field-helper {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-top: 0.4rem;
-    }
-
-    .check-group {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 0.4rem 1.25rem;
-    }
-    .check-item {
-      display: flex; align-items: flex-start; gap: 0.7rem;
-      padding: 0.55rem 0; cursor: pointer; line-height: 1.45;
-    }
-    .check-item input { margin: 0.2rem 0 0 0; width: 16px; height: 16px;
-      accent-color: var(--sage); flex-shrink: 0; cursor: pointer; }
-    .check-item-text { font-size: 0.95rem; color: var(--ink); }
+    .check-group { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.4rem 1.25rem; margin-top: 0.5rem; }
+    .check-item { display: flex; align-items: flex-start; gap: 0.65rem; padding: 0.5rem 0; cursor: pointer; line-height: 1.45; }
+    .check-item input { margin: 0.2rem 0 0 0; width: 15px; height: 15px; accent-color: var(--sage-deep); flex-shrink: 0; cursor: pointer; }
+    .check-item-text { font-family: var(--font-b); font-size: 0.88rem; color: var(--ink); }
+    .check-item-text .meta { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem; font-style: italic; }
     .check-item:hover .check-item-text { color: var(--sage-deep); }
 
-    /* Availability matrix — 7 days x 5 time blocks */
-    .matrix-wrap {
-      margin-top: 0.5rem;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      background: var(--surface);
-    }
-    .matrix {
-      width: 100%;
-      min-width: 640px;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-    }
-    .matrix th, .matrix td {
-      padding: 0;
-      text-align: center;
-      vertical-align: middle;
-      border-right: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-    }
+    /* Availability matrix */
+    .matrix-wrap { margin-top: 0.5rem; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--hairline); border-radius: 6px; background: var(--surface); }
+    .matrix { width: 100%; min-width: 580px; border-collapse: collapse; font-size: 0.88rem; }
+    .matrix th, .matrix td { padding: 0; text-align: center; vertical-align: middle; border-right: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
     .matrix th:last-child, .matrix td:last-child { border-right: none; }
     .matrix tr:last-child td { border-bottom: none; }
-    .matrix thead th {
-      background: var(--bg-warm);
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-style: italic;
-      color: var(--sage-deep);
-      font-size: 0.95rem;
-      padding: 0.8rem 0.3rem;
-    }
-    .matrix thead th.matrix-corner {
-      background: var(--surface);
-      width: 140px;
-      font-style: normal;
-      font-family: var(--font-body);
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 500;
-    }
-    .matrix tbody th {
-      background: var(--bg-warm);
-      padding: 0.6rem 0.85rem;
-      text-align: left;
-      font-family: var(--font-body);
-      font-weight: 500;
-      color: var(--sage-deep);
-      font-size: 0.88rem;
-      line-height: 1.3;
-      width: 140px;
-    }
-    .matrix tbody th .matrix-time-range {
-      display: block;
-      font-family: var(--font-display);
-      font-style: italic;
-      font-weight: 400;
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-top: 0.15rem;
-    }
+    .matrix thead th { background: var(--bg-warm); font-family: var(--font-d); font-weight: 400; font-style: italic; color: var(--sage-deep); font-size: 0.92rem; padding: 0.75rem 0.3rem; }
+    .matrix thead th.matrix-corner { background: var(--surface); width: 130px; font-style: normal; font-family: var(--font-b); font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+    .matrix tbody th { background: var(--bg-warm); padding: 0.55rem 0.85rem; text-align: left; font-family: var(--font-b); font-weight: 600; color: var(--sage-deep); font-size: 0.82rem; line-height: 1.3; width: 130px; }
+    .matrix tbody th .matrix-time-range { display: block; font-family: var(--font-d); font-style: italic; font-weight: 400; font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
     .matrix td { position: relative; transition: background 0.15s var(--ease); }
     .matrix td:hover { background: var(--bg); }
-    .matrix-cell-label {
-      display: block;
-      width: 100%;
-      height: 100%;
-      padding: 0.95rem 0.5rem;
-      cursor: pointer;
-      position: relative;
-    }
-    .matrix-cell-label input[type="checkbox"] {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-    .matrix-cell-box {
-      display: inline-block;
-      width: 18px;
-      height: 18px;
-      border: 1.5px solid var(--hairline);
-      border-radius: 3px;
-      background: var(--bg);
-      transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
-      position: relative;
-    }
+    .matrix-cell-label { display: block; width: 100%; height: 100%; padding: 0.85rem 0.5rem; cursor: pointer; }
+    .matrix-cell-label input[type="checkbox"] { position: absolute; opacity: 0; pointer-events: none; }
+    .matrix-cell-box { display: inline-block; width: 16px; height: 16px; border: 1.5px solid var(--hairline); border-radius: 3px; background: var(--bg); transition: background 0.15s, border-color 0.15s; position: relative; }
     .matrix-cell-label:hover .matrix-cell-box { border-color: var(--sage); }
-    .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box {
-      background: var(--sage);
-      border-color: var(--sage);
-    }
-    .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box::after {
-      content: "";
-      position: absolute;
-      left: 4px;
-      top: 0px;
-      width: 6px;
-      height: 11px;
-      border: solid var(--bg);
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg);
-    }
-    .matrix-cell-label:has(input:checked) { background: rgba(122, 138, 107, 0.08); }
-    .matrix-hint {
-      font-size: 0.82rem;
-      color: var(--muted);
-      font-style: italic;
-      margin-top: 0.75rem;
-      display: block;
-      font-family: var(--font-display);
-    }
+    .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box { background: var(--sage); border-color: var(--sage); }
+    .matrix-cell-label input[type="checkbox"]:checked + .matrix-cell-box::after { content: ""; position: absolute; left: 3px; top: 0; width: 6px; height: 10px; border: solid var(--bg); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+    .matrix-cell-label:has(input:checked) { background: rgba(122,138,107,0.08); }
+    .matrix-hint { font-family: var(--font-d); font-style: italic; font-size: 0.8rem; color: var(--muted); margin-top: 0.65rem; display: block; }
 
-    .form-submit-row {
-      padding-top: 2.5rem;
-      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
-    }
-    .btn-primary {
-      padding: 1.05rem 2.25rem;
-      background: var(--sage); color: var(--bg);
-      border: 1px solid var(--sage); border-radius: 999px;
-      font-family: inherit; font-size: 0.98rem;
-      font-weight: 500; letter-spacing: 0.02em;
-      cursor: pointer;
-      transition: background 0.2s var(--ease), transform 0.2s var(--ease);
-    }
-    .btn-primary:hover { background: var(--sage-deep); border-color: var(--sage-deep); }
+    .form-submit-row { padding-top: 2.5rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .btn-primary { padding: 0.95rem 2rem; background: var(--sage-deep); color: #fff; border: 1.5px solid var(--sage-deep); border-radius: 999px; font-family: var(--font-b); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.08em; cursor: pointer; transition: background 0.2s var(--ease), transform 0.15s; }
+    .btn-primary:hover { background: var(--sage); border-color: var(--sage); }
     .btn-primary:active { transform: translateY(1px); }
-    .form-submit-note {
-      font-family: var(--font-display); font-style: italic;
-      color: var(--muted); font-size: 0.92rem;
-    }
+    .form-submit-note { font-family: var(--font-d); font-style: italic; color: var(--muted); font-size: 0.9rem; }
 
-    /* Thank-you state (shown after successful submit) */
-    .form-thanks {
-      display: none;
-      padding: clamp(3rem, 6vw, 5rem) clamp(2rem, 5vw, 4rem);
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      text-align: center;
-      max-width: 720px;
-      margin: 2rem auto 4rem;
-    }
+    .form-thanks { display: none; padding: clamp(3rem, 5vw, 4rem); background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px; text-align: center; max-width: 680px; margin: 2rem 0 4rem; }
     .form-thanks.active { display: block; }
-    .form-thanks h3 {
-      font-family: var(--font-display);
-      font-size: clamp(2.25rem, 4vw, 3.25rem);
-      line-height: 1.1;
-      color: var(--sage-deep);
-      margin-bottom: 1.25rem;
-      font-weight: 400;
-    }
+    .form-thanks h3 { font-family: var(--font-d); font-size: clamp(2rem, 3.5vw, 2.75rem); color: var(--sage-deep); margin-bottom: 1rem; font-weight: 350; }
     .form-thanks h3 em { font-style: italic; color: var(--sage); }
-    .form-thanks p {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      color: var(--ink-soft);
-      line-height: 1.65;
-      max-width: 48ch;
-      margin: 0 auto;
-    }
-    .form-thanks p strong {
-      font-weight: 500;
-      color: var(--sage-deep);
-    }
+    .form-thanks p { font-family: var(--font-d); font-size: 1.05rem; color: var(--ink-soft); line-height: 1.65; max-width: 44ch; margin: 0 auto; }
 
-    /* Footer */
-    footer {
-      background: var(--sage-deep);
-      color: rgba(241, 236, 223, 0.85);
-      padding: clamp(3rem, 6vw, 5rem) 0 2rem;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr;
-      gap: clamp(2rem, 5vw, 4rem);
-      margin-bottom: 3rem;
-    }
-    .footer-grid h4 {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      color: var(--bg);
-      margin-bottom: 1rem;
-      font-style: italic;
-      font-weight: 400;
-    }
-    .footer-grid p {
-      font-size: 0.92rem;
-      line-height: 1.65;
-      color: rgba(241, 236, 223, 0.7);
-    }
-    .footer-grid a {
-      display: block;
-      font-size: 0.92rem;
-      color: rgba(241, 236, 223, 0.75);
-      text-decoration: none;
-      margin-bottom: 0.5rem;
-      transition: color 0.2s var(--ease);
-    }
-    .footer-grid a:hover { color: var(--bg); }
-    .stack { display: flex; flex-direction: column; }
-    .wordmark-lg {
-      font-family: var(--font-display); font-style: italic;
-      font-size: 1.85rem; color: var(--bg);
-      margin-bottom: 1rem; font-variation-settings: "opsz" 144;
-    }
-    .footer-bottom {
-      padding-top: 2rem;
-      border-top: 1px solid rgba(241, 236, 223, 0.15);
-      display: flex; justify-content: space-between;
-      flex-wrap: wrap; gap: 1rem;
-      font-size: 0.78rem; letter-spacing: 0.05em;
-      color: rgba(241, 236, 223, 0.55);
-    }
+    /* FOOTER */
+    footer { background: var(--sage-deep); color: var(--bg); padding: 4rem 0 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-wordmark { font-family: var(--font-d); font-style: italic; font-size: 1.75rem; color: var(--bg); letter-spacing: -0.01em; margin-bottom: 1rem; font-variation-settings: "opsz" 144; }
+    footer p { color: rgba(241,236,223,0.65); font-size: 0.92rem; line-height: 1.7; }
+    footer h4 { font-family: var(--font-b); font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage-pale); font-weight: 600; margin: 0 0 1.1rem; }
+    footer a { color: rgba(241,236,223,0.7); text-decoration: none; transition: color 0.2s; display: block; margin-bottom: 0.45rem; font-size: 0.92rem; }
+    footer a:hover { color: var(--sage-pale); }
+    .footer-bottom { border-top: 1px solid rgba(241,236,223,0.12); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; font-family: var(--font-b); font-size: 0.72rem; color: rgba(241,236,223,0.4); }
+    .footer-legal { display: flex; align-items: center; gap: 0.5rem; }
+    .footer-legal a { color: rgba(241,236,223,0.45); display: inline; margin: 0; }
+    .footer-sep { opacity: 0.4; }
+    @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr; gap: 2rem; } .footer-bottom { flex-direction: column; align-items: flex-start; } }
 
-    @media (max-width: 900px) {
-      .page-hero-inner,
-      .deal-grid { grid-template-columns: 1fr; gap: 2rem; align-items: start; }
-      .deal-side { position: static; }
-      .compare-grid { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    }
-  
-    /* === standardized nav (hamburger + active state) === */
-    .nav-inner { position: relative; }
-    .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 0.5rem; }
-    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--sage-deep); transition: transform 0.2s, opacity 0.2s; }
-    .nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
-    .nav-toggle.open span:nth-child(2){ opacity: 0; }
-    .nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
-    .nav-link-current { color: var(--sage-deep); }
-    .nav-link-current::after { content: ""; display: block; width: 100%; height: 1px; background: var(--sage); margin-top: 4px; }
-    @media (max-width: 760px) {
-      .nav-toggle { display: flex; }
-      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px; padding: 0.5rem; margin-top: 0.75rem; box-shadow: 0 18px 44px rgba(78,90,65,0.16); z-index: 50; }
-      .nav-links.open { display: flex; }
-      .nav-link { font-size: 0.9rem; letter-spacing: 0.12em; padding: 0.85rem 0.9rem; text-align: left; }
-      .nav-link-current::after { display: none; }
-      .nav-link-primary { text-align: center; margin-top: 0.4rem; }
-    }
-    .btn-nav-purchase {
-      background: var(--sage-deep, #4E5A41) !important;
-      color: #FFFFFF !important;
-      padding: 0.45rem 1rem !important;
-      border-radius: 20px !important;
-      font-weight: 600 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.08em !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 0.35rem !important;
-      border: none !important;
-      cursor: pointer !important;
-      transition: background 0.2s var(--ease), transform 0.2s var(--ease) !important;
-    }
-    .btn-nav-purchase:hover {
-      background: var(--sage, #7A8A6B) !important;
-      color: #FFFFFF !important;
-      transform: translateY(-1px);
-    }
-    /* === end standardized nav === */
+    :focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; }
   </style>
 </head>
 <body>
 
-  <!-- =========================================================
-       NAV
-       ========================================================= -->
-  <!-- TOP HEADER BAR (Row 1) -->
-  <div class="top-header-bar">
-    <div class="container top-header-inner">
-      <a href="index.html" class="top-header-link">HOME</a>
-      <a href="login.html" class="top-header-link">HOBBIEST LOG IN</a>
+  <!-- CONTACT BAR -->
+  <div class="contact-bar">
+    <div class="container cb-inner">
+      <div class="cb-items">
+        <div class="cb-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          135 N. Main Street, Pittston, PA
+        </div>
+        <div class="cb-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+15703546189">(570) 354-6189</a>
+        </div>
+        <div class="cb-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+        </div>
+      </div>
+      <a href="login.html" style="font-family:var(--font-b);font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(241,236,223,0.55);text-decoration:none;font-weight:600;">Member Login →</a>
     </div>
   </div>
 
-  <!-- SUBNAV STRIP (Row 2 — Exact match to annotated screenshot) -->
-  <nav class="subnav-strip">
-    <div class="container subnav-inner">
-      
-      <!-- GROUP 1: Core Navigation -->
-      <div class="subnav-group">
-        <a href="index.html#how-it-works" class="subnav-link">HOW IT WORKS</a>
-        <a href="schedule.html" class="subnav-link">CURRENT CURRICULUM</a>
+  <!-- STICKY NAV -->
+  <nav class="sticky-nav" role="navigation" aria-label="Primary">
+    <div class="container nav-inner">
+      <a href="index.html" class="wordmark">The Hobbiest</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="how-it-works.html" class="nav-link">How It Works</a>
+        <a href="schedule.html" class="nav-link">Curriculum</a>
+        <a href="studio.html" class="nav-link">Club &amp; Parking</a>
+        <a href="interest.html" class="nav-link">Interest Form</a>
+        <a href="apply.html" class="nav-link nav-link-active">Apply to Teach</a>
         <div class="nav-item-dropdown">
-          <a href="studio.html" class="subnav-link subnav-link-studio nav-dropdown-trigger">
-            THE STUDIO <span class="nav-dropdown-arrow">▾</span>
-          </a>
-          <div class="nav-dropdown" role="menu">
-            <div style="padding: 0.85rem 1.15rem; border-bottom: 1px solid var(--hairline);">
-              <div style="font-family: var(--font-body); font-weight: 700; font-size: 0.78rem; color: var(--sage-deep); margin-bottom: 0.2rem;">135 N. Main St, Pittston, PA</div>
-              <div style="font-size: 0.75rem; color: var(--muted); line-height: 1.3;">Free Parking Across N. Main &amp; Kennedy</div>
-            </div>
-            <a href="studio.html" class="nav-dropdown-link" role="menuitem">Studio &amp; Parking Details</a>
+          <button class="nav-link-pill" aria-haspopup="true">Purchase ▾</button>
+          <div class="nav-dropdown">
+            <a href="schedule.html" class="nav-dropdown-link">Single Class</a>
+            <a href="studio.html#membership-offer" class="nav-dropdown-link">Studio Membership</a>
+            <a href="gift.html" class="nav-dropdown-link">Gift Card</a>
           </div>
         </div>
       </div>
-
-      <!-- VERTICAL DIVIDER LINE 1 -->
-      <div class="subnav-divider"></div>
-
-      <!-- GROUP 2: Forms -->
-      <div class="subnav-group">
-        <a href="interest.html" class="subnav-link">SUBMIT INTEREST FORM</a>
-        <a href="apply.html" class="subnav-link active">SUBMIT TEACHING APP</a>
-      </div>
-
-      <!-- VERTICAL DIVIDER LINE 2 -->
-      <div class="subnav-divider"></div>
-
-      <!-- GROUP 3: Purchase Pill Button Dropdown -->
-      <div class="subnav-group">
-        <div class="nav-item-dropdown">
-          <button class="btn-purchase-pill nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            PURCHASE <span class="nav-dropdown-arrow" style="color:#fff;">▾</span>
-          </button>
-          <div class="nav-dropdown" role="menu">
-            <a href="schedule.html" class="nav-dropdown-link" role="menuitem">Single Class</a>
-            <a href="studio.html#membership-offer" class="nav-dropdown-link" role="menuitem">Studio Membership</a>
-            <a href="gift.html" class="nav-dropdown-link" role="menuitem">Gift Card</a>
-          </div>
-        </div>
-      </div>
-
     </div>
   </nav>
 
-  <!-- =========================================================
-       HERO
-       ========================================================= -->
+  <!-- HERO -->
   <header class="page-hero">
     <div class="container">
       <div class="page-hero-inner">
@@ -898,33 +251,27 @@
           <h1>Teach what you <em>love</em>.</h1>
         </div>
         <div data-reveal>
-          <p class="page-hero-lede">
-            We're looking for instructors who genuinely know their craft and want to teach. We provide everything but the teaching — the space, the students, the operations. <em>You bring the craft.</em>
-          </p>
+          <p class="page-hero-lede">We're looking for instructors who genuinely know their craft and want to teach. We provide everything but the teaching — the space, the students, the operations. <em>You bring the craft.</em></p>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- =========================================================
-       THE PARTNERSHIP
-       ========================================================= -->
-  <section class="deal">
+  <!-- THE PARTNERSHIP -->
+  <section class="section" style="border-bottom: 1px solid var(--hairline);">
     <div class="container">
       <div data-reveal>
         <span class="eyebrow">The Partnership</span>
         <h2 class="h-section">How it <em>works</em>.</h2>
         <p class="lede">A genuine partnership built around the people who do the teaching.</p>
       </div>
-
       <div class="deal-grid">
         <div class="deal-side" data-reveal>
           <h3>Built for <em>real teachers</em>.</h3>
           <p>Most class businesses turn teaching into a side gig. We don't. We're built around the idea that great teachers do their best work when the business side gets out of the way — when the room is set up, the students show up, and the operational support is real.</p>
-          <p style="margin-top: 1rem;">In return, we ask that teaching at The Hobbiest matters to you — that you teach with us regularly, and that the students you meet here stay here. The full terms get worked out together.</p>
+          <p>In return, we ask that teaching at The Hobbiest matters to you — that you teach with us regularly, and that the students you meet here stay here. The full terms get worked out together.</p>
         </div>
-
-        <div class="deal-list" data-reveal>
+        <div data-reveal>
           <div class="deal-item">
             <div class="deal-num">01</div>
             <div>
@@ -958,79 +305,49 @@
     </div>
   </section>
 
-  <!-- =========================================================
-       APPLICATION FORM
-       ========================================================= -->
+  <!-- APPLICATION FORM -->
   <section class="form-section" id="apply">
     <div class="container">
       <div class="form-header" data-reveal>
         <span class="eyebrow">Apply to Teach</span>
         <h2 class="h-section">Tell us about <em>yourself</em>.</h2>
-        <p class="form-lede">Six questions. We'll read every application personally and get back to you within two weeks.</p>
+        <p class="lede">Six questions. We'll read every application personally and get back to you within two weeks.</p>
       </div>
 
-      <!--
-        ============================================================
-        FORM SUBMISSION — Web3Forms
-        Submissions arrive at pittston@thehobbiestskillsclub.com
-        Subject-tagged "New Hobbiest teach application" for easy sorting
-        ============================================================
-      -->
       <form class="form" id="applyForm" action="https://api.web3forms.com/submit" method="POST" data-reveal>
         <input type="hidden" name="access_key" value="38874121-66c9-4ac2-b031-6b49d727f714" />
         <input type="hidden" name="subject" value="New Hobbiest teach application" />
         <input type="hidden" name="from_name" value="The Hobbiest — Teach Application" />
-        <!-- Honeypot for spam protection -->
         <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
 
-        <!-- 01. YOU -->
         <div class="form-block" data-reveal>
           <div class="form-block-num">01 — You</div>
           <h3 class="form-block-title">Who <em>are you</em>?</h3>
           <p class="form-block-note">The basics. We'll be in touch from this email.</p>
-
           <div class="form-row">
-            <div class="form-field">
-              <label for="firstName">First name</label>
-              <input type="text" id="firstName" name="firstName" required />
-            </div>
-            <div class="form-field">
-              <label for="lastName">Last name</label>
-              <input type="text" id="lastName" name="lastName" required />
-            </div>
+            <div class="form-field"><label for="firstName">First name</label><input type="text" id="firstName" name="firstName" required /></div>
+            <div class="form-field"><label for="lastName">Last name</label><input type="text" id="lastName" name="lastName" required /></div>
           </div>
           <div class="form-row">
-            <div class="form-field">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" required />
-            </div>
-            <div class="form-field">
-              <label for="phone">Phone (optional)</label>
-              <input type="tel" id="phone" name="phone" />
-            </div>
+            <div class="form-field"><label for="email">Email</label><input type="email" id="email" name="email" required /></div>
+            <div class="form-field"><label for="phone">Phone (optional)</label><input type="tel" id="phone" name="phone" /></div>
           </div>
           <div class="form-row">
-            <div class="form-field">
-              <label for="city">City &amp; state</label>
-              <input type="text" id="city" name="city" placeholder="Pittston, PA" required />
-            </div>
+            <div class="form-field"><label for="city">City &amp; state</label><input type="text" id="city" name="city" placeholder="Pittston, PA" required /></div>
           </div>
         </div>
 
-        <!-- 02. WHAT YOU TEACH -->
         <div class="form-block" data-reveal>
           <div class="form-block-num">02 — What you teach</div>
           <h3 class="form-block-title">What's your <em>craft</em>?</h3>
-          <p class="form-block-note">What would you teach at The Hobbiest? Be specific. A class title or topic is enough — we'll work out the format with you.</p>
-
+          <p class="form-block-note">What would you teach at The Hobbiest? Be specific — a class title or topic is enough. We'll work out the format together.</p>
           <div class="form-field">
             <label for="craft">Your craft or topic</label>
-            <input type="text" id="craft" name="craft" placeholder="Watercolor, modern calligraphy, sourdough baking, basic home repair, hand embroidery..." required />
+            <input type="text" id="craft" name="craft" placeholder="Watercolor, calligraphy, sourdough, home repair, hand embroidery…" required />
           </div>
-
-          <div class="form-field" style="margin-top: 1.5rem;">
+          <div class="form-field" style="margin-top:1.5rem;">
             <label>Which cornerstone does it fit best?</label>
-            <div class="check-group" style="margin-top: 0.4rem;">
+            <div class="check-group">
               <label class="check-item"><input type="checkbox" name="category" value="Creative Pursuits" /><span class="check-item-text">Creative Pursuits<span class="meta">Things made beautifully by hand.</span></span></label>
               <label class="check-item"><input type="checkbox" name="category" value="Presence & Entertaining" /><span class="check-item-text">Presence &amp; Entertaining<span class="meta">The art of making people feel welcome.</span></span></label>
               <label class="check-item"><input type="checkbox" name="category" value="Essential Life Skills" /><span class="check-item-text">Essential Life Skills<span class="meta">The things every adult should know.</span></span></label>
@@ -1040,53 +357,40 @@
           </div>
         </div>
 
-        <!-- 03. EXPERIENCE -->
         <div class="form-block" data-reveal>
           <div class="form-block-num">03 — Experience</div>
           <h3 class="form-block-title">How long have you been <em>doing this</em>?</h3>
           <p class="form-block-note">We're not snobs about credentials — what matters is genuine practice. Tell us your story.</p>
-
           <div class="form-field">
             <label for="experience">Your background with this craft</label>
-            <textarea id="experience" name="experience" placeholder="How long you've been practicing, what got you into it, where you trained (if applicable), what you've made, where you've shown or sold your work..." required></textarea>
+            <textarea id="experience" name="experience" placeholder="How long you've been practicing, what got you into it, where you trained, what you've made or sold…" required></textarea>
           </div>
-
-          <div class="form-field" style="margin-top: 1.5rem;">
+          <div class="form-field" style="margin-top:1.25rem;">
             <label for="taught">Have you taught before? Where?</label>
-            <textarea id="taught" name="taught" placeholder="If you've taught — formally or informally — tell us where, what, and to whom. If you haven't, just say so. New teachers are welcome."></textarea>
+            <textarea id="taught" name="taught" placeholder="If you've taught — formally or informally — tell us where and to whom. If you haven't, just say so. New teachers are welcome."></textarea>
           </div>
         </div>
 
-        <!-- 04. SHOW YOUR WORK -->
         <div class="form-block" data-reveal>
           <div class="form-block-num">04 — Show your work</div>
           <h3 class="form-block-title">Where can we <em>see what you make</em>?</h3>
-          <p class="form-block-note">Instagram, Etsy, personal website, portfolio — anywhere we can see your craft. If you don't have an online presence, that's fine; tell us what you'd send instead.</p>
-
+          <p class="form-block-note">Instagram, Etsy, personal website, portfolio — anywhere we can see your craft. If you don't have an online presence, tell us what you'd send instead.</p>
           <div class="form-field">
             <label for="portfolio">Links to your work</label>
-            <textarea id="portfolio" name="portfolio" placeholder="https://instagram.com/yourhandle&#10;https://yourwebsite.com&#10;https://etsy.com/shop/yourshop"></textarea>
+            <textarea id="portfolio" name="portfolio" placeholder="https://instagram.com/yourhandle&#10;https://yourwebsite.com"></textarea>
           </div>
         </div>
 
-        <!-- 05. AVAILABILITY -->
         <div class="form-block" data-reveal>
           <div class="form-block-num">05 — Availability</div>
           <h3 class="form-block-title">When could you <em>teach</em>?</h3>
           <p class="form-block-note">Check anything that generally works in your week.</p>
-
           <div class="matrix-wrap">
             <table class="matrix">
               <thead>
                 <tr>
                   <th class="matrix-corner"></th>
-                  <th>Mon</th>
-                  <th>Tue</th>
-                  <th>Wed</th>
-                  <th>Thu</th>
-                  <th>Fri</th>
-                  <th>Sat</th>
-                  <th>Sun</th>
+                  <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
                 </tr>
               </thead>
               <tbody>
@@ -1144,115 +448,123 @@
             </table>
           </div>
           <p class="matrix-hint">Tap or click any cell to mark it as available.</p>
-
-          <div class="form-field" style="margin-top: 2rem;">
+          <div class="form-field" style="margin-top:1.75rem;">
             <label for="firstClass">Earliest you could teach your first class</label>
             <input type="text" id="firstClass" name="firstClass" placeholder="We're looking ahead to July 2026" />
           </div>
         </div>
 
-        <!-- 06. ANYTHING ELSE -->
         <div class="form-block" data-reveal>
           <div class="form-block-num">06 — Anything else</div>
           <h3 class="form-block-title">What should we <em>know</em>?</h3>
-          <p class="form-block-note">Optional. Anything you want us to consider — questions, ideas for collaboration, classes you wish existed, anything.</p>
-
+          <p class="form-block-note">Optional. Questions, ideas for collaboration, classes you wish existed, anything.</p>
           <div class="form-field">
-            <textarea id="notes" name="notes" placeholder="Tell us what we missed..."></textarea>
+            <textarea id="notes" name="notes" placeholder="Tell us what we missed…"></textarea>
           </div>
         </div>
 
         <div class="form-submit-row">
-          <button type="submit" class="btn-primary">Send my application</button>
+          <button type="submit" class="btn-primary">Send my application →</button>
           <span class="form-submit-note">We'll be in touch within two weeks.</span>
         </div>
       </form>
 
-      <!-- Thank you state -->
       <div class="form-thanks" id="formThanks">
-        <h3>Thanks for <em>applying.</em></h3>
-        <p>We've received your application and will be in touch within two weeks. If we have questions in the meantime, we'll reach out from <strong>pittston@thehobbiestskillsclub.com</strong>.</p>
+        <h3>Thanks for <em>applying</em>.</h3>
+        <p>We've received your application and will be in touch within two weeks. Questions in the meantime? Email us at <strong>pittston@thehobbiestskillsclub.com</strong>.</p>
       </div>
     </div>
   </section>
 
-  <!-- =========================================================
-       FOOTER
-       ========================================================= -->
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="wordmark-lg">The Hobbiest</div>
-          <p>A skills club where all the things you wish you knew are taught. Opening July 2026 in downtown Pittston, PA.</p>
+          <div class="footer-wordmark">The Hobbiest</div>
+          <p>A private members skills club for adults. Opening July 2026 in downtown Pittston, PA.</p>
         </div>
         <div>
           <h4>Visit</h4>
-          <p>135 N Main Street<br />Pittston, PA 18640<br /><br />Wyoming Valley · NEPA</p>
+          <p>135 N. Main Street<br>Pittston, PA 18640<br><br><a href="tel:+15703546189">(570) 354-6189</a><br>Wyoming Valley · NEPA</p>
         </div>
         <div>
-          <h4>Follow</h4>
-          <div class="stack">
-            <a href="#" rel="noopener">Instagram</a>
-            <a href="#" rel="noopener">Facebook</a>
-            <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
-          </div>
+          <h4>Contact</h4>
+          <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+          <a href="#" rel="noopener">Instagram</a>
+          <a href="#" rel="noopener">Facebook</a>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© 2026 The Hobbiest Skills Club</span>
-        <span><a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy Policy</a> · <a href="terms.html" style="color: inherit; text-decoration: none;">Terms of Service</a></span>
+        <div class="footer-legal">
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="footer-sep">·</span>
+          <a href="terms.html">Terms of Service</a>
+        </div>
       </div>
     </div>
   </footer>
 
   <script>
-    const reveals = document.querySelectorAll('[data-reveal]');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('is-visible');
-          io.unobserve(e.target);
+    /* NAV TOGGLE */
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+    if (navToggle && navLinks) {
+      navToggle.addEventListener('click', () => {
+        const open = navLinks.classList.toggle('open');
+        navToggle.classList.toggle('open', open);
+        navToggle.setAttribute('aria-expanded', open);
+      });
+      document.addEventListener('click', e => {
+        if (!e.target.closest('.sticky-nav')) {
+          navLinks.classList.remove('open');
+          navToggle.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-    reveals.forEach((r) => io.observe(r));
-
-    // Form submission via Web3Forms
-    const form = document.getElementById('applyForm');
-    const thanks = document.getElementById('formThanks');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const originalLabel = submitBtn.textContent;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending…';
-
-      try {
-        const formData = new FormData(form);
-        const response = await fetch(form.action, {
-          method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' },
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          navLinks.classList.remove('open');
+          navToggle.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
         });
-        const result = await response.json();
-        if (response.ok && result.success) {
-          // Hide the form and its header lede
+      });
+    }
+
+    /* REVEAL */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(r => io.observe(r));
+
+    /* FORM SUBMISSION via Web3Forms */
+    const form   = document.getElementById('applyForm');
+    const thanks = document.getElementById('formThanks');
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      const orig = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      try {
+        const res  = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        const data = await res.json();
+        if (res.ok && data.success) {
           form.style.display = 'none';
-          const formHeader = document.querySelector('.form-header');
-          if (formHeader) formHeader.style.display = 'none';
+          const header = document.querySelector('.form-header');
+          if (header) header.style.display = 'none';
           thanks.classList.add('active');
           window.scrollTo({ top: thanks.offsetTop - 100, behavior: 'smooth' });
         } else {
-          throw new Error(result.message || 'Submission failed');
+          throw new Error(data.message || 'Submission failed');
         }
       } catch (err) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalLabel;
-        alert("Sorry — something went wrong sending your application. Please try again, or email us directly at pittston@thehobbiestskillsclub.com.");
+        btn.disabled = false;
+        btn.textContent = orig;
+        alert('Something went wrong — please try again or email pittston@thehobbiestskillsclub.com directly.');
       }
     });
   </script>
-
 </body>
 </html>
