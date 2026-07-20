@@ -507,6 +507,15 @@
       display: block;
     }
 
+    .interest-grid-2col {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) !important;
+      gap: 2.5rem !important;
+      align-items: start !important;
+    }
+    .interest-col-left, .interest-col-right {
+      min-width: 0 !important;
+    }
     @media (max-width: 860px) {
       .interest-grid-2col {
         grid-template-columns: 1fr !important;
@@ -2182,7 +2191,7 @@
           <div class="interest-grid-2col" style="display: grid; grid-template-columns: 1fr 1.15fr; gap: 2.5rem; align-items: start;">
             
             <!-- LEFT COLUMN: Contact & Class Preferences -->
-            <div>
+            <div class="interest-col-left">
               <h3 style="font-family: var(--font-display); font-size: 1.85rem; font-weight: 400; color: var(--sage-deep); margin: 0 0 0.5rem 0; font-variation-settings: 'opsz' 144;">Submit Interest Form <em>(Free)</em></h3>
               <p style="font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 1.75rem; line-height: 1.55;">Fill out this form with your class choices and availability. No payment required — we'll set up your member account and email you when classes fill.</p>
 
@@ -2224,7 +2233,7 @@
             </div>
 
             <!-- RIGHT COLUMN: Availability Grid & Submit Button -->
-            <div>
+            <div class="interest-col-right">
               <div style="font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; color: var(--sage-deep); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.45rem;">SELECT YOUR AVAILABILITY</div>
               <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 1.25rem; line-height: 1.45;">Weekdays (7:00–9:00 PM) &amp; Weekend 2-hour slots (8 AM–10 PM).</p>
               
