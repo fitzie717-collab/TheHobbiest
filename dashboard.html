@@ -177,15 +177,23 @@
         <button class="pill"        data-panel="schedule"       onclick="showPanel('schedule',this)">Your Schedule</button>
       </nav>
 
-      <!-- 1. BUY CLASSES (Full Roster 1-10) -->
+      <!-- 1. BUY CLASSES (Full Roster 1-10 Organized by Category) -->
       <section class="panel show" id="panel-buy-classes">
         <div class="section-head">
           <h2>Buy Single <em>Classes</em></h2>
-          <p>Browse our 10 hands-on courses ($45–$65, all materials included). Buy single 2-hour sessions or apply your $45/mo Studio Membership credit.</p>
+          <p>Browse our 10 hands-on courses organized by category ($45–$65, all materials included). Buy single 2-hour sessions or apply your $45/mo Studio Membership credit.</p>
         </div>
 
-        <div class="class-roster-grid" id="classRosterGrid">
-          <!-- Dynamically populated 1-10 class cards -->
+        <!-- 10 QUICK JUMP BUTTONS -->
+        <div style="background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px; padding: 1.2rem 1.4rem; margin-bottom: 2rem;">
+          <div style="font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 0.75rem;">JUMP TO CLASS:</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="quickJumpRow">
+            <!-- 10 Jump Buttons populated via JS -->
+          </div>
+        </div>
+
+        <div id="classCategoriesWrap">
+          <!-- Dynamically populated category sections & 1-10 class cards -->
         </div>
       </section>
 
@@ -495,18 +503,33 @@
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const STRIPE_PK = "pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS";
 
-    // Canonical 1-10 class list & prices
+    // Canonical 1-10 class list & prices (Grouped by Category: Creative Pursuits first)
+    const CATEGORY_ORDER = ['Creative Pursuits', 'Hearth & Garden', 'Essential Life Skills', 'Living Well'];
+    const CATEGORY_DESCS = {
+      'Creative Pursuits':     'Things made beautifully by hand. Explorations in craftsmanship, creative expression, and traditional arts.',
+      'Hearth & Garden':       'Slow, seasonal work with living things. Growing & arranging with intention.',
+      'Essential Life Skills': 'The practical skills everyone should know for everyday self-reliance.',
+      'Living Well':           'Daily rituals, personal styling, and intentional living practices.'
+    };
+
     const CANONICAL_CLASSES = [
+      // 1-5: Creative Pursuits
       { id: 'wreath-making', num: '01', name: 'Wreath Making', category: 'Creative Pursuits', price: 65, price_cents: 6500, desc: 'Craft a stunning, seasonal door wreath using fresh greens, dried florals, and traditional wiring techniques.', instructor: 'Studio Florist' },
-      { id: 'flower-arranging', num: '02', name: 'Flower Arranging & Floral Design', category: 'Hearth & Garden', price: 65, price_cents: 6500, desc: 'Principles of color, vessel selection, stem preparation, and creating balanced fresh floral arrangements.', instructor: 'Master Florist' },
-      { id: 'watercolor-101', num: '03', name: 'Watercolor Painting 101', category: 'Creative Pursuits', price: 55, price_cents: 5500, desc: 'Learn color blending, wet-on-wet washes, and botanical watercolor painting techniques.', instructor: 'Fine Artist' },
-      { id: 'modern-calligraphy', num: '04', name: 'Modern Calligraphy & Pointed Pen', category: 'Creative Pursuits', price: 55, price_cents: 5500, desc: 'Explore pointed pen lettering, stroke contrast, letterforms, and custom stationery design.', instructor: 'Calligrapher' },
-      { id: 'sourdough-bread', num: '05', name: 'Sourdough Bread Making', category: 'Essential Life Skills', price: 55, price_cents: 5500, desc: 'De-mystify starter maintenance, bulk fermentation, shaping, scoring, and baking golden rustic loaves.', instructor: 'Artisan Baker' },
-      { id: 'hair-blowouts', num: '06', name: 'Hair Tutorial — Professional Blowouts', category: 'Living Well', price: 45, price_cents: 4500, desc: 'Master the round-brush blowout at home! Learn sectioning, heat protection, volume lifting, and finishing oils.', instructor: 'Stylist Lead' },
-      { id: 'makeup-daily', num: '07', name: 'Makeup Tutorial — Daily Application', category: 'Living Well', price: 45, price_cents: 4500, desc: 'Learn a flawless 10-minute everyday makeup routine tailored to your skin tone and features.', instructor: 'Beauty Specialist' },
-      { id: 'makeup-night', num: '08', name: 'Makeup Tutorial — Night Out Glam', category: 'Living Well', price: 45, price_cents: 4500, desc: 'Step-by-step evening makeup techniques: subtle smokey eyes, long-lasting skin prep, and bold lip application.', instructor: 'Beauty Specialist' },
-      { id: 'beginner-knitting', num: '09', name: 'Beginner Knitting — Chunky Scarf', category: 'Creative Pursuits', price: 45, price_cents: 4500, desc: 'Cast on, knit stitch, purl stitch, and cast off. Walk away with your first cozy handmade creation.', instructor: 'Textile Artisan' },
-      { id: 'sketch-art', num: '10', name: 'Sketch Art & Drawing Basics', category: 'Creative Pursuits', price: 45, price_cents: 4500, desc: 'Master fundamental shading, perspective, line weight, and quick-sketch techniques in a relaxing environment.', instructor: 'Resident Artist' }
+      { id: 'watercolor-101', num: '02', name: 'Watercolor Painting 101', category: 'Creative Pursuits', price: 55, price_cents: 5500, desc: 'Learn color blending, wet-on-wet washes, and botanical watercolor painting techniques.', instructor: 'Fine Artist' },
+      { id: 'modern-calligraphy', num: '03', name: 'Modern Calligraphy & Pointed Pen', category: 'Creative Pursuits', price: 55, price_cents: 5500, desc: 'Explore pointed pen lettering, stroke contrast, letterforms, and custom stationery design.', instructor: 'Calligrapher' },
+      { id: 'beginner-knitting', num: '04', name: 'Beginner Knitting — Chunky Scarf', category: 'Creative Pursuits', price: 45, price_cents: 4500, desc: 'Cast on, knit stitch, purl stitch, and cast off. Walk away with your first cozy handmade creation.', instructor: 'Textile Artisan' },
+      { id: 'sketch-art', num: '05', name: 'Sketch Art & Drawing Basics', category: 'Creative Pursuits', price: 45, price_cents: 4500, desc: 'Master fundamental shading, perspective, line weight, and quick-sketch techniques in a relaxing environment.', instructor: 'Resident Artist' },
+      
+      // 06: Hearth & Garden
+      { id: 'flower-arranging', num: '06', name: 'Flower Arranging & Floral Design', category: 'Hearth & Garden', price: 65, price_cents: 6500, desc: 'Principles of color, vessel selection, stem preparation, and creating balanced fresh floral arrangements.', instructor: 'Master Florist' },
+
+      // 07: Essential Life Skills
+      { id: 'sourdough-bread', num: '07', name: 'Sourdough Bread Making', category: 'Essential Life Skills', price: 55, price_cents: 5500, desc: 'De-mystify starter maintenance, bulk fermentation, shaping, scoring, and baking golden rustic loaves.', instructor: 'Artisan Baker' },
+
+      // 08-10: Living Well
+      { id: 'hair-blowouts', num: '08', name: 'Hair Tutorial — Professional Blowouts', category: 'Living Well', price: 45, price_cents: 4500, desc: 'Master the round-brush blowout at home! Learn sectioning, heat protection, volume lifting, and finishing oils.', instructor: 'Stylist Lead' },
+      { id: 'makeup-daily', num: '09', name: 'Makeup Tutorial — Daily Application', category: 'Living Well', price: 45, price_cents: 4500, desc: 'Learn a flawless 10-minute everyday makeup routine tailored to your skin tone and features.', instructor: 'Beauty Specialist' },
+      { id: 'makeup-night', num: '10', name: 'Makeup Tutorial — Night Out Glam', category: 'Living Well', price: 45, price_cents: 4500, desc: 'Step-by-step evening makeup techniques: subtle smokey eyes, long-lasting skin prep, and bold lip application.', instructor: 'Beauty Specialist' }
     ];
 
     const ideaCategories = ["New Class Topic", "Guest Instructor", "Studio Event", "Materials / Tools", "Other"];
@@ -554,28 +577,64 @@
       if(btn) btn.classList.add("active");
     }
 
-    /* RENDER 1-10 CLASS ROSTER */
+    function jumpToClassCard(cardId){
+      const el = $("card-" + cardId);
+      if(el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.style.borderColor = 'var(--sage)';
+        setTimeout(() => el.style.borderColor = '', 2000);
+      }
+    }
+
+    /* RENDER 1-10 CLASS ROSTER GROUPED BY CATEGORY */
     function renderClassRoster(){
-      const grid = $("classRosterGrid");
-      grid.innerHTML = CANONICAL_CLASSES.map(c => `
-        <div class="class-roster-card">
-          <div>
-            <div class="crc-num">${c.num} — ${c.category}</div>
-            <div class="crc-title">${c.name}</div>
-            <div class="crc-desc">${c.desc}</div>
-          </div>
-          <div>
-            <div class="crc-price-row">
-              <div class="crc-price">$${c.price}</div>
-              <div class="crc-note">All materials included</div>
-            </div>
-            <div class="crc-actions">
-              <button class="btn-buy-single" onclick="buySingleClass('${c.id}')">Buy Single Class ($${c.price}) →</button>
-              <button class="btn-apply-credit" onclick="applyCreditToMembership('${c.id}')">Apply $45 Membership Credit →</button>
-            </div>
-          </div>
-        </div>
+      // Populate 10 Quick Jump Buttons
+      const jumpRow = $("quickJumpRow");
+      jumpRow.innerHTML = CANONICAL_CLASSES.map(c => `
+        <button onclick="jumpToClassCard('${c.id}')" style="font-family: var(--font-body); font-size: 0.76rem; font-weight: 600; padding: 0.45rem 0.85rem; border-radius: 999px; border: 1px solid var(--hairline); background: var(--bg); color: var(--sage-deep); cursor: pointer; transition: all 0.15s;">
+          ${c.num} ${c.name.split('—')[0].split('&')[0]} ($${c.price})
+        </button>
       `).join('');
+
+      // Group Classes by Category
+      const wrap = $("classCategoriesWrap");
+      wrap.innerHTML = CATEGORY_ORDER.map((cat, catIdx) => {
+        const catClasses = CANONICAL_CLASSES.filter(c => c.category === cat);
+        if(!catClasses.length) return '';
+        const catNum = String(catIdx + 1).padStart(2, '0');
+        
+        return `
+          <div style="margin-bottom: 3rem;">
+            <div style="margin-bottom: 1.25rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--hairline);">
+              <div style="font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--sage); font-weight: 700;">${catNum} — CATEGORY</div>
+              <h3 style="font-family: var(--font-display); font-size: 1.8rem; color: var(--sage-deep); margin: 0.2rem 0;">${cat}</h3>
+              <p style="font-family: var(--font-body); font-size: 0.88rem; color: var(--ink-soft); font-style: italic;">${CATEGORY_DESCS[cat] || ''}</p>
+            </div>
+            
+            <div class="class-roster-grid">
+              ${catClasses.map(c => `
+                <div class="class-roster-card" id="card-${c.id}">
+                  <div>
+                    <div class="crc-num">${c.num} — ${c.category}</div>
+                    <div class="crc-title">${c.name}</div>
+                    <div class="crc-desc">${c.desc}</div>
+                  </div>
+                  <div>
+                    <div class="crc-price-row">
+                      <div class="crc-price">$${c.price}</div>
+                      <div class="crc-note">All materials included</div>
+                    </div>
+                    <div class="crc-actions">
+                      <button class="btn-buy-single" onclick="buySingleClass('${c.id}')">Buy Class ($${c.price}) →</button>
+                      <button class="btn-apply-credit" onclick="applyCreditToMembership('${c.id}')">Apply $45 Membership Credit →</button>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
     /* MEMBERSHIP DROPDOWN & CREDIT CALCULATION */
