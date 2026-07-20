@@ -4,576 +4,430 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Submit Interest Form — The Hobbiest Skills Club</title>
-
-  <!-- Google Fonts: Fraunces (serif) & Inter (sans) -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root {
-      --bg: #F5F2EC;
-      --bg-alt: #EFECE4;
-      --bg-warm: #EBE7DF;
-      --surface: #FAF8F5;
-      --sage: #7A8A6B;
+      --bg:        #F1ECDF;
+      --bg-warm:   #EAE3D2;
+      --bg-alt:    #EBE7DF;
+      --surface:   #FAF7F0;
+      --ink:       #4E5A41;
+      --ink-soft:  #6B7459;
+      --muted:     #8A8170;
+      --hairline:  #D9D2BE;
+      --sage:      #7A8A6B;
       --sage-deep: #4E5A41;
-      --sage-pale: #D2DACB;
-      --taupe: #A89878;
-      --ink: #1C2018;
-      --ink-soft: #424A3B;
-      --muted: #788070;
-      --hairline: #DFD9CE;
+      --sage-pale: #B5BFA8;
+      --font-d: "Fraunces", "Times New Roman", serif;
+      --font-b: "DM Sans", -apple-system, sans-serif;
       --max-w: 1200px;
-      --gutter: 2rem;
-      --font-display: 'Fraunces', Georgia, serif;
-      --font-body: 'Inter', system-ui, sans-serif;
-      --ease: cubic-bezier(0.25, 1, 0.5, 1);
+      --gutter: clamp(1.25rem, 4vw, 3rem);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
-
     *, *::before, *::after { box-sizing: border-box; }
-    html { background-color: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
-    body { margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
-    h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; color: var(--sage-deep); margin: 0; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: var(--font-d); font-size: 16px; line-height: 1.6; color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; min-height: 100vh; display: flex; flex-direction: column; }
+    h1, h2, h3, h4 { font-family: var(--font-d); font-weight: 400; line-height: 1.05; letter-spacing: -0.015em; margin: 0; font-variation-settings: "opsz" 100; }
     p { margin: 0; }
     a { color: inherit; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
 
-    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); width: 100%; }
+    /* GRAIN */
+    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); opacity: 0.5; mix-blend-mode: multiply; }
 
-    /* Paper grain texture overlay */
-    body::before {
-      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-      opacity: 0.55; mix-blend-mode: multiply;
+    /* CONTACT BAR */
+    .contact-bar { background: var(--sage-deep); color: rgba(241,236,223,0.7); font-family: var(--font-b); font-size: 0.7rem; letter-spacing: 0.06em; padding: 0.5rem 0; }
+    .cb-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .cb-items { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .cb-item { display: flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
+    .cb-item svg { width: 10px; height: 10px; opacity: 0.55; flex-shrink: 0; }
+    .contact-bar a { color: inherit; text-decoration: none; transition: color 0.2s; }
+    .contact-bar a:hover { color: var(--bg); }
+    @media (max-width: 640px) { .cb-inner { justify-content: center; } .cb-item:first-child { display: none; } }
+
+    /* STICKY NAV */
+    .sticky-nav { position: sticky; top: 0; z-index: 500; background: var(--surface); border-bottom: 1px solid var(--hairline); box-shadow: 0 2px 20px rgba(78,90,65,0.07); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1.5rem; position: relative; }
+    .wordmark { font-family: var(--font-d); font-size: 1.25rem; font-weight: 400; font-style: italic; color: var(--sage); text-decoration: none; letter-spacing: -0.01em; font-variation-settings: "opsz" 144; flex-shrink: 0; }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+    .nav-link { font-family: var(--font-b); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 600; text-decoration: none; padding: 0.45rem 0.75rem; border-radius: 4px; transition: color 0.2s var(--ease), background 0.2s var(--ease); white-space: nowrap; }
+    .nav-link:hover { color: var(--sage-deep); background: var(--bg-warm); }
+    .nav-link-active { color: var(--sage-deep); }
+    .nav-link-pill { background: var(--sage-deep); color: #fff !important; padding: 0.45rem 1rem; border-radius: 20px; font-family: var(--font-b); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none; transition: background 0.2s var(--ease), transform 0.15s var(--ease); white-space: nowrap; }
+    .nav-link-pill:hover { background: var(--sage); transform: translateY(-1px); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 0.5rem; cursor: pointer; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--sage-deep); transition: 0.2s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (max-width: 860px) {
+      .nav-toggle { display: flex; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; background: var(--surface); border-bottom: 1px solid var(--hairline); padding: 0.75rem var(--gutter) 1rem; gap: 0.25rem; box-shadow: 0 10px 30px rgba(78,90,65,0.12); }
+      .nav-links.open { display: flex; }
+      .nav-link { font-size: 0.82rem; padding: 0.7rem 0.75rem; }
+      .nav-link-pill { text-align: center; margin-top: 0.25rem; justify-content: center; }
     }
 
-    /* TOP HEADER BAR (Row 1) & SUBNAV STRIP (Row 2) */
-    .top-header-bar {
-      background: var(--bg);
-      padding: 1.1rem 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .top-header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .top-header-link {
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 600;
-      text-decoration: none;
-      position: relative;
-      transition: color 0.2s;
-    }
-    .top-header-link:hover {
-      color: var(--sage-deep);
-    }
-    .top-header-link.active {
-      color: var(--sage-deep);
-      font-weight: 700;
-    }
-    .top-header-link.active::after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 0;
+    /* PAGE HERO */
+    .page-hero { padding: clamp(3rem, 6vw, 4.5rem) 0 clamp(2rem, 4vw, 3rem); border-bottom: 1px solid var(--hairline); background: var(--bg); }
+    .page-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 1.1rem; }
+    .page-eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--sage); }
+    .page-hero h1 { font-size: clamp(2.2rem, 5vw, 4rem); letter-spacing: -0.02em; font-weight: 350; font-variation-settings: "opsz" 144; color: var(--sage-deep); margin-bottom: 1rem; }
+    .page-hero h1 em { font-style: italic; color: var(--sage); }
+    .hero-lede { font-family: var(--font-d); font-size: clamp(1rem, 1.5vw, 1.2rem); color: var(--ink-soft); max-width: 60ch; line-height: 1.6; font-weight: 350; }
+
+    /* FORM SECTION */
+    .form-section { padding: clamp(2.5rem, 5vw, 4rem) 0; flex: 1; }
+    .interest-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; padding: clamp(1.75rem, 4vw, 3rem); box-shadow: 0 12px 40px rgba(78,90,65,0.06); }
+
+    /* Form layout */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    @media (max-width: 900px) { .form-grid { grid-template-columns: 1fr; gap: 2rem; } }
+
+    .form-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 560px) { .form-field-row { grid-template-columns: 1fr; } }
+
+    .field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .field label { font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--sage-deep); }
+    .field input, .field textarea {
+      padding: 0.8rem 1rem;
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      background: var(--bg-warm);
+      font-family: var(--font-b);
+      font-size: 0.92rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s var(--ease), background 0.2s;
       width: 100%;
-      height: 2px;
-      background: var(--sage-deep);
     }
+    .field input:focus, .field textarea:focus { border-color: var(--sage); background: var(--surface); }
+    .field textarea { min-height: 90px; resize: vertical; }
 
-    /* SUBNAV STRIP (EXACT MATCH TO ANNOTATED USER SCREENSHOT) */
-    .subnav-strip {
-      background: var(--surface, #FAF8F5);
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      padding: 0.9rem 0;
-      position: relative;
-      z-index: 50;
-    }
-    .subnav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .subnav-group {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-    .subnav-divider {
-      width: 1px;
-      height: 34px;
-      background: var(--hairline);
-      flex-shrink: 0;
-    }
+    /* Class checkboxes */
+    .class-label { font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--sage-deep); margin-bottom: 0.5rem; display: block; }
+    .class-scroll { border: 1px solid var(--hairline); border-radius: 6px; background: var(--bg-warm); padding: 0.5rem 0.85rem; display: flex; flex-direction: column; gap: 0.5rem; max-height: 200px; overflow-y: auto; }
+    .class-check { display: flex; align-items: center; gap: 0.6rem; font-family: var(--font-b); font-size: 0.8rem; font-weight: 600; color: var(--sage-deep); cursor: pointer; padding: 0.2rem 0; }
+    .class-check input { width: 15px; height: 15px; cursor: pointer; accent-color: var(--sage-deep); flex-shrink: 0; }
 
-    .subnav-link {
-      font-family: var(--font-body);
-      font-size: 0.76rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #666C5E;
-      font-weight: 600;
-      text-decoration: none;
-      line-height: 1.25;
-      transition: color 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .subnav-link:hover {
-      color: var(--sage-deep);
-    }
-    .subnav-link.active {
-      color: var(--sage-deep);
-      font-weight: 700;
-    }
+    /* Availability table */
+    .avail-label { font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--sage-deep); margin-bottom: 0.35rem; display: block; }
+    .avail-note { font-family: var(--font-b); font-size: 0.82rem; color: var(--muted); margin-bottom: 1.1rem; line-height: 1.45; }
+    .avail-wrap { overflow-x: auto; border: 1px solid var(--hairline); border-radius: 8px; background: var(--bg-warm); margin-bottom: 1.25rem; }
+    .avail-table { width: 100%; border-collapse: collapse; font-family: var(--font-b); font-size: 0.8rem; text-align: center; min-width: 480px; }
+    .avail-table th { padding: 0.65rem 0.3rem; font-family: var(--font-d); font-style: italic; font-weight: 400; color: var(--sage-deep); background: var(--bg-warm); border-bottom: 1px solid var(--hairline); }
+    .avail-table th.corner { text-align: left; padding-left: 0.85rem; font-style: normal; font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 600; width: 120px; }
+    .avail-table th.weekend { background: var(--hairline); }
+    .avail-table td { padding: 0.4rem 0.3rem; border-bottom: 1px solid var(--hairline); }
+    .avail-table td.row-label { text-align: left; padding-left: 0.85rem; font-weight: 600; color: var(--sage-deep); background: var(--bg-warm); font-size: 0.78rem; white-space: nowrap; }
+    .avail-table td.weekend { background: rgba(122,138,107,0.07); }
+    .avail-table td.unavail { color: var(--hairline); font-size: 0.72rem; }
+    .avail-table tr:last-child td { border-bottom: none; }
+    .avail-table input[type="checkbox"] { width: 15px; height: 15px; cursor: pointer; accent-color: var(--sage-deep); }
 
-    .subnav-link-studio {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--sage-deep);
-      font-weight: 500;
-      font-variation-settings: 'opsz' 144;
-    }
+    /* Submit */
+    .btn-submit { width: 100%; padding: 1rem; background: var(--sage-deep); color: #fff; font-family: var(--font-b); font-size: 0.92rem; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s var(--ease), transform 0.15s; letter-spacing: 0.04em; }
+    .btn-submit:hover { background: var(--sage); }
+    .btn-submit:active { transform: scale(0.99); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* IDENTICAL GREEN PURCHASE PILL BUTTON */
-    .btn-purchase-pill {
-      background: var(--sage-deep, #4E5A41) !important;
-      color: #FFFFFF !important;
-      padding: 0.6rem 1.4rem !important;
-      border-radius: 20px !important;
-      font-family: var(--font-body) !important;
-      font-size: 0.78rem !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.14em !important;
-      text-transform: uppercase !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 0.45rem !important;
-      border: none !important;
-      cursor: pointer !important;
-      box-shadow: 0 3px 10px rgba(78, 90, 65, 0.18);
-      transition: all 0.2s ease !important;
-      text-decoration: none !important;
-    }
-    .btn-purchase-pill:hover {
-      background: var(--sage, #7A8A6B) !important;
-      color: #FFFFFF !important;
-      transform: translateY(-1px);
-      box-shadow: 0 5px 14px rgba(78, 90, 65, 0.28);
-    }
+    /* Form message */
+    .form-msg { padding: 1rem 1.25rem; border-radius: 8px; font-family: var(--font-b); font-size: 0.92rem; line-height: 1.55; margin-bottom: 1.5rem; display: none; }
+    .form-msg.ok { background: rgba(122,138,107,0.12); border: 1px solid var(--sage); color: var(--sage-deep); }
+    .form-msg.err { background: rgba(176,80,60,0.1); border: 1px solid #d6a99a; color: #8a3a28; }
 
-    @media (max-width: 900px) {
-      .subnav-inner {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .subnav-divider {
-        display: none;
-      }
-      .subnav-group {
-        gap: 1.25rem;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-    }
-
-    /* Page Hero */
-    .hero-wrap {
-      padding: clamp(3rem, 6vw, 4.5rem) 0 clamp(2rem, 4vw, 3rem);
-      border-bottom: 1px solid var(--hairline);
-      background: var(--bg);
-    }
-    .eyebrow {
-      display: inline-block; font-size: 0.72rem; letter-spacing: 0.28em;
-      text-transform: uppercase; color: var(--sage); font-weight: 600; margin-bottom: 0.85rem;
-    }
-    .hero-wrap h1 {
-      font-size: clamp(2.5rem, 5.5vw, 4.2rem); color: var(--sage-deep); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1rem;
-    }
-    .hero-wrap h1 em { font-style: italic; color: var(--sage); }
-    .hero-lede {
-      font-family: var(--font-display); font-size: clamp(1.1rem, 1.8vw, 1.35rem); color: var(--ink-soft); max-width: 68ch; line-height: 1.55; font-weight: 350;
-    }
-
-    /* Form Section */
-    .form-section {
-      padding: clamp(3rem, 6vw, 5rem) 0;
-      flex: 1;
-    }
-    .interest-card {
-      background: #FAF8F5; border: 1px solid #DFD9CE; border-radius: 12px; padding: clamp(2rem, 4vw, 3rem); box-shadow: 0 12px 40px rgba(78, 90, 65, 0.06);
-    }
-    .form-msg { padding: 1.1rem 1.3rem; border-radius: 8px; font-size: 0.95rem; line-height: 1.55; margin-bottom: 1.75rem; display: none; }
-    .form-msg.ok { background: rgba(122, 138, 107, 0.15); border: 1.5px solid var(--sage); color: var(--sage-deep); }
-    .form-msg.err { background: rgba(176, 80, 60, 0.12); border: 1.5px solid #d6a99a; color: #8a3a28; }
-
-    @media (max-width: 960px) {
-      .interest-form-layout { grid-template-columns: 1fr !important; gap: 2rem !important; }
-    }
-
-    /* Footer */
-    footer {
-      background: var(--sage-deep); color: var(--bg); padding: 4rem 0 2rem; margin-top: auto;
-    }
+    /* FOOTER */
+    footer { background: var(--sage-deep); color: var(--bg); padding: 4rem 0 2rem; margin-top: auto; }
     .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-    .footer-grid h4 { font-family: var(--font-display); font-size: 1.15rem; color: var(--bg); margin-bottom: 1rem; font-style: italic; font-weight: 400; }
-    .footer-grid p { font-size: 0.92rem; line-height: 1.65; color: rgba(241, 236, 223, 0.7); }
-    .footer-grid a { display: block; font-size: 0.92rem; color: rgba(241, 236, 223, 0.75); text-decoration: none; margin-bottom: 0.5rem; transition: color 0.2s; }
-    .footer-grid a:hover { color: var(--sage-pale); }
-    .footer-bottom { border-top: 1px solid rgba(241, 236, 223, 0.15); padding-top: 1.5rem; display: flex; justify-content: space-between; font-size: 0.78rem; color: rgba(241, 236, 223, 0.45); }
-  </style>
+    .footer-wordmark { font-family: var(--font-d); font-style: italic; font-size: 1.75rem; color: var(--bg); letter-spacing: -0.01em; margin-bottom: 1rem; font-variation-settings: "opsz" 144; }
+    footer p { color: rgba(241,236,223,0.65); font-size: 0.92rem; line-height: 1.7; }
+    footer h4 { font-family: var(--font-b); font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage-pale); font-weight: 600; margin: 0 0 1.1rem; }
+    footer a { color: rgba(241,236,223,0.7); text-decoration: none; transition: color 0.2s; display: block; margin-bottom: 0.45rem; font-size: 0.92rem; }
+    footer a:hover { color: var(--sage-pale); }
+    .footer-bottom { border-top: 1px solid rgba(241,236,223,0.12); padding-top: 1.5rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; font-family: var(--font-b); font-size: 0.72rem; color: rgba(241,236,223,0.4); }
+    @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr; gap: 2rem; } }
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    :focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; }
+  </style>
 </head>
 <body>
 
-  <!-- =========================================================
-       NAVBAR
-       ========================================================= -->
-  <!-- TOP HEADER BAR (Row 1) -->
-  <div class="top-header-bar">
-    <div class="container top-header-inner">
-      <a href="index.html" class="top-header-link">HOME</a>
-      <a href="login.html" class="top-header-link">HOBBIEST LOG IN</a>
+  <!-- CONTACT BAR -->
+  <div class="contact-bar">
+    <div class="container cb-inner">
+      <div class="cb-items">
+        <div class="cb-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          135 N. Main Street, Pittston, PA
+        </div>
+        <div class="cb-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+15703546189">(570) 354-6189</a>
+        </div>
+        <div class="cb-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
+        </div>
+      </div>
+      <a href="login.html" style="font-family:var(--font-b);font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(241,236,223,0.55);text-decoration:none;font-weight:600;">Member Login →</a>
     </div>
   </div>
 
-  <!-- SUBNAV STRIP (Row 2 — Exact match to annotated screenshot) -->
-  <nav class="subnav-strip">
-    <div class="container subnav-inner">
-      
-      <!-- GROUP 1: Core Navigation -->
-      <div class="subnav-group">
-        <a href="index.html#how-it-works" class="subnav-link">HOW IT WORKS</a>
-        <a href="schedule.html" class="subnav-link">CURRENT CURRICULUM</a>
-        <div class="nav-item-dropdown">
-          <a href="studio.html" class="subnav-link subnav-link-studio nav-dropdown-trigger">
-            THE STUDIO <span class="nav-dropdown-arrow">▾</span>
-          </a>
-          <div class="nav-dropdown" role="menu">
-            <div style="padding: 0.85rem 1.15rem; border-bottom: 1px solid var(--hairline);">
-              <div style="font-family: var(--font-body); font-weight: 700; font-size: 0.78rem; color: var(--sage-deep); margin-bottom: 0.2rem;">135 N. Main St, Pittston, PA</div>
-              <div style="font-size: 0.75rem; color: var(--muted); line-height: 1.3;">Free Parking Across N. Main &amp; Kennedy</div>
-            </div>
-            <a href="studio.html" class="nav-dropdown-link" role="menuitem">Studio &amp; Parking Details</a>
-          </div>
-        </div>
+  <!-- STICKY NAV -->
+  <nav class="sticky-nav" role="navigation" aria-label="Primary">
+    <div class="container nav-inner">
+      <a href="index.html" class="wordmark">The Hobbiest</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="how-it-works.html" class="nav-link">How it works</a>
+        <a href="schedule.html" class="nav-link">Classes</a>
+        <a href="studio.html" class="nav-link">The Studio</a>
+        <a href="interest.html" class="nav-link nav-link-active">Interest form</a>
+        <a href="schedule.html" class="nav-link-pill">Book a class</a>
+        <a href="studio.html#membership-offer" class="nav-link-pill" style="background:var(--sage);">Membership</a>
       </div>
-
-      <!-- VERTICAL DIVIDER LINE 1 -->
-      <div class="subnav-divider"></div>
-
-      <!-- GROUP 2: Forms -->
-      <div class="subnav-group">
-        <a href="interest.html" class="subnav-link active">SUBMIT INTEREST FORM</a>
-        <a href="apply.html" class="subnav-link">SUBMIT TEACHING APP</a>
-      </div>
-
-      <!-- VERTICAL DIVIDER LINE 2 -->
-      <div class="subnav-divider"></div>
-
-      <!-- GROUP 3: Purchase Pill Button Dropdown -->
-      <div class="subnav-group">
-        <div class="nav-item-dropdown">
-          <button class="btn-purchase-pill nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            PURCHASE <span class="nav-dropdown-arrow" style="color:#fff;">▾</span>
-          </button>
-          <div class="nav-dropdown" role="menu">
-            <a href="schedule.html" class="nav-dropdown-link" role="menuitem">Single Class</a>
-            <a href="studio.html#membership-offer" class="nav-dropdown-link" role="menuitem">Studio Membership</a>
-            <a href="gift.html" class="nav-dropdown-link" role="menuitem">Gift Card</a>
-          </div>
-        </div>
-      </div>
-
     </div>
   </nav>
 
-  <!-- =========================================================
-       HERO
-       ========================================================= -->
-  <header class="hero-wrap">
+  <!-- PAGE HERO -->
+  <header class="page-hero">
     <div class="container">
-      <span class="eyebrow">MEMBER REGISTRATION &amp; AVAILABILITY</span>
+      <span class="page-eyebrow">Member Registration &amp; Availability</span>
       <h1>Submit Your <em>Interest Form</em>.</h1>
-      <p class="hero-lede">
-        Select the classes you want to take and your preferred availability. We use member input to lock in class dates, instructor schedules, and cohort sizes with zero commitment.
-      </p>
+      <p class="hero-lede">Select the classes you want to take and your preferred availability. We use member input to lock in class dates, instructor schedules, and cohort sizes — with zero commitment.</p>
     </div>
   </header>
 
-  <!-- =========================================================
-       FORM SECTION
-       ========================================================= -->
+  <!-- FORM -->
   <main class="form-section">
     <div class="container">
       <div class="interest-card">
-        
-        <div id="interestFormMsg" class="form-msg"></div>
 
-        <form id="interestForm" onsubmit="handleInterestSubmit(event)">
-          <div class="interest-form-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start;">
-            
-            <!-- LEFT COLUMN: Contact & Course Checkboxes -->
-            <div class="interest-col-left" style="display: flex; flex-direction: column; gap: 1.35rem;">
-              
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                <div class="form-group">
-                  <label for="interestFirstName" style="display:block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: #4A543D; margin-bottom: 0.45rem;">FIRST NAME</label>
-                  <input type="text" id="interestFirstName" required placeholder="Jane" style="width: 100%; padding: 0.85rem 1rem; border: 1px solid #DFD9CE; border-radius: 6px; background: #EBE7DF; font-family: var(--font-body); font-size: 0.95rem; color: #4A543D;" />
+        <div id="formMsg" class="form-msg"></div>
+
+        <form id="interestForm" onsubmit="handleSubmit(event)">
+          <div class="form-grid">
+
+            <!-- LEFT: Contact + Class Checkboxes -->
+            <div style="display:flex;flex-direction:column;gap:1.25rem;">
+
+              <div class="form-field-row">
+                <div class="field">
+                  <label for="fFirst">First Name</label>
+                  <input type="text" id="fFirst" required placeholder="Jane" autocomplete="given-name">
                 </div>
-                <div class="form-group">
-                  <label for="interestLastName" style="display:block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: #4A543D; margin-bottom: 0.45rem;">LAST NAME</label>
-                  <input type="text" id="interestLastName" required placeholder="Doe" style="width: 100%; padding: 0.85rem 1rem; border: 1px solid #DFD9CE; border-radius: 6px; background: #EBE7DF; font-family: var(--font-body); font-size: 0.95rem; color: #4A543D;" />
+                <div class="field">
+                  <label for="fLast">Last Name</label>
+                  <input type="text" id="fLast" required placeholder="Doe" autocomplete="family-name">
                 </div>
               </div>
 
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                <div class="form-group">
-                  <label for="interestEmail" style="display:block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: #4A543D; margin-bottom: 0.45rem;">EMAIL ADDRESS</label>
-                  <input type="email" id="interestEmail" required placeholder="jane@example.com" style="width: 100%; padding: 0.85rem 1rem; border: 1px solid #DFD9CE; border-radius: 6px; background: #EBE7DF; font-family: var(--font-body); font-size: 0.95rem; color: #4A543D;" />
+              <div class="form-field-row">
+                <div class="field">
+                  <label for="fEmail">Email Address</label>
+                  <input type="email" id="fEmail" required placeholder="jane@example.com" autocomplete="email">
                 </div>
-                <div class="form-group">
-                  <label for="interestPhone" style="display:block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: #4A543D; margin-bottom: 0.45rem;">PHONE NUMBER</label>
-                  <input type="tel" id="interestPhone" required placeholder="(570) 555-0199" style="width: 100%; padding: 0.85rem 1rem; border: 1px solid #DFD9CE; border-radius: 6px; background: #EBE7DF; font-family: var(--font-body); font-size: 0.95rem; color: #4A543D;" />
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label style="display:block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: #4A543D; margin-bottom: 0.45rem;">CLASSES OF INTEREST (CHECK ALL THAT APPLY)</label>
-                <div class="class-scroll-box" style="max-height: 180px; overflow-y: auto; border: 1px solid #DFD9CE; border-radius: 6px; background: #EBE7DF; padding: 0.6rem 0.9rem; display: flex; flex-direction: column; gap: 0.6rem;">
-                  <label style="display: flex; align-items: center; gap: 0.65rem; font-size: 0.82rem; font-weight: 600; color: #4A543D; cursor: pointer;">
-                    <input type="checkbox" name="interestClasses" value="Watercolor Painting 101" style="width:16px; height:16px; cursor: pointer; accent-color: #4A543D;" />
-                    <span>01. WATERCOLOR PAINTING 101 ($55)</span>
-                  </label>
-                  <label style="display: flex; align-items: center; gap: 0.65rem; font-size: 0.82rem; font-weight: 600; color: #4A543D; cursor: pointer;">
-                    <input type="checkbox" name="interestClasses" value="Modern Calligraphy & Pointed Pen" style="width:16px; height:16px; cursor: pointer; accent-color: #4A543D;" />
-                    <span>02. MODERN CALLIGRAPHY &amp; POINTED PEN ($55)</span>
-                  </label>
-                  <label style="display: flex; align-items: center; gap: 0.65rem; font-size: 0.82rem; font-weight: 600; color: #4A543D; cursor: pointer;">
-                    <input type="checkbox" name="interestClasses" value="Makeup Tutorial — Daily Application" style="width:16px; height:16px; cursor: pointer; accent-color: #4A543D;" />
-                    <span>03. MAKEUP TUTORIAL — DAILY APPLICATION ($45)</span>
-                  </label>
-                  <label style="display: flex; align-items: center; gap: 0.65rem; font-size: 0.82rem; font-weight: 600; color: #4A543D; cursor: pointer;">
-                    <input type="checkbox" name="interestClasses" value="Meditation & Intention Setting" style="width:16px; height:16px; cursor: pointer; accent-color: #4A543D;" />
-                    <span>04. MEDITATION &amp; INTENTION SETTING ($45)</span>
-                  </label>
-                  <label style="display: flex; align-items: center; gap: 0.65rem; font-size: 0.82rem; font-weight: 600; color: #4A543D; cursor: pointer;">
-                    <input type="checkbox" name="interestClasses" value="Personal Finance & Wealth Habits" style="width:16px; height:16px; cursor: pointer; accent-color: #4A543D;" />
-                    <span>05. PERSONAL FINANCE &amp; WEALTH HABITS ($45)</span>
-                  </label>
+                <div class="field">
+                  <label for="fPhone">Phone Number</label>
+                  <input type="tel" id="fPhone" required placeholder="(570) 555-0199" autocomplete="tel">
                 </div>
               </div>
 
-              <div class="form-group" style="margin-bottom: 0;">
-                <label for="interestSuggestion" style="display:block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: #4A543D; margin-bottom: 0.45rem;">TOPICS OR SUGGESTIONS</label>
-                <textarea id="interestSuggestion" placeholder="What other classes or topics would you like to see? Knitting, paint, etc." style="width: 100%; min-height: 95px; padding: 0.85rem 1rem; border: 1px solid #DFD9CE; border-radius: 6px; background: #EBE7DF; font-family: var(--font-body); font-size: 0.92rem; color: #4A543D; resize: vertical;"></textarea>
+              <div>
+                <span class="class-label">Classes of interest (check all that apply)</span>
+                <div class="class-scroll">
+                  <label class="class-check"><input type="checkbox" name="classes" value="Watercolor Painting 101"><span>01. Watercolor Painting 101 — $65</span></label>
+                  <label class="class-check"><input type="checkbox" name="classes" value="Modern Calligraphy & Pointed Pen"><span>02. Modern Calligraphy &amp; Pointed Pen — $65</span></label>
+                  <label class="class-check"><input type="checkbox" name="classes" value="Seasonal Wreath Making"><span>03. Seasonal Wreath Making — $65</span></label>
+                  <label class="class-check"><input type="checkbox" name="classes" value="Makeup Tutorial — Daily Application"><span>04. Makeup Tutorial — Daily Application — $45</span></label>
+                  <label class="class-check"><input type="checkbox" name="classes" value="Meditation & Intention Setting"><span>05. Meditation &amp; Intention Setting — $45</span></label>
+                  <label class="class-check"><input type="checkbox" name="classes" value="Personal Finance 101"><span>06. Personal Finance 101 — $45</span></label>
+                </div>
               </div>
+
+              <div class="field">
+                <label for="fNotes">Topics or suggestions</label>
+                <textarea id="fNotes" placeholder="What other classes or topics would you like to see? Knitting, sourdough, floral arranging…"></textarea>
+              </div>
+
             </div>
 
-            <!-- RIGHT COLUMN: Availability Grid & Submit Button -->
-            <div class="interest-col-right" style="padding-top: 0.25rem;">
-              <div style="font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; color: #4A543D; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.45rem;">SELECT YOUR AVAILABILITY</div>
-              <p style="font-size: 0.88rem; color: #666C5E; margin-bottom: 1.5rem; line-height: 1.45;">Weekdays (7:00–9:00 PM) &amp; Weekend 2-hour slots (8 AM–10 PM).</p>
-              
-              <div class="avail-table-wrap" style="overflow-x: auto; border: 1px solid #DFD9CE; border-radius: 8px; background: #EBE7DF; margin-bottom: 0.85rem;">
-                <table style="width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: 0.82rem; text-align: center;">
+            <!-- RIGHT: Availability + Submit -->
+            <div>
+              <span class="avail-label">Select your availability</span>
+              <p class="avail-note">Weekdays 7–9 PM · Weekend 2-hour slots 8 AM–10 PM</p>
+
+              <div class="avail-wrap">
+                <table class="avail-table">
                   <thead>
-                    <tr style="background: #E0DCD3; border-bottom: 1px solid #D5D0C5;">
-                      <th style="padding: 0.75rem 0.5rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D; text-align: left; width: 110px;">Time Slot</th>
-                      <th style="padding: 0.75rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D;">Mon</th>
-                      <th style="padding: 0.75rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D;">Tue</th>
-                      <th style="padding: 0.75rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D;">Wed</th>
-                      <th style="padding: 0.75rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D;">Thu</th>
-                      <th style="padding: 0.75rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D;">Fri</th>
-                      <th style="padding: 0.75rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D; background: #D5CFC3;">Sat</th>
-                      <th style="padding: 0.75rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D; background: #D5CFC3;">Sun</th>
+                    <tr>
+                      <th class="corner">Time Slot</th>
+                      <th>Mon</th>
+                      <th>Tue</th>
+                      <th>Wed</th>
+                      <th>Thu</th>
+                      <th>Fri</th>
+                      <th class="weekend">Sat</th>
+                      <th class="weekend">Sun</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- 7-9 PM (Weekdays & Weekends) -->
-                    <tr style="border-bottom: 1px solid #D5D0C5;">
-                      <td style="padding: 0.55rem 0.5rem; text-align: left; background: #E0DCD3; font-weight: 600; color: #4A543D;">7:00–9:00 PM</td>
-                      <td style="padding: 0.45rem;"><input type="checkbox" name="interestAvail" value="Mon 7-9PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem;"><input type="checkbox" name="interestAvail" value="Tue 7-9PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem;"><input type="checkbox" name="interestAvail" value="Wed 7-9PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem;"><input type="checkbox" name="interestAvail" value="Thu 7-9PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem;"><input type="checkbox" name="interestAvail" value="Fri 7-9PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sat 7-9PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sun 7-9PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
+                    <tr>
+                      <td class="row-label">7:00–9:00 PM</td>
+                      <td><input type="checkbox" name="avail" value="Mon 7–9 PM"></td>
+                      <td><input type="checkbox" name="avail" value="Tue 7–9 PM"></td>
+                      <td><input type="checkbox" name="avail" value="Wed 7–9 PM"></td>
+                      <td><input type="checkbox" name="avail" value="Thu 7–9 PM"></td>
+                      <td><input type="checkbox" name="avail" value="Fri 7–9 PM"></td>
+                      <td class="weekend"><input type="checkbox" name="avail" value="Sat 7–9 PM"></td>
+                      <td class="weekend"><input type="checkbox" name="avail" value="Sun 7–9 PM"></td>
                     </tr>
-                    <!-- Weekend 8-10 AM -->
-                    <tr style="border-bottom: 1px solid #D5D0C5;">
-                      <td style="padding: 0.55rem 0.5rem; text-align: left; background: #E0DCD3; font-weight: 600; color: #4A543D;">8:00–10:00 AM</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sat 8-10AM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sun 8-10AM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
+                    <tr>
+                      <td class="row-label">8:00–10:00 AM</td>
+                      <td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td>
+                      <td class="weekend"><input type="checkbox" name="avail" value="Sat 8–10 AM"></td>
+                      <td class="weekend"><input type="checkbox" name="avail" value="Sun 8–10 AM"></td>
                     </tr>
-                    <!-- Weekend 10 AM-12 PM -->
-                    <tr style="border-bottom: 1px solid #D5D0C5;">
-                      <td style="padding: 0.55rem 0.5rem; text-align: left; background: #E0DCD3; font-weight: 600; color: #4A543D;">10:00 AM–12:00 PM</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sat 10AM-12PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sun 10AM-12PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
+                    <tr>
+                      <td class="row-label">10:00 AM–12:00 PM</td>
+                      <td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td>
+                      <td class="weekend"><input type="checkbox" name="avail" value="Sat 10 AM–12 PM"></td>
+                      <td class="weekend"><input type="checkbox" name="avail" value="Sun 10 AM–12 PM"></td>
                     </tr>
-                    <!-- Weekend 12-2 PM -->
-                    <tr style="border-bottom: 1px solid #D5D0C5;">
-                      <td style="padding: 0.55rem 0.5rem; text-align: left; background: #E0DCD3; font-weight: 600; color: #4A543D;">12:00–2:00 PM</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sat 12-2PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sun 12-2PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
+                    <tr>
+                      <td class="row-label">12:00–2:00 PM</td>
+                      <td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td>
+                      <td class="weekend"><input type="checkbox" name="avail" value="Sat 12–2 PM"></td>
+                      <td class="weekend"><input type="checkbox" name="avail" value="Sun 12–2 PM"></td>
                     </tr>
-                    <!-- Weekend 2-4 PM -->
-                    <tr style="border-bottom: 1px solid #D5D0C5;">
-                      <td style="padding: 0.55rem 0.5rem; text-align: left; background: #E0DCD3; font-weight: 600; color: #4A543D;">2:00–4:00 PM</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sat 2-4PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sun 2-4PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
+                    <tr>
+                      <td class="row-label">2:00–4:00 PM</td>
+                      <td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td>
+                      <td class="weekend"><input type="checkbox" name="avail" value="Sat 2–4 PM"></td>
+                      <td class="weekend"><input type="checkbox" name="avail" value="Sun 2–4 PM"></td>
                     </tr>
-                    <!-- Weekend 4-6 PM -->
-                    <tr style="border-bottom: 1px solid #D5D0C5;">
-                      <td style="padding: 0.55rem 0.5rem; text-align: left; background: #E0DCD3; font-weight: 600; color: #4A543D;">4:00–6:00 PM</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sat 4-6PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sun 4-6PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
+                    <tr>
+                      <td class="row-label">4:00–6:00 PM</td>
+                      <td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td><td class="unavail">—</td>
+                      <td class="weekend"><input type="checkbox" name="avail" value="Sat 4–6 PM"></td>
+                      <td class="weekend"><input type="checkbox" name="avail" value="Sun 4–6 PM"></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
-              <button type="submit" id="interestBtn" style="width: 100%; padding: 1.05rem; background: #4A543D; color: #FFFFFF; font-family: var(--font-body); font-size: 0.95rem; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: all 0.2s;">
-                Submit Interest Form (Free) →
-              </button>
+              <button type="submit" class="btn-submit" id="submitBtn">Submit Interest Form (Free) →</button>
             </div>
+
           </div>
         </form>
-
       </div>
     </div>
   </main>
 
-  <!-- =========================================================
-       FOOTER
-       ========================================================= -->
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div>
-          <h4>The Hobbiest Skills Club</h4>
-          <p>A private skills club devoted to capability, craft, and dynamic living. Based in Pittston, Pennsylvania.</p>
+          <div class="footer-wordmark">The Hobbiest</div>
+          <p>A private members skills club for adults. Opening July 2026 in downtown Pittston, PA.</p>
         </div>
         <div>
+          <h4>Visit</h4>
+          <p>135 N. Main Street<br>Pittston, PA 18640<br><br><a href="tel:+15703546189">(570) 354-6189</a></p>
+        </div>
+        <div>
+          <h4>Links</h4>
           <a href="index.html">Home</a>
-          <a href="index.html#how-it-works">How it Works</a>
           <a href="schedule.html">Current Curriculum</a>
-          <a href="interest.html">Submit Interest Form</a>
-        </div>
-        <div>
-          <a href="apply.html">Submit Teaching App</a>
-          <a href="login.html">Hobbiest Log In</a>
-          <a href="terms.html">Terms of Service</a>
+          <a href="how-it-works.html">How It Works</a>
+          <a href="apply.html">Teach at The Hobbiest</a>
           <a href="privacy.html">Privacy Policy</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <div>&copy; 2026 The Hobbiest Skills Club LLC. All rights reserved.</div>
-        <div>135 N. Main St, Pittston, PA</div>
+        <span>© 2026 The Hobbiest Skills Club LLC</span>
+        <span>135 N. Main St, Pittston, PA</span>
       </div>
     </div>
   </footer>
 
   <script>
-    async function handleInterestSubmit(e) {
+    /* NAV TOGGLE */
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      navToggle.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', open);
+    });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.sticky-nav')) {
+        navLinks.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    /* FORM SUBMIT */
+    async function handleSubmit(e) {
       e.preventDefault();
-      const btn = document.getElementById('interestBtn');
-      const msg = document.getElementById('interestFormMsg');
-      
+      const btn = document.getElementById('submitBtn');
+      const msg = document.getElementById('formMsg');
       btn.disabled = true;
-      btn.textContent = 'Submitting your form…';
+      btn.textContent = 'Submitting…';
       msg.style.display = 'none';
 
-      const firstName = document.getElementById('interestFirstName').value.trim();
-      const lastName = document.getElementById('interestLastName').value.trim();
-      const email = document.getElementById('interestEmail').value.trim();
-      const phone = document.getElementById('interestPhone').value.trim();
-      
-      const interestClass = Array.from(document.querySelectorAll('input[name="interestClasses"]:checked')).map(cb => cb.value).join(', ');
-      const suggestions = document.getElementById('interestSuggestion').value.trim();
-      const availability = Array.from(document.querySelectorAll('input[name="interestAvail"]:checked')).map(cb => cb.value).join(', ');
+      const firstName   = document.getElementById('fFirst').value.trim();
+      const lastName    = document.getElementById('fLast').value.trim();
+      const email       = document.getElementById('fEmail').value.trim();
+      const phone       = document.getElementById('fPhone').value.trim();
+      const classes     = Array.from(document.querySelectorAll('input[name="classes"]:checked')).map(c => c.value).join(', ');
+      const avail       = Array.from(document.querySelectorAll('input[name="avail"]:checked')).map(c => c.value).join(', ');
+      const notes       = document.getElementById('fNotes').value.trim();
 
-      const SUPABASE_URL = "https://uprdczhhgwzfypkudqjg.supabase.co";
-      const SUPABASE_ANON_KEY = "sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ";
-      
+      const SUPABASE_URL      = 'https://uprdczhhgwzfypkudqjg.supabase.co';
+      const SUPABASE_ANON_KEY = 'sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ';
+
       try {
-        if (!window.supabase) {
-          throw new Error("Supabase is not loaded. Please try again.");
-        }
+        if (!window.supabase) throw new Error('Supabase not loaded — please refresh and try again.');
         const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        const { data, error } = await sb.functions.invoke("submit-signup", {
+        const { data, error } = await sb.functions.invoke('submit-signup', {
           body: {
             first_name: firstName,
             last_name: lastName,
-            email: email,
-            phone: phone,
-            classes_of_interest: interestClass || "General Interest",
-            availability: availability,
-            notes: suggestions || "Submitted via Interest Form Page",
+            email,
+            phone,
+            classes_of_interest: classes || 'General Interest',
+            availability: avail,
+            notes: notes || 'Submitted via Interest Form',
             newsletter: true
           }
         });
-
-        if (error || data?.error) {
-          throw new Error(error?.message || data?.error);
-        }
+        if (error || data?.error) throw new Error(error?.message || data?.error);
 
         const { error: otpError } = await sb.auth.signInWithOtp({
           email,
           options: { emailRedirectTo: window.location.origin + '/signup.html' }
         });
-
-        if (otpError) {
-          throw otpError;
-        }
+        if (otpError) throw otpError;
 
         msg.className = 'form-msg ok';
-        msg.innerHTML = `<strong>Success!</strong> Interest form submitted for <strong>${email}</strong>.<br />We've emailed you a login link! Click the link in your inbox to access the member portal.`;
+        msg.innerHTML = `<strong>Submitted!</strong> We received your interest form for <strong>${email}</strong>. Check your inbox — we've sent you a member login link.`;
         msg.style.display = 'block';
         document.getElementById('interestForm').reset();
       } catch (err) {
-        console.error("Interest form error:", err);
         msg.className = 'form-msg err';
-        msg.innerHTML = `<strong>Submission error:</strong> ${err.message || "Something went wrong. Please try again."}`;
+        msg.innerHTML = `<strong>Something went wrong:</strong> ${err.message || 'Please try again.'}`;
         msg.style.display = 'block';
       } finally {
         btn.disabled = false;
