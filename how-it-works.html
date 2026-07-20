@@ -342,13 +342,13 @@
           <div>
             <div class="path-badge">Option 02 · Unlimited Access</div>
             <h2 class="path-title">Studio <em>Membership</em>.</h2>
-            <p class="path-desc" style="margin-top: 0.75rem;">Daily access to the studio for independent projects, open creative time, and a physical space to paint, knit, or meditate in the garden.</p>
+            <p class="path-desc" style="margin-top: 0.75rem;">Daily open studio and garden access, one included class per month, and complimentary coffee every visit.</p>
           </div>
 
           <div class="price-box">
             <div class="price-label-sm">Club Member Dues</div>
-            <div class="price-big">$45 <span class="price-period">/ month</span></div>
-            <div class="price-note">Studio opens 8/1 — memberships begin 8/1</div>
+            <div class="price-big">$65 <span class="price-period">/ month</span></div>
+            <div class="price-note">Starts 8/1 · Cancel before the 1st to skip next month · No refunds mid-month</div>
           </div>
 
           <div>
@@ -356,13 +356,13 @@
             <ul class="included-list">
               <li><span class="included-check">✓</span><span><strong>Open Studio Access</strong> — Weekdays M–F 6–9:30 PM and weekends 7 AM–9 PM.</span></li>
               <li><span class="included-check">✓</span><span><strong>Complimentary Amenities</strong> — Free hot black coffee and filtered water always available.</span></li>
-              <li><span class="included-check">✓</span><span><strong>100% Class Credits</strong> — Your full $45 monthly dues apply toward any class. <em style="font-size: 0.8em; color: var(--muted);">(Beginning 2027, credits become use-it-or-lose-it monthly.)</em></span></li>
+              <li><span class="included-check">✓</span><span><strong>1 Class Per Month Included</strong> — One class per month is included — yours to use however you like. <em style="font-size: 0.8em; color: var(--muted);"></em></span></li>
             </ul>
           </div>
 
           <div class="path-cta-wrap">
             <button onclick="purchaseMembership()" class="btn-primary" style="width: 100%; justify-content: center;">Purchase Studio Membership →</button>
-            <p style="font-family: var(--font-b); font-size: 0.75rem; color: var(--muted); text-align: center; margin-top: 0.6rem;">Studio opens August 1st</p>
+            <p style="font-family: var(--font-b); font-size: 0.75rem; color: var(--muted); text-align: center; margin-top: 0.6rem;">Starts August 1st · Cancel anytime before the 1st</p>
           </div>
         </div>
 
@@ -386,7 +386,7 @@
         </div>
         <div class="note-card">
           <h4>Member <em>Credits</em></h4>
-          <p>Studio membership dues ($45/month) apply 100% as credits toward any class. Starting in 2027, unused monthly credits expire at month-end, so use them that month.</p>
+          <p>Studio membership dues ($65 / month) apply 100% as credits toward any class. Starting in 2027, unused monthly credits expire at month-end, so use them that month.</p>
         </div>
       </div>
     </div>
@@ -405,10 +405,10 @@
       <div class="modal-body">
         <div class="modal-summary" id="modalSummary">
           <div>
-            <div class="modal-summary-name">Studio Membership ($45/month)</div>
-            <div class="modal-summary-meta">Studio opens 8/1 — memberships begin 8/1</div>
+            <div class="modal-summary-name">Studio Membership ($65 / month)</div>
+            <div class="modal-summary-meta">Starts 8/1 · Cancel before the 1st to skip next month · No refunds mid-month</div>
           </div>
-          <div class="modal-summary-price">$45/mo</div>
+          <div class="modal-summary-price">$65/mo</div>
         </div>
         <div id="checkout-embed"></div>
         <div class="modal-success" id="modalSuccess">
@@ -476,7 +476,7 @@
         const res = await fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
-          body: JSON.stringify({ guest: true, type: 'membership', price_cents: 4500, title: 'Studio Membership' }),
+          body: JSON.stringify({ guest: true, type: 'membership', price_cents: 6500, title: 'Studio Membership' }),
         });
         const data = await res.json();
         if (!res.ok || !data.clientSecret) throw new Error(data.error || 'Checkout failed');
@@ -486,7 +486,7 @@
         embedEl.innerHTML = '';
         embeddedCheckout.mount('#checkout-embed');
       } catch(err) {
-        sessionStorage.setItem('pwIntent', JSON.stringify({ type: 'membership', price_cents: 4500, title: 'Studio Membership' }));
+        sessionStorage.setItem('pwIntent', JSON.stringify({ type: 'membership', price_cents: 6500, title: 'Studio Membership' }));
         embedEl.innerHTML = '<div style="text-align:center;padding:1.5rem 0"><p style="font-family:var(--font-d);font-style:italic;color:var(--sage-deep);font-size:1.05rem;margin-bottom:1rem">Sign in to complete your Studio Membership…</p><a href="login.html?intent=membership" style="display:inline-block;padding:0.75rem 1.5rem;background:var(--sage);color:#FAF7F0;text-decoration:none;border-radius:4px;font-family:var(--font-b);font-weight:600">Continue to sign in →</a></div>';
         setTimeout(() => { window.location.href = 'login.html?intent=membership'; }, 1800);
       }

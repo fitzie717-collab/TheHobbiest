@@ -332,12 +332,12 @@
           <div>
             <span class="eyebrow">Studio Membership</span>
             <h2 class="section-heading" style="margin-top:0.2rem;">Become a <em>Monthly Member</em>.</h2>
-            <p class="section-lede">Daily open studio access with 100% of your monthly dues applied as credit toward any class.</p>
+            <p class="section-lede">Daily open studio and garden access — with one class per month included.</p>
           </div>
           <div style="text-align:right;flex-shrink:0;">
             <div class="price-display">$45<span class="price-period">/ mo</span></div>
             <div class="price-note">Billed monthly · Cancel anytime</div>
-            <div class="price-note" style="margin-top:0.2rem;">Studio opens 8/1 — memberships begin 8/1</div>
+            <div class="price-note" style="margin-top:0.2rem;">Starts 8/1 · Cancel before the 1st to skip next month · No refunds mid-month</div>
           </div>
         </div>
 
@@ -345,8 +345,8 @@
           <div class="benefit-item">
             <span class="benefit-check">✓</span>
             <div>
-              <div class="benefit-title">100% Class Credits</div>
-              <p class="benefit-desc">Your entire $45 monthly dues apply directly as credit toward any 2-hour class session of your choice. Beginning 2027, credits are use-it-or-lose-it monthly.</p>
+              <div class="benefit-title">1 Class Per Month Included</div>
+              <p class="benefit-desc">One class per month included in your membership. Use it before the end of the month — use-it-or-lose-it starting December 2026 (rolls over until then).</p>
             </div>
           </div>
           <div class="benefit-item">
@@ -387,17 +387,17 @@
       <div class="modal-header">
         <div>
           <div class="modal-title" id="modalTitle">Studio Membership</div>
-          <div class="modal-subtitle">The Hobbiest Skills Club — $45/month</div>
+          <div class="modal-subtitle">The Hobbiest Skills Club — $65 / month</div>
         </div>
         <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
       </div>
       <div class="modal-body">
         <div class="modal-summary" id="modalSummary">
           <div>
-            <div class="modal-summary-name">Studio Membership ($45/month)</div>
-            <div class="modal-summary-meta">Studio opens 8/1 — memberships begin 8/1</div>
+            <div class="modal-summary-name">Studio Membership ($65 / month)</div>
+            <div class="modal-summary-meta">Starts 8/1 · Cancel before the 1st to skip next month · No refunds mid-month</div>
           </div>
-          <div class="modal-summary-price">$45/mo</div>
+          <div class="modal-summary-price">$65/mo</div>
         </div>
         <div id="checkout-embed"></div>
         <div class="modal-success" id="modalSuccess">
@@ -464,7 +464,7 @@
         const res = await fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY },
-          body: JSON.stringify({ guest: true, type: 'membership', price_cents: 4500, title: 'Studio Membership' }),
+          body: JSON.stringify({ guest: true, type: 'membership', price_cents: 6500, title: 'Studio Membership' }),
         });
         const data = await res.json();
         if (!res.ok || !data.clientSecret) throw new Error(data.error || 'Checkout failed');

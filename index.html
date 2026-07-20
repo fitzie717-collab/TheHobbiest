@@ -1217,9 +1217,9 @@
       const successEl = document.getElementById('modalSuccess');
       document.getElementById('modalTitle').textContent      = 'Studio Membership';
       document.getElementById('modalSubtitle').textContent   = 'The Hobbiest Skills Club';
-      document.getElementById('modalClassName').textContent  = 'Studio Membership ($45/month)';
-      document.getElementById('modalSessionMeta').textContent = 'Studio opens 8/1 — memberships begin 8/1';
-      document.getElementById('modalPrice').textContent      = '$45/mo';
+      document.getElementById('modalClassName').textContent  = 'Studio Membership ($65 / month)';
+      document.getElementById('modalSessionMeta').textContent = 'Starts 8/1 · Cancel before the 1st to skip next month · No refunds mid-month';
+      document.getElementById('modalPrice').textContent      = '$65/mo';
       embedEl.innerHTML = '<p style="font-family:var(--font-d);font-style:italic;color:var(--muted);padding:1rem 0;text-align:center">Preparing checkout…</p>';
       successEl.classList.remove('show');
       document.getElementById('modalSummary').style.display = 'flex';
@@ -1229,7 +1229,7 @@
         const res = await fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
-          body: JSON.stringify({ guest: true, type: 'membership', price_cents: 4500, title: 'Studio Membership' }),
+          body: JSON.stringify({ guest: true, type: 'membership', price_cents: 6500, title: 'Studio Membership' }),
         });
         const data = await res.json();
         if (!res.ok || !data.clientSecret) throw new Error(data.error || 'Checkout failed');
@@ -1239,7 +1239,7 @@
         embedEl.innerHTML = '';
         _embeddedCheckout.mount('#checkout-embed');
       } catch(err) {
-        sessionStorage.setItem('pwIntent', JSON.stringify({ type: 'membership', price_cents: 4500, title: 'Studio Membership' }));
+        sessionStorage.setItem('pwIntent', JSON.stringify({ type: 'membership', price_cents: 6500, title: 'Studio Membership' }));
         embedEl.innerHTML = '<div style="font-family:var(--font-d);font-style:italic;color:var(--sage-deep);padding:1.5rem 0;text-align:center"><p style="font-size:1.05rem;margin-bottom:0.75rem">Redirecting to member sign-in to complete checkout…</p><a href="login.html?intent=membership" style="display:inline-block;padding:0.75rem 1.5rem;background:var(--sage);color:#FAF7F0;text-decoration:none;border-radius:4px;font-family:var(--font-b);font-style:normal;font-weight:600">Continue to sign in →</a></div>';
         setTimeout(() => { window.location.href = 'login.html?intent=membership'; }, 1800);
       }
