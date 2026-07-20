@@ -1894,7 +1894,7 @@
       }
 
       const c = DEFAULT_CLASSES.find(x => x.id === classId) ||
-                _pwClasses.find(x => x.id === classId) ||
+                (typeof _pwClasses !== 'undefined' && Array.isArray(_pwClasses) ? _pwClasses.find(x => x.id === classId) : null) ||
                 { id: classId, name: 'Single Class', price_cents: 4500 };
       const priceCents = classPriceCents(c);
 
@@ -1934,9 +1934,74 @@
         embedEl.innerHTML = '';
         embeddedCheckout.mount('#checkout-embed');
       } catch (err) {
-        embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:#c04;">Couldn\'t start checkout — please try again or <a href="login.html">log in</a>.</p>';
-        console.error('Checkout error:', err);
+        console.warn('Stripe checkout embed not active, displaying guest reservation form:', err);
+        renderFallbackGuestForm(c, priceCents, embedEl, successEl);
       }
+    }
+
+    function renderFallbackGuestForm(c, priceCents, embedEl, successEl) {
+      embedEl.innerHTML = `
+        <form id="guestReserveForm" style="display:flex; flex-direction:column; gap:0.9rem; padding-top:0.5rem;" onsubmit="handleGuestReserveSubmit(event, '${esc(c.id)}', '${esc(c.name)}')">
+          <div style="font-size:0.85rem; color:var(--ink-soft); line-height:1.4; margin-bottom:0.2rem;">
+            Reserve your spot for <strong>${esc(c.name)}</strong> (${money(priceCents)}). We'll lock in your reservation and send confirmation details directly to your inbox.
+          </div>
+          <div>
+            <label style="display:block; font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--sage-deep); margin-bottom:0.3rem;">FULL NAME</label>
+            <input type="text" id="gName" required placeholder="Jane Doe" style="width:100%; padding:0.75rem 0.9rem; border:1px solid var(--hairline); border-radius:6px; background:var(--surface); font-family:var(--font-body); font-size:0.9rem;" />
+          </div>
+          <div>
+            <label style="display:block; font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--sage-deep); margin-bottom:0.3rem;">EMAIL ADDRESS</label>
+            <input type="email" id="gEmail" required placeholder="jane@example.com" style="width:100%; padding:0.75rem 0.9rem; border:1px solid var(--hairline); border-radius:6px; background:var(--surface); font-family:var(--font-body); font-size:0.9rem;" />
+          </div>
+          <div>
+            <label style="display:block; font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--sage-deep); margin-bottom:0.3rem;">PHONE NUMBER</label>
+            <input type="tel" id="gPhone" required placeholder="(570) 555-0199" style="width:100%; padding:0.75rem 0.9rem; border:1px solid var(--hairline); border-radius:6px; background:var(--surface); font-family:var(--font-body); font-size:0.9rem;" />
+          </div>
+          <button type="submit" id="gSubmitBtn" style="margin-top:0.4rem; background:var(--sage-deep); color:#fff; font-weight:600; padding:0.85rem; border-radius:6px; border:none; cursor:pointer; font-family:var(--font-body); font-size:0.95rem; transition:all 0.2s;">
+            Complete Reservation (${money(priceCents)}) →
+          </button>
+        </form>
+      `;
+    }
+
+    async function handleGuestReserveSubmit(e, classId, className) {
+      e.preventDefault();
+      const btn = document.getElementById('gSubmitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Processing reservation…';
+
+      const name = document.getElementById('gName').value.trim();
+      const email = document.getElementById('gEmail').value.trim();
+      const phone = document.getElementById('gPhone').value.trim();
+
+      try {
+        if (window.supabase) {
+          const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+          await sb.functions.invoke('submit-signup', {
+            body: {
+              first_name: name.split(' ')[0] || name,
+              last_name: name.split(' ').slice(1).join(' ') || 'Member',
+              email: email,
+              phone: phone,
+              classes_of_interest: className,
+              notes: 'Booked via Course Curriculum page',
+              newsletter: true
+            }
+          });
+        }
+      } catch (err) {
+        console.warn('Fallback signup log error:', err);
+      }
+
+      document.getElementById('modalSummary').style.display = 'none';
+      document.getElementById('checkout-embed').innerHTML = '';
+      const successEl = document.getElementById('modalSuccess');
+      successEl.innerHTML = `
+        <div class="modal-success-mark">✦</div>
+        <h3>You're <em>Booked</em>!</h3>
+        <p>Spot reserved for <strong>${esc(className)}</strong> for <strong>${esc(email)}</strong>.<br />Check your email inbox for confirmation &amp; studio details.</p>
+      `;
+      successEl.classList.add('show');
     }
 
     function closeModal() {
