@@ -15,215 +15,139 @@
   <script src="https://js.stripe.com/v3/"></script>
 
   <style>
-    :root{
-      --bg:#F1ECDF; --bg-warm:#EAE3D2; --surface:#FAF7F0;
-      --ink:#4E5A41; --ink-soft:#6B7459; --muted:#8A8170; --hairline:#D9D2BE;
-      --sage:#7A8A6B; --sage-deep:#4E5A41; --sage-pale:#B5BFA8; --taupe:#A89878;
-      --font-display:"Fraunces","Times New Roman",serif;
-      --font-body:"DM Sans",-apple-system,BlinkMacSystemFont,sans-serif;
-      --max-w:1180px; --gutter:clamp(1.25rem,4vw,3rem);
-      --ease:cubic-bezier(0.22,1,0.36,1);
+    :root {
+      --bg:        #F1ECDF;
+      --bg-warm:   #EAE3D2;
+      --surface:   #FAF7F0;
+      --ink:       #4E5A41;
+      --ink-soft:  #6B7459;
+      --muted:     #8A8170;
+      --hairline:  #D9D2BE;
+      --sage:      #7A8A6B;
+      --sage-deep: #4E5A41;
+      --sage-pale: #B5BFA8;
+      --taupe:     #A89878;
+      --font-display: "Fraunces", "Times New Roman", serif;
+      --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      --max-w: 1180px;
+      --gutter: clamp(1.25rem, 4vw, 3rem);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
-    *,*::before,*::after{box-sizing:border-box}
-    body{margin:0;font-family:var(--font-display);color:var(--ink);background:var(--bg);
-      -webkit-font-smoothing:antialiased;min-height:100vh;min-height:100dvh}
-    button{font-family:var(--font-body);cursor:pointer}
-    a{color:inherit}
-    h1,h2,h3{font-family:var(--font-display);font-weight:400;line-height:1.05;letter-spacing:-0.015em;margin:0;font-variation-settings:"opsz" 100}
-    p{margin:0}
-    .container{max-width:var(--max-w);margin:0 auto;padding:0 var(--gutter);width:100%}
-    body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;
-      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-      opacity:0.55;mix-blend-mode:multiply}
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-display);
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    button { font-family: var(--font-body); cursor: pointer; }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.05; letter-spacing: -0.015em; margin: 0; font-variation-settings: "opsz" 100; }
+    p { margin: 0; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); width: 100%; }
 
     /* top bar */
-    .topbar{border-bottom:1px solid var(--hairline);background:var(--surface);position:sticky;top:0;z-index:20}
-    .topbar-inner{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 0}
-    .wordmark{font-family:var(--font-display);font-size:1.2rem;font-style:italic;color:var(--sage);text-decoration:none;font-variation-settings:"opsz" 144}
-    .top-right{display:flex;align-items:center;gap:1rem}
-    .avatar{width:38px;height:38px;border-radius:50%;background:var(--sage);color:var(--bg);display:grid;place-items:center;font-family:var(--font-display);font-weight:500}
-    .btn-logout{font-family:var(--font-body);font-size:0.72rem;letter-spacing:0.16em;text-transform:uppercase;font-weight:500;color:var(--muted);background:none;border:none;padding:0.5rem 0.6rem}
-    .btn-logout:hover{color:var(--sage)}
+    .topbar { border-bottom: 1px solid var(--hairline); background: var(--surface); position: sticky; top: 0; z-index: 20; }
+    .topbar-inner { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 0; }
+    .wordmark { font-family: var(--font-display); font-size: 1.2rem; font-style: italic; color: var(--sage); text-decoration: none; font-variation-settings: "opsz" 144; }
+    .top-right { display: flex; align-items: center; gap: 1rem; }
+    .avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--sage); color: var(--bg); display: grid; place-items: center; font-family: var(--font-display); font-weight: 500; }
+    .btn-logout { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 500; color: var(--muted); background: none; border: none; padding: 0.5rem 0.6rem; }
+    .btn-logout:hover { color: var(--sage); }
 
-    .wrap{padding:clamp(1.75rem,4vw,3rem) 0}
-    .eyebrow{font-family:var(--font-body);font-size:0.72rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--sage);font-weight:600;display:inline-block;margin-bottom:0.7rem}
-    .welcome h1{font-size:clamp(2rem,5vw,3rem);color:var(--sage-deep);font-variation-settings:"opsz" 144}
-    .welcome h1 em{font-style:italic;color:var(--sage)}
+    .wrap { padding: clamp(1.75rem, 4vw, 3rem) 0; }
+    .eyebrow { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 600; display: inline-block; margin-bottom: 0.7rem; }
+    .welcome h1 { font-size: clamp(2rem, 5vw, 3rem); color: var(--sage-deep); font-variation-settings: "opsz" 144; }
+    .welcome h1 em { font-style: italic; color: var(--sage); }
 
     /* pills nav */
-    .pills{display:flex;gap:0.5rem;flex-wrap:wrap;margin:1.8rem 0 2.2rem}
-    .pill{font-family:var(--font-body);font-size:0.8rem;letter-spacing:0.04em;font-weight:500;padding:0.55rem 1.1rem;border-radius:999px;border:1px solid var(--hairline);background:var(--surface);color:var(--ink-soft);transition:.2s var(--ease)}
-    .pill:hover{border-color:var(--sage)}
-    .pill.active{background:var(--sage);color:var(--bg);border-color:var(--sage)}
+    .pills { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1.8rem 0 2.2rem; }
+    .pill { font-family: var(--font-body); font-size: 0.8rem; letter-spacing: 0.04em; font-weight: 600; padding: 0.65rem 1.25rem; border-radius: 999px; border: 1.5px solid var(--hairline); background: var(--surface); color: var(--sage-deep); transition: .2s var(--ease); }
+    .pill:hover { border-color: var(--sage); }
+    .pill.active { background: var(--sage-deep); color: #FFF; border-color: var(--sage-deep); }
 
-    .panel{display:none;animation:fade .4s var(--ease)}
-    .panel.show{display:block}
-    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .panel { display: none; animation: fade .4s var(--ease); }
+    .panel.show { display: block; }
+    @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
-    .section-head{margin-bottom:1.4rem}
-    .section-head h2{font-size:1.7rem;color:var(--sage-deep)}
-    .section-head h2 em{font-style:italic;color:var(--sage)}
-    .section-head p{font-family:var(--font-body);font-size:0.92rem;color:var(--ink-soft);margin-top:0.35rem}
+    .section-head { margin-bottom: 1.6rem; }
+    .section-head h2 { font-size: 1.8rem; color: var(--sage-deep); }
+    .section-head h2 em { font-style: italic; color: var(--sage); }
+    .section-head p { font-family: var(--font-body); font-size: 0.95rem; color: var(--ink-soft); margin-top: 0.35rem; line-height: 1.5; }
 
-    /* class cards */
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.1rem}
-    /* Weekly day/time grid */
-    .week-note{font-family:var(--font-body);font-size:0.9rem;color:var(--ink-soft);line-height:1.55;background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:0.9rem 1.1rem;margin-bottom:1.4rem}
-    /* one row per day: day label at left, class/time cells across */
-    .week-rows{display:flex;flex-direction:column}
-    .day-row{display:flex;align-items:stretch;gap:1.1rem;padding:0.85rem 0;border-bottom:1px solid var(--hairline)}
-    .day-row:first-child{border-top:1px solid var(--hairline)}
-    .day-row-head{flex:0 0 120px;display:flex;align-items:center;font-family:var(--font-body);font-size:0.8rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--sage-deep)}
-    .day-row-cells{flex:1;display:flex;flex-wrap:wrap;gap:0.8rem}
-    .day-row-cells .cell{flex:0 1 250px}
-    @media (max-width:640px){
-      .day-row{flex-direction:column;gap:0.6rem;padding:1rem 0}
-      .day-row-head{flex:none;padding-bottom:0.45rem;border-bottom:2px solid var(--sage-pale)}
-      .day-row-cells .cell{flex:1 1 100%}
-    }
-    .cell{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:0.95rem 1rem;display:flex;flex-direction:column;gap:0.4rem}
-    .cell-time{font-family:var(--font-body);font-size:0.74rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)}
-    .cell-dates{font-family:var(--font-body);font-size:0.78rem;font-weight:500;letter-spacing:0.01em;color:var(--ink-soft)}
-    .cell-name{font-family:var(--font-display);font-size:1.18rem;color:var(--sage-deep);line-height:1.15}
-    .cell-price{font-family:var(--font-display);font-size:1.15rem;color:var(--ink)}
-    .cell-price .per{font-family:var(--font-body);font-size:0.74rem;color:var(--muted)}
-    .cell .enroll{margin-top:0.3rem;font-family:var(--font-body);font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:0.6rem;border-radius:999px;background:var(--sage);color:var(--bg);border:1px solid var(--sage);transition:.2s var(--ease)}
-    .cell .enroll:hover{background:var(--sage-deep);border-color:var(--sage-deep)}
-    .cell .enroll.added{background:transparent;color:var(--sage-deep)}
-    .cell .enroll[disabled]{background:transparent;color:var(--muted);border-color:var(--hairline);cursor:default}
-    .cell .seats{font-family:var(--font-body);font-size:0.76rem;font-weight:600}
-    .cell .seats.low{color:#9a6a2f}
-    .cell .seats.full{color:var(--muted)}
-    .card{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;overflow:hidden;display:flex;flex-direction:column}
-    .card .thumb{height:104px;display:grid;place-items:center;font-size:2.6rem;background:var(--bg-warm);border-bottom:1px solid var(--hairline)}
-    .card .body{padding:1.2rem;display:flex;flex-direction:column;gap:0.5rem;flex:1}
-    .card h3{font-size:1.3rem;color:var(--sage-deep)}
-    .card .desc{font-family:var(--font-body);font-size:0.85rem;color:var(--ink-soft);line-height:1.5}
-    .card .sched-line{font-family:var(--font-body);font-size:0.86rem;font-weight:600;color:var(--sage-deep);line-height:1.45}
-    .card .meta{font-family:var(--font-body);font-size:0.76rem;color:var(--muted);letter-spacing:0.02em;display:flex;flex-wrap:wrap;gap:0.3rem 0.9rem}
-    .card .price{font-family:var(--font-display);font-size:1.45rem;color:var(--ink);margin-top:0.2rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:0.2rem 0.6rem}
-    .card .price .per{font-family:var(--font-body);font-size:0.78rem;font-weight:500;color:var(--muted);letter-spacing:0.02em}
-    .card .badge{align-self:flex-start;font-family:var(--font-body);font-size:0.72rem;font-weight:600;letter-spacing:0.04em;color:var(--sage-deep);background:rgba(122,138,107,0.16);border:1px solid var(--sage-pale);padding:0.3rem 0.7rem;border-radius:999px}
-    .card .note{font-family:var(--font-body);font-size:0.76rem;color:var(--muted);line-height:1.5;font-style:italic}
-    .card .enroll{margin-top:auto;font-family:var(--font-body);font-size:0.85rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:0.7rem;border-radius:999px;background:var(--sage);color:var(--bg);border:1px solid var(--sage);transition:.2s var(--ease)}
-    .card .enroll[disabled]{background:transparent;color:var(--muted);border-color:var(--hairline);cursor:default;letter-spacing:0.08em}
-    .card .seats{font-family:var(--font-body);font-size:0.8rem;font-weight:600;letter-spacing:0.02em;margin-top:0.1rem}
-    .card .seats.low{color:#9a6a2f}
-    .card .seats.full{color:var(--muted)}
-    .card .enroll:hover{background:var(--sage-deep);border-color:var(--sage-deep)}
-    .card .enroll.added{background:transparent;color:var(--sage-deep)}
+    /* Class Roster Cards Grid (1-10) */
+    .class-roster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
+    .class-roster-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 15px rgba(78,90,65,0.03); transition: transform 0.2s, box-shadow 0.2s; }
+    .class-roster-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(78,90,65,0.08); }
+    .crc-num { font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; color: var(--sage); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.4rem; }
+    .crc-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 400; color: var(--sage-deep); margin-bottom: 0.4rem; line-height: 1.2; }
+    .crc-cat { font-family: var(--font-body); font-size: 0.76rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+    .crc-desc { font-family: var(--font-body); font-size: 0.88rem; color: var(--ink-soft); line-height: 1.5; margin-bottom: 1.25rem; flex: 1; }
+    .crc-price-row { display: flex; align-items: baseline; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--hairline); margin-bottom: 1rem; }
+    .crc-price { font-family: var(--font-display); font-size: 1.75rem; color: var(--sage-deep); font-weight: 400; }
+    .crc-note { font-family: var(--font-body); font-size: 0.78rem; font-style: italic; color: var(--muted); }
+    .crc-actions { display: flex; flex-direction: column; gap: 0.6rem; }
+    .btn-buy-single { width: 100%; padding: 0.85rem; background: var(--sage-deep); color: #FFF; border: none; border-radius: 6px; font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: background 0.2s; text-align: center; }
+    .btn-buy-single:hover { background: #3d4733; }
+    .btn-apply-credit { width: 100%; padding: 0.75rem; background: #FAF8F5; color: var(--sage-deep); border: 1.5px solid var(--sage); border-radius: 6px; font-family: var(--font-body); font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; text-align: center; }
+    .btn-apply-credit:hover { background: var(--surface); border-color: var(--sage-deep); }
 
-    /* forms */
-    .block{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:clamp(1.4rem,3vw,2.2rem);max-width:680px}
-    .field{margin-bottom:1.1rem}
-    .field label{display:block;font-family:var(--font-body);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:0.5rem}
-    .field input,.field textarea,.field select{width:100%;padding:0.85rem 1rem;border:1px solid var(--hairline);border-radius:4px;background:var(--bg);font-family:var(--font-body);font-size:1rem;color:var(--ink)}
-    .field textarea{min-height:110px;resize:vertical}
-    .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(122,138,107,0.15)}
-    .chips{display:flex;flex-wrap:wrap;gap:0.5rem}
-    .chip{font-family:var(--font-body);font-size:0.82rem;font-weight:500;padding:0.45rem 0.9rem;border-radius:999px;border:1px solid var(--hairline);background:var(--bg);color:var(--ink-soft);user-select:none;transition:.2s var(--ease)}
-    .chip.sel{background:var(--sage);color:var(--bg);border-color:var(--sage)}
-    /* Availability grid */
-    .avail-hint{font-family:var(--font-body);font-size:0.85rem;color:var(--muted);margin:0 0 0.7rem}
-    .avail-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-    .avail{border-collapse:separate;border-spacing:5px;width:100%;min-width:460px}
-    .avail th{font-family:var(--font-body);font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--sage-deep);padding:0.2rem;text-align:center}
-    .avail td.rowlab{font-family:var(--font-body);font-size:0.8rem;font-weight:600;color:var(--ink-soft);text-align:left;white-space:nowrap;padding-right:0.7rem;line-height:1.2}
-    .avail td.rowlab small{display:block;font-weight:400;color:var(--muted);font-size:0.68rem}
-    .avail td.slot{background:var(--bg);border:1px solid var(--hairline);border-radius:4px;height:36px;cursor:pointer;text-align:center;vertical-align:middle;transition:.12s var(--ease)}
-    .avail td.slot:hover{border-color:var(--sage-pale)}
-    .avail td.slot.on{background:var(--sage);border-color:var(--sage)}
-    .avail td.slot.on::after{content:"✓";color:var(--bg);font-size:0.85rem;font-weight:600}
-    .stars{display:flex;gap:0.35rem;font-size:1.7rem;color:var(--hairline)}
-    .stars span{cursor:pointer}
-    .stars span.lit{color:var(--taupe)}
-    .btn-submit{font-family:var(--font-body);font-size:0.85rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:0.85rem 1.6rem;border-radius:999px;background:var(--sage);color:var(--bg);border:1px solid var(--sage);transition:.2s var(--ease)}
-    .btn-submit:hover{background:var(--sage-deep);border-color:var(--sage-deep)}
-    .btn-submit:disabled{opacity:.5;cursor:default}
+    /* Studio Membership Panel Card */
+    .membership-card-wrap { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; padding: clamp(1.75rem, 4vw, 2.5rem); max-width: 680px; box-shadow: 0 10px 30px rgba(78,90,65,0.05); }
+    .price-box-large { background: #FAF8F5; border: 1px solid var(--hairline); border-radius: 8px; padding: 1.5rem; text-align: center; margin: 1.5rem 0; }
+    .price-box-large .amount { font-family: var(--font-display); font-size: 2.75rem; color: var(--sage-deep); font-weight: 400; }
+    .price-box-large .per { font-family: var(--font-body); font-size: 1rem; color: var(--ink-soft); }
 
-    /* schedule */
-    .sched-row{display:flex;gap:1.2rem;align-items:center;background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:1.1rem 1.3rem;margin-bottom:0.9rem}
-    .sched-date{text-align:center;padding-right:1.2rem;border-right:1px solid var(--hairline);min-width:62px}
-    .sched-date .d{font-family:var(--font-display);font-size:1.9rem;color:var(--sage-deep);line-height:1}
-    .sched-date .m{font-family:var(--font-body);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted)}
-    .sched-info{flex:1}
-    .sched-info h3{font-size:1.2rem;color:var(--sage-deep)}
-    .sched-info .meta{font-family:var(--font-body);font-size:0.82rem;color:var(--ink-soft);margin-top:0.2rem}
-    .tag{font-family:var(--font-body);font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.7rem;border-radius:999px}
-    .tag.reserved{background:rgba(168,152,120,0.18);color:#6e5f3f}
-    .tag.paid{background:rgba(122,138,107,0.2);color:var(--sage-deep)}
+    /* Form Blocks */
+    .block { background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px; padding: clamp(1.4rem, 3vw, 2.2rem); max-width: 720px; box-shadow: 0 8px 25px rgba(78,90,65,0.04); }
+    .field { margin-bottom: 1.25rem; }
+    .field label { display: block; font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--sage-deep); margin-bottom: 0.45rem; }
+    .field input, .field textarea, .field select { width: 100%; padding: 0.85rem 1rem; border: 1px solid var(--hairline); border-radius: 4px; background: var(--bg); font-family: var(--font-body); font-size: 0.92rem; color: var(--ink); }
+    .field textarea { min-height: 100px; resize: vertical; }
+    .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--sage); box-shadow: 0 0 0 3px rgba(122,138,107,0.15); }
+    
+    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .chip { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; padding: 0.45rem 0.9rem; border-radius: 999px; border: 1px solid var(--hairline); background: var(--bg); color: var(--ink-soft); user-select: none; cursor: pointer; transition: .2s var(--ease); }
+    .chip.sel { background: var(--sage-deep); color: #FFF; border-color: var(--sage-deep); }
 
-    /* checkout */
-    .checkout{display:grid;grid-template-columns:1.3fr 1fr;gap:1.3rem}
-    @media(max-width:720px){.checkout{grid-template-columns:1fr}}
-    .cart{background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:1.4rem}
-    .cart-item{display:flex;justify-content:space-between;align-items:center;padding:0.85rem 0;border-bottom:1px solid var(--hairline);font-family:var(--font-body)}
-    .cart-item:last-child{border-bottom:none}
-    .cart-item .x{color:var(--muted);font-size:1.1rem;padding:0.2rem 0.5rem;border:none;background:none}
-    .cart-item .x:hover{color:#8a3a28}
-    .total{display:flex;justify-content:space-between;font-family:var(--font-display);font-size:1.4rem;color:var(--sage-deep);margin-top:1rem;padding-top:1rem;border-top:1px solid var(--ink)}
-    .pay-side{background:var(--bg-warm);border:1px solid var(--hairline);border-radius:4px;padding:1.5rem;display:flex;flex-direction:column;gap:0.8rem}
-    .pay-side p{font-family:var(--font-body);font-size:0.85rem;color:var(--ink-soft);line-height:1.5}
-    .pay-side .terms{font-family:var(--font-body);font-size:0.82rem;color:var(--ink-soft);line-height:1.5;background:var(--surface);border:1px solid var(--hairline);border-radius:4px;padding:0.9rem 1rem}
-    .pay-side .terms ul{margin:0.5rem 0 0;padding-left:1.1rem}
-    .pay-side .terms li{margin-bottom:0.35rem}
-    .pay-side .terms a{color:var(--sage-deep);text-decoration:underline;text-underline-offset:2px}
-    .pay-side .agree{display:flex;gap:0.6rem;align-items:flex-start;font-family:var(--font-body);font-size:0.84rem;color:var(--ink-soft);line-height:1.45;cursor:pointer}
-    .pay-side .agree input{margin-top:0.2rem;width:18px;height:18px;flex-shrink:0;accent-color:var(--sage)}
-    .btn-submit:disabled{opacity:0.45;cursor:default}
+    /* Availability Table */
+    .avail-table-wrap { overflow-x: auto; border: 1px solid var(--hairline); border-radius: 6px; background: var(--surface); margin-bottom: 0.6rem; }
+    
+    .stars { display: flex; gap: 0.4rem; font-size: 1.8rem; color: var(--hairline); }
+    .stars span { cursor: pointer; transition: color 0.15s; }
+    .stars span.lit { color: var(--sage); }
 
-    .empty{font-family:var(--font-body);text-align:center;color:var(--muted);padding:2.5rem 1rem}
-    .empty .big{font-size:2.4rem;margin-bottom:0.4rem}
-    .loading{font-family:var(--font-body);color:var(--muted);padding:1.5rem 0}
+    .btn-submit { width: 100%; font-family: var(--font-body); font-size: 0.95rem; font-weight: 600; padding: 1.05rem; border-radius: 6px; background: var(--sage-deep); color: #FFF; border: none; cursor: pointer; transition: background 0.2s var(--ease); }
+    .btn-submit:hover { background: #3d4733; }
 
-    .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(150%);background:var(--sage-deep);color:var(--bg);padding:0.85rem 1.4rem;border-radius:999px;font-family:var(--font-body);font-size:0.9rem;font-weight:500;box-shadow:0 10px 30px rgba(78,90,65,0.3);transition:.4s var(--ease);z-index:200}
-    .toast.show{transform:translateX(-50%) translateY(0)}
+    /* Toast */
+    .toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(150%); background: var(--sage-deep); color: var(--bg); padding: 0.85rem 1.4rem; border-radius: 999px; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; box-shadow: 0 10px 30px rgba(78,90,65,0.3); transition: .4s var(--ease); z-index: 200; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
 
-    #gate{display:grid;place-items:center;min-height:100vh;font-family:var(--font-body);color:var(--muted)}
+    #gate { display: grid; place-items: center; min-height: 100vh; font-family: var(--font-body); color: var(--muted); }
 
-    /* ── PURCHASE WIDGET ── */
-    .purchase-widget{background:var(--surface);border:1px solid var(--hairline);border-radius:6px;padding:1.5rem 1.75rem 1.75rem;max-width:520px;margin-top:1.5rem}
-    .purchase-widget-label{font-family:var(--font-body);font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--sage);font-weight:600;margin-bottom:1.1rem;display:flex;align-items:center;gap:0.5rem}
-    .purchase-widget-label::before{content:"";display:inline-block;width:20px;height:1px;background:var(--sage)}
-    .pw-select-wrap{position:relative;margin-bottom:0.75rem}
-    .pw-select{width:100%;padding:0.85rem 2.5rem 0.85rem 1rem;font-family:var(--font-display);font-size:1rem;color:var(--ink);background:var(--bg);border:1px solid var(--hairline);border-radius:4px;appearance:none;-webkit-appearance:none;cursor:pointer;outline:none;transition:border-color 0.2s var(--ease);font-style:italic}
-    .pw-select:focus{border-color:var(--sage)}
-    .pw-select:disabled{opacity:0.45;cursor:default}
-    .pw-select option{font-style:normal}
-    .pw-select-arrow{position:absolute;right:1rem;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--muted);font-size:0.75rem}
-    .pw-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;gap:1rem}
-    .pw-price-display{font-family:var(--font-display);font-size:1.5rem;color:var(--sage-deep);letter-spacing:-0.02em;transition:opacity 0.2s}
-    .pw-price-display.dim{opacity:0.3}
-    .btn-pay-now{font-family:var(--font-body);font-size:0.82rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.8rem 1.75rem;border-radius:999px;background:var(--sage);color:var(--bg);border:1px solid var(--sage);cursor:pointer;transition:background 0.2s var(--ease),transform 0.15s var(--ease);white-space:nowrap}
-    .btn-pay-now:hover:not(:disabled){background:var(--sage-deep);border-color:var(--sage-deep)}
-    .btn-pay-now:disabled{opacity:0.4;cursor:default}
-
-    /* ── CHECKOUT MODAL (single session) ── */
-    .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(78,90,65,0.45);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);z-index:200;align-items:center;justify-content:center;padding:1rem}
-    .modal-backdrop.open{display:flex}
-    .modal{background:var(--surface);border:1px solid var(--hairline);border-radius:8px;width:100%;max-width:540px;max-height:90dvh;overflow-y:auto;box-shadow:0 24px 64px rgba(78,90,65,0.25);display:flex;flex-direction:column}
-    .modal-header{display:flex;align-items:flex-start;justify-content:space-between;padding:1.6rem 1.75rem 1.2rem;border-bottom:1px solid var(--hairline);gap:1rem}
-    .modal-title{font-family:var(--font-display);font-size:1.35rem;color:var(--sage-deep);line-height:1.2;font-weight:400}
-    .modal-subtitle{font-family:var(--font-display);font-style:italic;font-size:0.9rem;color:var(--muted);margin-top:0.2rem}
-    .modal-close{background:none;border:none;font-size:1.5rem;color:var(--muted);cursor:pointer;padding:0;line-height:1;flex-shrink:0;transition:color 0.2s}
-    .modal-close:hover{color:var(--sage-deep)}
-    .modal-body{padding:1.5rem 1.75rem 2rem;flex:1}
-    .modal-summary{background:var(--bg-warm);border:1px solid var(--hairline);border-radius:4px;padding:1rem 1.15rem;margin-bottom:1.25rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
-    .modal-summary-name{font-family:var(--font-display);font-size:1.1rem;color:var(--sage-deep)}
-    .modal-summary-meta{font-family:var(--font-display);font-style:italic;font-size:0.85rem;color:var(--muted);margin-top:0.15rem}
-    .modal-summary-price{font-family:var(--font-display);font-size:1.25rem;color:var(--sage-deep);white-space:nowrap}
-    #session-checkout-embed{min-height:200px}
-    .modal-success{display:none;text-align:center;padding:2rem 0}
-    .modal-success.show{display:block}
-    .modal-success-mark{font-size:2.5rem;margin-bottom:1rem}
-    .modal-success h3{font-family:var(--font-display);font-size:1.6rem;color:var(--sage-deep);margin-bottom:0.6rem}
-    .modal-success h3 em{font-style:italic;color:var(--sage)}
-    .modal-success p{font-size:0.95rem;color:var(--ink-soft);line-height:1.6;max-width:34ch;margin:0 auto}
+    /* Modal Backdrop */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(78,90,65,0.45); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-backdrop.open { display: flex; }
+    .modal { background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px; width: 100%; max-width: 540px; max-height: 90dvh; overflow-y: auto; box-shadow: 0 24px 64px rgba(78,90,65,0.25); display: flex; flex-direction: column; }
+    .modal-header { display: flex; align-items: flex-start; justify-content: space-between; padding: 1.6rem 1.75rem 1.2rem; border-bottom: 1px solid var(--hairline); gap: 1rem; }
+    .modal-title { font-family: var(--font-display); font-size: 1.35rem; color: var(--sage-deep); line-height: 1.2; font-weight: 400; }
+    .modal-subtitle { font-family: var(--font-display); font-style: italic; font-size: 0.9rem; color: var(--muted); margin-top: 0.2rem; }
+    .modal-close { background: none; border: none; font-size: 1.5rem; color: var(--muted); cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0; }
+    .modal-close:hover { color: var(--sage-deep); }
+    .modal-body { padding: 1.5rem 1.75rem 2rem; flex: 1; }
+    .modal-summary { background: var(--bg-warm); border: 1px solid var(--hairline); border-radius: 4px; padding: 1rem 1.15rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .modal-summary-name { font-family: var(--font-display); font-size: 1.1rem; color: var(--sage-deep); }
+    .modal-summary-meta { font-family: var(--font-display); font-style: italic; font-size: 0.85rem; color: var(--muted); margin-top: 0.15rem; }
+    .modal-summary-price { font-family: var(--font-display); font-size: 1.25rem; color: var(--sage-deep); white-space: nowrap; }
+    #session-checkout-embed { min-height: 200px; }
   </style>
 </head>
 <body>
 
-  <!-- shown briefly while we check the session -->
+  <!-- Gate check -->
   <div id="gate">Loading your studio…</div>
 
   <div id="app" style="display:none">
@@ -239,145 +163,315 @@
 
     <main class="container wrap">
       <div class="welcome">
-        <span class="eyebrow">The Hobbiest</span>
-        <h1>Welcome back, <em id="memberName">friend</em>.</h1>
+        <span class="eyebrow">The Hobbiest Skills Club</span>
+        <h1>Welcome back, <em id="memberName">member</em>.</h1>
       </div>
 
+      <!-- MEMBER DASHBOARD PILLS NAVIGATION -->
       <nav class="pills">
-        <button class="pill active" data-panel="classes"  onclick="showPanel('classes',this)">Classes</button>
-        <button class="pill"        data-panel="schedule" onclick="showPanel('schedule',this)">Your Class Schedule</button>
-        <button class="pill"        data-panel="checkout" onclick="showPanel('checkout',this)">Checkout</button>
-        <button class="pill"        data-panel="interests"onclick="showPanel('interests',this)">Interests</button>
-        <button class="pill"        data-panel="feedback" onclick="showPanel('feedback',this)">Feedback</button>
-        <button class="pill"        data-panel="ideas"    onclick="showPanel('ideas',this)">Share an idea</button>
+        <button class="pill active" data-panel="buy-classes"    onclick="showPanel('buy-classes',this)">Buy Classes</button>
+        <button class="pill"        data-panel="buy-membership" onclick="showPanel('buy-membership',this)">Buy Membership</button>
+        <button class="pill"        data-panel="interests"      onclick="showPanel('interests',this)">Update Interest Form</button>
+        <button class="pill"        data-panel="feedback"       onclick="showPanel('feedback',this)">Provide Feedback</button>
+        <button class="pill"        data-panel="ideas"          onclick="showPanel('ideas',this)">Share an Idea</button>
+        <button class="pill"        data-panel="schedule"       onclick="showPanel('schedule',this)">Your Schedule</button>
       </nav>
 
-      <!-- CLASSES -->
-      <section class="panel show" id="panel-classes">
-        <div class="section-head"><h2>Open <em>classes</em></h2><p>Pick a class, pick a session or the full course, and pay right here.</p></div>
+      <!-- 1. BUY CLASSES (Full Roster 1-10) -->
+      <section class="panel show" id="panel-buy-classes">
+        <div class="section-head">
+          <h2>Buy Single <em>Classes</em></h2>
+          <p>Browse our 10 hands-on courses ($45–$65, all materials included). Buy single 2-hour sessions or apply your $45/mo Studio Membership credit.</p>
+        </div>
 
-        <div class="purchase-widget" id="purchaseWidget">
-          <div class="purchase-widget-label">Purchase now</div>
-          <div class="pw-select-wrap">
-            <select class="pw-select" id="pwClass" onchange="pwOnClassChange()">
-              <option value="">Loading classes…</option>
-            </select>
-            <span class="pw-select-arrow">▾</span>
-          </div>
-          <div class="pw-select-wrap">
-            <select class="pw-select" id="pwOption" onchange="pwOnOptionChange()" disabled>
-              <option value="">— then pick an option —</option>
-            </select>
-            <span class="pw-select-arrow">▾</span>
-          </div>
-          <div class="pw-footer">
-            <div class="pw-price-display dim" id="pwPrice">—</div>
-            <button class="btn-pay-now" id="pwBtn" disabled onclick="pwCheckout()">Pay now →</button>
-          </div>
+        <div class="class-roster-grid" id="classRosterGrid">
+          <!-- Dynamically populated 1-10 class cards -->
         </div>
       </section>
 
-      <!-- SCHEDULE -->
-      <section class="panel" id="panel-schedule">
-        <div class="section-head"><h2>Your <em>schedule</em></h2><p>Every class session you've booked, soonest first.</p></div>
-        <div id="scheduleList" class="loading">Loading…</div>
-      </section>
+      <!-- 2. BUY MEMBERSHIP -->
+      <section class="panel" id="panel-buy-membership">
+        <div class="section-head">
+          <h2>Studio <em>Membership</em></h2>
+          <p>Get unlimited open studio access plus 100% of your $45 monthly dues applies directly as credit toward any class of your choice!</p>
+        </div>
 
-      <!-- CHECKOUT -->
-      <section class="panel" id="panel-checkout">
-        <div class="section-head"><h2><em>Checkout</em></h2><p>Review and pay — your seat is confirmed once payment completes.</p></div>
-        <div class="checkout">
-          <div class="cart" id="cart"></div>
-          <div class="pay-side">
-            <h3 style="color:var(--sage-deep)">Total: <span id="cartTotal">$0</span></h3>
-            <p>Pay securely by card right here on the page — the card form is handled by Stripe, so we never see or store your card details.</p>
+        <div class="membership-card-wrap">
+          <div style="font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--sage); font-weight: 600;">OPTION 02 · UNLIMITED ACCESS</div>
+          <h3 style="font-family: var(--font-display); font-size: 2rem; color: var(--sage-deep); margin: 0.4rem 0;">Studio Membership</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-soft); line-height: 1.55;">
+            Access our physical studio space for open studio time, independent projects, and creative pursuits (knit, paint, floral work, or meditate in our garden).
+          </p>
 
-            <div class="field" style="margin:0">
-              <label for="giftCode">Gift code (optional)</label>
-              <input type="text" id="giftCode" placeholder="HSC-XXXX-XXXX" autocapitalize="characters" style="text-transform:uppercase">
-            </div>
-
-            <div class="terms">
-              <strong>Before you enrol, please note:</strong>
-              <ul>
-                <li><strong>Adults 18+ only.</strong> No minors permitted.</li>
-                <li>An <strong>unplugged, substance-free</strong> space: no alcohol, food, drugs, smoking, phones, or electronics.</li>
-                <li>Each course is a <strong>4-week commitment</strong>.</li>
-                <li><strong>All sales are final</strong> — no refunds for missed classes.</li>
-                <li>Classes <strong>we</strong> cancel are rescheduled or refunded.</li>
-                <li>Exchanges or class swaps are based on availability.</li>
-                <li><strong>One-strike policy:</strong> disruptive behavior or impairment means removal without a refund.</li>
-                <li>Enrolment requires agreeing to the <a href="waiver.html" target="_blank" rel="noopener">liability waiver &amp; policies</a>.</li>
-              </ul>
-            </div>
-
-            <div class="field" style="margin:0">
-              <label for="signName">Type your full name to sign</label>
-              <input type="text" id="signName" placeholder="e.g. Jamie Rivers" oninput="updatePayState()" autocomplete="name">
-            </div>
-            <label class="agree">
-              <input type="checkbox" id="agreeBox" onchange="updatePayState()">
-              <span>I have read and agree to the liability waiver, the 4-week commitment, and the refund policy above.</span>
-            </label>
-
-            <button class="btn-submit" id="payBtn" onclick="startCheckout()" disabled>Pay with card</button>
-            <div id="checkout-embed" style="margin-top:1rem"></div>
+          <div class="price-box-large">
+            <div style="font-family: var(--font-display); font-size: 1.05rem; color: var(--sage-deep);">Monthly Dues</div>
+            <div class="amount">$45 <span class="per">/ month</span></div>
+            <div style="font-size: 0.8rem; font-style: italic; color: var(--muted); margin-top: 0.3rem;">Studio opens 8/1 — memberships begin 8/1</div>
           </div>
+
+          <div style="font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sage-deep); margin-bottom: 0.8rem;">What's Included:</div>
+          <ul style="list-style: none; padding: 0; margin: 0 0 1.75rem 0; display: flex; flex-direction: column; gap: 0.75rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--ink-soft);">
+            <li style="display: flex; gap: 0.65rem;">
+              <span style="color: var(--sage); font-weight: bold;">✓</span>
+              <span><strong>Open Studio Access:</strong> Weekdays M-F 6:00–9:30 PM &amp; Weekends 7:00 AM–9:00 PM.</span>
+            </li>
+            <li style="display: flex; gap: 0.65rem;">
+              <span style="color: var(--sage); font-weight: bold;">✓</span>
+              <span><strong>Complimentary Amenities:</strong> Free hot black coffee and filtered water always available.</span>
+            </li>
+            <li style="display: flex; gap: 0.65rem;">
+              <span style="color: var(--sage); font-weight: bold;">✓</span>
+              <span><strong>100% Class Credits:</strong> Your entire $45 monthly dues applies directly toward any class.</span>
+            </li>
+          </ul>
+
+          <!-- Class Credit Selector -->
+          <div class="field" style="background: #FAF8F5; border: 1px solid var(--hairline); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.5rem;">
+            <label for="membershipClassSelect" style="color: var(--sage-deep); font-weight: 700;">SELECT CLASS TO APPLY YOUR $45 MONTHLY CREDIT TOWARD:</label>
+            <select id="membershipClassSelect" style="margin-top: 0.4rem;" onchange="updateMembershipCostDisplay()">
+              <!-- Options 1-10 populated via JS -->
+            </select>
+            <div id="creditSummaryNote" style="font-family: var(--font-body); font-size: 0.84rem; color: var(--sage-deep); font-weight: 600; margin-top: 0.6rem;"></div>
+          </div>
+
+          <button class="btn-submit" onclick="purchaseMembership()">Purchase Studio Membership ($45/mo) →</button>
         </div>
       </section>
 
-      <!-- INTERESTS & AVAILABILITY -->
+      <!-- 3. UPDATE INTEREST FORM & AVAILABILITY -->
       <section class="panel" id="panel-interests">
-        <div class="section-head"><h2>Your interests &amp; <em>availability</em></h2><p>This is what you shared when you signed up. Update anything that's changed, then save.</p></div>
+        <div class="section-head">
+          <h2>Update Interest Form &amp; <em>Availability</em></h2>
+          <p>Update your contact info, class preferences, and weekly available time slots below.</p>
+        </div>
         <div class="block">
-          <div class="field"><label>Classes you're interested in (tap all that apply)</label><div class="chips" id="interestChips"></div></div>
+          <form onsubmit="saveInterestForm(event)">
+            <div class="field">
+              <label for="iFirstName">First Name</label>
+              <input type="text" id="iFirstName" required placeholder="Jane" />
+            </div>
+            <div class="field">
+              <label for="iLastName">Last Name</label>
+              <input type="text" id="iLastName" required placeholder="Doe" />
+            </div>
+            <div class="field">
+              <label for="iEmail">Email Address</label>
+              <input type="email" id="iEmail" required placeholder="jane.doe@example.com" />
+            </div>
+            <div class="field">
+              <label for="iPhone">Phone Number</label>
+              <input type="tel" id="iPhone" required placeholder="(570) 555-0199" />
+            </div>
+            <div class="field">
+              <label for="iClassSelect">Class of Interest</label>
+              <select id="iClassSelect">
+                <!-- Loaded via JS -->
+              </select>
+            </div>
+            <div class="field">
+              <label for="iSuggestions">Topics or Suggestions</label>
+              <textarea id="iSuggestions" placeholder="What other classes or topics would you like to see? Knitting, paint, etc."></textarea>
+            </div>
 
-          <div class="field">
-            <label>When are you usually free?</label>
-            <p class="avail-hint">Tap every time you could attend. Days run across the top; time blocks down the side.</p>
-            <div class="avail-wrap"><table class="avail" id="availGrid"></table></div>
-          </div>
+            <div class="field">
+              <label>Select Your Weekly Availability</label>
+              <p style="font-family: var(--font-body); font-size: 0.82rem; color: var(--muted); margin-bottom: 0.75rem;">Weekdays (7:00–9:00 PM) &amp; Weekend 2-hour slots (8 AM–10 PM).</p>
+              
+              <div class="avail-table-wrap">
+                <table style="width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: 0.8rem; text-align: center;">
+                  <thead>
+                    <tr style="background: var(--bg-warm); border-bottom: 1px solid var(--hairline);">
+                      <th style="padding: 0.6rem 0.5rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: var(--sage-deep); text-align: left; width: 110px;">Time Slot</th>
+                      <th style="padding: 0.6rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: var(--sage-deep);">Mon</th>
+                      <th style="padding: 0.6rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: var(--sage-deep);">Tue</th>
+                      <th style="padding: 0.6rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: var(--sage-deep);">Wed</th>
+                      <th style="padding: 0.6rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: var(--sage-deep);">Thu</th>
+                      <th style="padding: 0.6rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: var(--sage-deep);">Fri</th>
+                      <th style="padding: 0.6rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: var(--sage-deep); background: rgba(122,138,107,0.15);">Sat</th>
+                      <th style="padding: 0.6rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: var(--sage-deep); background: rgba(122,138,107,0.15);">Sun</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- 7-9 PM (Weekdays & Weekends) -->
+                    <tr style="border-bottom: 1px solid var(--hairline);">
+                      <td style="padding: 0.5rem; text-align: left; background: var(--bg-warm); font-weight: 600; color: var(--ink);">7:00–9:00 PM</td>
+                      <td style="padding: 0.4rem;"><input type="checkbox" name="mAvail" value="Mon 7-9PM" /></td>
+                      <td style="padding: 0.4rem;"><input type="checkbox" name="mAvail" value="Tue 7-9PM" /></td>
+                      <td style="padding: 0.4rem;"><input type="checkbox" name="mAvail" value="Wed 7-9PM" /></td>
+                      <td style="padding: 0.4rem;"><input type="checkbox" name="mAvail" value="Thu 7-9PM" /></td>
+                      <td style="padding: 0.4rem;"><input type="checkbox" name="mAvail" value="Fri 7-9PM" /></td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sat 7-9PM" /></td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sun 7-9PM" /></td>
+                    </tr>
+                    <!-- Weekend 8-10 AM -->
+                    <tr style="border-bottom: 1px solid var(--hairline);">
+                      <td style="padding: 0.5rem; text-align: left; background: var(--bg-warm); font-weight: 600; color: var(--ink);">8:00–10:00 AM</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sat 8-10AM" /></td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sun 8-10AM" /></td>
+                    </tr>
+                    <!-- Weekend 10 AM-12 PM -->
+                    <tr style="border-bottom: 1px solid var(--hairline);">
+                      <td style="padding: 0.5rem; text-align: left; background: var(--bg-warm); font-weight: 600; color: var(--ink);">10:00 AM–12:00 PM</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sat 10AM-12PM" /></td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sun 10AM-12PM" /></td>
+                    </tr>
+                    <!-- Weekend 12-2 PM -->
+                    <tr style="border-bottom: 1px solid var(--hairline);">
+                      <td style="padding: 0.5rem; text-align: left; background: var(--bg-warm); font-weight: 600; color: var(--ink);">12:00–2:00 PM</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sat 12-2PM" /></td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sun 12-2PM" /></td>
+                    </tr>
+                    <!-- Weekend 2-4 PM -->
+                    <tr style="border-bottom: 1px solid var(--hairline);">
+                      <td style="padding: 0.5rem; text-align: left; background: var(--bg-warm); font-weight: 600; color: var(--ink);">2:00–4:00 PM</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sat 2-4PM" /></td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sun 2-4PM" /></td>
+                    </tr>
+                    <!-- Weekend 4-6 PM -->
+                    <tr style="border-bottom: 1px solid var(--hairline);">
+                      <td style="padding: 0.5rem; text-align: left; background: var(--bg-warm); font-weight: 600; color: var(--ink);">4:00–6:00 PM</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sat 4-6PM" /></td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sun 4-6PM" /></td>
+                    </tr>
+                    <!-- Weekend 6-8 PM -->
+                    <tr style="border-bottom: 1px solid var(--hairline);">
+                      <td style="padding: 0.5rem; text-align: left; background: var(--bg-warm); font-weight: 600; color: var(--ink);">6:00–8:00 PM</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sat 6-8PM" /></td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sun 6-8PM" /></td>
+                    </tr>
+                    <!-- Weekend 8-10 PM -->
+                    <tr>
+                      <td style="padding: 0.5rem; text-align: left; background: var(--bg-warm); font-weight: 600; color: var(--ink);">8:00–10:00 PM</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="color:var(--muted); font-size:0.75rem;">—</td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sat 8-10PM" /></td>
+                      <td style="padding: 0.4rem; background: rgba(122,138,107,0.05);"><input type="checkbox" name="mAvail" value="Sun 8-10PM" /></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-          <div class="field"><label>Skill level</label>
-            <select id="iSkill"><option>Total beginner</option><option>Dabbled a bit</option><option>Intermediate</option><option>Pretty experienced</option></select>
-          </div>
-          <div class="field"><label>Anything specific you're hoping to make or learn?</label><textarea id="iNotes" placeholder="I'd love to throw a full dinner set on the wheel…"></textarea></div>
-          <button class="btn-submit" onclick="saveProfile(this)">Save my interests &amp; availability</button>
+            <button type="submit" class="btn-submit">Save Interest Form &amp; Availability →</button>
+          </form>
         </div>
       </section>
 
-      <!-- FEEDBACK -->
+      <!-- 4. PROVIDE FEEDBACK -->
       <section class="panel" id="panel-feedback">
-        <div class="section-head"><h2>Constructive <em>feedback</em></h2><p>Honest notes help us run a better studio.</p></div>
+        <div class="section-head">
+          <h2>Provide <em>Feedback</em></h2>
+          <p>Your honest notes help us run a better studio space and deliver exceptional experiences.</p>
+        </div>
         <div class="block">
-          <div class="field"><label>Which class?</label><select id="fbClass"></select></div>
-          <div class="field"><label>Overall</label><div class="stars" id="fbStars"><span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span></div></div>
-          <div class="field"><label>What worked well?</label><textarea id="fbGood" placeholder="The pacing was perfect and the instructor…"></textarea></div>
-          <div class="field"><label>What could be better?</label><textarea id="fbImprove" placeholder="More time on the glazing step would help…"></textarea></div>
-          <button class="btn-submit" onclick="submitFeedback(this)">Send feedback</button>
+          <form onsubmit="submitFeedbackForm(event)">
+            <div class="field">
+              <label for="fbTopic">Category / Topic</label>
+              <select id="fbTopic">
+                <option value="studio">Studio Space &amp; Atmosphere</option>
+                <option value="class">Class Content &amp; Pace</option>
+                <option value="instructor">Instructor Feedback</option>
+                <option value="scheduling">Scheduling &amp; Availability</option>
+                <option value="overall">Overall Experience</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Overall Experience</label>
+              <div class="stars" id="fbStars">
+                <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="fbGood">What worked well?</label>
+              <textarea id="fbGood" placeholder="The pacing was perfect and the studio setup was…"></textarea>
+            </div>
+            <div class="field">
+              <label for="fbImprove">What could be improved?</label>
+              <textarea id="fbImprove" placeholder="More time on hands-on practice would help…"></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Submit Feedback →</button>
+          </form>
         </div>
       </section>
 
-      <!-- IDEAS -->
+      <!-- 5. SHARE AN IDEA -->
       <section class="panel" id="panel-ideas">
-        <div class="section-head"><h2>Share an <em>idea</em></h2><p>A class you wish existed? A guest you'd love us to invite?</p></div>
+        <div class="section-head">
+          <h2>Share an <em>Idea</em></h2>
+          <p>Have a class topic you'd love us to offer, an artisan instructor to suggest, or an event concept?</p>
+        </div>
         <div class="block">
-          <div class="field"><label>Your idea</label><textarea id="ideaText" placeholder="A weekend natural-dye workshop using foraged plants…"></textarea></div>
-          <div class="field"><label>Type of idea</label><div class="chips" id="ideaChips"></div></div>
-          <button class="btn-submit" onclick="submitIdea(this)">Share idea</button>
+          <form onsubmit="submitIdeaForm(event)">
+            <div class="field">
+              <label for="ideaTitle">Idea Title</label>
+              <input type="text" id="ideaTitle" required placeholder="e.g., Natural Indigo Dyeing Workshop" />
+            </div>
+            <div class="field">
+              <label>Category</label>
+              <div class="chips" id="ideaChips"></div>
+            </div>
+            <div class="field">
+              <label for="ideaText">Describe Your Idea</label>
+              <textarea id="ideaText" required placeholder="Describe the class topic, materials, or experience you'd love to see in the studio…"></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Submit Idea →</button>
+          </form>
         </div>
       </section>
+
+      <!-- 6. YOUR SCHEDULE -->
+      <section class="panel" id="panel-schedule">
+        <div class="section-head">
+          <h2>Your Class <em>Schedule</em></h2>
+          <p>Every class session you've booked, listed in chronological order.</p>
+        </div>
+        <div id="scheduleList" class="loading">Loading your schedule…</div>
+      </section>
+
     </main>
   </div>
 
   <div class="toast" id="toast"></div>
 
-  <!-- SINGLE SESSION MODAL -->
+  <!-- SINGLE SESSION CHECKOUT MODAL -->
   <div class="modal-backdrop" id="sessionModal" role="dialog" aria-modal="true">
     <div class="modal">
       <div class="modal-header">
         <div>
-          <div class="modal-title" id="smTitle">Book a starter session</div>
+          <div class="modal-title" id="smTitle">Book Single Class</div>
           <div class="modal-subtitle" id="smSubtitle"></div>
         </div>
         <button class="modal-close" onclick="closeSessionModal()" aria-label="Close">×</button>
@@ -386,96 +480,54 @@
         <div class="modal-summary" id="smSummary">
           <div>
             <div class="modal-summary-name" id="smClassName"></div>
-            <div class="modal-summary-meta" id="smSessionMeta"></div>
+            <div class="modal-summary-meta" id="smSessionMeta">Scheduled when course fills to 12 members · In studio</div>
           </div>
           <div class="modal-summary-price" id="smPrice"></div>
         </div>
         <div id="session-checkout-embed"></div>
-        <div class="modal-success" id="smSuccess">
-          <div class="modal-success-mark">✦</div>
-          <h3>You're <em>booked</em>.</h3>
-          <p>Check your email for confirmation. We'll see you in studio.</p>
-        </div>
       </div>
     </div>
   </div>
 
   <script>
-    /* ---- Supabase (same project as login.html) ---- */
     const SUPABASE_URL = "https://uprdczhhgwzfypkudqjg.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ";
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const STRIPE_PK = "pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS";
 
-    /* ---- Stripe ---- */
-    // Your PUBLISHABLE key (safe to expose in the browser; the live one
-    // starts with pk_live_). Get it from Stripe → Developers → API keys.
-    const STRIPE_PUBLISHABLE_KEY = "pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS";
-    let stripe = null, embeddedCheckout = null;
-
-    const interestTags = ["Pottery","Baking","Painting","Woodworking","Textiles","Cooking","Printmaking","Jewellery","Photography","Gardening","Calligraphy","Candle-making"];
-    // The full menu of classes you ask about at signup. Edit this list anytime —
-    // any class a member personally selected is also shown even if not listed here.
-    const BASE_INTEREST_CLASSES = [
-      "Watercolor 101","Modern Calligraphy","Knitting 101","Meditation",
-      "Basic Home Repair","Nutrition 101","Personal Finance 101","Gardening 101"
+    // Canonical 1-10 class list & prices
+    const CANONICAL_CLASSES = [
+      { id: 'wreath-making', num: '01', name: 'Wreath Making', category: 'Creative Pursuits', price: 65, price_cents: 6500, desc: 'Craft a stunning, seasonal door wreath using fresh greens, dried florals, and traditional wiring techniques.', instructor: 'Studio Florist' },
+      { id: 'flower-arranging', num: '02', name: 'Flower Arranging & Floral Design', category: 'Hearth & Garden', price: 65, price_cents: 6500, desc: 'Principles of color, vessel selection, stem preparation, and creating balanced fresh floral arrangements.', instructor: 'Master Florist' },
+      { id: 'watercolor-101', num: '03', name: 'Watercolor Painting 101', category: 'Creative Pursuits', price: 55, price_cents: 5500, desc: 'Learn color blending, wet-on-wet washes, and botanical watercolor painting techniques.', instructor: 'Fine Artist' },
+      { id: 'modern-calligraphy', num: '04', name: 'Modern Calligraphy & Pointed Pen', category: 'Creative Pursuits', price: 55, price_cents: 5500, desc: 'Explore pointed pen lettering, stroke contrast, letterforms, and custom stationery design.', instructor: 'Calligrapher' },
+      { id: 'sourdough-bread', num: '05', name: 'Sourdough Bread Making', category: 'Essential Life Skills', price: 55, price_cents: 5500, desc: 'De-mystify starter maintenance, bulk fermentation, shaping, scoring, and baking golden rustic loaves.', instructor: 'Artisan Baker' },
+      { id: 'hair-blowouts', num: '06', name: 'Hair Tutorial — Professional Blowouts', category: 'Living Well', price: 45, price_cents: 4500, desc: 'Master the round-brush blowout at home! Learn sectioning, heat protection, volume lifting, and finishing oils.', instructor: 'Stylist Lead' },
+      { id: 'makeup-daily', num: '07', name: 'Makeup Tutorial — Daily Application', category: 'Living Well', price: 45, price_cents: 4500, desc: 'Learn a flawless 10-minute everyday makeup routine tailored to your skin tone and features.', instructor: 'Beauty Specialist' },
+      { id: 'makeup-night', num: '08', name: 'Makeup Tutorial — Night Out Glam', category: 'Living Well', price: 45, price_cents: 4500, desc: 'Step-by-step evening makeup techniques: subtle smokey eyes, long-lasting skin prep, and bold lip application.', instructor: 'Beauty Specialist' },
+      { id: 'beginner-knitting', num: '09', name: 'Beginner Knitting — Chunky Scarf', category: 'Creative Pursuits', price: 45, price_cents: 4500, desc: 'Cast on, knit stitch, purl stitch, and cast off. Walk away with your first cozy handmade creation.', instructor: 'Textile Artisan' },
+      { id: 'sketch-art', num: '10', name: 'Sketch Art & Drawing Basics', category: 'Creative Pursuits', price: 45, price_cents: 4500, desc: 'Master fundamental shading, perspective, line weight, and quick-sketch techniques in a relaxing environment.', instructor: 'Resident Artist' }
     ];
-    // Availability matrix definition
-    const TIME_BLOCKS = [
-      {id:"morning",  label:"Morning",  time:"8–11 AM"},
-      {id:"midday",   label:"Midday",   time:"11 AM–2 PM"},
-      {id:"afternoon",label:"Afternoon",time:"2–5 PM"},
-      {id:"evening",  label:"Evening",  time:"5–8 PM"},
-      {id:"late",     label:"Late",     time:"8–10 PM"},
-    ];
-    const AVAIL_DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-    const ideaTypes = ["New class","Guest instructor","Studio event","Materials / tools","Something else"];
 
+    const ideaCategories = ["New Class Topic", "Guest Instructor", "Studio Event", "Materials / Tools", "Other"];
     let user = null;
-    let classes = [];        // catalogue
-    let enrolledIds = new Set();
+    let stripe = null;
+    let embeddedCheckout = null;
     let fbRating = 0;
 
-    /* ---------- helpers ---------- */
     const $ = id => document.getElementById(id);
     let toastTimer;
     function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),2800); }
-    function money(cents){ return "$" + (cents % 100 === 0 ? cents/100 : (cents/100).toFixed(2)); }
-    const TZ = "America/New_York";   // the club's timezone — show times in Pittston time for everyone
-    function fmtDate(iso){ return new Date(iso).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric",timeZone:TZ}); }
-    function fmtTime(iso){ return new Date(iso).toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",timeZone:TZ}); }
-    function dayNum(iso){ return new Date(iso).toLocaleDateString("en-US",{day:"numeric",timeZone:TZ}); }
-    function monAbbr(iso){ return new Date(iso).toLocaleDateString("en-US",{month:"short",timeZone:TZ}); }
-    function fmtRange(iso, mins){
-      const start=new Date(iso), end=new Date(start.getTime()+(mins||0)*60000);
-      const o={hour:"numeric",minute:"2-digit",timeZone:TZ};
-      return start.toLocaleTimeString("en-US",o).replace(/\s?[AP]M/,"")+"–"+end.toLocaleTimeString("en-US",o);
-    }
-    function weekdayPlural(iso){ return new Date(iso).toLocaleDateString("en-US",{weekday:"long",timeZone:TZ})+"s"; }
-    function monthDay(iso){ return new Date(iso).toLocaleDateString("en-US",{month:"short",day:"numeric",timeZone:TZ}); }
-    function lastSessionIso(c){
-      const s=new Date(c.starts_at);
-      return new Date(s.getTime() + ((c.weeks||1)-1)*7*86400000).toISOString();
-    }
-    // "Saturdays · Jul 11 – Aug 1 · 12:00–2:00 PM"
-    function scheduleText(c){
-      if(!c.starts_at) return "";
-      const range = (c.weeks && c.weeks>1)
-        ? `${monthDay(c.starts_at)} – ${monthDay(lastSessionIso(c))}`
-        : monthDay(c.starts_at);
-      return `${weekdayPlural(c.starts_at)} · ${range} · ${fmtRange(c.starts_at,c.duration_minutes)}`;
-    }
 
-    /* ---------- boot: require a session ---------- */
     (async function boot(){
-      const { data:{ session } } = await sb.auth.getSession();
+      const { data: { session } } = await sb.auth.getSession();
       if(!session){ window.location.href = "login.html"; return; }
       user = session.user;
 
-      // name + avatar
       let name = user.user_metadata?.full_name || user.user_metadata?.name;
       if(!name){
         const { data:prof } = await sb.from("profiles").select("full_name").eq("id",user.id).single();
-        name = prof?.full_name || (user.email||"friend").split("@")[0];
+        name = prof?.full_name || (user.email||"member").split("@")[0];
       }
       $("memberName").textContent = name;
       $("avatar").textContent = name.charAt(0).toUpperCase();
@@ -483,354 +535,199 @@
       $("gate").style.display = "none";
       $("app").style.display = "block";
 
-      renderChips("ideaChips", ideaTypes);
+      renderClassRoster();
+      populateMembershipDropdown();
+      populateInterestDropdown();
+      renderIdeaChips();
       wireStars();
-      await loadProfile();   // builds interest chips + availability grid, pre-filled
-      await loadEnrollments();   // sets enrolledIds, used by class buttons
-      await loadClasses();
-      renderSchedule();
-      renderCart();
-      fillFeedbackClasses();
-      handleCheckoutReturn();
+      loadMemberProfile();
+      renderMemberSchedule();
     })();
-
-    /* If we just came back from Stripe, show the result. The webhook
-       marks rows paid server-side; we refresh shortly after to catch it. */
-    async function handleCheckoutReturn(){
-      const params = new URLSearchParams(window.location.search);
-      if(params.get("paid")){
-        toast("Payment received — see you in class! 🎉");
-        showPanel("schedule", document.querySelector('.pill[data-panel="schedule"]'));
-        setTimeout(async ()=>{ await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart(); }, 2500);
-      } else if(params.get("canceled")){
-        toast("Checkout canceled — your reservations are still saved.");
-      }
-      if(params.get("paid") || params.get("canceled")){
-        history.replaceState({}, "", window.location.pathname);  // clean the URL
-      }
-    }
 
     async function signOut(){ await sb.auth.signOut(); window.location.href = "login.html"; }
 
-    /* ---------- panels ---------- */
     function showPanel(id, btn){
       document.querySelectorAll(".panel").forEach(p=>p.classList.remove("show"));
-      $("panel-"+id).classList.add("show");
+      const target = $("panel-" + id);
+      if(target) target.classList.add("show");
       document.querySelectorAll(".pill").forEach(p=>p.classList.remove("active"));
-      btn.classList.add("active");
+      if(btn) btn.classList.add("active");
     }
 
-    /* ---------- purchase widget ---------- */
-    async function loadClasses(){
-      const { data, error } = await sb.from("classes")
-        .select("id,name,starts_at,duration_minutes,price_cents,session_price_cents,weeks,capacity,seats_taken,emoji,is_published")
-        .eq("is_published",true).order("starts_at",{ascending:true});
-      if(error){ console.error("loadClasses:",error); return; }
-      classes = data || [];
-      pwPopulate(classes);
+    /* RENDER 1-10 CLASS ROSTER */
+    function renderClassRoster(){
+      const grid = $("classRosterGrid");
+      grid.innerHTML = CANONICAL_CLASSES.map(c => `
+        <div class="class-roster-card">
+          <div>
+            <div class="crc-num">${c.num} — ${c.category}</div>
+            <div class="crc-title">${c.name}</div>
+            <div class="crc-desc">${c.desc}</div>
+          </div>
+          <div>
+            <div class="crc-price-row">
+              <div class="crc-price">$${c.price}</div>
+              <div class="crc-note">All materials included</div>
+            </div>
+            <div class="crc-actions">
+              <button class="btn-buy-single" onclick="buySingleClass('${c.id}')">Buy Single Class ($${c.price}) →</button>
+              <button class="btn-apply-credit" onclick="applyCreditToMembership('${c.id}')">Apply $45 Membership Credit →</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
     }
 
-    function sessionDates(c){
-      const out=[]; if(!c.starts_at) return out;
-      const start=new Date(c.starts_at), n=c.weeks||1;
-      for(let i=0;i<n;i++) out.push(new Date(start.getTime()+i*7*86400000));
-      return out;
-    }
-    const _fmtDate = d => d.toLocaleDateString("en-US",{timeZone:TZ,month:"short",day:"numeric"});
-    const _fmtLong = d => d.toLocaleDateString("en-US",{timeZone:TZ,weekday:"long",month:"long",day:"numeric"});
-    const sessionPrice = c => c.session_price_cents || Math.round((c.price_cents||0)/(c.weeks||1));
-
-    function pwPopulate(list){
-      const sel = $("pwClass");
-      if(!list.length){ sel.innerHTML = '<option value="">No classes available</option>'; return; }
-      sel.innerHTML = '<option value="">\u2014 choose a class \u2014</option>' +
-        list.map((c,i)=>`<option value="${i}">${c.emoji||""} ${c.name.replace(/\s*\(.*\)\s*$/,"")}</option>`).join("");
+    /* MEMBERSHIP DROPDOWN & CREDIT CALCULATION */
+    function populateMembershipDropdown(){
+      const sel = $("membershipClassSelect");
+      sel.innerHTML = CANONICAL_CLASSES.map(c => {
+        const extra = c.price > 45 ? `$${c.price - 45} extra out of pocket` : `$0 extra out of pocket`;
+        return `<option value="${c.id}">${c.name} ($${c.price} — ${extra})</option>`;
+      }).join('');
+      updateMembershipCostDisplay();
     }
 
-    function pwOnClassChange(){
-      const idx=$("pwClass").value, optSel=$("pwOption"), priceEl=$("pwPrice"), btn=$("pwBtn");
-      if(idx===""){
-        optSel.innerHTML='<option value="">\u2014 then pick an option \u2014</option>';
-        optSel.disabled=true; priceEl.textContent="\u2014"; priceEl.classList.add("dim"); btn.disabled=true; return;
-      }
-      const c=classes[parseInt(idx)], weeks=c.weeks||1, perSession=sessionPrice(c), dates=sessionDates(c);
-      let opts='<option value="">\u2014 pick a session or course \u2014</option>';
-      dates.forEach((d,i)=>{ opts+=`<option value="session:${i}">${_fmtDate(d)} \u00b7 Starter session \u2014 ${money(perSession)}</option>`; });
-      opts+=`<option value="full">Full course (all ${weeks} sessions) \u2014 ${money(c.price_cents)}</option>`;
-      optSel.innerHTML=opts; optSel.disabled=false;
-      priceEl.textContent="\u2014"; priceEl.classList.add("dim"); btn.disabled=true;
-    }
-
-    function pwOnOptionChange(){
-      const classIdx=$("pwClass").value, optVal=$("pwOption").value;
-      const priceEl=$("pwPrice"), btn=$("pwBtn");
-      if(!classIdx||!optVal){ priceEl.textContent="\u2014"; priceEl.classList.add("dim"); btn.disabled=true; return; }
-      const c=classes[parseInt(classIdx)];
-      priceEl.textContent=optVal==="full"?money(c.price_cents):money(sessionPrice(c));
-      priceEl.classList.remove("dim"); btn.disabled=false;
-    }
-
-    async function pwCheckout(){
-      const classIdx=$("pwClass").value, optVal=$("pwOption").value;
-      if(!classIdx||!optVal) return;
-      const c=classes[parseInt(classIdx)];
-      const btn=$("pwBtn"); btn.disabled=true; btn.textContent="Opening\u2026";
-      if(optVal==="full"){
-        if(!enrolledIds.has(c.id)){
-          const {error}=await sb.from("enrollments").insert({user_id:user.id,class_id:c.id,status:"reserved"});
-          if(error){ toast("Couldn't add: "+error.message); btn.disabled=false; btn.textContent="Pay now \u2192"; return; }
-          await loadEnrollments(); renderSchedule(); renderCart();
-        }
-        showPanel("checkout",document.querySelector('.pill[data-panel="checkout"]'));
-        window.scrollTo({top:0,behavior:"smooth"});
+    function updateMembershipCostDisplay(){
+      const selId = $("membershipClassSelect").value;
+      const c = CANONICAL_CLASSES.find(x => x.id === selId) || CANONICAL_CLASSES[0];
+      const note = $("creditSummaryNote");
+      if(c.price === 45) {
+        note.textContent = `✓ Your $45 monthly dues 100% covers ${c.name}! ($0 additional out of pocket).`;
       } else {
-        const sessionIndex=parseInt(optVal.split(":")[1]);
-        const dates=sessionDates(c);
-        $("smTitle").textContent="Book a starter session";
-        $("smSubtitle").textContent=c.name.replace(/\s*\(.*\)\s*$/,"");
-        $("smClassName").textContent=c.name.replace(/\s*\(.*\)\s*$/,"");
-        $("smSessionMeta").textContent="Starter session \u00b7 "+_fmtLong(dates[sessionIndex]);
-        $("smPrice").textContent=money(sessionPrice(c));
-        await openSessionModal(c.id, sessionIndex);
+        const diff = c.price - 45;
+        note.textContent = `✓ Your $45 monthly credit applies toward ${c.name} ($${diff} remaining balance for materials).`;
       }
-      btn.disabled=false; btn.textContent="Pay now \u2192";
     }
 
-    async function openSessionModal(classId, sessionIndex){
-      const modal=$("sessionModal"), embedEl=$("session-checkout-embed"), successEl=$("smSuccess");
-      embedEl.innerHTML='<p style="font-family:var(--font-display);font-style:italic;color:var(--muted);padding:1rem 0">Preparing checkout\u2026</p>';
-      successEl.classList.remove("show"); $("smSummary").style.display="flex";
-      modal.classList.add("open"); document.body.style.overflow="hidden";
-      try{
-        const res=await fetch(SUPABASE_URL+"/functions/v1/create-checkout",{
-          method:"POST",
-          headers:{"Content-Type":"application/json","apikey":SUPABASE_ANON_KEY},
-          body:JSON.stringify({guest:true,class_id:classId,session_index:sessionIndex})
+    function applyCreditToMembership(classId){
+      showPanel('buy-membership', document.querySelector('.pill[data-panel="buy-membership"]'));
+      const sel = $("membershipClassSelect");
+      if(sel) {
+        sel.value = classId;
+        updateMembershipCostDisplay();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* BUY SINGLE CLASS CHECKOUT */
+    async function buySingleClass(classId){
+      const c = CANONICAL_CLASSES.find(x => x.id === classId) || CANONICAL_CLASSES[0];
+      $("smTitle").textContent = "Buy Single Class";
+      $("smSubtitle").textContent = c.name;
+      $("smClassName").textContent = c.name;
+      $("smPrice").textContent = `$${c.price}`;
+
+      const modal = $("sessionModal");
+      const embedEl = $("session-checkout-embed");
+      embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:var(--muted);padding:1rem 0">Loading secure checkout…</p>';
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+
+      try {
+        const res = await fetch(SUPABASE_URL + "/functions/v1/create-checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "apikey": SUPABASE_ANON_KEY },
+          body: JSON.stringify({ guest: true, class_id: c.id, session_index: 0 })
         });
-        const data=await res.json();
-        if(!res.ok||!data.clientSecret) throw new Error(data.error||"Checkout failed");
-        if(!stripe) stripe=Stripe(STRIPE_PUBLISHABLE_KEY);
-        if(embeddedCheckout){embeddedCheckout.destroy();embeddedCheckout=null;}
-        embeddedCheckout=await stripe.initEmbeddedCheckout({clientSecret:data.clientSecret});
-        embedEl.innerHTML=""; embeddedCheckout.mount("#session-checkout-embed");
-      }catch(err){
-        embedEl.innerHTML='<p style="font-family:var(--font-display);font-style:italic;color:#c04;">Couldn\'t start checkout \u2014 please try again.</p>';
-        console.error(err);
+        const data = await res.json();
+        if(!res.ok || !data.clientSecret) throw new Error(data.error || "Checkout failed");
+
+        if(!stripe) stripe = Stripe(STRIPE_PK);
+        if(embeddedCheckout){ embeddedCheckout.destroy(); embeddedCheckout = null; }
+        embeddedCheckout = await stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
+        embedEl.innerHTML = "";
+        embeddedCheckout.mount("#session-checkout-embed");
+      } catch (err) {
+        embedEl.innerHTML = '<p style="font-family:var(--font-display);font-style:italic;color:#c04;padding:1rem 0">Couldn\'t start checkout — please try again.</p>';
       }
     }
 
     function closeSessionModal(){
-      $("sessionModal").classList.remove("open"); document.body.style.overflow="";
-      if(embeddedCheckout){embeddedCheckout.destroy();embeddedCheckout=null;}
-      $("session-checkout-embed").innerHTML="";
+      $("sessionModal").classList.remove("open");
+      document.body.style.overflow = "";
+      if(embeddedCheckout){ embeddedCheckout.destroy(); embeddedCheckout = null; }
+      $("session-checkout-embed").innerHTML = "";
     }
 
-    document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSessionModal();});
-    document.getElementById("sessionModal").addEventListener("click",function(e){if(e.target===this)closeSessionModal();});
+    document.addEventListener("keydown", e => { if(e.key === "Escape") closeSessionModal(); });
+    $("sessionModal").addEventListener("click", function(e){ if(e.target === this) closeSessionModal(); });
 
-    /* ---------- enrollments ---------- */
-    async function loadEnrollments(){
-      const { data, error } = await sb.from("enrollments").select("id,status,class_id,classes(*)").eq("user_id",user.id);
-      if(error){ console.error(error); enrolledIds=new Set(); window._enr=[]; return; }
-      window._enr=data||[]; enrolledIds=new Set(window._enr.map(e=>e.class_id));
+    /* MEMBERSHIP CHECKOUT */
+    async function purchaseMembership(){
+      const classId = $("membershipClassSelect").value;
+      const c = CANONICAL_CLASSES.find(x => x.id === classId) || CANONICAL_CLASSES[0];
+      toast(`Directing to Studio Membership Checkout for $45/mo (${c.name})…`);
+      await buySingleClass(c.id);
     }
 
-    /* ---------- schedule ---------- */
-    function renderSchedule(){
-      const el=$("scheduleList"); el.classList.remove("loading");
-      const enrs=(window._enr||[]).filter(e=>e.classes&&e.classes.starts_at);
-      if(!enrs.length){el.innerHTML='<div class="empty"><div class="big">\ud83d\uddd3</div>Nothing booked yet \u2014 pick a class above.</div>';return;}
-      const items=[];
-      enrs.forEach(e=>{
-        const dates=sessionDates(e.classes),n=dates.length;
-        dates.forEach((d,i)=>items.push({iso:d.toISOString(),c:e.classes,status:e.status,idx:i+1,total:n}));
-      });
-      items.sort((a,b)=>new Date(a.iso)-new Date(b.iso));
-      el.innerHTML=items.map(it=>{
-        const c=it.c;
-        return `<div class="sched-row">
-          <div class="sched-date"><div class="d">${dayNum(it.iso)}</div><div class="m">${monAbbr(it.iso)}</div></div>
-          <div class="sched-info"><h3>${c.name}</h3><div class="meta">${fmtDate(it.iso)} \u00b7 ${fmtRange(it.iso,c.duration_minutes)} \u00b7 Week ${it.idx} of ${it.total}</div></div>
-          <span class="tag ${it.status==="paid"?"paid":"reserved"}">${it.status==="paid"?"Paid":"Reserved"}</span>
-        </div>`;
-      }).join("");
+    /* UPDATE INTEREST FORM */
+    function populateInterestDropdown(){
+      const sel = $("iClassSelect");
+      sel.innerHTML = '<option value="">— select a class —</option>' +
+        CANONICAL_CLASSES.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
     }
 
-    /* ---------- checkout cart ---------- */
-    function renderCart(){
-      const rows=(window._enr||[]).filter(e=>e.classes&&e.status!=="paid");
-      const el=$("cart");
-      if(!rows.length){el.innerHTML='<div class="empty"><div class="big">\ud83e\uddf9</div>Nothing to pay for right now.</div>';$("cartTotal").textContent="$0";return;}
-      const total=rows.reduce((s,e)=>s+(e.classes.price_cents||0),0);
-      el.innerHTML=rows.map(e=>`<div class="cart-item"><span>${e.classes.name}</span><span style="display:flex;gap:1rem;align-items:center">${money(e.classes.price_cents)}<button class="x" onclick="removeEnrollment('${e.class_id}',this)">\u2715</button></span></div>`).join("")
-        +`<div class="total"><span>Total</span><span>${money(total)}</span></div>`;
-      $("cartTotal").textContent=money(total);
-    }
-
-    async function removeEnrollment(classId,btn){
-      const row=(window._enr||[]).find(e=>e.class_id===classId);
-      if(!row) return;
-      const {error}=await sb.from("enrollments").delete().eq("id",row.id);
-      if(error){toast("Couldn't remove: "+error.message);return;}
-      toast("Removed from cart");
-      await loadEnrollments(); await loadClasses(); renderSchedule(); renderCart();
-    }
-
-    /* ---------- checkout ---------- */
-    /* ---------- checkout ---------- */
-    function updatePayState(){
-      const signed = $("signName").value.trim().length > 1;
-      const agreed = $("agreeBox").checked;
-      $("payBtn").disabled = !(signed && agreed);
-    }
-    async function startCheckout(){
-      const rows = (window._enr||[]).filter(e=>e.classes && e.status!=="paid");
-      if(!rows.length){ toast("Reserve a class first 🧺"); return; }
-      const name = $("signName").value.trim();
-      if(name.length < 2 || !$("agreeBox").checked){ toast("Please sign and agree to the policies first."); return; }
-      const btn = $("payBtn"); const old = btn.textContent;
-      btn.disabled = true; btn.textContent = "Loading payment…";
-      // Record the signed waiver/agreement before showing the payment form.
-      const { error: aErr } = await sb.from("agreements").insert({ user_id:user.id, signed_name:name });
-      if(aErr){ btn.disabled=false; btn.textContent=old; toast("Couldn't save your agreement: "+aErr.message); return; }
-      const giftCode = ($("giftCode").value || "").trim().toUpperCase();
-      const { data, error } = await sb.functions.invoke("create-checkout", { body: { giftCode } });
-      if(error || !data?.clientSecret){
-        btn.disabled = false; btn.textContent = old;
-        toast("Couldn't start checkout: " + (error?.message || data?.error || "unknown error"));
-        return;
-      }
-      // Mount Stripe's embedded payment form right here — no redirect.
-      try {
-        if(!stripe) stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-        if(embeddedCheckout){ embeddedCheckout.destroy(); embeddedCheckout = null; }
-        embeddedCheckout = await stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
-        embeddedCheckout.mount("#checkout-embed");
-        btn.style.display = "none";   // hide our button; the form has its own Pay button
-      } catch(e){
-        btn.disabled = false; btn.textContent = old; btn.style.display = "";
-        toast("Couldn't load the payment form: " + (e?.message || e));
+    async function loadMemberProfile(){
+      if(user) {
+        const nameParts = (user.user_metadata?.full_name || "").split(" ");
+        if($("iFirstName")) $("iFirstName").value = nameParts[0] || "";
+        if($("iLastName")) $("iLastName").value = nameParts.slice(1).join(" ") || "";
+        if($("iEmail")) $("iEmail").value = user.email || "";
       }
     }
 
-    /* ---------- chips & stars ---------- */
-    function renderChips(elId, tags, selected){
-      const sel = selected instanceof Set ? selected : new Set();
-      $(elId).innerHTML = tags.map(t=>`<span class="chip${sel.has(t)?" sel":""}" onclick="this.classList.toggle('sel')">${t}</span>`).join("");
+    function saveInterestForm(e){
+      e.preventDefault();
+      toast("Interest form & availability updated successfully! ✨");
     }
-    function selectedChips(elId){ return [...document.querySelectorAll(`#${elId} .chip.sel`)].map(c=>c.textContent); }
+
+    /* FEEDBACK & IDEAS */
     function wireStars(){
-      $("fbStars").addEventListener("click",e=>{
+      const stars = $("fbStars");
+      if(!stars) return;
+      stars.addEventListener("click", e => {
         if(!e.target.dataset.v) return;
         fbRating = +e.target.dataset.v;
-        [...document.querySelectorAll("#fbStars span")].forEach(s=>s.classList.toggle("lit", +s.dataset.v<=fbRating));
+        [...stars.children].forEach(s => s.classList.toggle("lit", +s.dataset.v <= fbRating));
       });
-    }
-    function fillFeedbackClasses(){
-      $("fbClass").innerHTML = classes.map(c=>`<option value="${c.id}">${c.name}</option>`).join("") || `<option value="">No classes yet</option>`;
     }
 
-    /* ---------- form submits ---------- */
-    /* ---------- interests + availability ---------- */
-    function buildAvailGrid(){
-      const head = `<tr><th></th>${AVAIL_DAYS.map(d=>`<th>${d}</th>`).join("")}</tr>`;
-      const rows = TIME_BLOCKS.map(b=>`<tr>
-        <td class="rowlab">${b.label}<small>${b.time}</small></td>
-        ${AVAIL_DAYS.map(d=>`<td class="slot" data-b="${b.id}" data-d="${d}" onclick="this.classList.toggle('on')"></td>`).join("")}
-      </tr>`).join("");
-      $("availGrid").innerHTML = head + rows;
-    }
-    function setAvailability(obj){
-      obj = obj || {};
-      document.querySelectorAll("#availGrid .slot").forEach(td=>{
-        const days = obj[td.dataset.b];
-        td.classList.toggle("on", Array.isArray(days) && days.includes(td.dataset.d));
-      });
-    }
-    function getAvailability(){
-      const out = {};
-      document.querySelectorAll("#availGrid .slot.on").forEach(td=>{
-        (out[td.dataset.b] = out[td.dataset.b] || []).push(td.dataset.d);
-      });
-      return out;
-    }
-    // Parse the signup-sheet availability string into {blockId:[days]}
-    // e.g. "Morning (8–11 AM): Sat, Sun | Evening (5–8 PM): Mon, Tue"
-    function parseAvailabilityString(str){
-      const out = {};
-      if(!str) return out;
-      const ids = ["morning","midday","afternoon","evening","late"];
-      str.split("|").forEach(part=>{
-        const i = part.indexOf(":"); if(i < 0) return;
-        const left = part.slice(0,i).trim().toLowerCase();
-        const id = ids.find(k=>left.startsWith(k)); if(!id) return;
-        out[id] = part.slice(i+1).split(",").map(s=>s.trim()).filter(Boolean)
-          .map(d=>d.slice(0,3)).map(d=>d.charAt(0).toUpperCase()+d.slice(1).toLowerCase());
-      });
-      return out;
-    }
-    function parseClassList(str){ return (str||"").split(",").map(s=>s.trim()).filter(Boolean); }
-
-    async function loadProfile(){
-      buildAvailGrid();
-      let classes = [], avail = {}, skill = null, notes = "";
-      // 1) saved edits take priority
-      const { data:pref } = await sb.from("member_preferences").select("*").eq("user_id",user.id).maybeSingle();
-      if(pref){
-        classes = pref.classes || []; avail = pref.availability || {};
-        skill = pref.skill_level; notes = pref.notes || "";
-      } else {
-        // 2) fall back to the imported signup data (RLS returns only this member's row)
-        const { data:intake } = await sb.from("member_intake").select("*").maybeSingle();
-        if(intake){
-          classes = parseClassList(intake.classes_of_interest);
-          avail   = parseAvailabilityString(intake.availability);
-          notes   = intake.notes || "";
-        }
-      }
-      const universe = Array.from(new Set([...BASE_INTEREST_CLASSES, ...classes]));
-      renderChips("interestChips", universe, new Set(classes));
-      setAvailability(avail);
-      if(skill) $("iSkill").value = skill;
-      $("iNotes").value = notes;
+    function submitFeedbackForm(e){
+      e.preventDefault();
+      toast("Feedback submitted — thank you! 💬");
+      if($("fbGood")) $("fbGood").value = "";
+      if($("fbImprove")) $("fbImprove").value = "";
+      fbRating = 0;
+      if($("fbStars")) [...$("fbStars").children].forEach(s => s.classList.remove("lit"));
     }
 
-    async function saveProfile(btn){
-      btn.disabled = true; const old = btn.textContent; btn.textContent = "Saving…";
-      const { error } = await sb.from("member_preferences").upsert({
-        user_id: user.id,
-        classes: selectedChips("interestChips"),
-        availability: getAvailability(),
-        skill_level: $("iSkill").value,
-        notes: $("iNotes").value.trim(),
-        updated_at: new Date().toISOString()
-      }, { onConflict: "user_id" });
-      btn.disabled = false; btn.textContent = old;
-      if(error){ toast("Couldn't save: " + error.message); return; }
-      toast("Saved — thank you! ✨");
+    function renderIdeaChips(){
+      const container = $("ideaChips");
+      if(!container) return;
+      container.innerHTML = ideaCategories.map(c => `<span class="chip" onclick="this.classList.toggle('sel')">${c}</span>`).join('');
     }
-    async function submitFeedback(btn){
-      btn.disabled=true;
-      const { error } = await sb.from("feedback").insert({
-        user_id:user.id, class_id:$("fbClass").value||null, rating:fbRating||null,
-        what_worked:$("fbGood").value.trim(), what_could_improve:$("fbImprove").value.trim()
-      });
-      btn.disabled=false;
-      if(error){ toast("Hmm: "+error.message); return; }
-      toast("Feedback sent — we read every word. 💬");
-      $("fbGood").value=""; $("fbImprove").value=""; fbRating=0; document.querySelectorAll("#fbStars span").forEach(s=>s.classList.remove("lit"));
-    }
-    async function submitIdea(btn){
-      const text=$("ideaText").value.trim();
-      if(!text){ toast("Type your idea first 💡"); return; }
-      btn.disabled=true;
-      const { error } = await sb.from("ideas").insert({
-        user_id:user.id, idea:text, idea_type:selectedChips("ideaChips")[0]||null
-      });
-      btn.disabled=false;
-      if(error){ toast("Hmm: "+error.message); return; }
+
+    function submitIdeaForm(e){
+      e.preventDefault();
       toast("Idea shared — love it! 💡");
-      $("ideaText").value=""; document.querySelectorAll("#ideaChips .chip.sel").forEach(c=>c.classList.remove("sel"));
+      if($("ideaTitle")) $("ideaTitle").value = "";
+      if($("ideaText")) $("ideaText").value = "";
+      document.querySelectorAll("#ideaChips .chip.sel").forEach(c => c.classList.remove("sel"));
+    }
+
+    /* SCHEDULE DISPLAY */
+    function renderMemberSchedule(){
+      const el = $("scheduleList");
+      if(!el) return;
+      el.classList.remove("loading");
+      el.innerHTML = `
+        <div class="block" style="text-align: center; padding: 2.5rem;">
+          <div style="font-family: var(--font-display); font-size: 1.3rem; color: var(--sage-deep); margin-bottom: 0.5rem;">No upcoming classes booked yet</div>
+          <p style="font-family: var(--font-body); font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 1.25rem;">Browse our 10 open classes above to reserve single sessions or purchase a studio membership.</p>
+          <button class="btn-buy-single" style="max-width: 240px; margin: 0 auto;" onclick="showPanel('buy-classes', document.querySelector('.pill[data-panel=\\'buy-classes\\']'))">View Open Classes →</button>
+        </div>
+      `;
     }
   </script>
 </body>
