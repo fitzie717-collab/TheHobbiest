@@ -2007,7 +2007,7 @@
               <div style="font-family: var(--font-display); font-style: italic; font-size: 0.82rem; color: var(--muted);">Photos coming soon.</div>
             </div>
           </div>
-          <a href="#interest-form-section" class="nav-link">Submit Interest Form</a>
+          <a href="interest.html" class="nav-link">Submit Interest Form</a>
           <a href="apply.html" class="nav-link">Submit Teaching App</a>
           <div class="nav-item-dropdown">
             <button class="nav-link nav-dropdown-trigger btn-nav-purchase" aria-haspopup="true" aria-expanded="false">
@@ -2216,7 +2216,7 @@
                 <!-- Step 01 = Button 1 -->
                 <div>
                   <div style="font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; color: var(--sage); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem;">Step 01 — Interest Form</div>
-                  <a href="#interest-form-section" onclick="document.getElementById('interestFirstName').focus();" style="display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.25rem; background: #FAF8F5; border: 1.5px solid var(--sage); border-radius: 8px; text-decoration: none; color: var(--sage-deep); transition: all 0.2s; box-shadow: 0 2px 8px rgba(78,90,65,0.03);">
+                  <a href="interest.html" style="display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.25rem; background: #FAF8F5; border: 1.5px solid var(--sage); border-radius: 8px; text-decoration: none; color: var(--sage-deep); transition: all 0.2s; box-shadow: 0 2px 8px rgba(78,90,65,0.03);">
                     <div>
                       <div style="font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; color: var(--sage-deep);">Submit an interest form (Free)</div>
                       <div style="font-size: 0.82rem; color: var(--ink-soft); font-family: var(--font-body); margin-top: 0.2rem;">Select topics &amp; mark preferred times with zero commitment</div>
@@ -2303,195 +2303,7 @@
     </div>
   </section>
 
-  <!-- FULL-WIDTH INTEREST REGISTRATION FORM SECTION BELOW -->
-  <section class="interest-section" id="interest-form-section" data-reveal style="min-height: calc(100vh - 70px); display: flex; flex-direction: column; justify-content: center; padding: 4rem 0; box-sizing: border-box; background: #FAF8F5;">
-    <div class="container">
-      <div style="max-width: 1180px; margin: 0 auto; background: transparent; padding: clamp(1rem, 3vw, 2.5rem);">
-        <form id="interestForm" onsubmit="submitInterest(event)">
-          <div class="interest-grid-2col" style="display: grid; grid-template-columns: 1fr 1.15fr; gap: 3rem; align-items: start;">
-            
-            <!-- LEFT COLUMN: Contact & Class Preferences -->
-            <div class="interest-col-left">
-              <h3 style="font-family: var(--font-display); font-size: 2.1rem; font-weight: 400; color: #4A543D; margin: 0 0 0.6rem 0; font-variation-settings: 'opsz' 144;">Submit Interest Form <em>(Free)</em></h3>
-              <p style="font-size: 0.92rem; color: #666C5E; margin-bottom: 2rem; line-height: 1.55;">Fill out this form with your class choices and availability. No payment required — we'll set up your member account and email you when classes fill.</p>
-
-              <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
-                <div class="form-group" style="margin-bottom:0;">
-                  <label for="interestFirstName" style="display:block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: #4A543D; margin-bottom: 0.45rem;">FIRST NAME</label>
-                  <input type="text" id="interestFirstName" required placeholder="Jane" style="width:100%; padding:0.85rem 1rem; border:1px solid #DFD9CE; border-radius:6px; background:#EBE7DF; font-family:var(--font-body); font-size:0.92rem; color:#4A543D;" />
-                </div>
-                <div class="form-group" style="margin-bottom:0;">
-                  <label for="interestLastName" style="display:block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: #4A543D; margin-bottom: 0.45rem;">LAST NAME</label>
-                  <input type="text" id="interestLastName" required placeholder="Doe" style="width:100%; padding:0.85rem 1rem; border:1px solid #DFD9CE; border-radius:6px; background:#EBE7DF; font-family:var(--font-body); font-size:0.92rem; color:#4A543D;" />
-                </div>
-              </div>
-              
-              <div class="form-group" style="margin-bottom: 1.25rem;">
-                <label for="interestEmail" style="display:block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: #4A543D; margin-bottom: 0.45rem;">EMAIL ADDRESS</label>
-                <input type="email" id="interestEmail" required placeholder="jane.doe@example.com" style="width:100%; padding:0.85rem 1rem; border:1px solid #DFD9CE; border-radius:6px; background:#EBE7DF; font-family:var(--font-body); font-size:0.92rem; color:#4A543D;" />
-              </div>
-
-              <div class="form-group" style="margin-bottom: 1.25rem;">
-                <label for="interestPhone" style="display:block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: #4A543D; margin-bottom: 0.45rem;">PHONE NUMBER</label>
-                <input type="tel" id="interestPhone" required placeholder="(570) 555-0199" style="width:100%; padding:0.85rem 1rem; border:1px solid #DFD9CE; border-radius:6px; background:#EBE7DF; font-family:var(--font-body); font-size:0.92rem; color:#4A543D;" />
-              </div>
-
-              <div class="form-group" style="margin-bottom: 1.25rem;">
-                <label style="display:block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: #4A543D; margin-bottom: 0.45rem;">CLASSES OF INTEREST (SELECT ALL THAT APPLY)</label>
-                
-                <div style="background: #EBE7DF; border: 1px solid #DFD9CE; border-radius: 6px; padding: 0.9rem 1.1rem; max-height: 195px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.7rem;">
-                  <label style="display: flex; align-items: center; gap: 0.75rem; font-family: var(--font-body); font-size: 0.85rem; font-weight: 700; color: #4A543D; cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em;">
-                    <input type="checkbox" name="interestClasses" value="Watercolor Painting 101" style="width:16px; height:16px; cursor: pointer; accent-color: #4A543D;" />
-                    <span>01. WATERCOLOR PAINTING 101 ($55)</span>
-                  </label>
-                  <label style="display: flex; align-items: center; gap: 0.75rem; font-family: var(--font-body); font-size: 0.85rem; font-weight: 700; color: #4A543D; cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em;">
-                    <input type="checkbox" name="interestClasses" value="Modern Calligraphy & Pointed Pen" style="width:16px; height:16px; cursor: pointer; accent-color: #4A543D;" />
-                    <span>02. MODERN CALLIGRAPHY &amp; POINTED PEN ($55)</span>
-                  </label>
-                  <label style="display: flex; align-items: center; gap: 0.75rem; font-family: var(--font-body); font-size: 0.85rem; font-weight: 700; color: #4A543D; cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em;">
-                    <input type="checkbox" name="interestClasses" value="Makeup Tutorial — Daily Application" style="width:16px; height:16px; cursor: pointer; accent-color: #4A543D;" />
-                    <span>03. MAKEUP TUTORIAL — DAILY APPLICATION ($45)</span>
-                  </label>
-                  <label style="display: flex; align-items: center; gap: 0.75rem; font-family: var(--font-body); font-size: 0.85rem; font-weight: 700; color: #4A543D; cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em;">
-                    <input type="checkbox" name="interestClasses" value="Meditation & Intention Setting" style="width:16px; height:16px; cursor: pointer; accent-color: #4A543D;" />
-                    <span>04. MEDITATION &amp; INTENTION SETTING ($45)</span>
-                  </label>
-                  <label style="display: flex; align-items: center; gap: 0.75rem; font-family: var(--font-body); font-size: 0.85rem; font-weight: 700; color: #4A543D; cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em;">
-                    <input type="checkbox" name="interestClasses" value="Personal Finance & Wealth Habits" style="width:16px; height:16px; cursor: pointer; accent-color: #4A543D;" />
-                    <span>05. PERSONAL FINANCE &amp; WEALTH HABITS ($45)</span>
-                  </label>
-                </div>
-              </div>
-
-              <div class="form-group" style="margin-bottom: 0;">
-                <label for="interestSuggestion" style="display:block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: #4A543D; margin-bottom: 0.45rem;">TOPICS OR SUGGESTIONS</label>
-                <textarea id="interestSuggestion" placeholder="What other classes or topics would you like to see? Knitting, paint, etc." style="width: 100%; min-height: 95px; padding: 0.85rem 1rem; border: 1px solid #DFD9CE; border-radius: 6px; background: #EBE7DF; font-family: var(--font-body); font-size: 0.92rem; color: #4A543D; resize: vertical;"></textarea>
-              </div>
-            </div>
-
-            <!-- RIGHT COLUMN: Availability Grid & Submit Button -->
-            <div class="interest-col-right" style="padding-top: 0.25rem;">
-              <div style="font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; color: #4A543D; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.45rem;">SELECT YOUR AVAILABILITY</div>
-              <p style="font-size: 0.88rem; color: #666C5E; margin-bottom: 1.5rem; line-height: 1.45;">Weekdays (7:00–9:00 PM) &amp; Weekend 2-hour slots (8 AM–10 PM).</p>
-              
-              <div class="avail-table-wrap" style="overflow-x: auto; border: 1px solid #DFD9CE; border-radius: 8px; background: #EBE7DF; margin-bottom: 0.85rem;">
-                <table style="width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: 0.82rem; text-align: center;">
-                  <thead>
-                    <tr style="background: #E0DCD3; border-bottom: 1px solid #D5D0C5;">
-                      <th style="padding: 0.75rem 0.5rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D; text-align: left; width: 110px;">Time Slot</th>
-                      <th style="padding: 0.75rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D;">Mon</th>
-                      <th style="padding: 0.75rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D;">Tue</th>
-                      <th style="padding: 0.75rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D;">Wed</th>
-                      <th style="padding: 0.75rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D;">Thu</th>
-                      <th style="padding: 0.75rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D;">Fri</th>
-                      <th style="padding: 0.75rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D; background: #D5CFC3;">Sat</th>
-                      <th style="padding: 0.75rem 0.3rem; font-family: var(--font-display); font-style: italic; font-weight: 500; color: #4A543D; background: #D5CFC3;">Sun</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- 7-9 PM (Weekdays & Weekends) -->
-                    <tr style="border-bottom: 1px solid #D5D0C5;">
-                      <td style="padding: 0.55rem 0.5rem; text-align: left; background: #E0DCD3; font-weight: 600; color: #4A543D;">7:00–9:00 PM</td>
-                      <td style="padding: 0.45rem;"><input type="checkbox" name="interestAvail" value="Mon 7-9PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem;"><input type="checkbox" name="interestAvail" value="Tue 7-9PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem;"><input type="checkbox" name="interestAvail" value="Wed 7-9PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem;"><input type="checkbox" name="interestAvail" value="Thu 7-9PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem;"><input type="checkbox" name="interestAvail" value="Fri 7-9PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sat 7-9PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sun 7-9PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                    </tr>
-                    <!-- Weekend 8-10 AM -->
-                    <tr style="border-bottom: 1px solid #D5D0C5;">
-                      <td style="padding: 0.55rem 0.5rem; text-align: left; background: #E0DCD3; font-weight: 600; color: #4A543D;">8:00–10:00 AM</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sat 8-10AM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sun 8-10AM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                    </tr>
-                    <!-- Weekend 10 AM-12 PM -->
-                    <tr style="border-bottom: 1px solid #D5D0C5;">
-                      <td style="padding: 0.55rem 0.5rem; text-align: left; background: #E0DCD3; font-weight: 600; color: #4A543D;">10:00 AM–12:00 PM</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sat 10AM-12PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sun 10AM-12PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                    </tr>
-                    <!-- Weekend 12-2 PM -->
-                    <tr style="border-bottom: 1px solid #D5D0C5;">
-                      <td style="padding: 0.55rem 0.5rem; text-align: left; background: #E0DCD3; font-weight: 600; color: #4A543D;">12:00–2:00 PM</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sat 12-2PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sun 12-2PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                    </tr>
-                    <!-- Weekend 2-4 PM -->
-                    <tr style="border-bottom: 1px solid #D5D0C5;">
-                      <td style="padding: 0.55rem 0.5rem; text-align: left; background: #E0DCD3; font-weight: 600; color: #4A543D;">2:00–4:00 PM</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sat 2-4PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sun 2-4PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                    </tr>
-                    <!-- Weekend 4-6 PM -->
-                    <tr style="border-bottom: 1px solid #D5D0C5;">
-                      <td style="padding: 0.55rem 0.5rem; text-align: left; background: #E0DCD3; font-weight: 600; color: #4A543D;">4:00–6:00 PM</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sat 4-6PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sun 4-6PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                    </tr>
-                    <!-- Weekend 6-8 PM -->
-                    <tr style="border-bottom: 1px solid #D5D0C5;">
-                      <td style="padding: 0.55rem 0.5rem; text-align: left; background: #E0DCD3; font-weight: 600; color: #4A543D;">6:00–8:00 PM</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sat 6-8PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sun 6-8PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                    </tr>
-                    <!-- Weekend 8-10 PM -->
-                    <tr>
-                      <td style="padding: 0.55rem 0.5rem; text-align: left; background: #E0DCD3; font-weight: 600; color: #4A543D;">8:00–10:00 PM</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="color:#A39E93; font-size:0.75rem;">—</td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sat 8-10PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                      <td style="padding: 0.45rem; background: rgba(122,138,107,0.08);"><input type="checkbox" name="interestAvail" value="Sun 8-10PM" style="width:16px; height:16px; cursor:pointer; accent-color:#4A543D;" /></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              
-              <p style="font-size: 0.8rem; font-style: italic; font-family: var(--font-display); color: #888E7F; margin-top: 0.5rem; margin-bottom: 2rem; text-align: center;">Tap or click any cell to mark it as available.</p>
-
-              <button type="submit" class="btn-submit-interest" id="interestSubmitBtn" style="width: 100%; padding: 1.15rem; background: #4A543D; color: #FFFFFF; border: none; border-radius: 8px; font-family: var(--font-body); font-weight: 600; font-size: 1.02rem; cursor: pointer; transition: background-color 0.2s; box-shadow: 0 4px 12px rgba(74,84,61,0.15);">Submit &amp; Create Account →</button>
-              <div id="interestMsg" class="form-msg"></div>
-            </div>
-
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
+  <!-- REMOVED INTEREST FORM FROM INDEX.HTML — NOW LOCATED ON DEDICATED PAGE interest.html -->
 
 
 
