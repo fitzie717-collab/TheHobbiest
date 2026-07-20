@@ -1656,25 +1656,20 @@
           <span class="page-eyebrow">The Hobbiest Skills Club</span>
           <h1>Current <em>Curriculum</em>.</h1>
           <p class="page-hero-lede">
-            Explore our featured lineup of 10 hands-on courses across creative arts, personal styling, life skills, and hearth &amp; garden. Available as single 2-hour sessions ($45–$65, all materials included).
+            Explore our featured lineup of 5 hands-on courses across creative arts, personal styling, and essential life skills. Available as single 2-hour sessions ($45–$55, all materials included).
           </p>
         </div>
 
         <div class="hero-right-card" style="background:#FAF8F5;border:1.5px solid #DFD9CE;border-radius:12px;padding:1.5rem;box-shadow:0 6px 24px rgba(78,90,65,0.06);" data-reveal>
           <div style="font-family:var(--font-body);font-size:0.75rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage-deep);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.4rem;">
-            <span style="color:var(--sage);">✦</span> Direct Course Jump (10 Canonical Classes)
+            <span style="color:var(--sage);">✦</span> Direct Course Jump (5 Featured Classes)
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:0.45rem;" id="heroCoursePills">
-            <a href="#wreath-making" class="course-pill-btn">01. Wreath Making ($65)</a>
-            <a href="#sketch-art-drawing-basics" class="course-pill-btn">02. Sketch Art ($45)</a>
+            <a href="#watercolor-painting-101" class="course-pill-btn">01. Watercolor 101 ($55)</a>
+            <a href="#modern-calligraphy-pointed-pen" class="course-pill-btn">02. Calligraphy ($55)</a>
             <a href="#makeup-tutorial-daily-application" class="course-pill-btn">03. Daily Makeup ($45)</a>
-            <a href="#makeup-tutorial-night-out-glam" class="course-pill-btn">04. Night Glam ($45)</a>
-            <a href="#hair-tutorial-professional-blowouts" class="course-pill-btn">05. Blowouts ($45)</a>
-            <a href="#modern-calligraphy-pointed-pen" class="course-pill-btn">06. Calligraphy ($55)</a>
-            <a href="#watercolor-painting-101" class="course-pill-btn">07. Watercolor ($55)</a>
-            <a href="#flower-arranging-floral-design" class="course-pill-btn">08. Floral Design ($65)</a>
-            <a href="#beginner-knitting-chunky-scarf" class="course-pill-btn">09. Knitting ($45)</a>
-            <a href="#sourdough-bread-making" class="course-pill-btn">10. Sourdough ($55)</a>
+            <a href="#meditation-intention-setting" class="course-pill-btn">04. Meditation ($45)</a>
+            <a href="#personal-finance-wealth-habits" class="course-pill-btn">05. Personal Finance ($45)</a>
           </div>
         </div>
       </div>
@@ -1784,16 +1779,11 @@
     const sessionPrice = c => c.session_price_cents || Math.round((c.price_cents || 0) / (c.weeks || 1));
 
     const DEFAULT_CLASSES = [
-      { id: 'wreath-making', name: 'Wreath Making', category: 'Creative Pursuits', description: 'Craft a stunning, seasonal door wreath using fresh greens, dried florals, and traditional wiring techniques.', instructor: 'Studio Florist', price_cents: 6500, materials_included: true },
-      { id: 'sketch-art', name: 'Sketch Art & Drawing Basics', category: 'Creative Pursuits', description: 'Master fundamental shading, perspective, line weight, and quick-sketch techniques in a relaxing environment.', instructor: 'Resident Artist', price_cents: 4500, materials_included: true },
-      { id: 'makeup-daily', name: 'Makeup Tutorial — Daily Application', category: 'Living Well', description: 'Learn a flawless 10-minute everyday makeup routine tailored to your skin tone and features.', instructor: 'Beauty Specialist', price_cents: 4500, materials_included: true },
-      { id: 'makeup-night', name: 'Makeup Tutorial — Night Out Glam', category: 'Living Well', description: 'Step-by-step evening makeup techniques: subtle smokey eyes, long-lasting skin prep, and bold lip application.', instructor: 'Beauty Specialist', price_cents: 4500, materials_included: true },
-      { id: 'hair-blowouts', name: 'Hair Tutorial — Professional Blowouts', category: 'Living Well', description: 'Master the round-brush blowout at home! Learn sectioning, heat protection, volume lifting, and finishing oils.', instructor: 'Stylist Lead', price_cents: 4500, materials_included: true },
-      { id: 'modern-calligraphy', name: 'Modern Calligraphy & Pointed Pen', category: 'Creative Pursuits', description: 'Explore pointed pen lettering, stroke contrast, letterforms, and custom stationery design.', instructor: 'Calligrapher', price_cents: 5500, materials_included: true },
       { id: 'watercolor-painting', name: 'Watercolor Painting 101', category: 'Creative Pursuits', description: 'Learn color blending, wet-on-wet washes, and botanical watercolor painting techniques.', instructor: 'Fine Artist', price_cents: 5500, materials_included: true },
-      { id: 'flower-arranging', name: 'Flower Arranging & Floral Design', category: 'Hearth & Garden', description: 'Principles of color, vessel selection, stem preparation, and creating balanced fresh floral arrangements.', instructor: 'Master Florist', price_cents: 6500, materials_included: true },
-      { id: 'beginner-knitting', name: 'Beginner Knitting — Chunky Scarf', category: 'Creative Pursuits', description: 'Cast on, knit stitch, purl stitch, and cast off. Walk away with your first cozy handmade creation.', instructor: 'Textile Artisan', price_cents: 4500, materials_included: true },
-      { id: 'sourdough-bread', name: 'Sourdough Bread Making', category: 'Essential Life Skills', description: 'De-mystify starter maintenance, bulk fermentation, shaping, scoring, and baking golden rustic loaves.', instructor: 'Artisan Baker', price_cents: 5500, materials_included: true }
+      { id: 'modern-calligraphy', name: 'Modern Calligraphy & Pointed Pen', category: 'Creative Pursuits', description: 'Explore pointed pen lettering, stroke contrast, letterforms, and custom stationery design.', instructor: 'Calligrapher', price_cents: 5500, materials_included: true },
+      { id: 'makeup-daily', name: 'Makeup Tutorial — Daily Application', category: 'Living Well', description: 'Learn a flawless 10-minute everyday makeup routine tailored to your skin tone and features.', instructor: 'Beauty Specialist', price_cents: 4500, materials_included: true },
+      { id: 'meditation-mindfulness', name: 'Meditation & Intention Setting', category: 'Living Well', description: 'Guided breathwork, mindfulness practices, and daily intention-setting rituals for a calm, intentional mind.', instructor: 'Mindfulness Coach', price_cents: 4500, materials_included: true },
+      { id: 'personal-finance', name: 'Personal Finance & Wealth Habits', category: 'Essential Life Skills', description: 'Master budgeting fundamentals, savings strategies, debt elimination, and building financial clarity.', instructor: 'Financial Advisor', price_cents: 4500, materials_included: true }
     ];
 
     function classPriceCents(c) {
