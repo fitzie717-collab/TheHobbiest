@@ -58,19 +58,47 @@
     .nav-link { font-family: var(--font-b); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 600; text-decoration: none; padding: 0.45rem 0.75rem; border-radius: 4px; transition: color 0.2s var(--ease), background 0.2s var(--ease); white-space: nowrap; }
     .nav-link:hover { color: var(--sage-deep); background: var(--bg-warm); }
     .nav-link-active { color: var(--sage-deep); }
-    .nav-link-pill { background: var(--sage-deep); color: #fff !important; padding: 0.45rem 1rem; border-radius: 20px; font-family: var(--font-b); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none; transition: background 0.2s var(--ease), transform 0.15s var(--ease); white-space: nowrap; }
+    /* Purchase pill + dropdown */
+    .nav-item-dropdown { position: relative; }
+    .nav-link-pill {
+      background: var(--sage-deep); color: #fff !important; padding: 0.45rem 1rem;
+      border-radius: 20px; font-family: var(--font-b); font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; display: inline-flex; align-items: center;
+      gap: 0.35rem; text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.2s var(--ease), transform 0.15s var(--ease); white-space: nowrap;
+    }
     .nav-link-pill:hover { background: var(--sage); transform: translateY(-1px); }
+    .nav-dropdown {
+      position: absolute; top: calc(100% + 0.5rem); right: 0;
+      background: var(--surface); border: 1px solid var(--hairline);
+      border-radius: 8px; padding: 0.4rem 0; min-width: 180px;
+      opacity: 0; visibility: hidden; transform: translateY(-6px);
+      transition: opacity 0.18s var(--ease), transform 0.18s var(--ease), visibility 0.18s;
+      box-shadow: 0 10px 32px rgba(78,90,65,0.13); z-index: 20;
+    }
+    .nav-item-dropdown:hover .nav-dropdown,
+    .nav-item-dropdown:focus-within .nav-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dropdown-link {
+      display: block; padding: 0.65rem 1.15rem;
+      font-family: var(--font-b); font-size: 0.72rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted); font-weight: 600;
+      text-decoration: none; transition: color 0.15s, background 0.15s;
+    }
+    .nav-dropdown-link:hover { color: var(--sage-deep); background: var(--bg); }
     .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 0.5rem; cursor: pointer; }
     .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--sage-deep); transition: 0.2s; }
     .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .nav-toggle.open span:nth-child(2) { opacity: 0; }
     .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    @media (max-width: 860px) {
+    @media (max-width: 960px) {
       .nav-toggle { display: flex; }
       .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; background: var(--surface); border-bottom: 1px solid var(--hairline); padding: 0.75rem var(--gutter) 1rem; gap: 0.25rem; box-shadow: 0 10px 30px rgba(78,90,65,0.12); }
       .nav-links.open { display: flex; }
       .nav-link { font-size: 0.82rem; padding: 0.7rem 0.75rem; }
-      .nav-link-pill { text-align: center; margin-top: 0.25rem; justify-content: center; }
+      .nav-link-pill { justify-content: center; margin-top: 0.25rem; }
+      .nav-item-dropdown { position: static; }
+      .nav-dropdown { position: static; opacity: 1; visibility: visible; transform: none; box-shadow: none; border: none; border-left: 2px solid var(--sage-pale); background: transparent; padding: 0.2rem 0; margin: 0.25rem 0 0.5rem 0.75rem; }
+      .nav-dropdown-link { padding: 0.45rem 0.75rem; font-size: 0.78rem; }
     }
 
     /* PAGE HERO */
@@ -180,18 +208,25 @@
 
   <!-- STICKY NAV -->
   <nav class="sticky-nav" role="navigation" aria-label="Primary">
-    <div class="container nav-inner">
+    <div class="container sticky-nav-inner" style="position:relative;">
       <a href="index.html" class="wordmark">The Hobbiest</a>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
       <div class="nav-links" id="navLinks">
-        <a href="how-it-works.html" class="nav-link">How it works</a>
-        <a href="schedule.html" class="nav-link">Classes</a>
-        <a href="studio.html" class="nav-link">The Studio</a>
-        <a href="interest.html" class="nav-link nav-link-active">Interest form</a>
-        <a href="schedule.html" class="nav-link-pill">Book a class</a>
-        <a href="studio.html#membership-offer" class="nav-link-pill" style="background:var(--sage);">Membership</a>
+        <a href="how-it-works.html" class="nav-link">How It Works</a>
+        <a href="schedule.html" class="nav-link">Curriculum</a>
+        <a href="studio.html" class="nav-link">Club &amp; Parking</a>
+        <a href="interest.html" class="nav-link nav-link-active">Interest Form</a>
+        <a href="apply.html" class="nav-link">Apply to Teach</a>
+        <div class="nav-item-dropdown">
+          <button class="nav-link-pill" aria-haspopup="true">Purchase ▾</button>
+          <div class="nav-dropdown">
+            <a href="schedule.html" class="nav-dropdown-link">Single Class</a>
+            <a href="studio.html#membership-offer" class="nav-dropdown-link">Studio Membership</a>
+            <a href="gift.html" class="nav-dropdown-link">Gift Card</a>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
@@ -364,18 +399,28 @@
     /* NAV TOGGLE */
     const navToggle = document.getElementById('navToggle');
     const navLinks  = document.getElementById('navLinks');
-    navToggle.addEventListener('click', () => {
-      const open = navLinks.classList.toggle('open');
-      navToggle.classList.toggle('open', open);
-      navToggle.setAttribute('aria-expanded', open);
-    });
-    document.addEventListener('click', e => {
-      if (!e.target.closest('.sticky-nav')) {
-        navLinks.classList.remove('open');
-        navToggle.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
+    if (navToggle && navLinks) {
+      navToggle.addEventListener('click', () => {
+        const open = navLinks.classList.toggle('open');
+        navToggle.classList.toggle('open', open);
+        navToggle.setAttribute('aria-expanded', open);
+      });
+      document.addEventListener('click', e => {
+        if (!e.target.closest('.sticky-nav')) {
+          navLinks.classList.remove('open');
+          navToggle.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          navLinks.classList.remove('open');
+          navToggle.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
 
     /* FORM SUBMIT */
     async function handleSubmit(e) {
