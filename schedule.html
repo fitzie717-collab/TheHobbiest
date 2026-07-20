@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#7A8A6B" />
   <title>Current Curriculum — The Hobbiest</title>
-  <meta name="description" content="Current curriculum options for The Hobbiest. Single 2-hour sessions in Pittston, PA." />
+  <meta name="description" content="Hands-on 2-hour classes in Pittston, PA. Single sessions $35–$65, all materials included." />
   <meta property="og:title" content="Current Curriculum — The Hobbiest" />
-  <meta property="og:description" content="Summer 2026 curriculum options for The Hobbiest in Pittston, PA." />
   <meta property="og:type" content="website" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,16 +33,7 @@
     }
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: var(--font-d);
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--ink);
-      background: var(--bg);
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+    body { margin: 0; font-family: var(--font-d); font-size: 16px; line-height: 1.6; color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     img { max-width: 100%; height: auto; display: block; }
     button, input, select, textarea { font-family: var(--font-b); }
     a { color: inherit; }
@@ -52,25 +42,21 @@
     .container { max-width: var(--max-w); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
 
     /* GRAIN */
-    body::before {
-      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-      opacity: 0.5; mix-blend-mode: multiply;
-    }
+    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); opacity: 0.5; mix-blend-mode: multiply; }
 
     /* CONTACT BAR */
     .contact-bar { background: var(--sage-deep); color: rgba(241,236,223,0.7); font-family: var(--font-b); font-size: 0.7rem; letter-spacing: 0.06em; padding: 0.5rem 0; }
-    .contact-bar-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-    .contact-bar-items { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
-    .contact-bar-item { display: flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
-    .contact-bar-item svg { width: 10px; height: 10px; opacity: 0.55; flex-shrink: 0; }
+    .cb-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .cb-items { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .cb-item { display: flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
+    .cb-item svg { width: 10px; height: 10px; opacity: 0.55; flex-shrink: 0; }
     .contact-bar a { color: inherit; text-decoration: none; transition: color 0.2s; }
     .contact-bar a:hover { color: var(--bg); }
-    @media (max-width: 640px) { .contact-bar-inner { justify-content: center; } .contact-bar-item:first-child { display: none; } }
+    @media (max-width: 640px) { .cb-inner { justify-content: center; } .cb-item:first-child { display: none; } }
 
     /* STICKY NAV */
     .sticky-nav { position: sticky; top: 0; z-index: 500; background: var(--surface); border-bottom: 1px solid var(--hairline); box-shadow: 0 2px 20px rgba(78,90,65,0.07); }
-    .sticky-nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1.5rem; position: relative; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1.5rem; position: relative; }
     .wordmark { font-family: var(--font-d); font-size: 1.25rem; font-weight: 400; font-style: italic; color: var(--sage); text-decoration: none; letter-spacing: -0.01em; font-variation-settings: "opsz" 144; flex-shrink: 0; }
     .nav-links { display: flex; align-items: center; gap: 0.25rem; }
     .nav-link { font-family: var(--font-b); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 600; text-decoration: none; padding: 0.45rem 0.75rem; border-radius: 4px; transition: color 0.2s var(--ease), background 0.2s var(--ease); white-space: nowrap; }
@@ -91,117 +77,183 @@
       .nav-link-pill { text-align: center; margin-top: 0.25rem; justify-content: center; }
     }
 
-    /* PAGE HERO */
-    .page-hero { padding: clamp(3rem, 6vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem); border-bottom: 1px solid var(--hairline); background: var(--bg); }
-    .page-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 1.25rem; }
+    /* ============================================================
+       COMBINED PAGE HEADER — hero + cornerstones in one band
+       ============================================================ */
+    .page-header {
+      background: var(--bg);
+      border-bottom: 1px solid var(--hairline);
+      padding: clamp(2.5rem, 5vw, 4rem) 0 0;
+    }
+    .page-header-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem 4rem;
+      align-items: end;
+      padding-bottom: clamp(2rem, 4vw, 3rem);
+    }
+    .page-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 1rem; }
     .page-eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--sage); }
-    .page-hero h1 { font-size: clamp(2.5rem, 5.5vw, 4.5rem); letter-spacing: -0.025em; font-weight: 350; font-variation-settings: "opsz" 144; color: var(--sage-deep); margin-bottom: 1rem; }
-    .page-hero h1 em { font-style: italic; color: var(--sage); }
-    .page-hero-lede { font-family: var(--font-d); font-size: clamp(1rem, 1.4vw, 1.2rem); line-height: 1.6; color: var(--ink-soft); font-weight: 350; max-width: 52ch; margin-bottom: 2rem; }
-
-    /* Purchase CTA bar in hero */
-    .hero-purchase-bar {
+    .page-header h1 { font-size: clamp(2.2rem, 4.5vw, 3.75rem); letter-spacing: -0.025em; font-weight: 350; font-variation-settings: "opsz" 144; color: var(--sage-deep); margin-bottom: 0.75rem; }
+    .page-header h1 em { font-style: italic; color: var(--sage); }
+    .page-header-lede { font-family: var(--font-d); font-size: clamp(0.95rem, 1.3vw, 1.1rem); line-height: 1.6; color: var(--ink-soft); font-weight: 350; max-width: 48ch; margin-bottom: 1.5rem; }
+    .header-cta-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .page-header-right {
       display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+      padding-bottom: 0.25rem;
+    }
+    .header-pricing-note {
+      font-family: var(--font-d);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.5;
+    }
+    .header-materials-badge {
+      display: inline-flex;
       align-items: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
+      gap: 0.4rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 20px;
+      padding: 0.35rem 0.85rem;
+      font-family: var(--font-b);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sage-deep);
     }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.9rem 1.75rem; background: var(--sage-deep); color: #fff;
-      border: 1.5px solid var(--sage-deep); border-radius: 999px;
-      font-family: var(--font-b); font-size: 0.82rem; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
-      transition: background 0.2s var(--ease), transform 0.15s var(--ease);
-      cursor: pointer; white-space: nowrap;
-    }
-    .btn-primary:hover { background: var(--sage); border-color: var(--sage); transform: translateY(-1px); }
-    .btn-outline {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.9rem 1.75rem; background: transparent; color: var(--sage-deep);
-      border: 1.5px solid var(--sage); border-radius: 999px;
-      font-family: var(--font-b); font-size: 0.82rem; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
-      transition: background 0.2s var(--ease), color 0.2s var(--ease); cursor: pointer; white-space: nowrap;
-    }
-    .btn-outline:hover { background: var(--sage); color: #fff; }
 
-    /* CORNERSTONES */
-    .cornerstones-section { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--surface); border-bottom: 1px solid var(--hairline); }
-    .cornerstones-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem 2rem; }
-    .section-heading { font-size: clamp(1.75rem, 3.5vw, 2.75rem); font-weight: 350; letter-spacing: -0.025em; color: var(--sage-deep); line-height: 1.08; font-variation-settings: "opsz" 144; }
-    .section-heading em { font-style: italic; color: var(--sage); }
-    .eyebrow { font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 0.75rem; display: block; }
-    .cornerstones-link { font-family: var(--font-d); font-style: italic; font-size: 1rem; color: var(--sage-deep); text-decoration: none; border-bottom: 1px solid var(--sage-pale); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; white-space: nowrap; align-self: flex-end; }
-    .cornerstones-link:hover { color: var(--sage); border-color: var(--sage); }
-    .cornerstones-grid { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--hairline); border-radius: 6px; overflow: hidden; }
-    .cornerstone-card { background: var(--surface); padding: 1.75rem 1.4rem; display: flex; flex-direction: column; gap: 0.6rem; border-right: 1px solid var(--hairline); transition: background 0.25s var(--ease); }
+    @media (max-width: 760px) {
+      .page-header-top { grid-template-columns: 1fr; }
+      .page-header-right { align-items: flex-start; }
+      .header-pricing-note { text-align: left; }
+    }
+
+    /* CORNERSTONES STRIP — inside page-header, below the fold line */
+    .cornerstones-strip {
+      border-top: 1px solid var(--hairline);
+      background: var(--surface);
+    }
+    .cornerstones-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-left: 1px solid var(--hairline);
+    }
+    .cornerstone-card {
+      padding: 1.25rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      border-right: 1px solid var(--hairline);
+      transition: background 0.2s var(--ease);
+      cursor: default;
+    }
     .cornerstone-card:last-child { border-right: none; }
     .cornerstone-card:hover { background: var(--bg); }
-    .cornerstone-num { font-family: var(--font-d); font-style: italic; font-size: 1rem; color: var(--sage); }
-    .cornerstone-title { font-family: var(--font-d); font-size: 1.35rem; font-weight: 400; color: var(--sage-deep); line-height: 1.15; letter-spacing: -0.01em; }
+    .cornerstone-num { font-family: var(--font-d); font-style: italic; font-size: 0.85rem; color: var(--sage); }
+    .cornerstone-title { font-family: var(--font-d); font-size: 1.05rem; font-weight: 400; color: var(--sage-deep); line-height: 1.2; letter-spacing: -0.01em; }
     .cornerstone-title em { font-style: italic; color: var(--sage); }
-    .cornerstone-sub { font-family: var(--font-d); font-style: italic; font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
-    .cornerstone-desc { font-family: var(--font-b); font-size: 0.8rem; color: var(--ink-soft); line-height: 1.55; margin-top: auto; padding-top: 0.4rem; }
-    @media (max-width: 900px) { .cornerstones-grid { grid-template-columns: 1fr 1fr; } .cornerstone-card:nth-child(2n) { border-right: none; } .cornerstone-card { border-bottom: 1px solid var(--hairline); } }
-    @media (max-width: 500px) { .cornerstones-grid { grid-template-columns: 1fr; } .cornerstone-card { border-right: none; } }
+    .cornerstone-sub { font-family: var(--font-b); font-size: 0.72rem; color: var(--muted); line-height: 1.4; }
+    @media (max-width: 900px) { .cornerstones-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    @media (max-width: 560px) { .cornerstones-grid { grid-template-columns: 1fr 1fr; } }
+
+    /* BUTTONS */
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.8rem 1.6rem; background: var(--sage-deep); color: #fff; border: 1.5px solid var(--sage-deep); border-radius: 999px; font-family: var(--font-b); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background 0.2s var(--ease), transform 0.15s var(--ease); cursor: pointer; white-space: nowrap; }
+    .btn-primary:hover { background: var(--sage); border-color: var(--sage); transform: translateY(-1px); }
+    .btn-outline { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.8rem 1.6rem; background: transparent; color: var(--sage-deep); border: 1.5px solid var(--sage); border-radius: 999px; font-family: var(--font-b); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background 0.2s var(--ease), color 0.2s var(--ease); cursor: pointer; white-space: nowrap; }
+    .btn-outline:hover { background: var(--sage); color: #fff; }
 
     /* SCHEDULE LAYOUT */
-    .schedule-layout { display: grid; grid-template-columns: 210px 1fr; gap: clamp(2rem, 4vw, 4rem); max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); }
+    .schedule-wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); display: grid; grid-template-columns: 190px 1fr; gap: clamp(2rem, 4vw, 4rem); }
     .schedule-rail { position: relative; }
-    .rail-nav { position: sticky; top: 5.5rem; display: flex; flex-direction: column; gap: 0; padding-top: clamp(2rem, 4vw, 3rem); }
-    .rail-eyebrow { font-family: var(--font-b); font-size: 0.65rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 1.25rem; padding-left: 1rem; }
-    .rail-link { display: block; padding: 0.8rem 0 0.8rem 1rem; margin-left: -1px; border-left: 1px solid var(--hairline); font-family: var(--font-b); font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-decoration: none; font-weight: 500; line-height: 1.4; transition: color 0.2s var(--ease), border-color 0.2s var(--ease); }
+    .rail-nav { position: sticky; top: 5rem; display: flex; flex-direction: column; padding-top: clamp(2rem, 3.5vw, 2.5rem); }
+    .rail-eyebrow { font-family: var(--font-b); font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 1.1rem; padding-left: 1rem; }
+    .rail-link { display: block; padding: 0.75rem 0 0.75rem 1rem; border-left: 1px solid var(--hairline); font-family: var(--font-b); font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); text-decoration: none; font-weight: 500; line-height: 1.35; transition: color 0.2s var(--ease), border-color 0.2s var(--ease); }
     .rail-link:hover { color: var(--ink); border-left-color: var(--sage-pale); }
-    .rail-link.is-active { color: var(--sage-deep); border-left: 2px solid var(--sage-deep); padding-left: calc(1rem - 1px); font-weight: 600; }
-    .schedule-main { min-width: 0; padding-top: clamp(2rem, 4vw, 3rem); padding-bottom: 4rem; }
-    @media (max-width: 860px) {
-      .schedule-layout { grid-template-columns: 1fr; gap: 0; }
-      .schedule-rail { position: sticky; top: 57px; z-index: 50; background: rgba(241,236,223,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--hairline); margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter); }
+    .rail-link.is-active { color: var(--sage-deep); border-left: 2px solid var(--sage-deep); padding-left: calc(1rem - 1px); font-weight: 700; }
+    .schedule-main { min-width: 0; padding-top: clamp(2rem, 3.5vw, 2.5rem); padding-bottom: 5rem; }
+    @media (max-width: 840px) {
+      .schedule-wrap { grid-template-columns: 1fr; gap: 0; }
+      .schedule-rail { position: sticky; top: 57px; z-index: 50; background: rgba(241,236,223,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--hairline); margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter); }
       .rail-eyebrow { display: none; }
-      .rail-nav { position: static; flex-direction: row; overflow-x: auto; scrollbar-width: none; padding: 0.5rem 0; }
+      .rail-nav { position: static; flex-direction: row; overflow-x: auto; scrollbar-width: none; padding: 0.4rem 0; }
       .rail-nav::-webkit-scrollbar { display: none; }
-      .rail-link { flex-shrink: 0; border-left: none; border-bottom: 2px solid transparent; padding: 0.55rem 0.85rem; white-space: nowrap; font-size: 0.72rem; }
-      .rail-link.is-active { border-left: none; border-bottom: 2px solid var(--sage-deep); padding-left: 0.85rem; }
-      .schedule-main { padding-top: 1.5rem; }
+      .rail-link { flex-shrink: 0; border-left: none; border-bottom: 2px solid transparent; padding: 0.5rem 0.8rem; white-space: nowrap; font-size: 0.7rem; }
+      .rail-link.is-active { border-left: none; border-bottom: 2px solid var(--sage-deep); padding-left: 0.8rem; }
+      .schedule-main { padding-top: 1.25rem; }
     }
 
     /* CATEGORY SECTIONS */
-    .category-section { padding: clamp(2rem, 4vw, 3.5rem) 0; border-bottom: 1px solid var(--hairline); }
+    .category-section { padding: clamp(1.75rem, 3.5vw, 3rem) 0; border-bottom: 1px solid var(--hairline); scroll-margin-top: 120px; }
     .category-section:last-child { border-bottom: none; }
-    .category-header { margin-bottom: 1.75rem; }
-    .category-title { font-size: clamp(1.5rem, 2.5vw, 2rem); color: var(--sage-deep); letter-spacing: -0.02em; }
+    .category-header { margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+    .category-title { font-size: clamp(1.35rem, 2.2vw, 1.75rem); color: var(--sage-deep); letter-spacing: -0.015em; }
     .category-title em { font-style: italic; color: var(--sage); }
-    .category-desc { font-family: var(--font-d); font-style: italic; font-size: 0.95rem; color: var(--muted); line-height: 1.5; margin-top: 0.4rem; }
+    .category-desc { font-family: var(--font-d); font-style: italic; font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
 
-    /* CLASS CARDS */
+    /* CLASS CARDS — accordion rows */
     .class-grid { display: flex; flex-direction: column; border-top: 1px solid var(--hairline); }
-    .class-card { border-bottom: 1px solid var(--hairline); background: transparent; transition: background 0.2s var(--ease); }
+    .class-card { border-bottom: 1px solid var(--hairline); background: transparent; transition: background 0.18s var(--ease); }
     .class-card:hover { background: var(--surface); }
-    .class-summary { list-style: none; cursor: pointer; outline: none; }
-    .class-summary::-webkit-details-marker { display: none; }
-    .class-summary::marker { display: none; content: ""; }
-    .class-summary { display: grid; grid-template-columns: 1fr auto auto; gap: clamp(1rem, 2.5vw, 2rem); align-items: center; padding: 1.4rem 1rem 1.4rem 0; }
-    .class-summary-main { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
-    .class-format-tags { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
-    .class-tag { background: var(--bg-warm); border: 1px solid var(--hairline); padding: 0.12rem 0.55rem; border-radius: 4px; font-family: var(--font-b); font-size: 0.68rem; font-weight: 600; color: var(--sage-deep); text-transform: uppercase; letter-spacing: 0.06em; }
-    .class-tag-meta { font-family: var(--font-b); font-size: 0.75rem; color: var(--muted); }
-    .class-card h4 { font-family: var(--font-d); font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--sage-deep); font-weight: 400; margin: 0; line-height: 1.15; letter-spacing: -0.01em; }
-    .class-price-col { display: flex; align-items: center; gap: 0.9rem; }
-    .class-price { font-family: var(--font-d); font-size: clamp(1.1rem, 1.8vw, 1.35rem); color: var(--sage-deep); font-weight: 400; white-space: nowrap; }
-    .btn-book { font-family: var(--font-b); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.6rem 1.2rem; border-radius: 999px; background: var(--sage-deep); color: #fff; border: none; cursor: pointer; transition: background 0.2s var(--ease), transform 0.15s var(--ease); white-space: nowrap; flex-shrink: 0; }
+
+    /* The summary row — price + Book button always visible */
+    .class-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem 1.5rem;
+      align-items: center;
+      padding: 1.25rem 0;
+      cursor: pointer;
+      user-select: none;
+    }
+    .class-row-left { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+    .class-tag-row { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .class-tag { background: var(--bg-warm); border: 1px solid var(--hairline); padding: 0.1rem 0.5rem; border-radius: 4px; font-family: var(--font-b); font-size: 0.65rem; font-weight: 600; color: var(--sage-deep); text-transform: uppercase; letter-spacing: 0.06em; }
+    .class-tag-meta { font-family: var(--font-b); font-size: 0.72rem; color: var(--muted); }
+    .class-name { font-family: var(--font-d); font-size: clamp(1.05rem, 1.8vw, 1.3rem); color: var(--sage-deep); font-weight: 400; line-height: 1.15; letter-spacing: -0.01em; }
+    .class-row-right { display: flex; align-items: center; gap: 0.85rem; flex-shrink: 0; }
+    .class-price { font-family: var(--font-d); font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: var(--sage-deep); font-weight: 400; white-space: nowrap; }
+
+    /* Book button — stops event propagation so clicking it doesn't toggle the accordion */
+    .btn-book {
+      font-family: var(--font-b);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      background: var(--sage-deep);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background 0.18s var(--ease), transform 0.15s var(--ease);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
     .btn-book:hover { background: var(--sage); transform: translateY(-1px); }
-    .class-chevron { font-size: 1.2rem; color: var(--muted); width: 1.4rem; display: flex; align-items: center; justify-content: center; transition: transform 0.3s var(--ease), color 0.2s; flex-shrink: 0; }
-    .class-details-wrap[open] > .class-summary .class-chevron { transform: rotate(180deg); color: var(--sage-deep); }
-    .class-details-body { padding: 0.25rem 1rem 1.5rem 0; max-width: 58ch; animation: fadeUp 0.25s var(--ease) both; }
+    .btn-book:active { transform: scale(0.97); }
+
+    .class-chevron { font-size: 1rem; color: var(--muted); transition: transform 0.25s var(--ease), color 0.18s; flex-shrink: 0; display: inline-block; }
+    .class-card.is-open .class-chevron { transform: rotate(180deg); color: var(--sage-deep); }
+
+    /* Expandable detail body */
+    .class-body { display: none; padding: 0 0 1.4rem; max-width: 58ch; }
+    .class-card.is-open .class-body { display: block; animation: fadeUp 0.22s var(--ease) both; }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
-    .class-desc { font-family: var(--font-d); font-size: 0.98rem; color: var(--ink-soft); line-height: 1.65; margin-bottom: 0.75rem; }
-    .class-instructor { font-family: var(--font-d); font-style: italic; font-size: 0.88rem; color: var(--sage); margin-bottom: 0.4rem; }
-    .class-materials-note { font-family: var(--font-b); font-size: 0.8rem; color: var(--sage); font-weight: 600; }
-    @media (max-width: 640px) {
-      .class-summary { grid-template-columns: 1fr auto; }
-      .class-price-col { flex-direction: column; align-items: flex-end; gap: 0.4rem; }
-      .class-details-body { padding-right: 0; }
+    .class-desc { font-family: var(--font-d); font-size: 0.95rem; color: var(--ink-soft); line-height: 1.65; margin-bottom: 0.6rem; }
+    .class-instructor { font-family: var(--font-d); font-style: italic; font-size: 0.86rem; color: var(--sage); margin-bottom: 0.35rem; }
+    .class-materials { font-family: var(--font-b); font-size: 0.78rem; color: var(--sage); font-weight: 600; }
+
+    @media (max-width: 560px) {
+      .class-row { grid-template-columns: 1fr; gap: 0.75rem; }
+      .class-row-right { justify-content: flex-start; }
     }
 
     /* MODAL */
@@ -209,22 +261,31 @@
     .modal-backdrop.open { display: flex; }
     .modal { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; width: 100%; max-width: 520px; max-height: 90dvh; overflow-y: auto; box-shadow: 0 24px 64px rgba(78,90,65,0.2); display: flex; flex-direction: column; }
     .modal-header { display: flex; align-items: flex-start; justify-content: space-between; padding: 1.5rem 1.75rem 1.25rem; border-bottom: 1px solid var(--hairline); gap: 1rem; }
-    .modal-title { font-family: var(--font-d); font-size: 1.3rem; font-weight: 400; color: var(--sage-deep); }
+    .modal-title { font-family: var(--font-d); font-size: 1.3rem; font-weight: 400; color: var(--sage-deep); line-height: 1.2; }
     .modal-subtitle { font-family: var(--font-d); font-style: italic; font-size: 0.88rem; color: var(--muted); margin-top: 0.2rem; }
-    .modal-close { background: none; border: 1px solid var(--hairline); width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s, color 0.2s; }
+    .modal-close { background: none; border: 1px solid var(--hairline); width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s, color 0.2s; line-height: 1; }
     .modal-close:hover { border-color: var(--sage); color: var(--sage-deep); }
     .modal-body { padding: 1.5rem 1.75rem 2rem; flex: 1; }
     .modal-summary { background: var(--bg-warm); border: 1px solid var(--hairline); border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
-    .modal-summary-name { font-family: var(--font-d); font-size: 1rem; color: var(--sage-deep); }
-    .modal-summary-meta { font-family: var(--font-d); font-style: italic; font-size: 0.82rem; color: var(--muted); margin-top: 0.1rem; }
-    .modal-summary-price { font-family: var(--font-d); font-size: 1.2rem; color: var(--sage-deep); white-space: nowrap; }
-    #checkout-embed { min-height: 200px; }
-    .modal-success { display: none; text-align: center; padding: 2rem 0; }
+    .modal-class-name { font-family: var(--font-d); font-size: 1.05rem; color: var(--sage-deep); }
+    .modal-class-meta { font-family: var(--font-d); font-style: italic; font-size: 0.82rem; color: var(--muted); margin-top: 0.15rem; }
+    .modal-class-price { font-family: var(--font-d); font-size: 1.2rem; color: var(--sage-deep); white-space: nowrap; font-weight: 400; }
+    #checkout-embed { min-height: 180px; }
+    .modal-success { display: none; text-align: center; padding: 2.5rem 0; }
     .modal-success.show { display: block; }
     .modal-success-mark { font-size: 2rem; margin-bottom: 1rem; }
-    .modal-success h3 { font-family: var(--font-d); font-size: 1.5rem; color: var(--sage-deep); margin-bottom: 0.6rem; }
+    .modal-success h3 { font-family: var(--font-d); font-size: 1.5rem; color: var(--sage-deep); margin-bottom: 0.6rem; letter-spacing: -0.01em; }
     .modal-success h3 em { font-style: italic; color: var(--sage); }
-    .modal-success p { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.6; max-width: 32ch; margin: 0 auto; }
+    .modal-success p { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.6; max-width: 34ch; margin: 0 auto; }
+
+    /* Fallback form inside modal */
+    .fallback-form { display: flex; flex-direction: column; gap: 0.85rem; padding-top: 0.25rem; }
+    .fallback-form label { display: block; font-family: var(--font-b); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage-deep); margin-bottom: 0.3rem; }
+    .fallback-form input { width: 100%; padding: 0.75rem 0.9rem; border: 1px solid var(--hairline); border-radius: 6px; background: var(--surface); font-size: 0.9rem; font-family: var(--font-b); color: var(--ink); outline: none; transition: border-color 0.2s; }
+    .fallback-form input:focus { border-color: var(--sage); }
+    .fallback-form .btn-submit { background: var(--sage-deep); color: #fff; font-family: var(--font-b); font-weight: 700; font-size: 0.88rem; padding: 0.9rem; border-radius: 6px; border: none; cursor: pointer; letter-spacing: 0.06em; transition: background 0.2s; margin-top: 0.25rem; }
+    .fallback-form .btn-submit:hover { background: var(--sage); }
+    .fallback-form .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
     /* FOOTER */
     footer { background: var(--sage-deep); color: var(--bg); padding: 4rem 0 2rem; }
@@ -241,8 +302,7 @@
     .footer-sep { opacity: 0.4; }
     @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr; gap: 2rem; } .footer-bottom { flex-direction: column; align-items: flex-start; } }
 
-    /* REVEAL */
-    [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+    [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity 0.75s var(--ease), transform 0.75s var(--ease); }
     [data-reveal].is-visible { opacity: 1; transform: none; }
     :focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; }
   </style>
@@ -251,28 +311,28 @@
 
   <!-- CONTACT BAR -->
   <div class="contact-bar">
-    <div class="container contact-bar-inner">
-      <div class="contact-bar-items">
-        <div class="contact-bar-item">
+    <div class="container cb-inner">
+      <div class="cb-items">
+        <div class="cb-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           135 N. Main Street, Pittston, PA
         </div>
-        <div class="contact-bar-item">
+        <div class="cb-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           <a href="tel:+15703546189">(570) 354-6189</a>
         </div>
-        <div class="contact-bar-item">
+        <div class="cb-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           <a href="mailto:pittston@thehobbiestskillsclub.com">pittston@thehobbiestskillsclub.com</a>
         </div>
       </div>
-      <a href="login.html" style="font-family: var(--font-b); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(241,236,223,0.55); text-decoration: none; font-weight: 600; transition: color 0.2s;">Member Login →</a>
+      <a href="login.html" style="font-family:var(--font-b);font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(241,236,223,0.55);text-decoration:none;font-weight:600;">Member Login →</a>
     </div>
   </div>
 
   <!-- STICKY NAV -->
   <nav class="sticky-nav" role="navigation" aria-label="Primary">
-    <div class="container sticky-nav-inner">
+    <div class="container nav-inner">
       <a href="index.html" class="wordmark">The Hobbiest</a>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -283,102 +343,96 @@
         <a href="studio.html" class="nav-link">The Studio</a>
         <a href="interest.html" class="nav-link">Interest form</a>
         <a href="schedule.html" class="nav-link-pill">Book a class</a>
-        <a href="studio.html#membership-offer" class="nav-link-pill" style="background: var(--sage);">Membership</a>
+        <a href="studio.html#membership-offer" class="nav-link-pill" style="background:var(--sage);">Membership</a>
       </div>
     </div>
   </nav>
 
-  <!-- PAGE HERO -->
-  <header class="page-hero">
+  <!-- COMBINED PAGE HEADER -->
+  <header class="page-header">
     <div class="container">
-      <div data-reveal>
-        <span class="page-eyebrow">The Hobbiest Skills Club</span>
-        <h1>Current <em>Curriculum</em>.</h1>
-        <p class="page-hero-lede">Hands-on 2-hour sessions across creative arts, essential life skills, and intentional living. All materials included. Classes run when 10–12 members confirm.</p>
-        <div class="hero-purchase-bar">
-          <button class="btn-primary" onclick="scrollToClasses()">Browse &amp; Book a Class →</button>
-          <a href="studio.html#membership-offer" class="btn-outline">Studio Membership ($45/mo)</a>
+      <div class="page-header-top" data-reveal>
+        <div>
+          <span class="page-eyebrow">The Hobbiest Skills Club</span>
+          <h1>Current <em>Curriculum</em>.</h1>
+          <p class="page-header-lede">Hands-on 2-hour sessions across creative arts, essential life skills, and intentional living. Classes run once 10–12 members confirm — all materials included.</p>
+          <div class="header-cta-row">
+            <button class="btn-primary" onclick="document.getElementById('classes').scrollIntoView({behavior:'smooth'})">Browse &amp; Book →</button>
+            <a href="how-it-works.html" class="btn-outline">How it works</a>
+          </div>
+        </div>
+        <div class="page-header-right">
+          <div class="header-materials-badge">✓ All materials included</div>
+          <p class="header-pricing-note">Single sessions $35–$65<br>No membership required</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cornerstones strip — flush, no container padding on the grid itself -->
+    <div class="cornerstones-strip">
+      <div class="container" style="padding-left:0;padding-right:0;">
+        <div class="cornerstones-grid">
+          <div class="cornerstone-card">
+            <div class="cornerstone-num">01</div>
+            <div class="cornerstone-title">Creative <em>Pursuits</em></div>
+            <div class="cornerstone-sub">Things made beautifully by hand.</div>
+          </div>
+          <div class="cornerstone-card">
+            <div class="cornerstone-num">02</div>
+            <div class="cornerstone-title">Presence &amp; <em>Entertaining</em></div>
+            <div class="cornerstone-sub">The art of making people feel welcome.</div>
+          </div>
+          <div class="cornerstone-card">
+            <div class="cornerstone-num">03</div>
+            <div class="cornerstone-title">Essential <em>Life Skills</em></div>
+            <div class="cornerstone-sub">The things everyone should know.</div>
+          </div>
+          <div class="cornerstone-card">
+            <div class="cornerstone-num">04</div>
+            <div class="cornerstone-title">Hearth &amp; <em>Garden</em></div>
+            <div class="cornerstone-sub">Slow, seasonal work with living things.</div>
+          </div>
+          <div class="cornerstone-card">
+            <div class="cornerstone-num">05</div>
+            <div class="cornerstone-title">Living <em>Well</em></div>
+            <div class="cornerstone-sub">The inward side of an intentional life.</div>
+          </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- CURRICULUM CORNERSTONES -->
-  <section class="cornerstones-section">
-    <div class="container">
-      <div class="cornerstones-header" data-reveal>
-        <div>
-          <span class="eyebrow">What We Teach</span>
-          <h2 class="section-heading">Curriculum <em>Cornerstones</em>.</h2>
-        </div>
-        <a href="#classes" class="cornerstones-link">Jump to current classes ↓</a>
-      </div>
-      <div class="cornerstones-grid" data-reveal>
-        <div class="cornerstone-card">
-          <div class="cornerstone-num">01</div>
-          <h3 class="cornerstone-title">Creative <em>Pursuits</em></h3>
-          <p class="cornerstone-sub">Things made beautifully by hand.</p>
-          <p class="cornerstone-desc">Watercolor, calligraphy, knitting, drawing, and craft traditions worth preserving.</p>
-        </div>
-        <div class="cornerstone-card">
-          <div class="cornerstone-num">02</div>
-          <h3 class="cornerstone-title">Presence &amp; <em>Entertaining</em></h3>
-          <p class="cornerstone-sub">The art of making people feel welcome.</p>
-          <p class="cornerstone-desc">Hosting, modern etiquette, personal styling, and small social skills that hold.</p>
-        </div>
-        <div class="cornerstone-card">
-          <div class="cornerstone-num">03</div>
-          <h3 class="cornerstone-title">Essential <em>Life Skills</em></h3>
-          <p class="cornerstone-sub">The things everyone should know.</p>
-          <p class="cornerstone-desc">Home repair, finances, first aid, and habits that compound over years.</p>
-        </div>
-        <div class="cornerstone-card">
-          <div class="cornerstone-num">04</div>
-          <h3 class="cornerstone-title">Hearth &amp; <em>Garden</em></h3>
-          <p class="cornerstone-sub">Slow, seasonal work with living things.</p>
-          <p class="cornerstone-desc">Sourdough, floral arranging, herb gardens, and the rituals of the year.</p>
-        </div>
-        <div class="cornerstone-card">
-          <div class="cornerstone-num">05</div>
-          <h3 class="cornerstone-title">Living <em>Well</em></h3>
-          <p class="cornerstone-sub">The inward side of an intentional life.</p>
-          <p class="cornerstone-desc">Meditation, journaling, intention-setting, and daily practices that hold.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- SCHEDULE -->
-  <div id="classes" style="scroll-margin-top: 80px;">
-    <div class="schedule-layout">
+  <div id="classes" style="scroll-margin-top:80px;">
+    <div class="schedule-wrap">
       <aside class="schedule-rail">
-        <nav class="rail-nav" id="railNav" aria-label="Curriculum navigation">
+        <nav class="rail-nav" id="railNav" aria-label="Curriculum categories">
           <div class="rail-eyebrow">Categories</div>
         </nav>
       </aside>
       <main class="schedule-main" id="scheduleMain">
-        <p style="font-family: var(--font-d); font-style: italic; color: var(--muted); padding: 2rem 0;">Loading the current schedule…</p>
+        <p style="font-family:var(--font-d);font-style:italic;color:var(--muted);padding:2rem 0;">Loading classes…</p>
       </main>
     </div>
   </div>
 
   <!-- CHECKOUT MODAL -->
-  <div class="modal-backdrop" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-backdrop" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="modalHeading">
     <div class="modal">
       <div class="modal-header">
         <div>
-          <div class="modal-title" id="modalTitle">Book your session</div>
+          <div class="modal-title" id="modalHeading">Purchase Single Class</div>
           <div class="modal-subtitle" id="modalSubtitle"></div>
         </div>
-        <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
+        <button class="modal-close" id="modalCloseBtn" aria-label="Close checkout">×</button>
       </div>
       <div class="modal-body">
         <div class="modal-summary" id="modalSummary">
           <div>
-            <div class="modal-summary-name" id="modalClassName"></div>
-            <div class="modal-summary-meta" id="modalSessionMeta"></div>
+            <div class="modal-class-name" id="modalClassName"></div>
+            <div class="modal-class-meta">2-Hour Session · All Materials Included · In Studio</div>
           </div>
-          <div class="modal-summary-price" id="modalPrice"></div>
+          <div class="modal-class-price" id="modalPrice"></div>
         </div>
         <div id="checkout-embed"></div>
         <div class="modal-success" id="modalSuccess">
@@ -428,79 +482,132 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    /* ============================================================
+       CONFIG
+       ============================================================ */
     const SUPABASE_URL      = 'https://uprdczhhgwzfypkudqjg.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_Ec5EpeC0g37iwLn4J5iY7A_aetoX2wQ';
     const STRIPE_PK         = 'pk_live_51TbpMlCHCNpWH1vZ3w1FwdDvhAdOW2aJ10izsLylLYomd4uUd6Cic0cdf3aertJcnIAqbdpA7bxafrczNScrbUHC00zwfEWojS';
 
-    const CATEGORY_ORDER = ['Creative Pursuits','Presence & Entertaining','Essential Life Skills','Hearth & Garden','Living Well'];
-    const CATEGORY_DESC = {
-      'Creative Pursuits':       'Things made beautifully by hand — explorations in craftsmanship, creative expression, and traditional arts.',
-      'Presence & Entertaining': 'The art of making people feel welcome — hosting, etiquette, and the small social skills that hold.',
-      'Essential Life Skills':   'The things everyone should know — practical knowledge for everyday competence and self-reliance.',
-      'Hearth & Garden':         'Slow, seasonal work with living things — growing and making with intention, in good company.',
-      'Living Well':             'The inward side of an intentional life — daily practices, mindfulness, and habits that hold.'
-    };
-
-    const DEFAULT_CLASSES = [
-      { id: 'watercolor-painting', name: 'Watercolor Painting 101', category: 'Creative Pursuits', description: 'Learn color blending, wet-on-wet washes, and botanical watercolor painting techniques. Leave with a finished piece and the vocabulary to keep practicing at home.', instructor: 'Fine Artist', price_cents: 5500 },
-      { id: 'modern-calligraphy', name: 'Modern Calligraphy & Pointed Pen', category: 'Creative Pursuits', description: 'Explore pointed pen lettering, stroke contrast, and letterforms. Covers basic alphabets and custom stationery design. All tools and paper provided.', instructor: 'Calligrapher', price_cents: 5500 },
-      { id: 'makeup-daily', name: 'Makeup Tutorial — Daily Application', category: 'Living Well', description: 'Learn a flawless 10-minute everyday makeup routine tailored to your skin tone and features. Covers foundation, eyes, and finishing.', instructor: 'Beauty Specialist', price_cents: 4500 },
-      { id: 'meditation-mindfulness', name: 'Meditation & Intention Setting', category: 'Living Well', description: 'Guided breathwork, mindfulness practices, and daily intention-setting rituals. Practical techniques you can use the next morning.', instructor: 'Lara Alexiou', price_cents: 4500 },
-      { id: 'personal-finance', name: 'Personal Finance & Wealth Habits', category: 'Essential Life Skills', description: 'Budgeting fundamentals, savings strategies, debt elimination, and building financial clarity. Taught with real examples — no jargon.', instructor: 'Joe Enten', price_cents: 4500 }
+    const CATEGORY_ORDER = [
+      'Creative Pursuits',
+      'Presence & Entertaining',
+      'Essential Life Skills',
+      'Hearth & Garden',
+      'Living Well'
     ];
 
-    const esc = s => { const d = document.createElement('div'); d.textContent = (s == null ? '' : s); return d.innerHTML; };
-    const money = cents => '$' + Math.round(cents / 100);
-    const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const CATEGORY_DESC = {
+      'Creative Pursuits':       'Things made beautifully by hand.',
+      'Presence & Entertaining': 'The art of making people feel welcome.',
+      'Essential Life Skills':   'The things everyone should know.',
+      'Hearth & Garden':         'Slow, seasonal work with living things.',
+      'Living Well':             'The inward side of an intentional life.'
+    };
 
+    /* Default classes — used when Supabase returns nothing.
+       Pricing: $65 for material-heavy crafts, $45 otherwise.    */
+    const DEFAULT_CLASSES = [
+      {
+        id: 'watercolor-painting-101',
+        name: 'Watercolor Painting 101',
+        category: 'Creative Pursuits',
+        description: 'Learn color blending, wet-on-wet washes, and botanical watercolor techniques. Leave with a finished piece and the vocabulary to keep practicing at home. All paints, paper, and brushes provided.',
+        instructor: 'Yoshi Gonzalez',
+        price_cents: 6500
+      },
+      {
+        id: 'modern-calligraphy-pointed-pen',
+        name: 'Modern Calligraphy & Pointed Pen',
+        category: 'Creative Pursuits',
+        description: 'Explore pointed pen lettering, stroke contrast, and classic letterforms. Covers the basic alphabet and custom stationery design. All nibs, ink, holders, and paper included.',
+        instructor: null,
+        price_cents: 6500
+      },
+      {
+        id: 'wreath-making',
+        name: 'Seasonal Wreath Making',
+        category: 'Hearth & Garden',
+        description: 'Design and build a full-size seasonal wreath using fresh and dried botanicals, ribbon, and wire frames. Everything is provided — just bring your eye for color and texture. A beautiful take-home piece guaranteed.',
+        instructor: null,
+        price_cents: 6500
+      },
+      {
+        id: 'makeup-daily-application',
+        name: 'Makeup Tutorial — Daily Application',
+        category: 'Living Well',
+        description: 'Learn a polished 10-minute everyday makeup routine tailored to your features and skin tone. Covers skincare prep, foundation, eyes, and a clean finish. Bring your own products or use the provided kit.',
+        instructor: null,
+        price_cents: 4500
+      },
+      {
+        id: 'meditation-intention-setting',
+        name: 'Meditation & Intention Setting',
+        category: 'Living Well',
+        description: 'Guided breathwork, body-scan meditation, and daily intention-setting rituals. Practical techniques grounded in mindfulness science that you can start using the next morning.',
+        instructor: 'Lara Alexiou',
+        price_cents: 4500
+      },
+      {
+        id: 'personal-finance-wealth-habits',
+        name: 'Personal Finance 101',
+        category: 'Essential Life Skills',
+        description: 'Budgeting fundamentals, savings strategies, debt elimination, and the habits that build lasting financial clarity. Taught with real-world examples — no jargon, no judgment.',
+        instructor: 'Joe Enten',
+        price_cents: 4500
+      }
+    ];
+
+    /* ============================================================
+       UTILITIES
+       ============================================================ */
+    const esc   = s => { const d = document.createElement('div'); d.textContent = (s == null ? '' : String(s)); return d.innerHTML; };
+    const money = cents => '$' + Math.round(cents / 100);
+    const slug  = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+    /* ============================================================
+       RENDER
+       ============================================================ */
     function cardHtml(c) {
-      const price = money(c.price_cents || 4500);
-      const instructor = c.instructor ? `<p class="class-instructor">Taught by <strong style="color:var(--sage-deep)">${esc(c.instructor)}</strong></p>` : '';
+      const price      = money(c.price_cents || 4500);
+      const instructor = c.instructor
+        ? `<p class="class-instructor">Taught by <strong style="color:var(--sage-deep)">${esc(c.instructor)}</strong></p>`
+        : '';
+      /* NOTE: Book button uses data-class-id — listener attached after render,
+         no inline onclick, avoids summary-toggle conflict entirely. */
       return `
-        <article class="class-card" id="${slug(c.name)}" style="scroll-margin-top:80px">
-          <details class="class-details-wrap" open>
-            <summary class="class-summary">
-              <div class="class-summary-main">
-                <div class="class-format-tags">
-                  <span class="class-tag">${esc(c.category)}</span>
-                  <span class="class-tag-meta">2 hrs &nbsp;·&nbsp; Max 12</span>
-                </div>
-                <h4>${esc(c.name)}</h4>
+        <article class="class-card" data-class-id="${esc(c.id)}">
+          <div class="class-row">
+            <div class="class-row-left">
+              <div class="class-tag-row">
+                <span class="class-tag">${esc(c.category)}</span>
+                <span class="class-tag-meta">2 hrs · Max 12</span>
               </div>
-              <div class="class-price-col">
-                <div class="class-price">${price}</div>
-                <button class="btn-book" onclick="openCheckout('${esc(c.id)}', event)">Book →</button>
-              </div>
-              <span class="class-chevron" aria-hidden="true">▾</span>
-            </summary>
-            <div class="class-details-body">
-              <p class="class-desc">${esc(c.description)}</p>
-              ${instructor}
-              <p class="class-materials-note" style="margin-top:0.5rem">✓ All materials included</p>
+              <div class="class-name">${esc(c.name)}</div>
             </div>
-          </details>
+            <div class="class-row-right">
+              <div class="class-price">${price}</div>
+              <button class="btn-book" data-book-id="${esc(c.id)}" aria-label="Book ${esc(c.name)}">Book →</button>
+              <span class="class-chevron" aria-hidden="true">▾</span>
+            </div>
+          </div>
+          <div class="class-body">
+            <p class="class-desc">${esc(c.description)}</p>
+            ${instructor}
+            <p class="class-materials" style="margin-top:0.5rem">✓ All materials included · ${price}</p>
+          </div>
         </article>`;
     }
 
-    function scrollToClasses() {
-      document.getElementById('classes').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    async function loadSchedule() {
+    function buildSchedule(classes) {
       const main = document.getElementById('scheduleMain');
       const rail = document.getElementById('railNav');
-      let classes = DEFAULT_CLASSES;
-
-      try {
-        const res = await fetch(
-          SUPABASE_URL + '/rest/v1/classes?select=id,name,category,description,instructor,price_cents,session_price_cents,weeks&is_published=eq.true&order=starts_at.asc',
-          { headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY } }
-        );
-        if (res.ok) { const data = await res.json(); if (data.length) classes = data; }
-      } catch(e) { /* use defaults */ }
 
       const groups = {};
-      classes.forEach(c => { const cat = c.category || 'Other'; (groups[cat] = groups[cat] || []).push(c); });
+      classes.forEach(c => {
+        const cat = c.category || 'Other';
+        (groups[cat] = groups[cat] || []).push(c);
+      });
       const cats = Object.keys(groups).sort((a, b) => {
         const ia = CATEGORY_ORDER.indexOf(a), ib = CATEGORY_ORDER.indexOf(b);
         return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
@@ -510,13 +617,13 @@
       rail.innerHTML = '<div class="rail-eyebrow">Categories</div>';
 
       cats.forEach((cat, i) => {
-        const id = slug(cat);
+        const id  = slug(cat);
         const num = String(i + 1).padStart(2, '0');
         main.insertAdjacentHTML('beforeend', `
           <section class="category-section" id="${id}">
             <div class="category-header">
-              <h2 class="category-title">${num} — <em>${esc(cat)}</em></h2>
-              <p class="category-desc">${esc(CATEGORY_DESC[cat] || '')}</p>
+              <h2 class="category-title"><em>${esc(cat)}</em></h2>
+              <span class="category-desc">${esc(CATEGORY_DESC[cat] || '')}</span>
             </div>
             <div class="class-grid">${groups[cat].map(cardHtml).join('')}</div>
           </section>`);
@@ -524,47 +631,88 @@
           `<a href="#${id}" class="rail-link" data-cat="${id}">${num} &nbsp; ${esc(cat)}</a>`);
       });
 
+      attachCardListeners();
       initScrollSpy();
-      handleStripeReturn();
     }
 
+    /* ============================================================
+       CARD INTERACTIONS — accordion toggle + book button
+       Attaching listeners after render ensures no inline-onclick
+       conflicts and handles any DOM structure safely.
+       ============================================================ */
+    function attachCardListeners() {
+      /* Accordion toggle: clicking the row (but NOT the book button) toggles open/close */
+      document.querySelectorAll('.class-row').forEach(row => {
+        row.addEventListener('click', e => {
+          if (e.target.closest('.btn-book')) return; // book button handles itself
+          const card = row.closest('.class-card');
+          card.classList.toggle('is-open');
+        });
+      });
+
+      /* Book buttons: stop propagation so they never toggle the accordion,
+         then call openCheckout with the class id from data attribute */
+      document.querySelectorAll('.btn-book').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          openCheckout(btn.dataset.bookId);
+        });
+      });
+    }
+
+    /* ============================================================
+       SCROLL SPY
+       ============================================================ */
     function initScrollSpy() {
       const buttons  = document.querySelectorAll('.rail-link[data-cat]');
       const sections = [...buttons].map(b => document.getElementById(b.dataset.cat)).filter(Boolean);
       const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) buttons.forEach(b => b.classList.toggle('is-active', b.dataset.cat === e.target.id)); });
-      }, { rootMargin: '-25% 0px -65% 0px' });
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            buttons.forEach(b => b.classList.toggle('is-active', b.dataset.cat === e.target.id));
+          }
+        });
+      }, { rootMargin: '-20% 0px -70% 0px' });
       sections.forEach(s => obs.observe(s));
+
       buttons.forEach(btn => {
         btn.addEventListener('click', e => {
           e.preventDefault();
           const target = document.getElementById(btn.getAttribute('href').slice(1));
           if (!target) return;
-          const railEl = document.querySelector('.schedule-rail');
-          const isMobile = window.matchMedia('(max-width: 860px)').matches;
-          const offset = (isMobile && railEl) ? railEl.offsetHeight + 60 : 80;
-          window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - offset, behavior: 'smooth' });
+          const railEl  = document.querySelector('.schedule-rail');
+          const isMobile = window.matchMedia('(max-width: 840px)').matches;
+          const offset  = isMobile && railEl ? railEl.offsetHeight + 64 : 90;
+          window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
         });
       });
     }
 
-    let stripe = null, embeddedCheckout = null;
+    /* ============================================================
+       CHECKOUT
+       ============================================================ */
+    let _stripeInstance = null;
+    let _embeddedCheckout = null;
 
-    async function openCheckout(classId, event) {
-      if (event) { event.preventDefault(); event.stopPropagation(); }
-      const c = DEFAULT_CLASSES.find(x => x.id === classId) || { id: classId, name: 'Single Class', price_cents: 4500 };
+    // Build a lookup map once classes are loaded
+    let _classMap = {};
+    DEFAULT_CLASSES.forEach(c => { _classMap[c.id] = c; });
+
+    async function openCheckout(classId) {
+      const c     = _classMap[classId] || { id: classId, name: 'Single Class', price_cents: 4500 };
       const price = money(c.price_cents || 4500);
 
-      document.getElementById('modalTitle').textContent    = 'Purchase Single Class';
-      document.getElementById('modalSubtitle').textContent = c.name;
+      // Populate modal header
+      document.getElementById('modalHeading').textContent  = 'Purchase Single Class';
+      document.getElementById('modalSubtitle').textContent = c.name + ' — ' + price;
       document.getElementById('modalClassName').textContent = c.name;
-      document.getElementById('modalSessionMeta').textContent = '2-Hour Session · All Materials Included · In Studio';
       document.getElementById('modalPrice').textContent    = price;
 
       const modal     = document.getElementById('checkoutModal');
       const embedEl   = document.getElementById('checkout-embed');
       const successEl = document.getElementById('modalSuccess');
-      embedEl.innerHTML = '<p style="font-family:var(--font-d);font-style:italic;color:var(--muted);padding:1rem 0">Initializing checkout…</p>';
+
+      embedEl.innerHTML = '<p style="font-family:var(--font-d);font-style:italic;color:var(--muted);padding:1.25rem 0;">Initializing secure checkout…</p>';
       successEl.classList.remove('show');
       document.getElementById('modalSummary').style.display = 'flex';
       modal.classList.add('open');
@@ -573,58 +721,96 @@
       try {
         const res = await fetch(SUPABASE_URL + '/functions/v1/create-checkout', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+          headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY },
           body: JSON.stringify({ guest: true, class_id: classId, session_index: 0 }),
         });
         const data = await res.json();
-        if (!res.ok || !data.clientSecret) throw new Error(data.error || 'Checkout failed');
-        if (!stripe) stripe = Stripe(STRIPE_PK);
-        if (embeddedCheckout) { embeddedCheckout.destroy(); embeddedCheckout = null; }
-        embeddedCheckout = await stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
+        if (!res.ok || !data.clientSecret) throw new Error(data.error || 'No client secret returned');
+
+        if (!_stripeInstance) _stripeInstance = Stripe(STRIPE_PK);
+        if (_embeddedCheckout) { _embeddedCheckout.destroy(); _embeddedCheckout = null; }
+        _embeddedCheckout = await _stripeInstance.initEmbeddedCheckout({ clientSecret: data.clientSecret });
         embedEl.innerHTML = '';
-        embeddedCheckout.mount('#checkout-embed');
-      } catch(err) {
-        embedEl.innerHTML = `
-          <form onsubmit="handleFallbackPurchase(event,'${esc(classId)}','${esc(c.name)}',${c.price_cents||4500})" style="display:flex;flex-direction:column;gap:0.85rem;padding-top:0.5rem">
-            <p style="font-family:var(--font-b);font-size:0.85rem;color:var(--ink-soft);line-height:1.5">Reserve your seat for <strong>${esc(c.name)}</strong> (${price}). All materials included.</p>
-            <div><label style="display:block;font-family:var(--font-b);font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage-deep);margin-bottom:0.3rem">Full Name</label><input type="text" id="fName" required placeholder="Jane Doe" style="width:100%;padding:0.75rem 0.9rem;border:1px solid var(--hairline);border-radius:6px;background:var(--surface);font-size:0.9rem;font-family:var(--font-b)"></div>
-            <div><label style="display:block;font-family:var(--font-b);font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage-deep);margin-bottom:0.3rem">Email</label><input type="email" id="fEmail" required placeholder="jane@example.com" style="width:100%;padding:0.75rem 0.9rem;border:1px solid var(--hairline);border-radius:6px;background:var(--surface);font-size:0.9rem;font-family:var(--font-b)"></div>
-            <div><label style="display:block;font-family:var(--font-b);font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage-deep);margin-bottom:0.3rem">Phone</label><input type="tel" id="fPhone" required placeholder="(570) 555-0199" style="width:100%;padding:0.75rem 0.9rem;border:1px solid var(--hairline);border-radius:6px;background:var(--surface);font-size:0.9rem;font-family:var(--font-b)"></div>
-            <button type="submit" id="fSubmit" style="background:var(--sage-deep);color:#fff;font-family:var(--font-b);font-weight:700;font-size:0.88rem;padding:0.9rem;border-radius:6px;border:none;cursor:pointer;letter-spacing:0.06em">Pay ${price} &amp; Reserve Seat →</button>
-          </form>`;
+        _embeddedCheckout.mount('#checkout-embed');
+
+      } catch (err) {
+        console.warn('Stripe embed unavailable, showing fallback form:', err.message);
+        showFallbackForm(embedEl, c, price);
       }
     }
 
-    async function handleFallbackPurchase(e, classId, className, priceCents) {
-      e.preventDefault();
-      const btn = document.getElementById('fSubmit');
-      btn.disabled = true; btn.textContent = 'Processing…';
-      const name = document.getElementById('fName').value.trim();
-      const email = document.getElementById('fEmail').value.trim();
-      const phone = document.getElementById('fPhone').value.trim();
-      try {
-        if (window.supabase) {
-          const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-          await sb.functions.invoke('submit-signup', { body: { first_name: name.split(' ')[0]||name, last_name: name.split(' ').slice(1).join(' ')||'Member', email, phone, classes_of_interest: className, notes: 'Class purchase via curriculum page', newsletter: true } });
-        }
-      } catch(err) { console.warn(err); }
-      document.getElementById('modalSummary').style.display = 'none';
-      document.getElementById('checkout-embed').innerHTML = '';
-      const s = document.getElementById('modalSuccess');
-      s.innerHTML = `<div class="modal-success-mark">✦</div><h3>You're <em>booked</em>.</h3><p>Confirmation for <strong>${esc(className)}</strong> has been sent to <strong>${esc(email)}</strong>.</p>`;
-      s.classList.add('show');
+    function showFallbackForm(embedEl, c, price) {
+      embedEl.innerHTML = `
+        <form class="fallback-form" id="fallbackForm">
+          <p style="font-family:var(--font-b);font-size:0.85rem;color:var(--ink-soft);line-height:1.5;margin-bottom:0.25rem;">
+            Reserve your seat for <strong style="color:var(--sage-deep)">${esc(c.name)}</strong> (${price}). All materials included.
+          </p>
+          <div>
+            <label for="ff-name">Full Name</label>
+            <input type="text" id="ff-name" required placeholder="Jane Doe" autocomplete="name">
+          </div>
+          <div>
+            <label for="ff-email">Email address</label>
+            <input type="email" id="ff-email" required placeholder="jane@example.com" autocomplete="email">
+          </div>
+          <div>
+            <label for="ff-phone">Phone number</label>
+            <input type="tel" id="ff-phone" required placeholder="(570) 555-0199" autocomplete="tel">
+          </div>
+          <button type="submit" class="btn-submit" id="ff-submit">Pay ${price} &amp; Reserve Seat →</button>
+        </form>`;
+
+      document.getElementById('fallbackForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const btn   = document.getElementById('ff-submit');
+        btn.disabled = true;
+        btn.textContent = 'Processing…';
+        const name  = document.getElementById('ff-name').value.trim();
+        const email = document.getElementById('ff-email').value.trim();
+        const phone = document.getElementById('ff-phone').value.trim();
+
+        try {
+          if (window.supabase) {
+            const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            await sb.functions.invoke('submit-signup', {
+              body: {
+                first_name: name.split(' ')[0] || name,
+                last_name:  name.split(' ').slice(1).join(' ') || 'Member',
+                email, phone,
+                classes_of_interest: c.name,
+                notes: 'Class reservation via curriculum page · ' + price,
+                newsletter: true
+              }
+            });
+          }
+        } catch (err) { console.warn('Signup log error:', err); }
+
+        document.getElementById('modalSummary').style.display = 'none';
+        embedEl.innerHTML = '';
+        const s = document.getElementById('modalSuccess');
+        s.innerHTML = `
+          <div class="modal-success-mark">✦</div>
+          <h3>You're <em>booked</em>.</h3>
+          <p>A confirmation for <strong>${esc(c.name)}</strong> has been sent to <strong>${esc(email)}</strong>. We'll see you in studio.</p>`;
+        s.classList.add('show');
+      });
     }
 
     function closeModal() {
       document.getElementById('checkoutModal').classList.remove('open');
       document.body.style.overflow = '';
-      if (embeddedCheckout) { embeddedCheckout.destroy(); embeddedCheckout = null; }
+      if (_embeddedCheckout) { _embeddedCheckout.destroy(); _embeddedCheckout = null; }
       document.getElementById('checkout-embed').innerHTML = '';
     }
-    document.getElementById('checkoutModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+    document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+    document.getElementById('checkoutModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    function handleStripeReturn() {
+    /* Stripe redirect return */
+    (function() {
       const params = new URLSearchParams(window.location.search);
       if (params.get('status') === 'complete') {
         document.getElementById('checkout-embed').innerHTML = '';
@@ -633,17 +819,62 @@
         document.getElementById('checkoutModal').classList.add('open');
         history.replaceState({}, '', window.location.pathname);
       }
+    })();
+
+    /* ============================================================
+       LOAD SCHEDULE — try Supabase, fall back to defaults
+       ============================================================ */
+    async function loadSchedule() {
+      let classes = DEFAULT_CLASSES;
+      try {
+        const res = await fetch(
+          SUPABASE_URL + '/rest/v1/classes?select=id,name,category,description,instructor,price_cents&is_published=eq.true&order=name.asc',
+          { headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY } }
+        );
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length) {
+            classes = data;
+            _classMap = {};
+            classes.forEach(c => { _classMap[c.id] = c; });
+          }
+        }
+      } catch (e) { /* network issue — use defaults */ }
+      buildSchedule(classes);
     }
 
-    // NAV TOGGLE
+    /* ============================================================
+       NAV TOGGLE
+       ============================================================ */
     const navToggle = document.getElementById('navToggle');
     const navLinks  = document.getElementById('navLinks');
-    navToggle.addEventListener('click', () => { const open = navLinks.classList.toggle('open'); navToggle.classList.toggle('open', open); navToggle.setAttribute('aria-expanded', open); });
-    document.addEventListener('click', e => { if (!e.target.closest('.sticky-nav')) { navLinks.classList.remove('open'); navToggle.classList.remove('open'); navToggle.setAttribute('aria-expanded','false'); } });
+    navToggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      navToggle.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', open);
+    });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.sticky-nav')) {
+        navLinks.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
 
-    // REVEAL
-    const io = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } }); }, { threshold: 0.08 });
-    document.querySelectorAll('[data-reveal]').forEach(r => io.observe(r));
+    /* ============================================================
+       SCROLL REVEAL
+       ============================================================ */
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('[data-reveal]').forEach(r => revealObs.observe(r));
 
     loadSchedule();
   </script>
