@@ -1633,7 +1633,7 @@
     <div class="container">
       <div class="page-hero-inner">
         <div data-reveal>
-          <span class="page-eyebrow">Current Curriculum</span>
+          <span class="page-eyebrow">The Hobbiest Skills Club</span>
           <h1>Current <em>Curriculum</em>.</h1>
           <p class="page-hero-lede">
             Explore our featured lineup of 10 hands-on courses across creative arts, personal styling, life skills, and hearth &amp; garden. Available as single 2-hour sessions ($45–$65, all materials included).
@@ -1651,7 +1651,7 @@
 
     <aside class="schedule-rail">
       <nav class="rail-nav" id="railNav" aria-label="Curriculum navigation">
-        <div class="rail-eyebrow">Curriculum</div>
+        <div class="rail-eyebrow">Categories</div>
       </nav>
     </aside>
 
@@ -1805,7 +1805,7 @@
       });
 
       main.innerHTML = '';
-      rail.innerHTML = '<div class="rail-eyebrow">Curriculum</div>';
+      rail.innerHTML = '<div class="rail-eyebrow">Categories</div>';
       cats.forEach((cat, i) => {
         const num  = String(i + 1).padStart(2, '0');
         const id   = slug(cat);
@@ -1857,9 +1857,14 @@
     let embeddedCheckout = null;
 
     async function openCheckout(classId, sessionIndex, event) {
-      if (event) event.stopPropagation();
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
 
-      const c = _pwClasses.find(x => x.id === classId) || { id: classId, name: 'Single Class', price_cents: 4500 };
+      const c = DEFAULT_CLASSES.find(x => x.id === classId) ||
+                _pwClasses.find(x => x.id === classId) ||
+                { id: classId, name: 'Single Class', price_cents: 4500 };
       const priceCents = classPriceCents(c);
 
       document.getElementById('modalTitle').textContent = 'Book Single Session';
