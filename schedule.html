@@ -303,6 +303,26 @@
       font-style: italic;
       color: var(--sage);
     }
+    .course-pill-btn {
+      display: inline-block;
+      padding: 0.4rem 0.8rem;
+      background: var(--bg-warm);
+      border: 1px solid var(--hairline);
+      border-radius: 20px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--sage-deep);
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+    }
+    .course-pill-btn:hover {
+      background: var(--sage-deep);
+      color: #ffffff;
+      border-color: var(--sage-deep);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(78,90,65,0.15);
+    }
 
     /* ============================================================
        SECTION HELPERS
@@ -1638,7 +1658,24 @@
           <p class="page-hero-lede">
             Explore our featured lineup of 10 hands-on courses across creative arts, personal styling, life skills, and hearth &amp; garden. Available as single 2-hour sessions ($45–$65, all materials included).
           </p>
+        </div>
 
+        <div class="hero-right-card" style="background:#FAF8F5;border:1.5px solid #DFD9CE;border-radius:12px;padding:1.5rem;box-shadow:0 6px 24px rgba(78,90,65,0.06);" data-reveal>
+          <div style="font-family:var(--font-body);font-size:0.75rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage-deep);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.4rem;">
+            <span style="color:var(--sage);">✦</span> Direct Course Jump (10 Canonical Classes)
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:0.45rem;" id="heroCoursePills">
+            <a href="#wreath-making" class="course-pill-btn">01. Wreath Making ($65)</a>
+            <a href="#sketch-art-drawing-basics" class="course-pill-btn">02. Sketch Art ($45)</a>
+            <a href="#makeup-tutorial-daily-application" class="course-pill-btn">03. Daily Makeup ($45)</a>
+            <a href="#makeup-tutorial-night-out-glam" class="course-pill-btn">04. Night Glam ($45)</a>
+            <a href="#hair-tutorial-professional-blowouts" class="course-pill-btn">05. Blowouts ($45)</a>
+            <a href="#modern-calligraphy-pointed-pen" class="course-pill-btn">06. Calligraphy ($55)</a>
+            <a href="#watercolor-painting-101" class="course-pill-btn">07. Watercolor ($55)</a>
+            <a href="#flower-arranging-floral-design" class="course-pill-btn">08. Floral Design ($65)</a>
+            <a href="#beginner-knitting-chunky-scarf" class="course-pill-btn">09. Knitting ($45)</a>
+            <a href="#sourdough-bread-making" class="course-pill-btn">10. Sourdough ($55)</a>
+          </div>
         </div>
       </div>
     </div>
@@ -1767,26 +1804,30 @@
       const priceCents = classPriceCents(c);
       const priceFormatted = money(priceCents);
       const materialsNote = 'All materials included (' + priceFormatted + ')';
-      const instructor = c.instructor ? '<p class="class-instructor">Taught by ' + esc(c.instructor) + '</p>' : '';
+      const instructor = c.instructor ? '<p class="class-instructor" style="margin-top:0.4rem;font-size:0.88rem;color:var(--sage-deep);">Taught by <strong>' + esc(c.instructor) + '</strong></p>' : '';
+      const courseSlug = slug(c.name);
 
       return '' +
-        '<article class="class-card">' +
+        '<article class="class-card" id="' + courseSlug + '" style="scroll-margin-top: 5rem;">' +
           '<details class="class-details-wrap" open>' +
             '<summary class="class-summary">' +
               '<div class="class-summary-main">' +
-                '<div class="class-format">Scheduled when course fills to 12 members · 2-Hour Session · In studio</div>' +
-                '<h4>' + esc(c.name) + '</h4>' +
+                '<div class="class-format" style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.25rem;">' +
+                  '<span style="background:var(--bg-warm);border:1px solid var(--hairline);padding:0.15rem 0.6rem;border-radius:4px;font-size:0.75rem;font-family:var(--font-body);font-weight:600;color:var(--sage-deep);text-transform:uppercase;letter-spacing:0.05em;">' + esc(c.category || 'Curriculum') + '</span>' +
+                  '<span style="font-size:0.8rem;color:var(--ink-soft);font-family:var(--font-body);">⏱ 2-Hour Session &nbsp;·&nbsp; 👥 Max 12 Members</span>' +
+                '</div>' +
+                '<h4 style="font-size:1.4rem;font-weight:500;color:var(--sage-deep);margin-top:0.2rem;">' + esc(c.name) + '</h4>' +
               '</div>' +
-              '<div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">' +
-                '<div class="class-price">' + priceFormatted + '</div>' +
-                '<button class="btn-book" onclick="openCheckout(' + JSON.stringify(c.id) + ', 0, event)">Buy Class →</button>' +
+              '<div style="display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;">' +
+                '<div class="class-price" style="font-size:1.5rem;font-weight:600;color:var(--sage-deep);">' + priceFormatted + '</div>' +
+                '<button class="btn-book" onclick="openCheckout(' + JSON.stringify(c.id) + ', 0, event)" style="background:var(--sage-deep);color:#fff;font-weight:600;padding:0.65rem 1.25rem;border-radius:6px;border:none;cursor:pointer;transition:all 0.2s;">Buy Class →</button>' +
               '</div>' +
-              '<span class="class-chevron" aria-hidden="true">+</span>' +
+              '<span class="class-chevron" aria-hidden="true">▾</span>' +
             '</summary>' +
-            '<div class="class-details-body">' +
-              '<p class="class-desc">' + esc(c.description) + '</p>' +
+            '<div class="class-details-body" style="padding:0.5rem 1rem 1.25rem 0.5rem;">' +
+              '<p class="class-desc" style="font-size:0.95rem;color:var(--ink-soft);line-height:1.5;">' + esc(c.description) + '</p>' +
               instructor +
-              '<div class="class-price-note" style="margin-top:0.5rem;font-weight:600;color:var(--sage-deep);">' + materialsNote + '</div>' +
+              '<div class="class-price-note" style="margin-top:0.6rem;font-weight:600;color:var(--sage);font-size:0.85rem;">✂ ' + materialsNote + '</div>' +
             '</div>' +
           '</details>' +
         '</article>';
